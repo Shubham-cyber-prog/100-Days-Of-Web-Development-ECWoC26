@@ -151,6 +151,17 @@
         </div>
 
         <script>
+            // Escape HTML special characters to prevent DOM text from being reinterpreted as HTML.
+            function escapeHtml(text) {
+                return text
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;')
+                    .replace(/\//g, '&#x2F;');
+            }
+
             document.addEventListener('DOMContentLoaded', () => {
                 const codeBlock = document.getElementById('structure-code');
                 const lines = codeBlock.innerText.split('\n');
@@ -159,7 +170,8 @@
                     // Tree structure characters
                     const treeChars = /([│├└]──|│)/g;
 
-                    let html = line;
+                    // Work on an escaped version of the line so original text cannot inject HTML
+                    let html = escapeHtml(line);
 
                     // Highlight structure characters
                     html = html.replace(treeChars, '<span class="tree-guide">$1</span>');
@@ -176,13 +188,13 @@
 
                     // Highlight comments
                     if (line.includes('#')) {
-                        const parts = html.split('#');
-                        if (parts.length > 1) {
-                            // Reconstruct with comment span
-                            // Note: this simple split might be risky if # is in filename, but rare here
-                            const beforeComment = parts.slice(0, parts.length - 1).join('#');
-                            const comment = parts[parts.length - 1];
-                            return `${beforeComment}<span class="tree-comment">#${comment}</span>`;
+                        // Find the first '#' position in the original (unescaped) line
+                        const hashIndex = line.indexOf('#');
+                        if (hashIndex !== -1) {
+                            // Since html is an escaped version of line with the same character order
+                            const escapedBefore = escapeHtml(line.slice(0, hashIndex));
+                            const escapedComment = escapeHtml(line.slice(hashIndex + 1));
+                            return `${escapedBefore}<span class="tree-comment">#${escapedComment}</span>`;
                         }
                     }
 

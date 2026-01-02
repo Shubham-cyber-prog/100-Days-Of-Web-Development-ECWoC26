@@ -462,3 +462,57 @@ footer {
 .code-block:hover {
     cursor: text;
 }
+
+/* Contributors Grid */
+.contributors-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.contributor-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+    width: 160px;
+    transition: transform var(--transition-speed), border-color var(--transition-speed);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contributor-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-primary);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.contributor-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    border: 2px solid var(--accent-primary);
+    object-fit: cover;
+}
+
+.contributor-name {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.contributor-commits {
+    color: var(--badge-beginner); /* Using your green variable */
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+}
