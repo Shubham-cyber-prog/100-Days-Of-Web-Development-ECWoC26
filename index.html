@@ -45,11 +45,29 @@
                 <li>✅ Prepare for Open Source, Internships & GSoC</li>
             </ul>
         </section>
+
+        <section id="tracker-section">
+    <h2>📊 Your Progress</h2>
+    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+        Click a day to mark it as complete. Your progress is saved automatically!
+    </p>
+
+    <div class="tracker-stats">
+        <span>Completed: <strong id="completedCount">0</strong>/100</span>
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progressBarFill"></div>
+        </div>
+    </div>
+
+    <div class="progress-grid" id="progressGrid">
+        </div>
+</section>
     </main>
 
     <footer>
         <p>Maintained by the Shubham-cyber-prog</p>
     </footer>
+    <script src="website/tracker.js"></script>
 </body>
 
 </html>
