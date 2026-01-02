@@ -34,7 +34,7 @@ const currencies = {
       resultDiv.textContent = "Please enter a valid amount";
       return;
     }
-  
+
     const fromRate = currencies[fromSelect.value];
     const toRate = currencies[toSelect.value];
   
