@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Board</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="/logo.jpg" type="image/x-icon">
+    <link rel="icon" href="/logo.jpg" type="image/png">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    
+    <header>
+        <img src="/logo.jpg" alt="innoverse Logo" class="logo">
+        <div class="heading-text">
+            <h1>Day 2 of 100 days code Challenge</h1>
+            
+        </div>
+        <button id="theme-toggle" onclick="toggleTheme()">🌞</button>
+    </header>
+    
+    <h2 class="kanban-title">Task Board</h2>
+    
+    <div class="kanban-container">
+        <div class="column" id="todo" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h2>To-Do</h2>
+            <div class="task-list"></div>
+            <button onclick="addTask('todo')">+ Add Task</button>
+        </div>
+        <div class="column" id="inprogress" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h2>In Progress</h2>
+            <div class="task-list"></div>
+            <button onclick="addTask('inprogress')">+ Add Task</button>
+        </div>
+        <div class="column" id="done" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h2>Done</h2>
+            <div class="task-list"></div>
+            <button onclick="addTask('done')">+ Add Task</button>
+        </div>
+    </div>
+    
+    <div id="progress-container">
+        <div id="progress-bar">0%</div>
+    </div>
+    
+    
+    <div class="bottom-controls">
+        <button onclick="importTasks()">Import</button>
+        <button onclick="exportTasks()">Export</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
