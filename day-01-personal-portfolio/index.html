@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personal Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+ <!-- Snowflakes Container -->
+  <div class="snow-container"></div>
+
+  <!-- Header -->
+  <header class="hero">
+  <div class="hero-content">
+    <img src="profile.jpg" alt="Profile Photo" class="profile-img" />
+
+    <h1>Hello, I'm <span class="highlight">Your Name 👋</span></h1>
+    <h2 class="typing-text"></h2>
+
+    <button class="btn" onclick="scrollToSection()">View Projects</button>
+
+    <div class="socials">
+  <a href="#" target="_blank">
+    <img src="icons/linkedin.png" alt="LinkedIn">
+  </a>
+  <a href="#" target="_blank">
+    <img src="icons/github.png" alt="GitHub">
+  </a>
+  <a href="#" target="_blank">
+    <img src="icons/twitter.png" alt="Twitter">
+  </a>
+</div>
+
+  </div>
+</header>
+
+
+  <!-- About -->
+  <section class="section">
+    <h2>About Me</h2>
+    <p>
+      I am a beginner web developer learning HTML, CSS, and JavaScript.
+      I enjoy building simple and responsive web projects.
+    </p>
+  </section>
+
+  <!-- Skills -->
+  <section class="section">
+    <h2>Skills</h2>
+    <ul class="skills-list">
+      <li>HTML5</li>
+      <li>CSS3</li>
+      <li>JavaScript (Basics)</li>
+    </ul>
+  </section>
+
+  <section class="section" id="projects">
+  <h2>Projects</h2>
+  <div class="projects">
+    <div class="project-pill" onclick="openProject('portfolio')">
+      Personal Portfolio
+    </div>
+    <div class="project-pill" onclick="openProject('landing')">
+      Landing Page
+    </div>
+  </div>
+</section>
+
+
+
+  <!-- Contact -->
+  <section class="section">
+    <h2>Contact</h2>
+    <p>Email: yourname@example.com</p>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2026 Your Name</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

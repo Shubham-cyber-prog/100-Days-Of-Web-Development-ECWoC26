@@ -581,3 +581,48 @@ footer {
     box-shadow: 0 4px 15px var(--accent-glow);
     font-weight: bold;
 }
+
+/* --- Showcase Page Styles --- */
+
+.showcase-card {
+    padding: 0;
+    overflow: hidden;
+    padding-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.showcase-img-container {
+    width: 100%;
+    height: 180px;
+    background-color: var(--bg-secondary);
+    margin-bottom: 1rem;
+    overflow: hidden;
+    border-radius: 1rem 1rem 0 0;
+}
+
+.showcase-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.showcase-card:hover .showcase-img {
+    transform: scale(1.05);
+}
+
+.showcase-card h3, 
+.showcase-card p, 
+.showcase-card .card-actions {
+    padding: 0 1.5rem;
+}
+
+.showcase-card h3 {
+    margin-bottom: 0.25rem;
+}
+
+.showcase-card p {
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
