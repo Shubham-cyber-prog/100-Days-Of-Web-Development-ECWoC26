@@ -3,209 +3,205 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Project Structure - 100 Days of Web</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Structure | 100 Days of Web</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
+
     <nav class="navbar">
-        <div class="logo">DevChallenge 🚀</div>
-        <ul class="nav-links">
-            <li><a href="/index.html" class="active">Home</a></li>
-            <li><a href="/website/projects.html">Projects</a></li>
-            <li><a href="/website/showcase.html">Contributors Projects</a></li>
-            <li><a href="/website/contribute.html">Contribute</a></li>
-            <li><a href="/website/structure.html">Structure</a></li>
-        </ul>
+
+        <div class="container nav-content">
+            <div class="logo">
+                <span>100</span> Days of Web
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contributors.html">Contributors</a></li>
+                <li><a href="#" class="active">Structure</a></li>
+            </ul>
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5" />
+                    <path
+                        d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
+                </svg>
+            </button>
+        </div>
     </nav>
 
     <main class="container">
-        <h1>🗂 Project Structure</h1>
-        <p>Please follow this directory layout when adding new projects.</p>
 
-        <div class="terminal-window">
-            <div class="terminal-header">
-                <div class="terminal-controls">
-                    <span class="control close"></span>
-                    <span class="control minimize"></span>
-                    <span class="control maximize"></span>
+        <header class="page-hero">
+            <h1>Project Structure</h1>
+            <p>A look under the hood. Organized for clarity and scalability.</p>
+        </header>
+
+        <section>
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <div class="terminal-controls">
+                        <span class="control close"></span>
+                        <span class="control minimize"></span>
+                        <span class="control maximize"></span>
+                    </div>
+                    <div class="terminal-title">100-Days-Of-Web-Development/TREE</div>
                 </div>
-                <div class="terminal-title">project-structure — tree — 80x24</div>
+                <div class="terminal-body" id="fileTree">
+                    <div class="tree-line"><span class="tree-folder">100-Days-Of-Web-Development</span>/</div>
+
+                    <div class="tree-line"><span class="tree-guide">├──</span> <span
+                            class="tree-folder">BEGINNER</span>/</div>
+                    <div class="tree-line"><span class="tree-guide">│ ├──</span> <span
+                            class="tree-folder">day-01-personal-portfolio</span>/</div>
+                    <div class="tree-line"><span class="tree-guide">│ │ ├──</span> <span
+                            class="tree-file">index.html</span></div>
+                    <div class="tree-line"><span class="tree-guide">│ │ └──</span> <span
+                            class="tree-file">style.css</span></div>
+                    <div class="tree-line"><span class="tree-guide">│ └──</span> <span class="tree-comment">...
+                            (Days
+                            1-30)</span></div>
+
+                    <div class="tree-line"><span class="tree-guide">├──</span> <span
+                            class="tree-folder">INTERMEDIATE</span>/</div>
+                    <div class="tree-line"><span class="tree-guide">│ └──</span> <span class="tree-comment">...
+                            (Days
+                            31-60)</span></div>
+
+                    <div class="tree-line"><span class="tree-guide">├──</span> <span
+                            class="tree-folder">ADVANCED</span>/</div>
+                    <div class="tree-line"><span class="tree-guide">│ └──</span> <span class="tree-comment">...
+                            (Days
+                            61-90)</span></div>
+
+                    <div class="tree-line"><span class="tree-guide">├──</span> <span
+                            class="tree-folder">CAPSTONE</span>/</div>
+                    <div class="tree-line"><span class="tree-guide">│ └──</span> <span class="tree-comment">...
+                            (Days
+                            91-100)</span></div>
+
+                    <div class="tree-line"><span class="tree-guide">├──</span> <span class="tree-folder">website</span>/
+                    </div>
+                    <div class="tree-line"><span class="tree-guide">│ ├──</span> <span
+                            class="tree-file">style.css</span></div>
+                    <div class="tree-line"><span class="tree-guide">│ ├──</span> <span
+                            class="tree-file">script.js</span></div>
+                    <div class="tree-line"><span class="tree-guide">│ ├──</span> <span
+                            class="tree-file">projects.html</span></div>
+                    <div class="tree-line"><span class="tree-guide">│ ├──</span> <span
+                            class="tree-file">about.html</span></div>
+                    <div class="tree-line"><span class="tree-guide">│ └──</span> <span
+                            class="tree-file">contributors.html</span></div>
+
+                    <div class="tree-line"><span class="tree-guide">├──</span> <span class="tree-file">index.html</span>
+                    </div>
+                    <div class="tree-line"><span class="tree-guide">├──</span> <span class="tree-file">README.md</span>
+                    </div>
+                    <div class="tree-line"><span class="tree-guide">├──</span> <span
+                            class="tree-file">CONTRIBUTING.md</span></div>
+                    <div class="tree-line"><span class="tree-guide">└──</span> <span class="tree-file">LICENSE</span>
+                    </div>
+                </div>
             </div>
-            <div class="terminal-body">
-                <pre class="code-block" id="structure-code">
-100-days-web-projects/
-│
-├── 📁 BEGINNER (Days 1-30)                # Basic Projects
-│   │
-│   ├── 📁 day-01-personal-portfolio/
-│   │   ├── index.html
-│   │   ├── style.css
-│   │   ├── script.js
-│   │   └── README.md
-│   │
-│   ├── 📁 day-02-responsive-landing-page/
-│   ├── 📁 day-03-todo-list/
-│   ├── 📁 day-04-weather-app/
-│   ├── 📁 day-05-calculator/
-│   ├── 📁 day-06-quiz-app/
-│   ├── 📁 day-07-expense-tracker/
-│   ├── 📁 day-08-pomodoro-timer/
-│   ├── 📁 day-09-note-taking-app/
-│   ├── 📁 day-10-recipe-book/
-│   ├── 📁 day-11-blog-website/
-│   ├── 📁 day-12-ecommerce-product-page/
-│   ├── 📁 day-13-chat-ui/
-│   ├── 📁 day-14-music-player/
-│   ├── 📁 day-15-drawing-app/
-│   ├── 📁 day-16-password-generator/
-│   ├── 📁 day-17-unit-converter/
-│   ├── 📁 day-18-countdown-timer/
-│   ├── 📁 day-19-tip-calculator/
-│   ├── 📁 day-20-qr-code-generator/
-│   ├── 📁 day-21-flashcards-app/
-│   ├── 📁 day-22-markdown-previewer/
-│   ├── 📁 day-23-currency-converter/
-│   ├── 📁 day-24-bmi-calculator/
-│   ├── 📁 day-25-random-quote-generator/
-│   ├── 📁 day-26-image-gallery/
-│   ├── 📁 day-27-dice-roller/
-│   ├── 📁 day-28-rock-paper-scissors/
-│   ├── 📁 day-29-memory-game/
-│   └── 📁 day-30-tic-tac-toe/
-│
-├── 📁 INTERMEDIATE (Days 31-60)           # Intermediate Projects
-│   │
-│   ├── 📁 day-31-job-board/
-│   ├── 📁 day-32-social-media-dashboard/
-│   ├── 📁 day-33-real-estate-website/
-│   ├── 📁 day-34-hotel-booking-system/
-│   ├── 📁 day-35-food-delivery-app/
-│   ├── 📁 day-36-fitness-tracker/
-│   ├── 📁 day-37-event-management/
-│   ├── 📁 day-38-booking-appointment-system/
-│   ├── 📁 day-39-online-learning-platform/
-│   ├── 📁 day-40-movie-database/
-│   ├── 📁 day-41-github-profile-finder/
-│   ├── 📁 day-42-stock-market-tracker/
-│   ├── 📁 day-43-news-aggregator/
-│   ├── 📁 day-44-chat-application/
-│   ├── 📁 day-45-project-management-tool/
-│   ├── 📁 day-46-ecommerce-cart/
-│   ├── 📁 day-47-banking-dashboard/
-│   ├── 📁 day-48-flight-booking-system/
-│   ├── 📁 day-49-recipe-sharing-platform/
-│   ├── 📁 day-50-blog-with-cms/
-│   ├── 📁 day-51-portfolio-with-blog/
-│   ├── 📁 day-52-task-management-board/
-│   ├── 📁 day-53-file-uploader/
-│   ├── 📁 day-54-code-editor/
-│   ├── 📁 day-55-voice-notes-app/
-│   ├── 📁 day-56-expense-splitter/
-│   ├── 📁 day-57-habit-tracker/
-│   ├── 📁 day-58-budget-planner/
-│   ├── 📁 day-59-meal-planner/
-│   └── 📁 day-60-travel-planner/
-│
-├── 📁 ADVANCED (Days 61-90)               # Advanced Projects
-│   │
-│   ├── 📁 day-61-fullstack-ecommerce/
-│   ├── 📁 day-62-social-network/
-│   ├── 📁 day-63-video-conferencing/
-│   ├── 📁 day-64-online-code-editor/
-│   ├── 📁 day-65-real-time-collaboration/
-│   ├── 📁 day-66-stock-trading-simulator/
-│   ├── 📁 day-67-multiplayer-game/
-│   ├── 📁 day-68-ai-chatbot/
-│   ├── 📁 day-69-blockchain-explorer/
-│   ├── 📁 day-70-data-visualization-dashboard/
-│   ├── 📁 day-71-crypto-wallet/
-│   ├── 📁 day-72-iot-dashboard/
-│   ├── 📁 day-73-machine-learning-ui/
-│   ├── 📁 day-74-voice-assistant/
-│   ├── 📁 day-75-ar-web-app/
-│   ├── 📁 day-76-pwa-news-app/
-│   ├── 📁 day-77-real-time-analytics/
-│   ├── 📁 day-78-document-editor/
-│   ├── 📁 day-79-email-client/
-│   ├── 📁 day-80-project-management-saas/
-│   ├── 📁 day-81-healthcare-portal/
-│   ├── 📁 day-82-elearning-platform/
-│   ├── 📁 day-83-recruitment-platform/
-│   ├── 📁 day-84-real-time-chat-support/
-│   ├── 📁 day-85-auction-platform/
-│   ├── 📁 day-86-freelance-marketplace/
-│   ├── 📁 day-87-music-streaming/
-│   ├── 📁 day-88-video-streaming/
-│   ├── 📁 day-89-smart-home-dashboard/
-│   └── 📁 day-90-enterprise-crm/
-│
-├── 📁 CAPSTONE (Days 91-100)              # Final Projects
-│   │
-│   ├── 📁 day-91-92-microservices-project/
-│   ├── 📁 day-93-94-open-source-contribution/
-│   ├── 📁 day-95-96-fullstack-application/
-│   ├── 📁 day-97-98-complex-dashboard/
-│   └── 📁 day-99-100-master-project/
-                </pre>
+        </section>
+
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>
+                    <svg class="icon icon-sm" viewBox="0 0 24 24">
+                        <path
+                            d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z">
+                        </path>
+                        <path
+                            d="M12 15l-3 3a2.21 2.21 0 0 0-.1 2.9c1.24 1.26 5 2 5 2s-.74-3.76-2-5a2.23 2.23 0 0 0-3 .1z">
+                        </path>
+                        <path d="M14.31 9.86 5 19"></path>
+                        <path d="M22 2 11 13"></path>
+                    </svg>
+                    100 Days Challenge
+                </h4>
+                <p class="footer-description">
+                    A community-driven journey to master web development through daily projects.
+                </p>
+                <div class="footer-socials">
+                    <a href="https://instagram.com" class="social-link" aria-label="Instagram">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="https://github.com" class="social-link" aria-label="GitHub">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path
+                                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="https://linkedin.com" class="social-link" aria-label="LinkedIn">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
+                            </path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="about.html">About Challenge</a></li>
+                    <li><a href="contributors.html">Contributors</a></li>
+                    <li><a href="structure.html" class="active-link">Structure</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Technologies</h4>
+                <div class="tech-tags">
+                    <span class="tech-tag tag-html">HTML5</span>
+                    <span class="tech-tag tag-css">CSS3</span>
+                    <span class="tech-tag tag-js">JavaScript</span>
+                    <span class="tech-tag"
+                        style="background: var(--bg-hover); color: var(--text-secondary);">Responsive</span>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <div class="legal-links">
+                    <a href="#" class="legal-btn">Privacy Policy</a>
+                    <a href="#" class="legal-btn">Terms of Service</a>
+                </div>
             </div>
         </div>
 
-        <script>
-            // Escape HTML special characters to prevent DOM text from being reinterpreted as HTML.
-            function escapeHtml(text) {
-                return text
-                    .replace(/&/g, '&amp;')
-                    .replace(/</g, '&lt;')
-                    .replace(/>/g, '&gt;')
-                    .replace(/"/g, '&quot;')
-                    .replace(/'/g, '&#39;')
-                    .replace(/\//g, '&#x2F;');
-            }
+        <div class="footer-bottom">
+            <p>&copy; 2026 100 Days of Web.</p>
+            <div class="created-by">
+                Maintained by <a href="#">Shubham</a> & Contributors
+            </div>
+        </div>
+    </footer>
 
-            document.addEventListener('DOMContentLoaded', () => {
-                const codeBlock = document.getElementById('structure-code');
-                const lines = codeBlock.innerText.split('\n');
-
-                const processLine = (line) => {
-                    // Tree structure characters
-                    const treeChars = /([│├└]──|│)/g;
-
-                    // Work on an escaped version of the line so original text cannot inject HTML
-                    let html = escapeHtml(line);
-
-                    // Highlight structure characters
-                    html = html.replace(treeChars, '<span class="tree-guide">$1</span>');
-
-                    // Highlight folders (lines with 📁)
-                    if (line.includes('📁')) {
-                        // Extract folder name
-                        html = html.replace(/(📁\s+)([^#\n]+)/, '<span class="tree-icon">$1</span><span class="tree-folder">$2</span>');
-                    } else if (line.match(/[a-zA-Z0-9_\-\.]+\.[a-zA-Z0-9]+/)) {
-                        // Highlight files (heuristics: contains extension)
-                        // Be careful not to match inside comments
-                        html = html.replace(/([a-zA-Z0-9_\-\.]+\.[a-zA-Z0-9]+)/, '<span class="tree-file">$1</span>');
-                    }
-
-                    // Highlight comments
-                    if (line.includes('#')) {
-                        // Find the first '#' position in the original (unescaped) line
-                        const hashIndex = line.indexOf('#');
-                        if (hashIndex !== -1) {
-                            // Since html is an escaped version of line with the same character order
-                            const escapedBefore = escapeHtml(line.slice(0, hashIndex));
-                            const escapedComment = escapeHtml(line.slice(hashIndex + 1));
-                            return `${escapedBefore}<span class="tree-comment">#${escapedComment}</span>`;
-                        }
-                    }
-
-                    return html;
-                };
-
-                codeBlock.innerHTML = lines.map(processLine).join('\n');
-            });
-        </script>
-    </main>
+    <script src="theme.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-const repoOwner = "Shubham-cyber-prog"; 
+const repoOwner = "Shubham-cyber-prog";
 const repoName = "100-Days-Of-Web-Development";
 const container = document.getElementById("contributors-grid");
 
@@ -6,7 +6,7 @@ async function fetchContributors() {
     try {
         const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contributors`);
         if (!response.ok) throw new Error("Failed to fetch contributors");
-        
+
         const contributors = await response.json();
         container.innerHTML = ""; // Clear the loading text
 
@@ -19,7 +19,8 @@ async function fetchContributors() {
             card.innerHTML = `
                 <img src="${user.avatar_url}" alt="${user.login}" class="contributor-img">
                 <span class="contributor-name">${user.login}</span>
-                <span class="contributor-commits">${user.contributions} contributions</span>
+                <span class="contributor-commits"><strong class="highlight-count">${user.contributions}</strong> contributions</span>
+                <p class="view-profile">Click to view profile</p>
             `;
 
             container.appendChild(card);
