@@ -1,22 +1,48 @@
-# 100-Days-Of-Web-Development
-🚀 100 Days of Web Development challenge using HTML, CSS &amp; JavaScript. Daily learning, practice, and real-world projects to strengthen frontend development skills.
 # 🚀 100 Days of Web Development
 
-![HTML](https://img.shields.io/badge/HTML5-orange?style=for-the-badge&logo=html5)
-![CSS](https://img.shields.io/badge/CSS3-blue?style=for-the-badge&logo=css3)
-![JavaScript](https://img.shields.io/badge/JavaScript-yellow?style=for-the-badge&logo=javascript)
-![GitHub Repo Size](https://img.shields.io/github/repo-size/Shubham-cyber-prog/100-Days-Of-Web-Development?style=for-the-badge)
-![GitHub Stars](https://img.shields.io/github/stars/Shubham-cyber-prog/100-Days-Of-Web-Development?style=for-the-badge)
-https://discord.gg/SW7puwEm
----
+Level up your **frontend skills** with this **100 Days of Web Development Challenge** using **HTML, CSS & JavaScript**. Build **mini-projects**, practice **daily coding**, and create a **portfolio-worthy collection**!  
 
-## 📌 About This Repository
+![HTML](https://img.shields.io/badge/HTML5-orange?style=for-the-badge&logo=html5) 
+![CSS](https://img.shields.io/badge/CSS3-blue?style=for-the-badge&logo=css3) 
+![JavaScript](https://img.shields.io/badge/JavaScript-yellow?style=for-the-badge&logo=javascript) 
+![GitHub Repo Size](https://img.shields.io/github/repo-size/Shubham-cyber-prog/100-Days-Of-Web-Development?style=for-the-badge) 
+![GitHub Stars](https://img.shields.io/github/stars/Shubham-cyber-prog/100-Days-Of-Web-Development?style=for-the-badge)  
 
-This repository documents my **100 Days of Web Development Challenge**, where I consistently learn, practice, and build projects using **HTML, CSS, and JavaScript**.
-
-The goal is to strengthen **frontend fundamentals**, improve **problem-solving**, and build **real-world projects** while maintaining daily GitHub consistency.
+🔗 **Join our Discord community:** [Click Here](https://discord.gg/SW7puwEm)  
 
 ---
+
+## 📌 About This Challenge
+This repository documents my **100 Days of Web Development journey**, where I:  
+- Learn and **practice frontend fundamentals** daily.  
+- Build **mini-projects & real-world apps**.  
+- Track progress with **interactive tools & visuals**.  
+- Strengthen **problem-solving & coding consistency**.
+
+---
+
+## ✨ Key Features
+- **🎯 Daily Projects**: 100 carefully crafted mini-projects.  
+- **📊 Progress Tracker**: Interactive heatmap to visualize coding streaks.  
+- **🗂️ Project Compendium**: Searchable and filterable project list.  
+- **🔒 Login/Signup UI**: Sleek static authentication interface (dummy credentials only).  
+
+> 💡 *Note: The login/signup UI is for demonstration purposes only and does not store real data.*
+
+---
+
+## 🔧 Tech Stack
+- **Frontend**: HTML5, CSS3, JavaScript  
+- **Version Control**: Git & GitHub  
+
+---
+
+## 🌟 Get Involved
+- Fork this repo ⭐  
+- Contribute mini-projects or enhancements  
+- Share your progress on social media using **#100DaysOfWebDev**  
+
+
 
 ## 🎯 Challenge Goals
 
@@ -30,6 +56,7 @@ The goal is to strengthen **frontend fundamentals**, improve **problem-solving**
 
 ## 📂 Repository Structure
 ```
+> Each folder represents daily projects organized by difficulty level.
 100-days-web-projects/
 │
 ├── 📁 README.md                           # Main project overview

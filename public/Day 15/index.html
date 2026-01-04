@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drawing App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="app">
+    <h1>🎨 Drawing App</h1>
+
+    <div class="toolbar">
+      <label>
+        Brush Size
+        <input type="range" id="brushSize" min="1" max="30" value="5">
+      </label>
+
+      <label>
+        Color
+        <input type="color" id="colorPicker" value="#000000">
+      </label>
+
+      <button id="clearBtn" class="btn danger">Clear</button>
+      <button id="saveBtn" class="btn success">Save PNG</button>
+    </div>
+
+    <canvas id="canvas"></canvas>
+
+    <p class="footer">Made with ❤️ using HTML, CSS & JavaScript</p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

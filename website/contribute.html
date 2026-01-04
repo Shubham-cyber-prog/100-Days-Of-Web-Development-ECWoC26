@@ -1,54 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Contribute - 100 Days of Web</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contribute | 100 Days of Code</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    <nav>
-        <div class="logo">Shubham-cyber-prog 🚀</div>
+    <nav class="navbar">
+        <div class="logo">DevChallenge 🚀</div>
         <ul class="nav-links">
-            <li><a href="../index.html">Home</a></li>
-            <li><a href="projects.html">Projects</a></li>
-            <li><a href="contribute.html" class="active">Contribute</a></li>
-            <li><a href="structure.html">Structure</a></li>
+            <li><a href="/index.html" class="active">Home</a></li>
+            <li><a href="/website/projects.html">Projects</a></li>
+            <li><a href="/website/showcase.html">Contributors Projects</a></li>
+            <li><a href="/website/contribute.html">Contribute</a></li>
+            <li><a href="/website/structure.html">Structure</a></li>
         </ul>
     </nav>
 
+    <header class="projects-header">
+        <h1>Contribution Guide</h1>
+        <p>Join the community. Make your mark on Open Source.</p>
+    </header>
+
     <main class="container">
-        <h1>🤝 How to Contribute</h1>
-        <p>We’re excited to have you here! Every contribution—big or small—matters.</p>
 
-        <section class="contribution-section">
-            <h2>👥 Who Can Contribute?</h2>
-            <p>Anyone! Beginners, Students, and Open-source enthusiasts. If you can learn, you can contribute 💙.</p>
+        <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            <div class="contribute-card">
+                <h2>👥 Who Can Contribute?</h2>
+                <p style="color: var(--text-secondary); margin-top: 1rem;">
+                    Everyone! Whether you are a beginner, a student, or a seasoned developer. If you have the passion to
+                    learn and share, this place is for you.
+                </p>
+            </div>
+            <div class="contribute-card">
+                <h2>🛠 Ways to Help</h2>
+                <ul style="list-style: none; margin-top: 1rem; color: var(--text-secondary);">
+                    <li style="margin-bottom: 0.5rem">📚 <strong>Content:</strong> Fix typos, improve docs.</li>
+                    <li style="margin-bottom: 0.5rem">💻 <strong>Code:</strong> Add new projects, fix bugs.</li>
+                    <li style="margin-bottom: 0.5rem">🎨 <strong>Design:</strong> Improve UI/UX.</li>
+                </ul>
+            </div>
         </section>
 
-        <section class="contribution-section">
-            <h2>🛠 Ways to Contribute</h2>
-            <ul>
-                <li><strong>📚 Content:</strong> Add challenges, improve explanations, fix typos.</li>
-                <li><strong>💻 Code:</strong> Add mini projects, optimize HTML/CSS/JS.</li>
-                <li><strong>📄 Documentation:</strong> Improve READMEs, add resources.</li>
-                <li><strong>🐞 Bug Fixes:</strong> Resolve UI issues, fix broken links.</li>
-            </ul>
-        </section>
-
-        <section class="contribution-section">
-            <h2>🚀 Getting Started</h2>
-            <ol>
-                <li><strong>Fork</strong> the repository.</li>
-                <li><strong>Clone</strong> your fork locally.</li>
-                <li>Create a new branch for your feature.</li>
-                <li>Commit your changes and push.</li>
-                <li>Open a <strong>Pull Request</strong>!</li>
+        <section class="contribute-card">
+            <h2>🚀 Quick Start Guide</h2>
+            <ol class="step-list" style="margin-top: 1.5rem;">
+                <li>
+                    <strong>Fork the Repository</strong>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Click the 'Fork' button on GitHub to
+                        create your own copy.</p>
+                </li>
+                <li>
+                    <strong>Clone Locally</strong>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">git clone
+                        https://github.com/YOUR-USERNAME/100-days.git</p>
+                </li>
+                <li>
+                    <strong>Create a Branch</strong>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">git checkout -b feature/amazing-feature
+                    </p>
+                </li>
+                <li>
+                    <strong>Make Changes & Push</strong>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Commit your work and push it to your
+                        fork.</p>
+                </li>
+                <li>
+                    <strong>Submit Pull Request</strong>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">We'll review your code and merge it!</p>
+                </li>
             </ol>
         </section>
         
         <div style="margin-top: 2rem; text-align: center;">
             <a href="../CONTRIBUTING.md" class="btn">Read Full Guidelines</a>
         </div>
+
+        <section>
+            <h2>✨ Hall of Fame</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+                A huge thanks to all the amazing developers who have contributed to this journey!
+            </p>
+            <div id="contributors-grid" class="contributors-grid">
+                <p>Loading contributors...</p>
+            </div>
+        </section>
+
     </main>
+
+    <footer>
+        <p>Maintained by the Shubham-cyber-prog</p>
+    </footer>
+
+    <script src="theme.js"></script>
+    <script src="contribute.js"></script>
 </body>
+
 </html>
