@@ -1,0 +1,3 @@
+- [x] Add Setup Guide for New Contributors section to README.md
+- [x] Add Project Template for Quick Start section to README.md
+- [x] Add Git Workflow Guidelines section to README.md
