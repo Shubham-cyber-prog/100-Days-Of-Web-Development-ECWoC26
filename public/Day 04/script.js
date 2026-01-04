@@ -98,7 +98,7 @@ function getWeatherDescription(code) {
     };
     return weatherCodes[code] || "Unknown Weather";
 }
-=======
+// ================= Project Grid Logic ================= //
 class WeatherApp {
     constructor() {
         this.apiKey = '003fddc023a25bd09aca868ba11a7b1b';
