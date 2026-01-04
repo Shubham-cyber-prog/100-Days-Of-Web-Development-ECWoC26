@@ -73,6 +73,7 @@ You can help in many ways:
 - Improve existing code
 - Optimize HTML/CSS/JS
 - Improve responsiveness
+- **Authentication**: The current Login/Signup page is a static placeholder. Contributors are encouraged to implement actual authentication using any **BaaS (Backend as a Service)** like Firebase, Supabase, or Appwrite. 🚀
 
 ### 📄 Documentation
 - Improve README files
