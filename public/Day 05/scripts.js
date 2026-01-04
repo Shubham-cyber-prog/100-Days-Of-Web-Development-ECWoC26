@@ -1,66 +1,175 @@
-const qrCanvas = document.getElementById("qrCanvas");
-const qrBox = document.getElementById("qrBox");
-const downloadBtn = document.getElementById("downloadBtn");
-let currentTab = "text";
+class Calculator {
+    constructor(previousOperandTextElement, currentOperandTextElement) {
+        this.previousOperandTextElement = previousOperandTextElement;
+        this.currentOperandTextElement = currentOperandTextElement;
+        this.clear();
+    }
 
-/* Tabs */
-function switchTab(tab) {
-  currentTab = tab;
-  document.querySelectorAll(".tab").forEach(btn => btn.classList.remove("active"));
-  document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+    clear() {
+        this.currentOperand = '0';
+        this.previousOperand = '';
+        this.operation = undefined;
+    }
 
-  document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add("active");
-  document.getElementById(tab).classList.add("active");
+    delete() {
+        this.currentOperand = this.currentOperand.toString().slice(0, -1);
+        if (this.currentOperand === '') {
+            this.currentOperand = '0';
+        }
+    }
+
+    appendNumber(number) {
+        if (number === '.' && this.currentOperand.includes('.')) return;
+        if (this.currentOperand === '0' && number !== '.') {
+            this.currentOperand = number.toString();
+        } else {
+            this.currentOperand = this.currentOperand.toString() + number.toString();
+        }
+    }
+
+    chooseOperation(operation) {
+        if (this.currentOperand === '') return;
+        if (this.previousOperand !== '') {
+            this.compute();
+        }
+        this.operation = operation;
+        this.previousOperand = this.currentOperand;
+        this.currentOperand = '';
+    }
+
+    compute() {
+        let computation;
+        const prev = parseFloat(this.previousOperand);
+        const current = parseFloat(this.currentOperand);
+        if (isNaN(prev) || isNaN(current)) return;
+
+        switch (this.operation) {
+            case '+':
+                computation = prev + current;
+                break;
+            case '-':
+                computation = prev - current;
+                break;
+            case '×':
+                computation = prev * current;
+                break;
+            case '÷':
+                computation = prev / current;
+                break;
+            default:
+                return;
+        }
+
+        this.currentOperand = computation.toString();
+        this.operation = undefined;
+        this.previousOperand = '';
+    }
+
+    getDisplayNumber(number) {
+        const stringNumber = number.toString();
+        const integerDigits = parseFloat(stringNumber.split('.')[0]);
+        const decimalDigits = stringNumber.split('.')[1];
+        let integerDisplay;
+        
+        if (isNaN(integerDigits)) {
+            integerDisplay = '';
+        } else {
+            integerDisplay = integerDigits.toLocaleString('en', {
+                maximumFractionDigits: 0
+            });
+        }
+        
+        if (decimalDigits != null) {
+            return `${integerDisplay}.${decimalDigits}`;
+        } else {
+            return integerDisplay;
+        }
+    }
+
+    updateDisplay() {
+        this.currentOperandTextElement.innerText = 
+            this.getDisplayNumber(this.currentOperand);
+        if (this.operation != null) {
+            this.previousOperandTextElement.innerText = 
+                `${this.getDisplayNumber(this.previousOperand)} ${this.operation}`;
+        } else {
+            this.previousOperandTextElement.innerText = '';
+        }
+    }
 }
 
-/* QR */
-function generateQR() {
-  let data = "";
+// Theme switching functionality
+const themeSwitcher = document.getElementById('theme-switcher');
+const body = document.body;
 
-  if (currentTab === "text") {
-    data = document.getElementById("textInput").value.trim();
-  }
+themeSwitcher.addEventListener('click', () => {
+    body.dataset.theme = body.dataset.theme === 'dark' ? 'light' : 'dark';
+    themeSwitcher.textContent = body.dataset.theme === 'dark' ? 'Toggle Light Mode' : 'Toggle Dark Mode';
+});
 
-  if (currentTab === "wifi") {
-    const ssid = document.getElementById("ssid").value;
-    const pass = document.getElementById("wifiPass").value;
-    data = `WIFI:T:WPA;S:${ssid};P:${pass};;`;
-  }
+// Calculator functionality
+const numberButtons = document.querySelectorAll('.number');
+const operationButtons = document.querySelectorAll('.operator');
+const equalsButton = document.getElementById('equals');
+const deleteButton = document.getElementById('delete');
+const clearButton = document.getElementById('clear');
+const previousOperandTextElement = document.getElementById('previous-operand');
+const currentOperandTextElement = document.getElementById('current-operand');
 
-  if (currentTab === "contact") {
-    const name = document.getElementById("name").value;
-    const phone = document.getElementById("phone").value;
-    const email = document.getElementById("email").value;
-    data = `BEGIN:VCARD\nFN:${name}\nTEL:${phone}\nEMAIL:${email}\nEND:VCARD`;
-  }
+const calculator = new Calculator(previousOperandTextElement, currentOperandTextElement);
 
-  if (!data) {
-    alert("Please fill the fields");
-    return;
-  }
+numberButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        calculator.appendNumber(button.innerText);
+        calculator.updateDisplay();
+    });
+});
 
-  QRCode.toCanvas(qrCanvas, data, { width: 180, margin: 2 });
-  qrBox.style.display = "block";
-  downloadBtn.style.display = "block";
-}
+operationButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        calculator.chooseOperation(button.innerText);
+        calculator.updateDisplay();
+    });
+});
 
-/* Download */
-function downloadQR() {
-  const link = document.createElement("a");
-  link.download = "qr-code.png";
-  link.href = qrCanvas.toDataURL();
-  link.click();
-}
+equalsButton.addEventListener('click', () => {
+    calculator.compute();
+    calculator.updateDisplay();
+});
 
-/* 🌿 Background Switch */
-function setBackground(type) {
-  if (type === "rain") {
-    document.body.style.backgroundImage = "url('https://images.unsplash.com/photo-1501999635878-71cb5379c2d8')";
-  }
-  if (type === "mountain") {
-    document.body.style.backgroundImage = "url('https://images.unsplash.com/photo-1501785888041-af3ef285b470')";
-  }
-  if (type === "nature") {
-    document.body.style.backgroundImage = "url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e')";
-  }
-}
+clearButton.addEventListener('click', () => {
+    calculator.clear();
+    calculator.updateDisplay();
+});
+
+deleteButton.addEventListener('click', () => {
+    calculator.delete();
+    calculator.updateDisplay();
+});
+
+// Keyboard support
+document.addEventListener('keydown', (e) => {
+    if ((e.key >= 0 && e.key <= 9) || e.key === '.') {
+        calculator.appendNumber(e.key);
+        calculator.updateDisplay();
+    } else if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') {
+        let operation;
+        switch (e.key) {
+            case '*': operation = '×'; break;
+            case '/': operation = '÷'; break;
+            default: operation = e.key;
+        }
+        calculator.chooseOperation(operation);
+        calculator.updateDisplay();
+    } else if (e.key === 'Enter' || e.key === '=') {
+        e.preventDefault();
+        calculator.compute();
+        calculator.updateDisplay();
+    } else if (e.key === 'Backspace') {
+        calculator.delete();
+        calculator.updateDisplay();
+    } else if (e.key === 'Escape') {
+        calculator.clear();
+        calculator.updateDisplay();
+    }
+});
