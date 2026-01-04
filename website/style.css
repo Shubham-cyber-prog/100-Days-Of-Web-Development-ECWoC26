@@ -56,18 +56,18 @@
 
 /* Light Mode Overrides */
 body.light-mode {
-    --bg-primary: #ffffff;
-    --bg-secondary: #fafafa;
-    --bg-card: #ffffff;
-    --bg-hover: #f4f4f5;
+    --bg-primary: #f8f9fa; /* Slightly off-white background */
+    --bg-secondary: #ffffff; /* Pure white for elements */
+    --bg-card: #ffffff;      /* Pure white for cards */
+    --bg-hover: #f1f5f9;
 
     --text-primary: #09090b;
     --text-secondary: #52525b;
     --text-tertiary: #a1a1aa;
 
     --accent-primary: #09090b;
-    --border-color: #e4e4e7;
-    --border-hover: #d4d4d8;
+    --border-color: #e2e8f0; /* Slightly darker border for visibility */
+    --border-hover: #cbd5e1;
 
     --badge-bg: #f4f4f5;
     --badge-text: #18181b;
@@ -1205,6 +1205,13 @@ main {
     font-family: var(--font-main);
     position: relative;
     overflow: hidden;
+
+    --text-primary: #ededed;   /* Resets Header/Main text to White */
+    --text-secondary: #a1a1aa; /* Resets Description/Link text to Light Grey */
+    --text-tertiary: #52525b;  /* Resets copyright text to Muted Grey */
+    
+    /* Ensure the color is applied */
+    color: var(--text-primary);
 }
 
 .main-footer::before {
@@ -1244,10 +1251,11 @@ main {
 
 .footer-col:hover {
     transform: translateY(-2px);
+    color: var(--text-secondary);
 }
 
 .footer-col h4 {
-    color: var(--text-primary);
+    color: var(--text-primary) !important;
     margin-bottom: 1.5rem;
     font-size: 1.1rem;
     font-weight: 600;
@@ -1271,6 +1279,7 @@ main {
 
 .footer-col:hover h4::after {
     width: 30px;
+    
 }
 
 .footer-description {
@@ -1330,7 +1339,7 @@ main {
 
 .social-link:hover {
     background: var(--text-primary);
-    color: var(--bg-primary);
+    color: var(--text-tertiary);
     border-color: var(--text-primary);
     transform: translateY(-3px) scale(1.05);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 255, 255, 0.1);
@@ -1357,6 +1366,10 @@ main {
     font-size: 0.95rem;
     position: relative;
     padding: 0.25rem 0;
+}
+
+.footer-links a:hover {
+    color: #ffffff !important; /* Ensure hover state is bright white */
 }
 
 .footer-links a::before {
@@ -1507,7 +1520,7 @@ main {
 
 .legal-btn:hover {
     background: var(--bg-hover);
-    color: var(--text-primary);
+    color: var(--text-secondary);
     border-color: var(--text-tertiary);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
