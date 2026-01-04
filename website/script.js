@@ -51,10 +51,17 @@ const projects = [
     { day: 100, title: "Master Project", folder: "Day 100", level: "Capstone" }
 ];
 
-const grid = document.getElementById('projects-grid');
-const tabs = document.querySelectorAll('.tab-btn');
 const repoBaseUrl = "https://github.com/Shubham-cyber-prog/100-days-of-web-development/tree/main/public/";
 const liveBaseUrl = "../public/";
+
+// Get DOM elements safely
+function getGrid() {
+    return document.getElementById('projects-grid');
+}
+
+function getTabs() {
+    return document.querySelectorAll('.tab-btn');
+}
 
 // Storage keys for preserving context
 const STORAGE_KEYS = {
@@ -69,6 +76,7 @@ let currentSearchQuery = '';
 
 
 function saveScrollPosition() {
+    const grid = getGrid();
     if (grid && window.location.pathname.includes('projects.html')) {
         const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
         sessionStorage.setItem(STORAGE_KEYS.SCROLL_POSITION, scrollPosition.toString());
@@ -78,6 +86,7 @@ function saveScrollPosition() {
 
 function restoreScrollPosition() {
     const savedPosition = sessionStorage.getItem(STORAGE_KEYS.SCROLL_POSITION);
+    const grid = getGrid();
     if (savedPosition && grid) {
         
         const restoreScroll = () => {
@@ -113,7 +122,7 @@ function restoreContext() {
     
     if (savedCategory) {
         currentCategory = savedCategory;
-       
+        const tabs = getTabs();
         if (tabs.length > 0) {
             tabs.forEach(t => {
                 if (t.dataset.category === savedCategory) {
@@ -138,6 +147,7 @@ let isInitialLoad = true;
 let shouldRestoreScroll = false;
 
 function renderProjects(category = 'All', searchQuery = '', preserveScroll = false) {
+    const grid = getGrid();
     if (!grid) return;
     
     
@@ -196,17 +206,21 @@ function renderProjects(category = 'All', searchQuery = '', preserveScroll = fal
     isInitialLoad = false;
 }
 
-tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        currentCategory = tab.dataset.category || 'All';
-        
-        renderProjects(currentCategory, currentSearchQuery, false);
-       
-        saveContext();
+// Tab Switching Logic - wait for DOM
+function setupTabs() {
+    const tabs = getTabs();
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            currentCategory = tab.dataset.category || 'All';
+            
+            renderProjects(currentCategory, currentSearchQuery, false);
+           
+            saveContext();
+        });
     });
-});
+}
 
 const searchInput = document.getElementById('projectSearch');
 if (searchInput) {
@@ -254,15 +268,16 @@ document.addEventListener('click', (e) => {
 }, true);
 
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        restoreContext();
-       
-        shouldRestoreScroll = !!sessionStorage.getItem(STORAGE_KEYS.SCROLL_POSITION);
-        renderProjects(currentCategory, currentSearchQuery, shouldRestoreScroll);
-    });
-} else {
+// Initial setup
+function initialize() {
     restoreContext();
+    setupTabs();
     shouldRestoreScroll = !!sessionStorage.getItem(STORAGE_KEYS.SCROLL_POSITION);
     renderProjects(currentCategory, currentSearchQuery, shouldRestoreScroll);
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initialize);
+} else {
+    initialize();
 }
