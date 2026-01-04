@@ -15,6 +15,15 @@ The goal is to strengthen **frontend fundamentals**, improve **problem-solving**
 
 ---
 
+## ✨ Key Features
+- **Daily Projects**: 100 uniquely crafted mini-projects.
+- **Progress Tracker**: Interactive heatmap to track your coding journey.
+- **Project Compendium**: Filterable and searchable project list.
+- **Login/Signup Showcase**: A sleek, static authentication UI (currently a placeholder).
+  - *Note: You can log in or sign up using any dummy credentials strictly for demonstration purposes.*
+
+---
+
 ## 🎯 Challenge Goals
 
 - ✅ Master HTML, CSS & JavaScript fundamentals  
