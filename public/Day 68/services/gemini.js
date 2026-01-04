@@ -1,5 +1,5 @@
 const API_URL =
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=AIzaSyDNwcXdnsQqaDItVn4E2kl2DVoUdVv5kP8";
+  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=Your_API_key_here";
 
 export async function askGemini(text, imageBase64 = null) {
   const parts = [];
