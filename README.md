@@ -1,28 +1,48 @@
 # 🚀 100 Days of Web Development
-🚀 100 Days of Web Development challenge using HTML, CSS &amp; JavaScript. Daily learning, practice, and real-world projects to strengthen frontend development skills.
 
-![HTML](https://img.shields.io/badge/HTML5-orange?style=for-the-badge&logo=html5)
-![CSS](https://img.shields.io/badge/CSS3-blue?style=for-the-badge&logo=css3)
-![JavaScript](https://img.shields.io/badge/JavaScript-yellow?style=for-the-badge&logo=javascript)
-![GitHub Repo Size](https://img.shields.io/github/repo-size/Shubham-cyber-prog/100-Days-Of-Web-Development?style=for-the-badge)
-![GitHub Stars](https://img.shields.io/github/stars/Shubham-cyber-prog/100-Days-Of-Web-Development?style=for-the-badge)
-🔗 **Join our Discord:** https://discord.gg/SW7puwEm
+Level up your **frontend skills** with this **100 Days of Web Development Challenge** using **HTML, CSS & JavaScript**. Build **mini-projects**, practice **daily coding**, and create a **portfolio-worthy collection**!  
+
+![HTML](https://img.shields.io/badge/HTML5-orange?style=for-the-badge&logo=html5) 
+![CSS](https://img.shields.io/badge/CSS3-blue?style=for-the-badge&logo=css3) 
+![JavaScript](https://img.shields.io/badge/JavaScript-yellow?style=for-the-badge&logo=javascript) 
+![GitHub Repo Size](https://img.shields.io/github/repo-size/Shubham-cyber-prog/100-Days-Of-Web-Development?style=for-the-badge) 
+![GitHub Stars](https://img.shields.io/github/stars/Shubham-cyber-prog/100-Days-Of-Web-Development?style=for-the-badge)  
+
+🔗 **Join our Discord community:** [Click Here](https://discord.gg/SW7puwEm)  
+
 ---
 
-## 📌 About This Repository
-This repository documents my **100 Days of Web Development Challenge**, where I consistently learn, practice, and build projects using **HTML, CSS, and JavaScript**.
-The goal is to strengthen **frontend fundamentals**, improve **problem-solving**, and build **real-world projects** while maintaining daily GitHub consistency.
+## 📌 About This Challenge
+This repository documents my **100 Days of Web Development journey**, where I:  
+- Learn and **practice frontend fundamentals** daily.  
+- Build **mini-projects & real-world apps**.  
+- Track progress with **interactive tools & visuals**.  
+- Strengthen **problem-solving & coding consistency**.
 
 ---
 
 ## ✨ Key Features
-- **Daily Projects**: 100 uniquely crafted mini-projects.
-- **Progress Tracker**: Interactive heatmap to track your coding journey.
-- **Project Compendium**: Filterable and searchable project list.
-- **Login/Signup Showcase**: A sleek, static authentication UI (currently a placeholder).
-  - *Note: You can log in or sign up using any dummy credentials strictly for demonstration purposes.*
+- **🎯 Daily Projects**: 100 carefully crafted mini-projects.  
+- **📊 Progress Tracker**: Interactive heatmap to visualize coding streaks.  
+- **🗂️ Project Compendium**: Searchable and filterable project list.  
+- **🔒 Login/Signup UI**: Sleek static authentication interface (dummy credentials only).  
+
+> 💡 *Note: The login/signup UI is for demonstration purposes only and does not store real data.*
 
 ---
+
+## 🔧 Tech Stack
+- **Frontend**: HTML5, CSS3, JavaScript  
+- **Version Control**: Git & GitHub  
+
+---
+
+## 🌟 Get Involved
+- Fork this repo ⭐  
+- Contribute mini-projects or enhancements  
+- Share your progress on social media using **#100DaysOfWebDev**  
+
+
 
 ## 🎯 Challenge Goals
 
@@ -181,4 +201,92 @@ The goal is to strengthen **frontend fundamentals**, improve **problem-solving**
 └── 📁 packages.json
 ```
                # Dependencies configuration
+
+
+- **DayX/** → Each day contains a mini-project or practice file  
+- **.github/workflows/** → Automated workflows for:
+  - GitHub Pages deployment  
+  - First-time contributor welcome  
+  - Stale issue & PR reminders  
+  - Workflow validation  
+
+---
+
+## 🌐 Live Demo
+
+The website is hosted on **GitHub Pages**:
+
+[🔗 View Live Site](https://shubham-cyber-prog.github.io/100-Days-Of-Web-Development-ECWoC26/)
+
+---
+## 🛠 Skills & Tools
+
+<p align="center">
+<img src="https://img.shields.io/badge/HTML5-orange?style=for-the-badge&logo=html5" alt="HTML5"/>
+<img src="https://img.shields.io/badge/CSS3-blue?style=for-the-badge&logo=css3" alt="CSS3"/>
+<img src="https://img.shields.io/badge/JavaScript-yellow?style=for-the-badge&logo=javascript" alt="JavaScript"/>
+<img src="https://img.shields.io/badge/GitHub-lightgrey?style=for-the-badge&logo=github" alt="GitHub"/>
+<img src="https://img.shields.io/badge/GitHub%20Pages-blueviolet?style=for-the-badge&logo=github" alt="GitHub Pages"/>
+</p>
+
+---
+
+## 🎯 How to Contribute
+
+1. **Fork the repository**  
+2. **Create a new branch**: `git checkout -b DayX-feature`  
+3. **Add your project files** (`index.html`, `style.css`, `script.js`)  
+4. **Push branch**: `git push origin DayX-feature`  
+5. **Create a Pull Request**  
+
+⚡ **Tips:**  
+- Use **descriptive commit messages**  
+- Keep your **folder and file names consistent**  
+- Follow coding standards  
+- Join our **Discord community** for guidance and support  
+
+---
+
+## 📅 Milestones & Releases
+
+| Milestone | Tag |
+|-----------|-----|
+| GitHub Pages + Workflows | `v1.0.0` |
+| Day 1–10 Projects | `v1.1.0` |
+| Day 25 Projects | `v1.2.0` |
+| Day 50 – Midway | `v2.0.0` |
+| Day 100 – Completion | `v3.0.0` |
+
+---
+
+## 💡 Notes & Best Practices
+
+- Every project/day is **self-contained**, so you can view it by opening `index.html` in browser  
+- All workflows are **automatic**, including:  
+  - Status updates & reminders  
+  - First-time contributor recognition  
+  - Workflow validation & GitHub Pages deployment  
+- **Discord** is the best place for discussion, help, and collaboration: [Join Discord](https://discord.gg/SW7puwEm)  
+- Follow **good coding practices**, comment your code, and make PRs clean  
+
+---
+
+## 🎉 Motivation
+
+> "Small consistent steps every day lead to massive growth in coding skills."  
+
+Keep contributing, stay motivated, and complete your **100-day web development journey**!  
+
+---
+
+
+
+## 👥 Contributors Wall of Fame
+
+[![Contributors](https://contributors-img.web.app/image?repo=Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26&animated=true&columns=12)](https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26/graphs/contributors)
+
+
+**Happy Coding! 🚀**
+
+
 
