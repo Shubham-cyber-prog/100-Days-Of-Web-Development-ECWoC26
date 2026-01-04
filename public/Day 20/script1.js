@@ -5,11 +5,23 @@ let currentTab = "text";
 
 function switchTab(tab) {
   currentTab = tab;
-  document.querySelectorAll(".tab").forEach(btn => btn.classList.remove("active"));
-  document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
 
-  document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add("active");
+  document.querySelectorAll(".tab").forEach(btn =>
+    btn.classList.remove("active")
+  );
+  document.querySelectorAll(".tab-content").forEach(c =>
+    c.classList.remove("active")
+  );
+
+  document
+    .querySelector(`[onclick="switchTab('${tab}')"]`)
+    .classList.add("active");
+
   document.getElementById(tab).classList.add("active");
+
+  // Reset QR when switching tabs
+  qrBox.style.display = "none";
+  downloadBtn.style.display = "none";
 }
 
 function generateQR() {
@@ -20,16 +32,20 @@ function generateQR() {
   }
 
   if (currentTab === "wifi") {
-    const ssid = document.getElementById("ssid").value;
-    const pass = document.getElementById("wifiPass").value;
+    const ssid = document.getElementById("ssid").value.trim();
+    const pass = document.getElementById("wifiPass").value.trim();
     data = `WIFI:T:WPA;S:${ssid};P:${pass};;`;
   }
 
   if (currentTab === "contact") {
-    const name = document.getElementById("name").value;
-    const phone = document.getElementById("phone").value;
-    const email = document.getElementById("email").value;
-    data = `BEGIN:VCARD\nFN:${name}\nTEL:${phone}\nEMAIL:${email}\nEND:VCARD`;
+    const name = document.getElementById("name").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const email = document.getElementById("email").value.trim();
+    data = `BEGIN:VCARD
+FN:${name}
+TEL:${phone}
+EMAIL:${email}
+END:VCARD`;
   }
 
   if (!data) {
@@ -37,9 +53,15 @@ function generateQR() {
     return;
   }
 
+  // Generate QR
   QRCode.toCanvas(qrCanvas, data, { width: 180, margin: 2 });
 
+  // 🔥 Animation reset + trigger
   qrBox.style.display = "block";
+  qrBox.classList.remove("show");
+  void qrBox.offsetWidth; // force reflow (important)
+  qrBox.classList.add("show");
+
   downloadBtn.style.display = "block";
 }
 

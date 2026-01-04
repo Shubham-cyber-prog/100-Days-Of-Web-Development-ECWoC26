@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ecommerce Product Page</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h2>ShopNow</h2>
+  <div class="cart-icon" onclick="toggleCart()">
+    🛒 <span id="cartCount">0</span>
+  </div>
+</header>
+
+<div class="product-container animate">
+  <div class="product-image glow">
+    <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f" />
+  </div>
+
+  <div class="product-details">
+    <h1>Stylish T-Shirt</h1>
+    <p class="price">₹2,499</p>
+
+    <p class="description">
+      Premium cotton t-shirt with a modern fit, breathable fabric, and everyday comfort.
+    </p>
+
+    <label>Color</label>
+    <select id="variant">
+      <option>Black</option>
+      <option>White</option>
+      <option>Blue</option>
+      <option>Red</option>
+      <option>Orange</option>
+      <option>Green</option>
+      <option>Ash gray</option>
+    </select>
+
+    <div class="quantity">
+      <button onclick="changeQty(-1)">−</button>
+      <span id="qty">1</span>
+      <button onclick="changeQty(1)">+</button>
+    </div>
+
+    <button class="cart-btn glow-btn" onclick="addToCart()">Add to Cart</button>
+  </div>
+</div>
+
+<!-- CART MODAL -->
+<div class="cart-modal" id="cartModal">
+  <h3>Your Cart</h3>
+
+  <div id="cartItems"></div>
+
+  <p class="total">Total: ₹<span id="totalPrice">0</span></p>
+
+  <button class="checkout-btn" onclick="checkout()">Checkout</button>
+  <button class="close-btn" onclick="toggleCart()">Close</button>
+</div>
+
+<!-- ORDER CONFIRMATION -->
+<div class="order-confirm" id="orderConfirm">
+  <h2>✅ Order Confirmed</h2>
+  <p>Thank you for your purchase!</p>
+  <button onclick="closeOrder()">Continue Shopping</button>
+</div>
+
+
+<script src="script.js"></script>
+</body>
+</html>
