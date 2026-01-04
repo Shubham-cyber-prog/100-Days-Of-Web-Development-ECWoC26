@@ -426,8 +426,99 @@ class WeatherApp {
     }
 }
 
-// Initialize the weather app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new WeatherApp();
+});
+
+const suggestionsBox = document.getElementById('suggestions');
+
+/* Debounce to avoid excessive API calls */
+function debounceAutocomplete(fn, delay = 400) {
+    let timer;
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => fn(...args), delay);
+    };
+}
+
+
+async function fetchCitySuggestions(query) {
+    if (query.length < 2) {
+        suggestionsBox.style.display = 'none';
+        return;
+    }
+
+    try {
+        const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=5&language=en&format=json`;
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (!data.results) {
+            suggestionsBox.style.display = 'none';
+            return;
+        }
+
+        suggestionsBox.innerHTML = '';
+        suggestionsBox.style.display = 'block';
+
+        data.results.forEach(city => {
+            const div = document.createElement('div');
+            div.textContent = `${city.name}, ${city.country}`;
+            div.style.padding = '12px 16px';
+            div.style.cursor = 'pointer';
+            div.style.fontSize = '14px';
+
+            div.addEventListener('mouseenter', () => {
+                div.style.background = '#f1f5f9';
+            });
+
+            div.addEventListener('mouseleave', () => {
+                div.style.background = '#fff';
+            });
+
+            div.addEventListener('click', () => {
+                /* Works with BOTH of your search inputs */
+                if (typeof searchInput !== 'undefined') searchInput.value = city.name;
+                if (typeof cityInput !== 'undefined') cityInput.value = city.name;
+
+                suggestionsBox.style.display = 'none';
+
+                /* Trigger existing weather logic safely */
+                if (typeof getWeatherByCity === 'function') {
+                    getWeatherByCity(city.name);
+                } else if (typeof getCityCoordinates === 'function') {
+                    getCityCoordinates(city.name);
+                }
+            });
+
+            suggestionsBox.appendChild(div);
+        });
+
+    } catch (err) {
+        console.error(err);
+        suggestionsBox.style.display = 'none';
+    }
+}
+
+if (typeof searchInput !== 'undefined') {
+    searchInput.addEventListener(
+        'input',
+        debounceAutocomplete(e => fetchCitySuggestions(e.target.value))
+    );
+}
+
+if (typeof cityInput !== 'undefined') {
+    cityInput.addEventListener(
+        'input',
+        debounceAutocomplete(e => fetchCitySuggestions(e.target.value))
+    );
+}
+
+document.addEventListener('click', e => {
+    if (!e.target.closest('#suggestions') &&
+        e.target !== searchInput &&
+        e.target !== cityInput) {
+        suggestionsBox.style.display = 'none';
+    }
 });
 
