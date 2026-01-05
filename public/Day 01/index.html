@@ -1,1 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personal Portfolio</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- Decorative background -->
+  <div class="snow-container" aria-hidden="true"></div>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="hero-content">
+
+      <img 
+        src="profile.jpg" 
+        alt="Profile photo" 
+        class="profile-img"
+      />
+
+      <h1>
+        Hello, I'm <span class="highlight">Your Name 👋</span>
+      </h1>
+
+      <h2 class="typing-text" aria-live="polite"></h2>
+
+      <button 
+        class="btn"
+        onclick="scrollToSection()"
+        aria-label="Scroll to projects section"
+      >
+        View Projects
+      </button>
+
+      <!-- Social Icons -->
+      <nav class="socials" aria-label="Social media links">
+        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <img src="icons/linkedin.png" alt="LinkedIn icon">
+        </a>
+
+        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <img src="icons/github.png" alt="GitHub icon">
+        </a>
+
+        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+          <img src="icons/twitter.png" alt="Twitter icon">
+        </a>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+
+    <!-- About -->
+    <section class="section" id="about">
+      <h2>About Me</h2>
+      <p>
+        I am a beginner web developer learning HTML, CSS, and JavaScript.
+        I enjoy building simple and responsive web projects.
+      </p>
+    </section>
+
+    <!-- Skills -->
+    <section class="section" id="skills">
+      <h2>Skills</h2>
+      <ul class="skills-list">
+        <li>HTML5</li>
+        <li>CSS3</li>
+        <li>JavaScript (Basics)</li>
+      </ul>
+    </section>
+
+    <!-- Projects -->
+    <section class="section" id="projects">
+      <h2>Projects</h2>
+
+      <div class="projects">
+        <button 
+          class="project-pill"
+          onclick="openProject('portfolio')"
+          aria-label="Open personal portfolio project"
+        >
+          Personal Portfolio
+        </button>
+
+        <button 
+          class="project-pill"
+          onclick="openProject('landing')"
+          aria-label="Open landing page project"
+        >
+          Landing Page
+        </button>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section" id="contact">
+      <h2>Contact</h2>
+      <p>Email: yourname@example.com</p>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2026 Your Name</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+
+</body>
+</html>
 
