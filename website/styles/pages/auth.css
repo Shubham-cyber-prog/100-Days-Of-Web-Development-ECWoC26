@@ -1,0 +1,357 @@
+/* --- Auth / Login Page --- */
+/* --- Auth / Login Page (Full Viewport) --- */
+body.login-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    /* Fixed height for the entire viewport */
+    overflow: hidden;
+    /* No scrollbars for the main auth page */
+    background: var(--bg-primary);
+}
+
+.split-screen {
+    flex: 1;
+    /* Take all space above the footer */
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* --- Visual Side (Left - 60%) --- */
+/* --- Visual Side (Left - 60%) --- */
+.split-visual {
+    flex: 0 0 60%;
+    /* Dark Terminal Theme as requested */
+    background: #0d1117;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 4rem;
+    color: #fff;
+    overflow: hidden;
+}
+
+.split-visual::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.1;
+    background-image: radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.2) 0%, transparent 20%),
+        radial-gradient(circle at 90% 90%, rgba(255, 255, 255, 0.1) 0%, transparent 20%);
+    pointer-events: none;
+}
+
+.brand-big-icon {
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.visual-content-direct {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Back to center for balance */
+    max-width: 600px;
+    transform: translateY(-5%);
+    /* Slight upward bias to fix 'forehead' */
+    animation: float 6s ease-in-out infinite;
+    /* Subtle floating animation */
+}
+
+.visual-content-direct h1 {
+    font-family: 'Courier New', Courier, monospace;
+    /* Terminal font */
+    font-size: 4.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    letter-spacing: -2px;
+    /* Tighter for code look */
+}
+
+.code-text {
+    color: #fff;
+    text-shadow: 0 0 10px rgba(57, 211, 83, 0.2);
+    /* Subtle glow */
+}
+
+.cursor {
+    display: inline-block;
+    color: var(--text-tertiary);
+    /* Accent color or just white */
+    animation: blink 1s step-end infinite;
+    vertical-align: text-bottom;
+    margin-left: 5px;
+}
+
+.visual-content-direct p {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    opacity: 0.85;
+    max-width: 80%;
+}
+
+.visual-footer {
+    font-size: 0.9rem;
+    opacity: 0.5;
+    margin-top: auto;
+}
+
+/* --- Form Side (Right - 40%) --- */
+.split-form {
+    flex: 1;
+    background: var(--bg-primary);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Center to use the flexible space */
+    padding: 2rem;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
+.auth-form-container {
+    width: 100%;
+    max-width: 380px;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    transform: translateY(-5%);
+    /* Match visual side bias */
+}
+
+.auth-brand-logo {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+}
+
+/* Header & Toggle */
+.auth-header {
+    text-align: left;
+    margin-bottom: 0.5rem;
+}
+
+.auth-header h2 {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    font-weight: 800;
+}
+
+.auth-header p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.text-link-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: var(--text-primary);
+    text-decoration: underline;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Footer Hover Effects */
+.community-link-row {
+    transition: opacity 0.2s;
+}
+
+.community-link-row:hover {
+    opacity: 0.8;
+}
+
+/* Footer Actions */
+.form-footer-actions {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    display: flex;
+    gap: 0.25rem;
+    color: var(--text-secondary);
+}
+
+.forget-password {
+    color: var(--text-secondary);
+    text-decoration: none;
+}
+
+.text-bold {
+    font-weight: 700;
+    color: var(--text-primary);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* --- Responsive Stacking --- */
+@media (max-width: 900px) {
+    .split-screen {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .split-visual {
+        flex: 0 0 auto;
+        padding: 3rem 1.5rem;
+        min-height: 300px;
+    }
+
+    .visual-content-direct h1 {
+        font-size: 3rem;
+    }
+
+    .split-form {
+        flex: 1 0 auto;
+        padding: 3rem 1.5rem;
+        min-height: auto;
+    }
+}
+
+
+.social-btn .icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* Back Link */
+.back-link-wrapper {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s;
+}
+
+.back-link:hover {
+    color: var(--text-primary);
+}
+
+/* --- Responsive Stacking --- */
+@media (max-width: 900px) {
+    .split-screen {
+        flex-direction: column;
+        height: auto;
+        /* Allow scrolling on mobile */
+    }
+
+    .split-visual {
+        flex: 0 0 auto;
+        padding: 3rem 1.5rem;
+        min-height: 250px;
+    }
+
+    .terminal-content {
+        max-width: 100%;
+    }
+
+    .split-form {
+        flex: 1 0 auto;
+        padding: 3rem 1.5rem;
+        min-height: 100vh;
+        /* Ensure form takes full height on mobile too or at least fills screen */
+    }
+
+    .auth-header {
+        text-align: center;
+    }
+}
+
+.auth-header p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* Auth Tabs */
+.auth-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
+}
+
+.auth-tab {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+.auth-tab:hover {
+    color: var(--text-primary);
+}
+
+.auth-tab.active {
+    color: var(--text-primary);
+    border-bottom-color: var(--text-primary);
+}
+
+/* Collapsible Form Group Animation */
+#confirmPasswordGroup {
+    overflow: hidden;
+    max-height: 120px;
+    opacity: 1;
+    margin-bottom: 1rem;
+    transition: all var(--duration-normal) var(--ease-in-out);
+    transform-origin: top;
+}
+
+#confirmPasswordGroup.collapsed {
+    max-height: 0;
+    opacity: 0;
+    margin-bottom: 0;
+    pointer-events: none;
+    padding: 0;
+    transform: translateY(-10px);
+}
+
+.forgot-password {
+    color: var(--accent-secondary);
+    font-weight: 500;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+/* Divider */
+.auth-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 1.5rem 0;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.auth-divider span {
+    padding: 0 1rem;
+}

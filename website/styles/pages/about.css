@@ -1,0 +1,124 @@
+/* --- About Page: Learning Path Timeline --- */
+.learning-path {
+    position: relative;
+    max-width: 800px;
+    margin: 4rem auto;
+    padding-left: 2rem;
+}
+
+.learning-path::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border-color);
+}
+
+.learning-step {
+    position: relative;
+    margin-bottom: 4rem;
+    padding-left: 2rem;
+}
+
+.learning-step::after {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 0;
+    width: 12px;
+    height: 12px;
+    background: var(--accent-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px var(--bg-primary);
+}
+
+.learning-step h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.learning-step p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.topic-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.topic-tag {
+    background: var(--bg-hover);
+    color: var(--text-secondary);
+    padding: 0.3rem 0.8rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-family: var(--font-mono);
+}
+
+.section-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 3rem;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Mission Section */
+.mission-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4rem;
+    margin-bottom: 4rem;
+}
+
+.mission-text {
+    flex: 1;
+    min-width: 300px;
+}
+
+.mission-text h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* Circular Progress */
+.circular-progress {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: conic-gradient(var(--accent-primary) 0% 100%, var(--bg-hover) 100% 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+}
+
+.circular-progress::before {
+    content: '';
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: var(--bg-card);
+}
+
+.circular-value {
+    position: relative;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    z-index: 1;
+}
