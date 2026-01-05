@@ -7,7 +7,7 @@ const projects = [
     { day: 5, title: "Random Image Generator", folder: "Day 05", level: "Beginner" },
     { day: 6, title: "New Year Countdown", folder: "Day 06", level: "Beginner" },
     { day: 7, title: "Stylish Animated loginpage", folder: "Day 07", level: "Beginner" },
-    { day: 8, title: "BMI Calculator", folder: "Day 08", level: "Beginner" },
+    { day: 8, title: "Pomodoro Timer", folder: "Day 08", level: "Beginner" },
     { day: 9, title: "QR Generator", folder: "Day 09", level: "Beginner" },
     { day: 10, title: "Rock Paper Scissors Game", folder: "Day 10", level: "Beginner" },
     { day: 11, title: "Reading Journal", folder: "Day 11", level: "Beginner" },
@@ -23,7 +23,7 @@ const projects = [
     { day: 21, title: "Snake And Ladder Game", folder: "Day 21", level: "Beginner" },
     { day: 22, title: "Space Jumper Game", folder: "Day 22", level: "Beginner" },
     { day: 23, title: "Smart Calculator 2.0", folder: "Day 23", level: "Beginner" },
-    { day: 24, title: "Promodoro Timer", folder: "Day 24", level: "Beginner" },
+    { day: 24, title: "BMI Calculator", folder: "Day 24", level: "Beginner" },
     { day: 25, title: "Temperature Converter", folder: "Day 25", level: "Beginner" },
     { day: 26, title: "Space War Game", folder: "Day 26", level: "Beginner" },
     { day: 27, title: "CHESS GAME", folder: "Day 27", level: "Beginner" },
@@ -51,19 +51,127 @@ const projects = [
     { day: 100, title: "Master Project", folder: "Day 100", level: "Capstone" }
 ];
 
-const grid = document.getElementById('projects-grid');
-const tabs = document.querySelectorAll('.tab-btn');
 const repoBaseUrl = "https://github.com/Shubham-cyber-prog/100-days-of-web-development/tree/main/public/";
 const liveBaseUrl = "../public/";
 
-function renderProjects(category = 'All') {
+// Get DOM elements safely
+function getGrid() {
+    return document.getElementById('projects-grid');
+}
+
+function getTabs() {
+    return document.querySelectorAll('.tab-btn');
+}
+
+// Storage keys for preserving context
+const STORAGE_KEYS = {
+    SCROLL_POSITION: 'projects_scroll_position',
+    ACTIVE_CATEGORY: 'projects_active_category',
+    SEARCH_QUERY: 'projects_search_query'
+};
+
+
+let currentCategory = 'All';
+let currentSearchQuery = '';
+
+
+function saveScrollPosition() {
+    const grid = getGrid();
+    if (grid && window.location.pathname.includes('projects.html')) {
+        const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+        sessionStorage.setItem(STORAGE_KEYS.SCROLL_POSITION, scrollPosition.toString());
+    }
+}
+
+
+function restoreScrollPosition() {
+    const savedPosition = sessionStorage.getItem(STORAGE_KEYS.SCROLL_POSITION);
+    const grid = getGrid();
+    if (savedPosition && grid) {
+        
+        const restoreScroll = () => {
+            window.scrollTo({
+                top: parseInt(savedPosition, 10),
+                behavior: 'auto' 
+            });
+        };
+        
+        
+        requestAnimationFrame(() => {
+            if (document.readyState === 'complete') {
+                restoreScroll();
+            } else {
+                
+                window.addEventListener('load', restoreScroll, { once: true });
+            }
+        });
+    }
+}
+
+
+function saveContext() {
+    saveScrollPosition();
+    sessionStorage.setItem(STORAGE_KEYS.ACTIVE_CATEGORY, currentCategory);
+    sessionStorage.setItem(STORAGE_KEYS.SEARCH_QUERY, currentSearchQuery);
+}
+
+
+function restoreContext() {
+    const savedCategory = sessionStorage.getItem(STORAGE_KEYS.ACTIVE_CATEGORY);
+    const savedSearch = sessionStorage.getItem(STORAGE_KEYS.SEARCH_QUERY);
+    
+    if (savedCategory) {
+        currentCategory = savedCategory;
+        const tabs = getTabs();
+        if (tabs.length > 0) {
+            tabs.forEach(t => {
+                if (t.dataset.category === savedCategory) {
+                    t.classList.add('active');
+                } else {
+                    t.classList.remove('active');
+                }
+            });
+        }
+    }
+    
+    if (savedSearch) {
+        currentSearchQuery = savedSearch;
+        const searchInput = document.getElementById('projectSearch');
+        if (searchInput) {
+            searchInput.value = savedSearch;
+        }
+    }
+}
+
+let isInitialLoad = true;
+let shouldRestoreScroll = false;
+
+function renderProjects(category = 'All', searchQuery = '', preserveScroll = false) {
+    const grid = getGrid();
+    if (!grid) return;
+    
+    
+    if (!preserveScroll && !isInitialLoad) {
+        saveScrollPosition();
+    }
+    
     grid.innerHTML = '';
 
-    const filteredProjects = category === 'All'
+    let filteredProjects = category === 'All'
         ? projects
         : projects.filter(p => p.level === category);
 
-    // Ensure sorted by day
+   
+    if (searchQuery.trim()) {
+        const query = searchQuery.toLowerCase();
+        filteredProjects = filteredProjects.filter(p => 
+            p.title.toLowerCase().includes(query) ||
+            p.level.toLowerCase().includes(query) ||
+            p.day.toString().includes(query) ||
+            p.folder.toLowerCase().includes(query)
+        );
+    }
+
     filteredProjects.sort((a, b) => a.day - b.day);
 
     filteredProjects.forEach(project => {
@@ -83,16 +191,93 @@ function renderProjects(category = 'All') {
         `;
         grid.appendChild(card);
     });
+    
+    if (preserveScroll || shouldRestoreScroll) {
+        
+        setTimeout(() => {
+            restoreScrollPosition();
+            shouldRestoreScroll = false;
+        }, 100);
+    } else if (!isInitialLoad) {
+     
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    isInitialLoad = false;
 }
 
-// Tab Switching Logic
-tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        renderProjects(tab.dataset.category);
+// Tab Switching Logic - wait for DOM
+function setupTabs() {
+    const tabs = getTabs();
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            currentCategory = tab.dataset.category || 'All';
+            
+            renderProjects(currentCategory, currentSearchQuery, false);
+           
+            saveContext();
+        });
     });
+}
+
+const searchInput = document.getElementById('projectSearch');
+if (searchInput) {
+    let searchTimeout;
+    searchInput.addEventListener('input', (e) => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            currentSearchQuery = e.target.value;
+            
+            renderProjects(currentCategory, currentSearchQuery, false);
+            saveContext();
+        }, 300); 
+    });
+}
+
+
+let scrollTimeout;
+window.addEventListener('scroll', () => {
+    if (window.location.pathname.includes('projects.html')) {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            saveScrollPosition();
+        }, 100);
+    }
 });
 
-// Initial Render
-renderProjects();
+
+window.addEventListener('beforeunload', () => {
+    saveContext();
+});
+
+
+window.addEventListener('popstate', () => {
+    restoreContext();
+    shouldRestoreScroll = true; 
+    renderProjects(currentCategory, currentSearchQuery, true);
+});
+
+
+document.addEventListener('click', (e) => {
+    const link = e.target.closest('a.btn-small');
+    if (link && link.href && link.href.includes('index.html')) {
+        saveContext();
+    }
+}, true);
+
+
+// Initial setup
+function initialize() {
+    restoreContext();
+    setupTabs();
+    shouldRestoreScroll = !!sessionStorage.getItem(STORAGE_KEYS.SCROLL_POSITION);
+    renderProjects(currentCategory, currentSearchQuery, shouldRestoreScroll);
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initialize);
+} else {
+    initialize();
+}
