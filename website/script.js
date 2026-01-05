@@ -88,22 +88,24 @@ function restoreScrollPosition() {
     const savedPosition = sessionStorage.getItem(STORAGE_KEYS.SCROLL_POSITION);
     const grid = getGrid();
     if (savedPosition && grid) {
-        
         const restoreScroll = () => {
-            window.scrollTo({
-                top: parseInt(savedPosition, 10),
-                behavior: 'auto' 
-            });
+            // Wait for grid to have content and height
+            if (grid.children.length > 0) {
+                window.scrollTo({
+                    top: parseInt(savedPosition, 10),
+                    behavior: 'auto'
+                });
+            } else {
+                // If grid is still empty, try again after a short delay
+                setTimeout(restoreScroll, 50);
+            }
         };
         
-        
+        // Use requestAnimationFrame for smooth timing
         requestAnimationFrame(() => {
-            if (document.readyState === 'complete') {
+            requestAnimationFrame(() => {
                 restoreScroll();
-            } else {
-                
-                window.addEventListener('load', restoreScroll, { once: true });
-            }
+            });
         });
     }
 }
@@ -185,7 +187,7 @@ function renderProjects(category = 'All', searchQuery = '', preserveScroll = fal
             <h3>${project.title}</h3>
             <p>Project for Day ${project.day}</p>
             <div class="card-actions">
-                <a href="${liveBaseUrl}${project.folder}/index.html" target="_blank" class="btn-small">Live Demo</a>
+                <a href="${liveBaseUrl}${project.folder}/index.html" class="btn-small">Live Demo</a>
                 <a href="${repoBaseUrl}${project.folder}" target="_blank" class="btn-small outline">View Code</a>
             </div>
         `;
@@ -193,13 +195,14 @@ function renderProjects(category = 'All', searchQuery = '', preserveScroll = fal
     });
     
     if (preserveScroll || shouldRestoreScroll) {
-        
-        setTimeout(() => {
-            restoreScrollPosition();
-            shouldRestoreScroll = false;
-        }, 100);
+        // Wait for browser to finish rendering the grid
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                restoreScrollPosition();
+                shouldRestoreScroll = false;
+            });
+        });
     } else if (!isInitialLoad) {
-     
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     
