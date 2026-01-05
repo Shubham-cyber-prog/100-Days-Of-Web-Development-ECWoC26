@@ -11,9 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateStats() {
         const completed = progress.length;
         countSpan.textContent = completed;
-        
-        const percentage = (completed / totalDays) * 100;
-        barFill.style.width = `${percentage}%`;
     }
 
     // 3. Function to toggle a day's status
@@ -26,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Add to progress
             progress.push(dayNumber);
             boxElement.classList.add('completed');
-            
+
             // Optional: Add a little confetti effect or log here
         }
 
@@ -35,26 +32,35 @@ document.addEventListener('DOMContentLoaded', () => {
         updateStats();
     }
 
-    // 4. Render the 100 boxes
+    // 4. Render the 100 boxes in 4 columns (Quarters) of 25
     if (grid) {
-        grid.innerHTML = ''; // Clear existing content if any
+        grid.innerHTML = ''; // Clear existing content
 
-        for (let i = 1; i <= totalDays; i++) {
-            const box = document.createElement('div');
-            box.className = 'day-box';
-            box.textContent = i;
-            
-            // Check if this day is already completed
-            if (progress.includes(i)) {
-                box.classList.add('completed');
+        // Create 4 Quarter Containers
+        for (let q = 0; q < 4; q++) {
+            const quarterBlock = document.createElement('div');
+            quarterBlock.className = 'quarter-block';
+
+            // Add 25 days to this quarter
+            for (let i = 1; i <= 25; i++) {
+                const dayNum = (q * 25) + i;
+                const box = document.createElement('div');
+                box.className = 'day-cell';
+                box.setAttribute('data-tooltip', `Day ${dayNum}`);
+
+                // Check if completed
+                if (progress.includes(dayNum)) {
+                    box.classList.add('completed');
+                }
+
+                // Add click event
+                box.addEventListener('click', () => toggleDay(dayNum, box));
+                quarterBlock.appendChild(box);
             }
 
-            // Add click event
-            box.addEventListener('click', () => toggleDay(i, box));
-            
-            grid.appendChild(box);
+            grid.appendChild(quarterBlock);
         }
-        
+
         // Initial stats update
         updateStats();
     }

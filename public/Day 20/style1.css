@@ -1,0 +1,139 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.container {
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+  color: #fff;
+}
+
+h1 {
+  margin-bottom: 15px;
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.tab {
+  flex: 1;
+  margin: 0 3px;
+  padding: 10px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  transition: 0.3s;
+}
+
+.tab.active {
+  background: #fff;
+  color: #333;
+}
+
+.glass-card {
+  padding: 20px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  animation: fadeIn 0.6s ease;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: #fff;
+  font-weight: 600;
+  transition: 0.3s;
+  margin-top: 10px;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.tab-content {
+  display: none;
+  animation: slide 0.4s ease;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.qr-box {
+  margin-top: 20px;
+  display: none;
+  animation: pop 0.5s ease forwards;
+}
+
+#downloadBtn {
+  display: none;
+}
+
+@keyframes pop {
+  from { transform: scale(0.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+body {
+  background-size: cover;
+  background-position: center;
+  transition: background 0.6s ease;
+}
+
+.bg-controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+video, canvas {
+  width: 100%;
+  border-radius: 12px;
+  margin-top: 10px;
+}
+.bg-controls button {
+  flex: 1;
+  font-size: 12px;
+}

@@ -1,5 +1,5 @@
-# Contributing to ECWoc ’26  
-## 100 Days Of Web Development 🚀
+# Contributing to ECWoC ’26  
+## 100 Days Of Web Development
 
 Welcome to **100 Days Of Web Development**, an open-source initiative under **ECWoc ’26** aimed at helping beginners and intermediates grow their web development skills through daily challenges and real-world projects.
 
@@ -53,11 +53,13 @@ You don’t need to be an expert.
 ✔ Frontend developers  
 
 If you can **learn**, you can **contribute** 💙
+> First-time contributors are welcome and encouraged to start with documentation or small fixes.
 
 ---
 
 ## 🛠 Ways to Contribute
 
+> Documentation, content, and small improvements are as valuable as code contributions.
 You can help in many ways:
 
 ### 📚 Content Contributions
@@ -71,6 +73,7 @@ You can help in many ways:
 - Improve existing code
 - Optimize HTML/CSS/JS
 - Improve responsiveness
+- **Authentication**: The current Login/Signup page is a static placeholder. Contributors are encouraged to implement actual authentication using any **BaaS (Backend as a Service)** like Firebase, Supabase, or Appwrite.
 
 ### 📄 Documentation
 - Improve README files
@@ -239,7 +242,8 @@ You can help in many ways:
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
+> New contributors are advised to read this file completely before starting their first contribution.
 
 1. **Fork** this repository
 2. **Clone** your fork:

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atmosphere | Instant Weather</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="background-container">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+    
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <h1 class="app-title">Atmosphere</h1>
+                <p class="app-subtitle">Instant Weather Updates</p>
+            </div>
+            
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="cityInput" placeholder="Enter city name..." autocomplete="off" spellcheck="false">
+                    <button id="searchBtn" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="error-msg" id="errorMsg">City not found. Try again.</div>
+            <div class="loader" id="loader"></div>
+
+            <div class="weather-data hidden" id="weatherData">
+                <div class="location-info">
+                    <i class="fas fa-map-marker-alt location-icon"></i>
+                    <h2 class="city-name" id="cityName">New York, US</h2>
+                </div>
+                
+                <div class="weather-main">
+                    <div class="temperature-container">
+                        <span class="temperature" id="temperature">24</span>
+                        <span class="unit">°C</span>
+                    </div>
+                    <div class="weather-icon" id="weatherIcon">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                </div>
+                
+                <p class="condition" id="condition">Clear Sky</p>
+                
+                <div class="details">
+                    <div class="detail-item">
+                        <div class="detail-icon">
+                            <i class="fas fa-wind"></i>
+                        </div>
+                        <div class="detail-info">
+                            <span class="label">Wind</span>
+                            <span class="val" id="windSpeed">12 km/h</span>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-icon">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <div class="detail-info">
+                            <span class="label">Humidity</span>
+                            <span class="val" id="humidity">45%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="extra-details">
+                    <div class="extra-detail-item">
+                        <span class="extra-label">Feels Like</span>
+                        <span class="extra-val" id="feelsLike">26°C</span>
+                    </div>
+                    <div class="extra-detail-item">
+                        <span class="extra-label">UV Index</span>
+                        <span class="extra-val" id="uvIndex">3</span>
+                    </div>
+                    <div class="extra-detail-item">
+                        <span class="extra-label">Visibility</span>
+                        <span class="extra-val" id="visibility">10 km</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Powered by Open-Meteo API</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
