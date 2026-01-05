@@ -1,4 +1,4 @@
-# 🚀 100 Days of Web Development
+# 100 Days of Web Development
 
 Level up your **frontend skills** with this **100 Days of Web Development Challenge** using **HTML, CSS & JavaScript**. Build **mini-projects**, practice **daily coding**, and create a **portfolio-worthy collection**!  
 
@@ -286,7 +286,4 @@ Keep contributing, stay motivated, and complete your **100-day web development j
 [![Contributors](https://contributors-img.web.app/image?repo=Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26&animated=true&columns=12)](https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26/graphs/contributors)
 
 
-**Happy Coding! 🚀**
-
-
-
+**Happy Coding!**

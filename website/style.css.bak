@@ -56,12 +56,9 @@
 
 /* Light Mode Overrides */
 body.light-mode {
-    --bg-primary: #f8f9fa;
-    /* Slightly off-white background */
-    --bg-secondary: #ffffff;
-    /* Pure white for elements */
-    --bg-card: #ffffff;
-    /* Pure white for cards */
+    --bg-primary: #f8f9fa; /* Slightly off-white background */
+    --bg-secondary: #ffffff; /* Pure white for elements */
+    --bg-card: #ffffff;      /* Pure white for cards */
     --bg-hover: #f1f5f9;
 
     --text-primary: #09090b;
@@ -69,8 +66,7 @@ body.light-mode {
     --text-tertiary: #a1a1aa;
 
     --accent-primary: #09090b;
-    --border-color: #e2e8f0;
-    /* Slightly darker border for visibility */
+    --border-color: #e2e8f0; /* Slightly darker border for visibility */
     --border-hover: #cbd5e1;
 
     --badge-bg: #f4f4f5;
@@ -1204,20 +1200,17 @@ main {
     background: #050505;
     /* Deepest black */
     border-top: 1px solid var(--border-color);
-    padding: 1.5rem 1.5rem 0.75rem;
-    /* Reduced padding further for compactness */
+    padding: 2rem 1.5rem 1rem;
+    /* Significantly reduced padding */
     margin-top: auto;
     font-family: var(--font-main);
     position: relative;
     overflow: hidden;
 
-    --text-primary: #ededed;
-    /* Resets Header/Main text to White */
-    --text-secondary: #a1a1aa;
-    /* Resets Description/Link text to Light Grey */
-    --text-tertiary: #52525b;
-    /* Resets copyright text to Muted Grey */
-
+    --text-primary: #ededed;   /* Resets Header/Main text to White */
+    --text-secondary: #a1a1aa; /* Resets Description/Link text to Light Grey */
+    --text-tertiary: #52525b;  /* Resets copyright text to Muted Grey */
+    
     /* Ensure the color is applied */
     color: var(--text-primary);
 }
@@ -1235,8 +1228,7 @@ main {
 .footer-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 3rem;
-    /* Reduced gap between columns */
+    gap: 4rem;
     max-width: var(--container-width);
     margin: 0 auto;
     position: relative;
@@ -1265,8 +1257,7 @@ main {
 
 .footer-col h4 {
     color: var(--text-primary) !important;
-    margin-bottom: 1rem;
-    /* Reduced margin below header */
+    margin-bottom: 1.5rem;
     font-size: 1.1rem;
     font-weight: 600;
     display: flex;
@@ -1289,15 +1280,14 @@ main {
 
 .footer-col:hover h4::after {
     width: 30px;
-
+    
 }
 
 .footer-description {
     color: var(--text-secondary);
     line-height: 1.7;
     font-size: 0.9rem;
-    margin-bottom: 0.5rem;
-    /* Reduced margin */
+    margin-bottom: 2rem;
     max-width: 300px;
     text-align: left;
     transition: color 0.3s ease;
@@ -1364,11 +1354,7 @@ main {
 }
 
 .footer-links li {
-    margin-bottom: 0.6rem;
-}
-
-.footer-links li:last-child {
-    margin-bottom: 0;
+    margin-bottom: 0.85rem;
 }
 
 .footer-links a {
@@ -1384,8 +1370,7 @@ main {
 }
 
 .footer-links a:hover {
-    color: #ffffff !important;
-    /* Ensure hover state is bright white */
+    color: #ffffff !important; /* Ensure hover state is bright white */
 }
 
 .footer-links a::before {
@@ -1545,8 +1530,8 @@ main {
 /* Copyright Row */
 .footer-bottom {
     max-width: var(--container-width);
-    margin: 1rem auto 0;
-    padding-top: 1rem;
+    margin: 2rem auto 0;
+    padding-top: 1.5rem;
     border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
@@ -2229,305 +2214,4 @@ body.login-page {
 
 .auth-divider span {
     padding: 0 1rem;
-}
-
-/* --- Contact Page Styles --- */
-
-.contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    margin-bottom: 4rem;
-    align-items: start;
-}
-
-@media (max-width: 900px) {
-    .contact-grid {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-    }
-}
-
-/* Contact Cards (Left Col) */
-.contact-info-col {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.column-title {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.contact-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    transition: all var(--duration-normal) var(--ease-out-quad);
-    cursor: pointer;
-    text-decoration: none;
-    position: relative;
-    overflow: hidden;
-}
-
-.contact-card:hover {
-    border-color: var(--text-tertiary);
-    background: var(--bg-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-}
-
-.icon-box {
-    width: 44px;
-    height: 44px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.03);
-    flex-shrink: 0;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.contact-card:hover .icon-box {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.1);
-}
-
-.icon-box .icon {
-    width: 22px;
-    height: 22px;
-}
-
-/* Specific Icon Colors (Vibrant) */
-.email-icon .icon {
-    color: #ea4335;
-}
-
-/* Gmail Red */
-.discord-icon .icon {
-    color: #5865F2;
-}
-
-/* Discord Blue/Purple */
-.github-icon .icon {
-    color: #ffffff;
-}
-
-.location-icon .icon {
-    color: #f43f5e;
-}
-
-.card-content {
-    flex: 1;
-}
-
-.card-content h3 {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 0.25rem;
-}
-
-.card-content p {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    margin-bottom: 0.25rem;
-}
-
-.card-action {
-    font-size: 0.75rem;
-    color: var(--text-tertiary);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-weight: 600;
-}
-
-.contact-card:hover .card-action {
-    color: var(--accent-secondary);
-}
-
-/* Contact Form (Right Col) */
-.contact-form-col {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-lg);
-    padding: 2.5rem;
-}
-
-.contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-}
-
-@media (max-width: 600px) {
-    .form-row {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-}
-
-.form-group label {
-    display: block;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-    margin-bottom: 0.5rem;
-}
-
-.required {
-    color: #f43f5e;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    background: transparent;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    padding: 0.85rem 1rem;
-    color: var(--text-primary);
-    font-family: var(--font-main);
-    font-size: 0.95rem;
-    resize: vertical;
-    transition: all 0.3s ease;
-}
-
-.form-group input:hover,
-.form-group textarea:hover {
-    border-color: var(--text-tertiary);
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-    border-color: var(--accent-secondary);
-    background: rgba(255, 255, 255, 0.02);
-    outline: none;
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
-}
-
-.form-note {
-    font-size: 0.8rem;
-    color: var(--text-tertiary);
-    text-align: center;
-    margin-top: 1rem;
-}
-
-/* Button Success State */
-.btn.success {
-    background: #10b981;
-    border-color: #10b981;
-    color: white;
-}
-
-/* Status Pills */
-.status-pills {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-top: 2rem;
-}
-
-.pill {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: default;
-    transition: all 0.2s;
-}
-
-.pill:hover {
-    border-color: var(--text-tertiary);
-    background: var(--bg-hover);
-}
-
-.pill.active {
-    border-color: rgba(16, 185, 129, 0.2);
-    background: rgba(16, 185, 129, 0.1);
-    color: #10b981;
-}
-
-.dot {
-    width: 8px;
-    height: 8px;
-    background: #10b981;
-    border-radius: 50%;
-    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
-    }
-
-    70% {
-        box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
-    }
-
-    100% {
-        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
-    }
-}
-
-/* Toast Notification */
-.toast-container {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    pointer-events: none;
-}
-
-.toast {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    padding: 1rem 1.5rem;
-    border-radius: var(--radius-md);
-    color: var(--text-primary);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    transform: translateY(20px);
-    opacity: 0;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    font-size: 0.9rem;
-    border-left: 4px solid var(--text-tertiary);
-}
-
-.toast.success {
-    border-left-color: #10b981;
-}
-
-.toast.error {
-    border-left-color: #f43f5e;
-}
-
-.toast.show {
-    transform: translateY(0);
-    opacity: 1;
 }
