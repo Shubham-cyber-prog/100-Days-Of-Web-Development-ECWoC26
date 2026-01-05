@@ -40,3 +40,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        const isWebsitePage = window.location.pathname.includes('/website/');
+        const swUrl = isWebsitePage ? '../sw.js' : './sw.js';
+        navigator.serviceWorker.register(swUrl).catch(() => {
+            // Ignore registration errors (e.g. unsupported context).
+        });
+    });
+}
