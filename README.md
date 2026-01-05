@@ -282,8 +282,9 @@ Keep contributing, stay motivated, and complete your **100-day web development j
 
 
 ## 👥 Contributors Wall of Fame
+[![Contributors](https://contributors-img.web.app/image?repo=Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26&columns=50&animated=true)](https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26/graphs/contributors)
 
-[![Contributors](https://contributors-img.web.app/image?repo=Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26&animated=true&columns=12)](https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26/graphs/contributors)
+
 
 
 **Happy Coding!**
