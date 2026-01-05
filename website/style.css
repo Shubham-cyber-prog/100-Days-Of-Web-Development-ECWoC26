@@ -56,9 +56,12 @@
 
 /* Light Mode Overrides */
 body.light-mode {
-    --bg-primary: #f8f9fa; /* Slightly off-white background */
-    --bg-secondary: #ffffff; /* Pure white for elements */
-    --bg-card: #ffffff;      /* Pure white for cards */
+    --bg-primary: #f8f9fa;
+    /* Slightly off-white background */
+    --bg-secondary: #ffffff;
+    /* Pure white for elements */
+    --bg-card: #ffffff;
+    /* Pure white for cards */
     --bg-hover: #f1f5f9;
 
     --text-primary: #09090b;
@@ -66,7 +69,8 @@ body.light-mode {
     --text-tertiary: #a1a1aa;
 
     --accent-primary: #09090b;
-    --border-color: #e2e8f0; /* Slightly darker border for visibility */
+    --border-color: #e2e8f0;
+    /* Slightly darker border for visibility */
     --border-hover: #cbd5e1;
 
     --badge-bg: #f4f4f5;
@@ -200,102 +204,7 @@ ul {
     font-family: var(--font-mono);
 }
 
-/* --- Structure Page: Terminal Theme --- */
-.terminal-window {
-    background: #0d0d0d;
-    /* Slightly darker than card for contrast */
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-    overflow: hidden;
-    margin: 0 auto 4rem;
-    /* Aligns with global spacing (tight top, breathing room bottom) */
-    font-family: var(--font-mono);
-    max-width: 900px;
-}
 
-.terminal-header {
-    background: var(--bg-secondary);
-    padding: 0.75rem 1rem;
-    display: flex;
-    align-items: center;
-    position: relative;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.terminal-controls {
-    display: flex;
-    gap: 8px;
-}
-
-.control {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-}
-
-.control.close {
-    background-color: #ff5f56;
-}
-
-.control.minimize {
-    background-color: #ffbd2e;
-}
-
-.control.maximize {
-    background-color: #27c93f;
-}
-
-.terminal-title {
-    position: absolute;
-    left: 0;
-    right: 0;
-    text-align: center;
-    color: var(--text-secondary);
-    font-size: 0.85rem;
-    font-family: var(--font-main);
-    user-select: none;
-}
-
-.terminal-body {
-    padding: 1.5rem;
-    color: var(--text-secondary);
-    overflow-x: auto;
-    font-size: 0.9rem;
-    line-height: 1.6;
-}
-
-/* Syntax Highlighting */
-.tree-line {
-    white-space: pre;
-    cursor: default;
-}
-
-.tree-line:hover {
-    background: rgba(255, 255, 255, 0.03);
-}
-
-.tree-guide {
-    color: var(--text-tertiary);
-}
-
-.tree-folder {
-    color: #61afef;
-    font-weight: bold;
-}
-
-/* VS Code Blue */
-.tree-file {
-    color: #98c379;
-}
-
-/* VS Code Green */
-.tree-comment {
-    color: #5c6370;
-    font-style: italic;
-}
-
-/* VS Code Comment */
 
 /* --- Layout Utilities --- */
 .container {
@@ -1207,10 +1116,13 @@ main {
     position: relative;
     overflow: hidden;
 
-    --text-primary: #ededed;   /* Resets Header/Main text to White */
-    --text-secondary: #a1a1aa; /* Resets Description/Link text to Light Grey */
-    --text-tertiary: #52525b;  /* Resets copyright text to Muted Grey */
-    
+    --text-primary: #ededed;
+    /* Resets Header/Main text to White */
+    --text-secondary: #a1a1aa;
+    /* Resets Description/Link text to Light Grey */
+    --text-tertiary: #52525b;
+    /* Resets copyright text to Muted Grey */
+
     /* Ensure the color is applied */
     color: var(--text-primary);
 }
@@ -1280,7 +1192,7 @@ main {
 
 .footer-col:hover h4::after {
     width: 30px;
-    
+
 }
 
 .footer-description {
@@ -1370,7 +1282,8 @@ main {
 }
 
 .footer-links a:hover {
-    color: #ffffff !important; /* Ensure hover state is bright white */
+    color: #ffffff !important;
+    /* Ensure hover state is bright white */
 }
 
 .footer-links a::before {
