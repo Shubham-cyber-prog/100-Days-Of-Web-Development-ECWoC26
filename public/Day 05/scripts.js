@@ -173,3 +173,4 @@ document.addEventListener('keydown', (e) => {
         calculator.updateDisplay();
     }
 });
+});

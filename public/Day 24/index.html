@@ -2,6 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
+    <title>BMI Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="card">
+        <h1>⚖️ BMI Calculator</h1>
+        <p class="subtitle">Check your Body Mass Index</p>
+
+        <div class="input-group">
+            <label>Height</label>
+            <div class="height-input">
+                <input type="number" id="height" placeholder="Enter height">
+                <select id="heightUnit">
+                    <option value="cm">cm</option>
+                    <option value="ft">feet</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Weight (kg)</label>
+            <input type="number" id="weight" placeholder="Enter weight">
+        </div>
+
+        <button onclick="calculateBMI()">Calculate BMI</button>
+
+        <div class="result-box">
+            <h2 id="bmiResult">Your BMI: —</h2>
+            <p id="bmiStatus"></p>
+            <p id="idealInfo"></p>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
+=======
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BMI Calculator</title>
     <link rel="stylesheet" href="style.css">
@@ -52,3 +94,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
