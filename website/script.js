@@ -94,5 +94,20 @@ tabs.forEach(tab => {
     });
 });
 
-// Initial Render
-renderProjects();
+// Initial Render: pick category from currently active tab (Beginner by default)
+const activeTab = document.querySelector('.tab-btn.active');
+const initialCategory = activeTab ? activeTab.dataset.category : 'All';
+renderProjects(initialCategory);
+
+// Safe init: ensure filter buttons work even if HTML was added after initial script run
+document.addEventListener('DOMContentLoaded', () => {
+    const tabsInit = document.querySelectorAll('.tab-btn');
+    if (!tabsInit || tabsInit.length === 0) return;
+    tabsInit.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabsInit.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            if (typeof renderProjects === 'function') renderProjects(tab.dataset.category);
+        });
+    });
+});

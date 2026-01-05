@@ -55,7 +55,15 @@
         </header>
 
         <section class="container">
-            <h2 style="margin-bottom: 2rem; color: var(--text-primary); font-size: 1.5rem;">All Projects</h2>
+
+            <!-- Filter Buttons: All/Beginner/Intermediate/Advanced (All active) -->
+            <div class="filter-tabs" aria-label="Project filters" style="margin-bottom: 1.5rem;">
+                <button class="tab-btn active" data-category="All">All Projects</button>
+                <button class="tab-btn" data-category="Beginner">🟢 Beginner</button>
+                <button class="tab-btn" data-category="Intermediate">🟡 Intermediate</button>
+                <button class="tab-btn" data-category="Advanced">🟣 Advanced</button>
+            </div>
+
             <div id="projects-grid" class="projects-grid">
                 <!-- Injected by script.js -->
             </div>
