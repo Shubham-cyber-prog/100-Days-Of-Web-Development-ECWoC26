@@ -1,0 +1,62 @@
+/* Light Mode Overrides */
+body.light-mode {
+    --bg-primary: #f8f9fa;
+    /* Slightly off-white background */
+    --bg-secondary: #ffffff;
+    /* Pure white for elements */
+    --bg-card: #ffffff;
+    /* Pure white for cards */
+    --bg-hover: #f1f5f9;
+
+    --text-primary: #09090b;
+    --text-secondary: #52525b;
+    --text-tertiary: #a1a1aa;
+
+    --accent-primary: #09090b;
+    --border-color: #e2e8f0;
+    /* Slightly darker border for visibility */
+    --border-hover: #cbd5e1;
+
+    --badge-bg: #f4f4f5;
+    --badge-text: #18181b;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.2s ease;
+}
+
+ul {
+    list-style: none;
+}
+
+/* --- SVG Icons Utility --- */
+.icon {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+}
+
+.icon-sm {
+    width: 16px;
+    height: 16px;
+}
+
+.icon-lg {
+    width: 32px;
+    height: 32px;
+}
