@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>E-Commerce KPI Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="dashboard">
+    <header>
+        <h1>📊 E-Commerce KPI Dashboard</h1>
+        <p>Sales & Performance Analytics Overview</p>
+    </header>
+
+    <!-- KPI CARDS -->
+    <section class="cards">
+        <div class="card">
+            <h3>Total Revenue</h3>
+            <p>$52.4K</p>
+        </div>
+        <div class="card">
+            <h3>Total Orders</h3>
+            <p>3.2K</p>
+        </div>
+        <div class="card">
+            <h3>Active Customers</h3>
+            <p>6.1K</p>
+        </div>
+        <div class="card">
+            <h3>Conversion Rate</h3>
+            <p>3.8%</p>
+        </div>
+    </section>
+
+    <!-- CHARTS -->
+    <section class="charts">
+        <div class="chart-box">
+            <canvas id="customersChart"></canvas>
+        </div>
+        <div class="chart-box">
+            <canvas id="revenueChart"></canvas>
+        </div>
+        <div class="chart-box">
+            <canvas id="categoryChart"></canvas>
+        </div>
+        <div class="chart-box">
+            <canvas id="ordersChart"></canvas>
+        </div>
+        <div class="chart-box full">
+            <canvas id="revOrdersChart"></canvas>
+        </div>
+    </section>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
