@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz App</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ===== QUIZ APP CONTAINER ===== -->
+  <main class="quiz-container">
+
+    <!-- ===== START SCREEN ===== -->
+    <section id="start-screen" class="screen active">
+      <h1 class="quiz-title">Quiz App</h1>
+      <p class="quiz-subtitle">Test your knowledge!</p>
+
+      <button id="start-btn" class="btn primary-btn">
+        Start Quiz
+      </button>
+    </section>
+
+    <!-- ===== QUIZ SCREEN ===== -->
+    <section id="quiz-screen" class="screen hidden">
+
+      <!-- Progress -->
+      <div class="quiz-header">
+        <span id="question-count">Question 1 / 10</span>
+        <span id="timer">⏱ 10s</span>
+      </div>
+
+      <!-- Question -->
+      <h2 id="question-text">
+        Question will appear here
+      </h2>
+
+      <!-- Options -->
+      <div id="options-container">
+        <!-- Options will be injected via JS -->
+        <!-- Example structure:
+        <button class="option-btn">Option 1</button>
+        -->
+      </div>
+
+      <!-- Next Button -->
+      <button id="next-btn" class="btn secondary-btn">
+        Next
+      </button>
+
+    </section>
+
+    <!-- ===== RESULT SCREEN ===== -->
+    <section id="result-screen" class="screen hidden">
+      <h2>Quiz Completed 🎉</h2>
+
+      <p id="final-score">
+        Your Score: 0 / 10
+      </p>
+
+      <button id="restart-btn" class="btn primary-btn">
+        Restart Quiz
+      </button>
+    </section>
+
+  </main>
+
+  <!-- JavaScript -->
+  <script src="data/questions.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
