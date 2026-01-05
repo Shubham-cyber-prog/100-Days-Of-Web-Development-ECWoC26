@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Email Client</title>
+  <link rel="stylesheet" href="../src/styles.css" />
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>Mail</h2>
+    <button class="nav-btn active" data-folder="inbox">Inbox</button>
+    <button class="nav-btn" data-folder="sent">Sent</button>
+    <button class="nav-btn" data-folder="drafts">Drafts</button>
+  </aside>
+
+  <!-- Email List -->
+  <section class="list">
+    <h3 id="folder-title">Inbox</h3>
+    <div id="email-list"></div>
+  </section>
+
+  <!-- Email Preview -->
+  <section class="preview">
+    <h3>Email Preview</h3>
+    <div id="email-preview">
+      <p>Select an email to read</p>
+    </div>
+  </section>
+
+</div>
+
+<script src="../src/app.js"></script>
+</body>
+</html>
