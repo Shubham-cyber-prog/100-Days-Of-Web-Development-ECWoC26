@@ -6,55 +6,60 @@ document.addEventListener('DOMContentLoaded', () => {
     const confirmPasswordInput = document.getElementById('confirmPassword');
     const confirmPasswordGroup = document.getElementById('confirmPasswordGroup');
     const submitBtn = document.getElementById('submitBtn');
-    const tabs = document.querySelectorAll('.auth-tab');
     const authTitle = document.getElementById('authTitle');
-    const authSubtitle = document.getElementById('authSubtitle');
-    const socialBtns = document.querySelectorAll('.social-btn');
+    const authSubtitle = document.getElementById('authSubtitle'); // P tag
+    const toggleAuthBtn = document.getElementById('toggleAuth'); // Button inside P
+    const forgotPasswordAction = document.getElementById('forgotPasswordAction');
 
     // --- State ---
     let isLogin = true;
 
-    // --- Tab Switching Logic ---
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            const mode = tab.dataset.tab;
-            if ((mode === 'login' && isLogin) || (mode === 'signup' && !isLogin)) return;
-
-            // Update State
-            isLogin = mode === 'login';
-
-            // Update UI tabs
-            tabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-
-            // Animate Text Change
-            const headerText = document.querySelector('.auth-header');
-            headerText.style.opacity = '0';
-
-            setTimeout(() => {
-                // Update Text Content
-                if (isLogin) {
-                    authTitle.textContent = 'Welcome Back';
-                    authSubtitle.textContent = 'Enter your credentials to access your account.';
-                    confirmPasswordGroup.classList.add('collapsed'); // Use animation class
-                    submitBtn.textContent = 'Sign In';
-                    confirmPasswordInput.removeAttribute('required');
-                } else {
-                    authTitle.textContent = 'Create Account';
-                    authSubtitle.textContent = 'Join the challenge and track your progress.';
-                    confirmPasswordGroup.classList.remove('collapsed'); // Use animation class
-                    submitBtn.textContent = 'Sign Up';
-                    confirmPasswordInput.setAttribute('required', 'true');
-                }
-
-                headerText.style.transition = 'opacity 200ms ease';
-                headerText.style.opacity = '1';
-
-                // Reset Errors cleanly
-                resetFormState();
-            }, 150);
+    // --- Toggle Logic ---
+    if (toggleAuthBtn) {
+        toggleAuthBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            isLogin = !isLogin;
+            updateUI();
         });
-    });
+    }
+
+    function updateUI() {
+        // Animate Opacity for smooth transition
+        const headerText = document.querySelector('.auth-header');
+        headerText.style.opacity = '0';
+
+        setTimeout(() => {
+            if (isLogin) {
+                authTitle.textContent = 'Welcome Back!';
+                authSubtitle.innerHTML = `Don't have an account? <button id="toggleAuth" class="text-link-btn">Create a new account now</button>, it's FREE!`;
+                confirmPasswordGroup.classList.add('collapsed');
+                submitBtn.textContent = 'Login Now';
+                confirmPasswordInput.removeAttribute('required');
+                if (forgotPasswordAction) forgotPasswordAction.style.display = 'flex';
+            } else {
+                authTitle.textContent = 'Create Account';
+                authSubtitle.innerHTML = `Already have an account? <button id="toggleAuth" class="text-link-btn">Log in instead</button>`;
+                confirmPasswordGroup.classList.remove('collapsed');
+                submitBtn.textContent = 'Join Now';
+                confirmPasswordInput.setAttribute('required', 'true');
+                if (forgotPasswordAction) forgotPasswordAction.style.display = 'none';
+            }
+
+            // Re-attach listener since we replaced innerHTML
+            const newToggleBtn = document.getElementById('toggleAuth');
+            newToggleBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                isLogin = !isLogin;
+                updateUI();
+            });
+
+            headerText.style.transition = 'opacity 200ms ease';
+            headerText.style.opacity = '1';
+
+            // Clear errors
+            resetFormState();
+        }, 150);
+    }
 
     function resetFormState() {
         // Reset inputs and error styles

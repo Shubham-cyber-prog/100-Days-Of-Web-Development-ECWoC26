@@ -1,0 +1,152 @@
+/* ===== RESET ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ===== BODY ===== */
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #4f46e5, #9333ea);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #111827;
+}
+
+/* ===== CONTAINER ===== */
+.quiz-container {
+  background: #ffffff;
+  width: 100%;
+  max-width: 420px;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== SCREENS ===== */
+.screen {
+  display: none;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.screen.active {
+  display: flex;
+}
+
+.hidden {
+  display: none;
+}
+
+/* ===== START SCREEN ===== */
+.quiz-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.quiz-subtitle {
+  text-align: center;
+  color: #6b7280;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.primary-btn {
+  background: #4f46e5;
+  color: white;
+}
+
+.primary-btn:hover {
+  background: #4338ca;
+}
+
+.secondary-btn {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.secondary-btn:hover {
+  background: #d1d5db;
+}
+
+/* ===== QUIZ HEADER ===== */
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+/* ===== QUESTION ===== */
+#question-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* ===== OPTIONS ===== */
+#options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.option-btn {
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.option-btn:hover {
+  background: #e0e7ff;
+  border-color: #6366f1;
+}
+
+/* Correct & Wrong states (for JS later) */
+.option-btn.correct {
+  background: #dcfce7;
+  border-color: #16a34a;
+}
+
+.option-btn.wrong {
+  background: #fee2e2;
+  border-color: #dc2626;
+}
+
+/* ===== RESULT SCREEN ===== */
+#result-screen h2 {
+  text-align: center;
+}
+
+#final-score {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 480px) {
+  .quiz-container {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+
+  .quiz-title {
+    font-size: 1.7rem;
+  }
+}
