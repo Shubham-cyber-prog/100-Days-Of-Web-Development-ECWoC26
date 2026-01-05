@@ -122,7 +122,7 @@ This repository documents my **100 Days of Web Development journey**, where I:
 │   ├── 📁 day-47-banking-dashboard/
 │   ├── 📁 day-48-flight-booking-system/
 │   ├── 📁 day-49-recipe-sharing-platform/
-│   ├── 📁 day-50-blog-with-cms/
+│   ├── 📁 day-50-resume-builder/
 │   ├── 📁 day-51-portfolio-with-blog/
 │   ├── 📁 day-52-task-management-board/
 │   ├── 📁 day-53-file-uploader/
