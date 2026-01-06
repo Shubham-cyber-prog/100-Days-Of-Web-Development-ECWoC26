@@ -8,7 +8,7 @@ const projects = [
     { day: 6, title: "New Year Countdown", folder: "Day 06", level: "Beginner" },
     { day: 7, title: "Stylish Animated loginpage", folder: "Day 07", level: "Beginner" },
     { day: 8, title: "Pomodoro Timer", folder: "Day 08", level: "Beginner" },
-    { day: 9, title: "QR Generator", folder: "Day 20", level: "Beginner" },
+    { day: 9, title: "QR Generator", folder: "Day 20", level: "Beginner", source: "index1.html" },
     { day: 10, title: "Rock Paper Scissors Game", folder: "Day 28", level: "Beginner" },
     { day: 11, title: "Reading Journal", folder: "Day 11", level: "Beginner" },
     { day: 12, title: "Pong Game", folder: "Day 12", level: "Beginner" },
@@ -22,7 +22,7 @@ const projects = [
     { day: 20, title: "Email Validator", folder: "Day 20", level: "Beginner" },
     { day: 21, title: "Snake And Ladder Game", folder: "Day 21", level: "Beginner" },
     { day: 22, title: "Space Jumper Game", folder: "Day 22", level: "Beginner" },
-    { day: 23, title: "Smart Calculator 2.0", folder: "Day 05", level: "Beginner" },
+    { day: 23, title: "Smart Calculator 2.0", folder: "Day 05", level: "Beginner", source: "index1.html" },
     { day: 24, title: "BMI Calculator", folder: "Day 24", level: "Beginner" },
     { day: 25, title: "Temperature Converter", folder: "Day 25", level: "Beginner" },
     { day: 26, title: "Space War Game", folder: "Day 26", level: "Beginner" },
@@ -38,7 +38,7 @@ const projects = [
     { day: 34, title: "Typing Speed Test webapp", folder: "Day 34", level: "Intermediate" },
     { day: 35, title: "Startup Name Generator Web App", folder: "Day 35", level: "Intermediate" },
     { day: 36, title: "Coming Soon", folder: "Day 36", level: "Intermediate" },
-    { day: 37, title: "Recipe Finder", folder: "Day 09", level: "Intermediate" },
+    { day: 37, title: "Recipe Finder", folder: "Day 9", level: "Intermediate" },
     { day: 38, title: "Snake Game", folder: "Day 38", level: "Intermediate" },
     { day: 39, title: "Hangman Game", folder: "Day 39", level: "Intermediate" },
     { day: 40, title: "Simon Say Game", folder: "Day 40", level: "Intermediate" },
@@ -185,7 +185,7 @@ function renderProjects(category = 'All', searchQuery = '', preserveScroll = fal
             <h3>${project.title}</h3>
             <p>Project for Day ${project.day}</p>
             <div class="card-actions">
-                <a href="${liveBaseUrl}${project.folder}/index.html" target="_blank" class="btn-small">Live Demo</a>
+                <a href="${liveBaseUrl}${project.folder}/${project.source || 'index.html'}" target="_blank" class="btn-small">Live Demo</a>
                 <a href="${repoBaseUrl}${project.folder}" target="_blank" class="btn-small outline">View Code</a>
             </div>
         `;
