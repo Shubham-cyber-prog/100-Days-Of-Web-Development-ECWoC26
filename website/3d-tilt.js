@@ -72,4 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Also target the new tracker progress pill if desired
     new TiltEffect('.progress-stat-pill');
+    
+    // Target the main tracker container
+    new TiltEffect('.tracker-container');
 });

@@ -129,26 +129,4 @@
 }
 
 /* Tooltip for Day Cell */
-.day-cell::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-8px);
-    background: var(--bg-secondary);
-    color: var(--text-primary);
-    padding: 0.4rem 0.6rem;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s;
-    border: 1px solid var(--border-color);
-    z-index: 20;
-    font-weight: 500;
-}
-
-.day-cell:hover::after {
-    opacity: 1;
-}
+/* Tooltip removed - Day numbers are now visible in the cell directly */

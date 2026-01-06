@@ -48,7 +48,7 @@ const projects = [
     // ADVANCED & CAPSTONE - Follow same pattern
     { day: 61, title: "Doodle Jump Game", folder: "Day 61", level: "Advanced" },
     // ... add more as you complete them
-    { day: 100, title: "Server Survival", folder: "Day 100", level: "Capstone" }
+    { day: 100, title: "Server Survival", folder: "Day100", level: "Capstone" }
 ];
 
 const repoBaseUrl = "https://github.com/Shubham-cyber-prog/100-days-of-web-development/tree/main/public/";
