@@ -177,14 +177,14 @@ function renderProjects(category = 'All', searchQuery = '', preserveScroll = fal
 
     filteredProjects.sort((a, b) => a.day - b.day);
     if (filteredProjects.length === 0) {
-    grid.innerHTML = `
-        <div class="no-results">
-            <h3>No matching projects found</h3>
-            <p>Try a different keyword or clear the search.</p>
-        </div>
-    `;
-    return;
-}
+        grid.innerHTML = `
+            <div class="no-results">
+                <h3>No matching projects found</h3>
+                <p>Try a different keyword or clear the search.</p>
+            </div>
+        `;
+        return;
+    }
     filteredProjects.forEach(project => {
         const card = document.createElement('div');
         card.className = 'project-card';
@@ -250,25 +250,40 @@ function setupTabs() {
 }
 
 const searchInput = document.getElementById('projectSearch');
-if (searchInput) {
-    let searchTimeout;
-    searchInput.addEventListener('input', (e) => {
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(() => {
-            currentSearchQuery = e.target.value;
-            
-            renderProjects(currentCategory, currentSearchQuery, false);
-            saveContext();
-        }, 300); 
-    });
-}
 const clearBtn = document.getElementById('clearSearch');
 
+if (searchInput) {
+    let searchTimeout;
+
+    searchInput.addEventListener('input', (e) => {
+        const value = e.target.value;
+
+        // Toggle clear button visibility
+        if (clearBtn) {
+            clearBtn.style.display = value ? 'block' : 'none';
+        }
+
+        // Debounced search logic
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            currentSearchQuery = value;
+            renderProjects(currentCategory, currentSearchQuery, false);
+            saveContext();
+        }, 300);
+    });
+}
+// Initialize clear button visibility on page load / restored context
+if (searchInput && clearBtn && searchInput.value) {
+    clearBtn.style.display = 'block';
+}
+
+// Toggle clear button visibility while typing
 if (searchInput && clearBtn) {
     searchInput.addEventListener('input', () => {
         clearBtn.style.display = searchInput.value ? 'block' : 'none';
     });
 
+    // Clear search on click
     clearBtn.addEventListener('click', () => {
         searchInput.value = '';
         currentSearchQuery = '';
@@ -278,6 +293,7 @@ if (searchInput && clearBtn) {
         saveContext();
     });
 }
+
 
 
 let scrollTimeout;
