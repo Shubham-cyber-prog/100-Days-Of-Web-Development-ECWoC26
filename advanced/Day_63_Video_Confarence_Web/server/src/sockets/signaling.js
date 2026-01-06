@@ -2,19 +2,45 @@ const Room = require('../models/Room');
 
 function signaling(io) {
   io.on('connection', (socket) => {
-    // Handle joining a room
+    console.log(`Socket connected: ${socket.id}`);
+
+    /**
+     * Explicitly create a room
+     */
+    socket.on('create-room', async ({ roomCode, name }) => {
+      const code = roomCode.trim();
+
+      try {
+        const existing = await Room.findOne({ code });
+        if (existing) {
+          socket.emit('room-error', 'Room already exists');
+          return;
+        }
+
+        const room = await Room.create({
+          code,
+          name: name || 'Untitled Room',
+          participants: []
+        });
+
+        socket.emit('room-created', { code: room.code, name: room.name });
+      } catch (err) {
+        console.error('Error creating room:', err);
+        socket.emit('room-error', 'Could not create room');
+      }
+    });
+
+    /**
+     * Join an existing room
+     */
     socket.on('join-room', async ({ roomCode, displayName }) => {
       const code = roomCode.trim();
 
       try {
-        // Find room or auto-create if not found
-        let room = await Room.findOne({ code });
+        const room = await Room.findOne({ code });
         if (!room) {
-          room = await Room.create({
-            code,
-            name: 'Untitled Room',
-            participants: []
-          });
+          socket.emit('room-error', 'Room does not exist. Please create it first.');
+          return;
         }
 
         // Join the socket.io room
@@ -32,7 +58,7 @@ function signaling(io) {
         // Notify others in the room
         socket.to(code).emit('user-joined', {
           socketId: socket.id,
-          displayName
+          displayName: displayName || 'Guest'
         });
 
         // Send existing participants to the new user
@@ -46,7 +72,9 @@ function signaling(io) {
       }
     });
 
-    // WebRTC signaling events
+    /**
+     * WebRTC signaling events
+     */
     socket.on('webrtc-offer', ({ to, sdp }) => {
       io.to(to).emit('webrtc-offer', { from: socket.id, sdp });
     });
@@ -59,7 +87,9 @@ function signaling(io) {
       io.to(to).emit('webrtc-ice-candidate', { from: socket.id, candidate });
     });
 
-    // Handle leaving a room
+    /**
+     * Leave a room
+     */
     socket.on('leave-room', async ({ roomCode }) => {
       socket.leave(roomCode);
       try {
@@ -73,7 +103,9 @@ function signaling(io) {
       }
     });
 
-    // Handle disconnect
+    /**
+     * Handle disconnect
+     */
     socket.on('disconnect', async () => {
       const rooms = Array.from(socket.rooms).filter(r => r !== socket.id);
       for (const roomCode of rooms) {
