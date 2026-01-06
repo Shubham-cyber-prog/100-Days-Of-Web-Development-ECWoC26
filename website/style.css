@@ -53,6 +53,32 @@
     --duration-normal: 300ms;
     --duration-slow: 500ms;
 }
+.clear-search-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    font-size: 1.1rem;
+    color: #aaa;
+    cursor: pointer;
+    display: none;
+}
+
+.clear-search-btn:hover {
+    color: #fff;
+}
+.no-results {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-secondary);
+}
+
+.no-results h3 {
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
 
 /* Light Mode Overrides */
 body.light-mode {

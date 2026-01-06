@@ -52,8 +52,6 @@ const projects = [
 
     { day: 100, title: "Server Survival", folder: "Day100", level: "Capstone" }
 
-    { day: 100, title: "Server Survival", folder: "Day 100", level: "Capstone" }
-
 ];
 
 const repoBaseUrl = "https://github.com/Shubham-cyber-prog/100-days-of-web-development/tree/main/public/";
@@ -178,7 +176,15 @@ function renderProjects(category = 'All', searchQuery = '', preserveScroll = fal
     }
 
     filteredProjects.sort((a, b) => a.day - b.day);
-
+    if (filteredProjects.length === 0) {
+    grid.innerHTML = `
+        <div class="no-results">
+            <h3>No matching projects found</h3>
+            <p>Try a different keyword or clear the search.</p>
+        </div>
+    `;
+    return;
+}
     filteredProjects.forEach(project => {
         const card = document.createElement('div');
         card.className = 'project-card';
@@ -254,6 +260,22 @@ if (searchInput) {
             renderProjects(currentCategory, currentSearchQuery, false);
             saveContext();
         }, 300); 
+    });
+}
+const clearBtn = document.getElementById('clearSearch');
+
+if (searchInput && clearBtn) {
+    searchInput.addEventListener('input', () => {
+        clearBtn.style.display = searchInput.value ? 'block' : 'none';
+    });
+
+    clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        currentSearchQuery = '';
+        clearBtn.style.display = 'none';
+
+        renderProjects(currentCategory, '', false);
+        saveContext();
     });
 }
 
