@@ -52,6 +52,28 @@
                 <input type="text" id="projectSearch" class="search-input"
                     placeholder="Search by title, day, or tech...">
             </div>
+
+            <div class="filters-container" style="margin: 2rem auto 0; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <select id="difficultyFilter" class="filter-select">
+                    <option value="All">All Difficulties</option>
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Advanced">Advanced</option>
+                    <option value="Capstone">Capstone</option>
+                </select>
+
+                <div class="tech-filters">
+                    <label>Technologies:</label>
+                    <div class="tech-checkboxes">
+                        <label><input type="checkbox" value="HTML" checked> HTML</label>
+                        <label><input type="checkbox" value="CSS" checked> CSS</label>
+                        <label><input type="checkbox" value="JS" checked> JS</label>
+                        <label><input type="checkbox" value="API"> API</label>
+                        <label><input type="checkbox" value="Canvas"> Canvas</label>
+                        <label><input type="checkbox" value="React"> React</label>
+                    </div>
+                </div>
+            </div>
         </header>
 
         <section class="container">
