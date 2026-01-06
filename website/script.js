@@ -32,7 +32,7 @@ const projects = [
     { day: 29, title: "Coming Soon", folder: "Day 29", level: "Beginner" },
     { day: 30, title: "Coming Soon", folder: "Day 30", level: "Beginner" },
 
-       { day: 1, title: "Personal Portfolio", folder: "Day 01", level: "Beginner" },
+    { day: 1, title: "Personal Portfolio", folder: "Day 01", level: "Beginner" },
     { day: 2, title: "Responsive Landing Page", folder: "Day 02", level: "Beginner" },
     { day: 3, title: "To-Do List", folder: "Day 03", level: "Beginner" },
     { day: 4, title: "Weather App", folder: "Day 04", level: "Beginner" },
@@ -81,8 +81,46 @@ const projects = [
 
     // ADVANCED & CAPSTONE - Follow same pattern
     { day: 61, title: "Doodle Jump Game", folder: "Day 61", level: "Advanced" },
-    // ... add more as you complete them
+    { day: 62, title: "Social Network", folder: "Day 62", level: "Advanced" },
+    { day: 63, title: "Video Conferencing", folder: "Day 63", level: "Advanced" },
+    { day: 64, title: "Online Code Editor", folder: "Day 64", level: "Advanced" },
+    { day: 65, title: "Real-time Collaboration", folder: "Day 65", level: "Advanced" },
+    { day: 66, title: "Stock Trading Simulator", folder: "Day 66", level: "Advanced" },
+    { day: 67, title: "Multiplayer Game", folder: "Day 67", level: "Advanced" },
+    { day: 68, title: "AI Chatbot", folder: "Day 68", level: "Advanced" },
+    { day: 69, title: "Blockchain Explorer", folder: "Day 69", level: "Advanced" },
+    { day: 70, title: "Data Visualization Dashboard", folder: "Day 70", level: "Advanced" },
+    { day: 71, title: "Crypto Wallet", folder: "Day 71", level: "Advanced" },
+    { day: 72, title: "IoT Dashboard", folder: "Day 72", level: "Advanced" },
+    { day: 73, title: "Machine Learning UI", folder: "Day 73", level: "Advanced" },
+    { day: 74, title: "Voice Assistant", folder: "Day 74", level: "Advanced" },
+    { day: 75, title: "AR Web App", folder: "Day 75", level: "Advanced" },
+    { day: 76, title: "PWA News App", folder: "Day 76", level: "Advanced" },
+    { day: 77, title: "Real-time Analytics", folder: "Day 77", level: "Advanced" },
+    { day: 78, title: "Document Editor", folder: "Day 78", level: "Advanced" },
+    { day: 79, title: "Email Client", folder: "Day 79", level: "Advanced" },
+    { day: 80, title: "Project Management SaaS", folder: "Day 80", level: "Advanced" },
+    { day: 81, title: "Healthcare Portal", folder: "Day 81", level: "Advanced" },
+    { day: 82, title: "Elearning Platform", folder: "Day 82", level: "Advanced" },
+    { day: 83, title: "Recruitment Platform", folder: "Day 83", level: "Advanced" },
+    { day: 84, title: "Real-time Chat Support", folder: "Day 84", level: "Advanced" },
+    { day: 85, title: "Auction Platform", folder: "Day 85", level: "Advanced" },
+    { day: 86, title: "Freelance Marketplace", folder: "Day 86", level: "Advanced" },
+    { day: 87, title: "Music Streaming", folder: "Day 87", level: "Advanced" },
+    { day: 88, title: "Video Streaming", folder: "Day 88", level: "Advanced" },
+    { day: 89, title: "Smart Home Dashboard", folder: "Day 89", level: "Advanced" },
+    { day: 90, title: "Enterprise CRM", folder: "Day 90", level: "Advanced" },
 
+    // CAPSTONE (Days 91-100)
+    { day: 91, title: "Microservices Project 1", folder: "Day 91", level: "Capstone" },
+    { day: 92, title: "Microservices Project 2", folder: "Day 92", level: "Capstone" },
+    { day: 93, title: "Open Source Contrib 1", folder: "Day 93", level: "Capstone" },
+    { day: 94, title: "Open Source Contrib 2", folder: "Day 94", level: "Capstone" },
+    { day: 95, title: "Fullstack App 1", folder: "Day 95", level: "Capstone" },
+    { day: 96, title: "Fullstack App 2", folder: "Day 96", level: "Capstone" },
+    { day: 97, title: "Complex Dashboard 1", folder: "Day 97", level: "Capstone" },
+    { day: 98, title: "Complex Dashboard 2", folder: "Day 98", level: "Capstone" },
+    { day: 99, title: "Pre-Master Project", folder: "Day 99", level: "Capstone" },
     { day: 100, title: "Server Survival", folder: "Day100", level: "Capstone" }
 
 ];
@@ -124,20 +162,20 @@ function restoreScrollPosition() {
     const savedPosition = sessionStorage.getItem(STORAGE_KEYS.SCROLL_POSITION);
     const grid = getGrid();
     if (savedPosition && grid) {
-        
+
         const restoreScroll = () => {
             window.scrollTo({
                 top: parseInt(savedPosition, 10),
-                behavior: 'auto' 
+                behavior: 'auto'
             });
         };
-        
-        
+
+
         requestAnimationFrame(() => {
             if (document.readyState === 'complete') {
                 restoreScroll();
             } else {
-                
+
                 window.addEventListener('load', restoreScroll, { once: true });
             }
         });
@@ -155,7 +193,7 @@ function saveContext() {
 function restoreContext() {
     const savedCategory = sessionStorage.getItem(STORAGE_KEYS.ACTIVE_CATEGORY);
     const savedSearch = sessionStorage.getItem(STORAGE_KEYS.SEARCH_QUERY);
-    
+
     if (savedCategory) {
         currentCategory = savedCategory;
         const tabs = getTabs();
@@ -169,7 +207,7 @@ function restoreContext() {
             });
         }
     }
-    
+
     if (savedSearch) {
         currentSearchQuery = savedSearch;
         const searchInput = document.getElementById('projectSearch');
@@ -185,22 +223,22 @@ let shouldRestoreScroll = false;
 function renderProjects(category = 'All', searchQuery = '', preserveScroll = false) {
     const grid = getGrid();
     if (!grid) return;
-    
-    
+
+
     if (!preserveScroll && !isInitialLoad) {
         saveScrollPosition();
     }
-    
+
     grid.innerHTML = '';
 
     let filteredProjects = category === 'All'
         ? projects
         : projects.filter(p => p.level === category);
 
-   
+
     if (searchQuery.trim()) {
         const query = searchQuery.toLowerCase();
-        filteredProjects = filteredProjects.filter(p => 
+        filteredProjects = filteredProjects.filter(p =>
             p.title.toLowerCase().includes(query) ||
             p.level.toLowerCase().includes(query) ||
             p.day.toString().includes(query) ||
@@ -210,17 +248,17 @@ function renderProjects(category = 'All', searchQuery = '', preserveScroll = fal
 
     filteredProjects.sort((a, b) => a.day - b.day);
     if (filteredProjects.length === 0) {
-    grid.innerHTML = `
+        grid.innerHTML = `
         <div class="no-results">
             <h3>No matching projects found</h3>
             <p>Try a different keyword or clear the search.</p>
         </div>
     `;
-    return;
-}
+        return;
+    }
     filteredProjects.forEach(project => {
         const card = document.createElement('div');
-        card.className = 'project-card';
+        card.className = 'project-card ' + project.level.toLowerCase(); // Added level class
         if (project.day === 100) card.classList.add('special-day-100');
         card.innerHTML = `
             <div class="card-header">
@@ -234,40 +272,24 @@ function renderProjects(category = 'All', searchQuery = '', preserveScroll = fal
                 <a href="${liveBaseUrl}${project.folder}/${project.source || 'index.html'}" target="_blank" class="btn-small">Live Demo</a>
                 <a href="${repoBaseUrl}${project.folder}" target="_blank" class="btn-small outline">View Code</a>
 
-                <a href="${liveBaseUrl}${project.folder}/index.html" target="_blank" class="btn-small" 
-                style="background: rgba(0, 255, 0, 0.3);
-                border: 1px solid rgba(0, 255, 0, 0.6);
-                box-shadow: 0 4px 30px rgba(0, 255, 0, 0.5);
-                backdrop-filter: blur(5px);
-                -webkit-backdrop-filter: blur(5px);
-                color: white;">
-                Live Demo</a>
-                <a href="${repoBaseUrl}${project.folder}" target="_blank" class="btn-small outline" 
-                style="background: rgba(0, 0, 255, 0.3);
-                border: 1px solid rgba(0, 0, 255, 0.6);
-                box-shadow: 0 4px 30px rgba(0, 0, 255, 0.5);
-                backdrop-filter: blur(5px);
-                -webkit-backdrop-filter: blur(5px);
-                color: white;
-                ">
-                View Code</a>
+
 
             </div>
         `;
         grid.appendChild(card);
     });
-    
+
     if (preserveScroll || shouldRestoreScroll) {
-        
+
         setTimeout(() => {
             restoreScrollPosition();
             shouldRestoreScroll = false;
         }, 100);
     } else if (!isInitialLoad) {
-     
+
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    
+
     isInitialLoad = false;
 }
 
@@ -279,9 +301,9 @@ function setupTabs() {
             tabs.forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
             currentCategory = tab.dataset.category || 'All';
-            
+
             renderProjects(currentCategory, currentSearchQuery, false);
-           
+
             saveContext();
         });
     });
@@ -294,10 +316,10 @@ if (searchInput) {
         clearTimeout(searchTimeout);
         searchTimeout = setTimeout(() => {
             currentSearchQuery = e.target.value;
-            
+
             renderProjects(currentCategory, currentSearchQuery, false);
             saveContext();
-        }, 300); 
+        }, 300);
     });
 }
 const clearBtn = document.getElementById('clearSearch');
@@ -336,7 +358,7 @@ window.addEventListener('beforeunload', () => {
 
 window.addEventListener('popstate', () => {
     restoreContext();
-    shouldRestoreScroll = true; 
+    shouldRestoreScroll = true;
     renderProjects(currentCategory, currentSearchQuery, true);
 });
 
