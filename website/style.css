@@ -2,6 +2,12 @@
   Theme Variables 
   Modern Greyish Black Palette - Serious Open Source Aesthetic
 */
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 :root {
     /* Base Colors - Dark Mode Default */
     --bg-primary: #0a0a0a;
@@ -52,13 +58,45 @@
     --duration-fast: 150ms;
     --duration-normal: 300ms;
     --duration-slow: 500ms;
+
+    /* Responsive Breakpoints */
+    --mobile-breakpoint: 768px;
+}
+.clear-search-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    font-size: 1.1rem;
+    color: #aaa;
+    cursor: pointer;
+    display: none;
+}
+
+.clear-search-btn:hover {
+    color: #fff;
+}
+.no-results {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-secondary);
+}
+
+.no-results h3 {
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
 }
 
 /* Light Mode Overrides */
 body.light-mode {
-    --bg-primary: #f8f9fa; /* Slightly off-white background */
-    --bg-secondary: #ffffff; /* Pure white for elements */
-    --bg-card: #ffffff;      /* Pure white for cards */
+    --bg-primary: #f8f9fa;
+    /* Slightly off-white background */
+    --bg-secondary: #ffffff;
+    /* Pure white for elements */
+    --bg-card: #ffffff;
+    /* Pure white for cards */
     --bg-hover: #f1f5f9;
 
     --text-primary: #09090b;
@@ -66,7 +104,8 @@ body.light-mode {
     --text-tertiary: #a1a1aa;
 
     --accent-primary: #09090b;
-    --border-color: #e2e8f0; /* Slightly darker border for visibility */
+    --border-color: #e2e8f0;
+    /* Slightly darker border for visibility */
     --border-hover: #cbd5e1;
 
     --badge-bg: #f4f4f5;
@@ -112,7 +151,7 @@ ul {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    padding: 0.75rem 1rem 0.75rem 2.8rem;
+    padding: 0.75rem 3rem 0.75rem 2.8rem;
     /* Space for icon */
     color: var(--text-primary);
     font-family: var(--font-main);
@@ -321,6 +360,38 @@ ul {
     top: 0;
     z-index: 100;
     transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+
+    .nav-content {
+        padding: 0 1rem;
+        /* reduce horizontal padding */
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+    }
+
+    .nav-links {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+        /* reduced from 2rem */
+        margin-top: 0.5rem;
+        flex-basis: 100%;
+    }
+
+    .nav-links a {
+        padding: 0.4rem 0;
+        white-space: nowrap;
+        font-size: 0.85rem;
+    }
+
+    .theme-toggle {
+        margin-left: auto;
+    }
 }
 
 body.light-mode .navbar {
@@ -887,6 +958,23 @@ main {
 }
 
 /* refined heatmap */
+
+/* refined heatmap */
+.tracker-container {
+    background: rgba(13, 17, 23, 0.8);
+    /* GitHub Dark Dimmed content bg */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 3rem;
+    max-width: 900px;
+    margin: 0 auto;
+    box-shadow: 
+        0 20px 50px rgba(0, 0, 0, 0.5),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    transition: transform 0.1s ease-out;
+    transform-style: preserve-3d;
+
 .tracker-container {
     background: #0d1117;
     /* GitHub Dark Dimmed content bg */
@@ -896,6 +984,7 @@ main {
     max-width: 900px;
     margin: 0 auto;
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+
 }
 
 .heatmap-grid {
@@ -903,6 +992,9 @@ main {
     grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
     justify-content: center;
+
+    transform-style: preserve-3d;
+
 }
 
 @media (max-width: 768px) {
@@ -920,12 +1012,68 @@ main {
 .quarter-block {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
+
+    gap: 8px;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+
     gap: 6px;
+
 }
 
 .day-cell {
     aspect-ratio: 1;
     width: 100%;
+
+    background: linear-gradient(145deg, #2a2f38, #1c2128); /* 3D gradient */
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 
+        5px 5px 10px rgba(0, 0, 0, 0.2),
+        -1px -1px 2px rgba(255, 255, 255, 0.05);
+
+    /* Text centering and styling */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.3);
+    font-weight: 600;
+}
+
+.day-cell::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 6px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+    pointer-events: none;
+}
+
+.day-cell:hover {
+    transform: translateY(-4px) scale(1.1);
+    z-index: 10;
+    border-color: var(--accent-secondary);
+    color: var(--text-primary);
+    box-shadow: 
+        0 10px 20px rgba(0, 0, 0, 0.3),
+        0 0 15px rgba(59, 130, 246, 0.4);
+    background: linear-gradient(145deg, #3b82f6, #2563eb);
+}
+
+.day-cell.completed {
+    background: linear-gradient(135deg, #2ea043 0%, #238636 100%);
+    /* Professional Deep Green */
+    box-shadow: 
+        0 0 15px rgba(46, 160, 67, 0.4),
+        inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    border-color: #3fb950;
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
     background: #21262d;
     /* Slightly lighter inactive */
     border-radius: 3px;
@@ -947,6 +1095,7 @@ main {
     /* Professional Deep Green */
     box-shadow: 0 0 8px rgba(35, 134, 54, 0.5);
     border-color: #2ea043;
+
 }
 
 /* Projects Grid */
@@ -1207,10 +1356,13 @@ main {
     position: relative;
     overflow: hidden;
 
-    --text-primary: #ededed;   /* Resets Header/Main text to White */
-    --text-secondary: #a1a1aa; /* Resets Description/Link text to Light Grey */
-    --text-tertiary: #52525b;  /* Resets copyright text to Muted Grey */
-    
+    --text-primary: #ededed;
+    /* Resets Header/Main text to White */
+    --text-secondary: #a1a1aa;
+    /* Resets Description/Link text to Light Grey */
+    --text-tertiary: #52525b;
+    /* Resets copyright text to Muted Grey */
+
     /* Ensure the color is applied */
     color: var(--text-primary);
 }
@@ -1280,7 +1432,7 @@ main {
 
 .footer-col:hover h4::after {
     width: 30px;
-    
+
 }
 
 .footer-description {
@@ -1370,7 +1522,8 @@ main {
 }
 
 .footer-links a:hover {
-    color: #ffffff !important; /* Ensure hover state is bright white */
+    color: #ffffff !important;
+    /* Ensure hover state is bright white */
 }
 
 .footer-links a::before {

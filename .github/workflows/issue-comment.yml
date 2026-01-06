@@ -74,7 +74,6 @@ jobs:
               documentation: ['doc', 'readme', 'documentation'],
               'ui/ux': ['ui', 'ux', 'design', 'layout'],
               frontend: ['frontend', 'html', 'css', 'javascript', 'ui'],
-              'ecwoc-26': ['ecwoc', '100 days', 'challenge']
             };
 
             for (const [label, keywords] of Object.entries(keywordMap)) {

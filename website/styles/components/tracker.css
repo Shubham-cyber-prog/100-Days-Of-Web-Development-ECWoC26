@@ -1,0 +1,132 @@
+/* --- Heatmap Section --- */
+.tracker-section {
+    margin-bottom: 4rem;
+}
+
+/* refined heatmap header */
+.tracker-wrapper {
+    max-width: 900px;
+    margin: 0 auto 4rem;
+}
+
+.tracker-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3rem;
+    /* Significant whitespace as requested */
+    padding: 0 0.5rem;
+}
+
+.tracker-text h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+}
+
+.tracker-text p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    max-width: 400px;
+}
+
+.progress-stat-pill {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 0.75rem 1.5rem;
+    border-radius: 100px;
+    /* Fully rounded pill */
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.stat-label {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.stat-value {
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.stat-total {
+    color: var(--text-tertiary);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* refined heatmap */
+.tracker-container {
+    background: #0d1117;
+    /* GitHub Dark Dimmed content bg */
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 2.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+}
+
+.heatmap-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .heatmap-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .heatmap-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.quarter-block {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+}
+
+.day-cell {
+    aspect-ratio: 1;
+    width: 100%;
+    background: #21262d;
+    /* Slightly lighter inactive */
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    transition: all var(--duration-fast) var(--ease-out);
+    border: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.day-cell:hover {
+    transform: scale(1.15);
+    z-index: 10;
+    border-color: var(--accent-secondary);
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+}
+
+.day-cell.completed {
+    background: #238636;
+    /* Professional Deep Green */
+    box-shadow: 0 0 8px rgba(35, 134, 54, 0.5);
+    border-color: #2ea043;
+}
+
+/* Tooltip for Day Cell */
+/* Tooltip removed - Day numbers are now visible in the cell directly */
