@@ -1,65 +1,75 @@
-let userscore = 0;
-let compscore = 0;
+let boxes = document.querySelectorAll(".box");
+let resetbtn = document.querySelector("#reset");
+let newBtn = document.querySelector("#new");
+let msgcontainer = document.querySelector(".msg-container");
+let msg = document.querySelector("#msg");
+let turnO = true;
 
-const choices = document.querySelectorAll(".choice");
-const msg = document.querySelector("#msg");
-const userscorepara = document.querySelector("#user-score");
-const compscorepara = document.querySelector("#comp-score");
+const winpatterns = [
+    [0, 1, 2],
+    [0, 3, 6],
+    [0, 4, 8],
+    [3, 4, 5],
+    [6, 7, 8],
+    [2, 4, 6],
+    [2, 5, 8],
+    [1, 4, 7],
+];
 
-const gencompchoice = () => {
-    const options = ["rock", "paper", "scissors"];
-    const randIdx = Math.floor(Math.random() * 3);
-    return options[randIdx];
+const resetgame = () => {
+    turnO = true;
+    enableboxes();
+    msgcontainer.classList.add("hide");
 };
 
-const drawgame = () => {
-    console.log("Game was draw.");
-    msg.innerText = "Game was draw. Play Again";
-    msg.style.backgroundColor = "lightyellow";
-    msg.style.color = "black";
-};
-
-const showwinner = (userwin, userchoice, compchoice) => {
-    if (userwin) {
-        userscore++; // Increment user score
-        msg.innerText = `You win! Your ${userchoice} beats ${compchoice}`;
-        msg.style.backgroundColor = "green";
-        msg.style.color = "white";
-    } else {
-        compscore++; // Increment computer score
-        msg.innerText = `You lose. ${compchoice} beats your ${userchoice}`;
-        msg.style.backgroundColor = "red";
-        msg.style.color = "white";
-    }
-
-    // Update scores in the UI
-    userscorepara.innerText = userscore;
-    compscorepara.innerText = compscore;
-};
-
-const playgame = (userchoice) => {
-    console.log("User choice = ", userchoice);
-    const compchoice = gencompchoice();
-    console.log("Comp choice = ", compchoice);
-
-    if (userchoice === compchoice) {
-        drawgame();
-    } else {
-        let userwin = true;
-        if (userchoice === "rock") {
-            userwin = compchoice === "paper" ? false : true;
-        } else if (userchoice === "paper") {
-            userwin = compchoice === "scissors" ? false : true;
+boxes.forEach((box) => {
+    box.addEventListener("click", () => {
+        //console.log("Box was clicked!");
+        if (turnO === true) {
+            box.innerText = "O";
+            turnO = false;
         } else {
-            userwin = compchoice === "rock" ? false : true;
+            box.innerText = "X";
+            turnO = true;
         }
-        showwinner(userwin, userchoice, compchoice); // Pass values
+        box.style.pointerEvents = "none"; // Prevent further clicks
+        checkWinner();
+    });
+});                   
+
+const enableboxes = () => {
+    for (let box of boxes) {
+        box.style.pointerEvents = "auto"; // Fixed: Enable clicking
+        box.innerText = "";
     }
 };
 
-choices.forEach((choice) => {
-    choice.addEventListener("click", () => {
-        const userchoice = choice.getAttribute("id");
-        playgame(userchoice);
-    });
-});
+const disableboxes = () => {
+    for (let box of boxes) {
+        box.style.pointerEvents = "none"; // Fixed: Disable clicking
+    }
+};
+
+const showwinner = (winner) => {
+    msg.innerText = `Congratulations, winner is ${winner}`; // Fixed string interpolation
+    msgcontainer.classList.remove("hide"); // Fixed `classList`
+    disableboxes();
+};
+
+const checkWinner = () => {
+    for (let pattern of winpatterns) {
+        let pos1val = boxes[pattern[0]].innerText;
+        let pos2val = boxes[pattern[1]].innerText;
+        let pos3val = boxes[pattern[2]].innerText;
+
+        if (pos1val !== "" && pos2val !== "" && pos3val !== "") {
+            if (pos1val === pos2val && pos2val === pos3val) {
+              //  console.log("Winner:", pos1val);
+                showwinner(pos1val); // Fixed: Pass winner to function
+            }
+        }
+    }
+};
+
+newBtn.addEventListener("click", resetgame); // Fixed event listener
+resetbtn.addEventListener("click", resetgame); // Fixed event listener
