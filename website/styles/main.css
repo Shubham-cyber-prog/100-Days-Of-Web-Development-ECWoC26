@@ -26,6 +26,7 @@
 @import 'components/timeline.css';
 @import 'components/tracker.css';
 @import 'components/stats.css';
+@import 'components/mobile-nav.css';
 
 /* 5. Pages Layer */
 @import 'pages/about.css';

@@ -57,7 +57,14 @@ body.light-mode .navbar {
     display: flex;
     gap: 2rem;
     font-size: 0.9rem;
+    font-size: 0.9rem;
     font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
 }
 
 .nav-links a {

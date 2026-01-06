@@ -32,7 +32,7 @@ const projects = [
     { day: 29, title: "Coming Soon", folder: "Day 29", level: "Beginner" },
     { day: 30, title: "Coming Soon", folder: "Day 30", level: "Beginner" },
 
-       { day: 1, title: "Personal Portfolio", folder: "Day 01", level: "Beginner" },
+    { day: 1, title: "Personal Portfolio", folder: "Day 01", level: "Beginner" },
     { day: 2, title: "Responsive Landing Page", folder: "Day 02", level: "Beginner" },
     { day: 3, title: "To-Do List", folder: "Day 03", level: "Beginner" },
     { day: 4, title: "Weather App", folder: "Day 04", level: "Beginner" },
@@ -122,20 +122,20 @@ function restoreScrollPosition() {
     const savedPosition = sessionStorage.getItem(STORAGE_KEYS.SCROLL_POSITION);
     const grid = getGrid();
     if (savedPosition && grid) {
-        
+
         const restoreScroll = () => {
             window.scrollTo({
                 top: parseInt(savedPosition, 10),
-                behavior: 'auto' 
+                behavior: 'auto'
             });
         };
-        
-        
+
+
         requestAnimationFrame(() => {
             if (document.readyState === 'complete') {
                 restoreScroll();
             } else {
-                
+
                 window.addEventListener('load', restoreScroll, { once: true });
             }
         });
@@ -153,7 +153,7 @@ function saveContext() {
 function restoreContext() {
     const savedCategory = sessionStorage.getItem(STORAGE_KEYS.ACTIVE_CATEGORY);
     const savedSearch = sessionStorage.getItem(STORAGE_KEYS.SEARCH_QUERY);
-    
+
     if (savedCategory) {
         currentCategory = savedCategory;
         const tabs = getTabs();
@@ -167,7 +167,7 @@ function restoreContext() {
             });
         }
     }
-    
+
     if (savedSearch) {
         currentSearchQuery = savedSearch;
         const searchInput = document.getElementById('projectSearch');
@@ -183,22 +183,22 @@ let shouldRestoreScroll = false;
 function renderProjects(category = 'All', searchQuery = '', preserveScroll = false) {
     const grid = getGrid();
     if (!grid) return;
-    
-    
+
+
     if (!preserveScroll && !isInitialLoad) {
         saveScrollPosition();
     }
-    
+
     grid.innerHTML = '';
 
     let filteredProjects = category === 'All'
         ? projects
         : projects.filter(p => p.level === category);
 
-   
+
     if (searchQuery.trim()) {
         const query = searchQuery.toLowerCase();
-        filteredProjects = filteredProjects.filter(p => 
+        filteredProjects = filteredProjects.filter(p =>
             p.title.toLowerCase().includes(query) ||
             p.level.toLowerCase().includes(query) ||
             p.day.toString().includes(query) ||
@@ -218,7 +218,7 @@ function renderProjects(category = 'All', searchQuery = '', preserveScroll = fal
     }
     filteredProjects.forEach(project => {
         const card = document.createElement('div');
-        card.className = 'project-card';
+        card.className = 'project-card ' + project.level.toLowerCase(); // Added level class
         if (project.day === 100) card.classList.add('special-day-100');
         card.innerHTML = `
             <div class="card-header">
@@ -232,40 +232,24 @@ function renderProjects(category = 'All', searchQuery = '', preserveScroll = fal
                 <a href="${liveBaseUrl}${project.folder}/${project.source || 'index.html'}" target="_blank" class="btn-small">Live Demo</a>
                 <a href="${repoBaseUrl}${project.folder}" target="_blank" class="btn-small outline">View Code</a>
 
-                <a href="${liveBaseUrl}${project.folder}/index.html" target="_blank" class="btn-small" 
-                style="background: rgba(0, 255, 0, 0.3);
-                border: 1px solid rgba(0, 255, 0, 0.6);
-                box-shadow: 0 4px 30px rgba(0, 255, 0, 0.5);
-                backdrop-filter: blur(5px);
-                -webkit-backdrop-filter: blur(5px);
-                color: white;">
-                Live Demo</a>
-                <a href="${repoBaseUrl}${project.folder}" target="_blank" class="btn-small outline" 
-                style="background: rgba(0, 0, 255, 0.3);
-                border: 1px solid rgba(0, 0, 255, 0.6);
-                box-shadow: 0 4px 30px rgba(0, 0, 255, 0.5);
-                backdrop-filter: blur(5px);
-                -webkit-backdrop-filter: blur(5px);
-                color: white;
-                ">
-                View Code</a>
+
 
             </div>
         `;
         grid.appendChild(card);
     });
-    
+
     if (preserveScroll || shouldRestoreScroll) {
-        
+
         setTimeout(() => {
             restoreScrollPosition();
             shouldRestoreScroll = false;
         }, 100);
     } else if (!isInitialLoad) {
-     
+
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    
+
     isInitialLoad = false;
 }
 
@@ -277,9 +261,9 @@ function setupTabs() {
             tabs.forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
             currentCategory = tab.dataset.category || 'All';
-            
+
             renderProjects(currentCategory, currentSearchQuery, false);
-           
+
             saveContext();
         });
     });
@@ -313,29 +297,7 @@ if (searchInput && clearBtn && searchInput.value) {
     clearBtn.style.display = 'block';
 }
 
-// Toggle clear button visibility while typing
-if (searchInput && clearBtn) {
-    searchInput.addEventListener('input', () => {
-        clearBtn.style.display = searchInput.value ? 'block' : 'none';
-    });
-
-    // Clear search on click
-    clearBtn.addEventListener('click', () => {
-        searchInput.value = '';
-        currentSearchQuery = '';
-        clearBtn.style.display = 'none';
-
-        renderProjects(currentCategory, '', false);
-        saveContext();
-    });
-}
-const clearBtn = document.getElementById('clearSearch');
-
-if (searchInput && clearBtn) {
-    searchInput.addEventListener('input', () => {
-        clearBtn.style.display = searchInput.value ? 'block' : 'none';
-    });
-
+if (clearBtn && searchInput) {
     clearBtn.addEventListener('click', () => {
         searchInput.value = '';
         currentSearchQuery = '';
@@ -366,7 +328,7 @@ window.addEventListener('beforeunload', () => {
 
 window.addEventListener('popstate', () => {
     restoreContext();
-    shouldRestoreScroll = true; 
+    shouldRestoreScroll = true;
     renderProjects(currentCategory, currentSearchQuery, true);
 });
 

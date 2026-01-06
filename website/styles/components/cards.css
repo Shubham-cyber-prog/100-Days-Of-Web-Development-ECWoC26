@@ -135,6 +135,43 @@
     gap: 1.5rem;
 }
 
+@media (max-width: 580px) {
+    .contributors-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.75rem;
+    }
+
+    .contributor-card {
+        padding: 1rem 0.75rem;
+    }
+
+    .contributor-img {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 0.5rem;
+    }
+
+    .contributor-info h3,
+    .contributor-name {
+        font-size: 0.85rem;
+        word-break: break-all;
+    }
+
+    .contributor-stats,
+    .contributor-commits {
+        font-size: 0.75rem;
+    }
+
+    .highlight-count {
+        font-size: 0.9em;
+    }
+
+    .view-profile {
+        font-size: 0.65rem;
+        margin-top: 0.15rem;
+    }
+}
+
 .contributor-card {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
@@ -355,7 +392,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, transparent 40%, rgba(255,68,0,0.1) 50%, transparent 60%);
+    background: linear-gradient(45deg, transparent 40%, rgba(255, 68, 0, 0.1) 50%, transparent 60%);
     background-size: 200% 200%;
     animation: shine 3s infinite;
     pointer-events: none;
@@ -368,6 +405,83 @@
 }
 
 @keyframes shine {
-    0% { background-position: 200% 50%; }
-    100% { background-position: -200% 50%; }
-}
+    0% {
+        background-position: 200% 50%;
+    }
+
+    100% {
+        background-position: -200% 50%;
+    }
+
+    /* Project Card Animations */
+    @keyframes glow-blue {
+
+        0%,
+        100% {
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.2), 0 0 10px rgba(0, 123, 255, 0.1);
+            border-color: rgba(0, 123, 255, 0.3);
+        }
+
+        50% {
+            box-shadow: 0 0 15px rgba(0, 123, 255, 0.5), 0 0 25px rgba(0, 123, 255, 0.2);
+            border-color: rgba(0, 123, 255, 0.6);
+        }
+    }
+
+    @keyframes glow-yellow {
+
+        0%,
+        100% {
+            box-shadow: 0 0 5px rgba(255, 193, 7, 0.2), 0 0 10px rgba(255, 193, 7, 0.1);
+            border-color: rgba(255, 193, 7, 0.3);
+        }
+
+        50% {
+            box-shadow: 0 0 15px rgba(255, 193, 7, 0.5), 0 0 25px rgba(255, 193, 7, 0.2);
+            border-color: rgba(255, 193, 7, 0.6);
+        }
+    }
+
+    /* Base card styles updates */
+    .project-card {
+        transition: all 0.3s ease;
+        border: 1px solid var(--border-color);
+    }
+
+    .project-card.beginner:hover {
+        animation: glow-blue 2s infinite;
+    }
+
+    .project-card.advanced:hover {
+        animation: glow-yellow 2s infinite;
+    }
+
+    /* Distinct Button Styling */
+    .card-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: auto;
+        padding-top: 1rem;
+    }
+
+    .card-actions .btn-small {
+        flex: 1;
+        text-align: center;
+        background: var(--bg-card);
+        /* Dark background */
+        border: 1px solid var(--border-color);
+        color: var(--text-primary);
+        padding: 0.6rem 1rem;
+        border-radius: var(--radius-sm);
+        font-weight: 500;
+        transition: all 0.3s ease;
+        /* distinct cell look */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-actions .btn-small:hover {
+        transform: translateY(-2px);
+        background: var(--bg-hover);
+        border-color: var(--text-primary);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }

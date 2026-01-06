@@ -341,52 +341,158 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Copyright Row */
+/* Accordion/Collapsible Footer Styles */
+
+@media (min-width: 769px) {
+    details.footer-col {
+        display: flex;
+        flex-direction: column;
+    }
+
+    details.footer-col>summary {
+        pointer-events: none;
+        list-style: none;
+    }
+
+    details.footer-col>summary::-webkit-details-marker {
+        display: none;
+    }
+
+    details.footer-col>summary .arrow-icon {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-footer {
+        padding: 2rem 1rem 5rem;
+        text-align: left;
+    }
+
+    .footer-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        /* Removing gap to let borders handle separation */
+    }
+
+    .footer-col {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        width: 100%;
+        margin: 0;
+    }
+
+    .footer-col:last-child {
+        border-bottom: none;
+    }
+
+    /* Specific styling for the 'about' section which is NOT a details element */
+    .footer-col.about-col {
+        text-align: center;
+        border-bottom: none;
+        margin-bottom: 1.5rem;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 1rem;
+    }
+
+    .footer-col.about-col h4 {
+        justify-content: center;
+    }
+
+    details.footer-col>summary {
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0.5rem;
+        cursor: pointer;
+    }
+
+    details.footer-col>summary::-webkit-details-marker {
+        display: none;
+    }
+
+    details.footer-col h4 {
+        margin-bottom: 0;
+        display: inline-flex;
+        font-size: 1rem;
+    }
+
+    details.footer-col h4::after {
+        display: none;
+    }
+
+    .arrow-icon {
+        transition: transform 0.3s ease;
+        color: var(--text-secondary);
+        width: 20px;
+        height: 20px;
+    }
+
+    details[open] .arrow-icon {
+        transform: rotate(180deg);
+        color: var(--text-primary);
+    }
+
+    /* Content styling when open */
+    .footer-links,
+    .tech-tags,
+    .legal-links {
+        padding: 0 0.5rem 1.5rem;
+        animation: slideDown 0.3s ease-out;
+    }
+
+    /* Reset grids for mobile accordion content */
+    .footer-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        text-align: left;
+        grid-template-columns: 1fr;
+        /* Reset grid */
+    }
+
+    .footer-links a {
+        justify-content: flex-start;
+    }
+
+    .tech-tags {
+        justify-content: flex-start;
+        padding-bottom: 1.5rem;
+    }
+
+    .legal-links {
+        justify-content: flex-start;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* Footer Bottom / Copyright */
 .footer-bottom {
-    max-width: var(--container-width);
-    margin: 1rem auto 0;
-    padding-top: 1rem;
-    border-top: 1px solid var(--border-color);
+    padding-top: 2rem;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 1rem;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    color: var(--text-tertiary);
-    font-size: 0.85rem;
+    flex-direction: column;
+    gap: 0.75rem;
+    opacity: 0.6;
+    /* Reduced opacity as requested */
 }
 
-.created-by {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.created-by a {
-    color: var(--text-secondary);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.created-by a::before {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: linear-gradient(90deg, var(--text-secondary), var(--accent-secondary));
-    transition: width 0.3s ease;
-}
-
-.created-by a:hover::before {
-    width: 100%;
-}
-
-.created-by a:hover {
-    color: var(--text-primary);
-    transform: translateY(-1px);
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
-}
+/* Remove the old mobile query block */

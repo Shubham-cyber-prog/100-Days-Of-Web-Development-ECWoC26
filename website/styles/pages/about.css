@@ -64,7 +64,8 @@
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
-    padding: 3rem;
+    padding: 2rem;
+    /* Reduced from 3rem */
     margin-bottom: 2rem;
     position: relative;
     overflow: hidden;
@@ -75,8 +76,10 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 4rem;
-    margin-bottom: 4rem;
+    gap: 2rem;
+    /* Reduced from 4rem */
+    margin-bottom: 0;
+    /* Reduced from 4rem to avoid double spacing with parent padding */
 }
 
 .mission-text {
