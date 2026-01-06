@@ -1,4 +1,4 @@
-# 🚀 100 Days of Web Development
+# 100 Days of Web Development
 
 Level up your **frontend skills** with this **100 Days of Web Development Challenge** using **HTML, CSS & JavaScript**. Build **mini-projects**, practice **daily coding**, and create a **portfolio-worthy collection**!  
 
@@ -122,7 +122,7 @@ This repository documents my **100 Days of Web Development journey**, where I:
 │   ├── 📁 day-47-banking-dashboard/
 │   ├── 📁 day-48-flight-booking-system/
 │   ├── 📁 day-49-recipe-sharing-platform/
-│   ├── 📁 day-50-blog-with-cms/
+│   ├── 📁 day-50-resume-builder/
 │   ├── 📁 day-51-portfolio-with-blog/
 │   ├── 📁 day-52-task-management-board/
 │   ├── 📁 day-53-file-uploader/
@@ -163,7 +163,7 @@ This repository documents my **100 Days of Web Development journey**, where I:
 │   ├── 📁 day-85-auction-platform/
 │   ├── 📁 day-86-freelance-marketplace/
 │   ├── 📁 day-87-music-streaming/
-│   ├── 📁 day-88-video-streaming/
+│   ├── 📁 day-88-Medicine-Reminder /
 │   ├── 📁 day-89-smart-home-dashboard/
 │   └── 📁 day-90-enterprise-crm/
 │
@@ -273,6 +273,7 @@ Then, modify the files to build your todo list functionality.
 
 ---
 
+
 ## 🔄 Git Workflow Guidelines
 
 To maintain a clean and collaborative codebase, follow these Git workflow guidelines:
@@ -312,3 +313,10 @@ To maintain a clean and collaborative codebase, follow these Git workflow guidel
 - Use `.gitignore` to exclude unnecessary files (e.g., `node_modules/`, `.env`).
 
 
+## 👥 Contributors Wall of Fame
+[![Contributors](https://contributors-img.web.app/image?repo=Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26&columns=50&animated=true)](https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26/graphs/contributors)
+
+
+
+
+**Happy Coding!**

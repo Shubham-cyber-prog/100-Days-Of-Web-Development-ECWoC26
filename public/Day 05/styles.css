@@ -4,7 +4,7 @@
     --background-color: #f5f6fa;
     --text-color: #2d3436;
     --display-bg: #dfe6e9;
-    --button-bg: #fff;
+    --button-bg: #ffffff;
     --button-shadow: #d1d8e0;
     --operator-color: #fd79a8;
 }
@@ -35,48 +35,39 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
 }
 
 .calculator-container {
-    width: 100%;
     max-width: 400px;
+    width: 100%;
     text-align: center;
 }
 
 h1 {
-    color: var(--primary-color);
     margin-bottom: 20px;
-    font-size: 2.5rem;
-    text-shadow: 0 0 10px rgba(108, 92, 231, 0.5);
+    color: var(--primary-color);
 }
 
 .calculator {
     border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .display {
     background-color: var(--display-bg);
     padding: 20px;
     text-align: right;
-    border-radius: 15px 15px 0 0;
-    margin-bottom: 5px;
 }
 
 .previous-operand {
-    min-height: 24px;
     font-size: 1.2rem;
-    color: rgba(45, 52, 54, 0.7);
-    overflow-wrap: break-word;
+    opacity: 0.7;
 }
 
 .current-operand {
     font-size: 2.5rem;
     font-weight: bold;
-    margin-top: 10px;
-    overflow-wrap: break-word;
 }
 
 .buttons {
@@ -85,29 +76,21 @@ h1 {
     gap: 10px;
     padding: 20px;
     background-color: var(--button-shadow);
-    border-radius: 0 0 15px 15px;
 }
 
 button {
     border: none;
     border-radius: 10px;
-    padding: 20px 0;
-    font-size: 1.5rem;
-    font-family: 'Orbitron', sans-serif;
+    padding: 20px;
+    font-size: 1.4rem;
     cursor: pointer;
     background-color: var(--button-bg);
-    color: var(--text-color);
     box-shadow: 0 4px 0 var(--button-shadow);
-    transition: transform 0.1s, box-shadow 0.1s;
 }
 
 button:active {
     transform: translateY(2px);
     box-shadow: 0 2px 0 var(--button-shadow);
-}
-
-.number {
-    font-weight: bold;
 }
 
 .operator {
@@ -119,39 +102,10 @@ button:active {
     grid-column: span 2;
 }
 
-#clear {
-    background-color: #ff7675;
-    color: white;
-}
-
-#delete {
-    background-color: #74b9ff;
-    color: white;
-}
-
-#equals {
-    background-color: var(--primary-color);
-    color: white;
-}
+#clear { background: #ff7675; color: white; }
+#delete { background: #74b9ff; color: white; }
+#equals { background: var(--primary-color); color: white; }
 
 .theme-toggle {
     margin-top: 20px;
-}
-
-#theme-switcher {
-    padding: 10px 20px;
-    background-color: var(--primary-color);
-    color: white;
-    border-radius: 50px;
-    font-size: 1rem;
-}
-
-@media (max-width: 480px) {
-    .calculator {
-        width: 100%;
-    }
-    
-    button {
-        padding: 15px 0;
-    }
 }
