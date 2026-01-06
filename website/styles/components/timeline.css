@@ -1,0 +1,133 @@
+/* Enhanced Flow Timeline */
+.timeline-section {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto 6rem;
+}
+
+.timeline-flow {
+    position: relative;
+    padding-left: 3rem;
+}
+
+/* The vertical line */
+.timeline-flow::before {
+    content: '';
+    position: absolute;
+    left: 11px;
+    /* Center of the 24px icon roughly */
+    top: 1rem;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent-primary), var(--bg-hover));
+}
+
+.timeline-node {
+    position: relative;
+    margin-bottom: 3rem;
+}
+
+.node-marker {
+    position: absolute;
+    left: -3rem;
+    top: 0;
+    width: 24px;
+    height: 24px;
+    background: var(--bg-primary);
+    border: 2px solid var(--accent-primary);
+    border-radius: 50%;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.node-marker svg {
+    width: 14px;
+    height: 14px;
+    color: var(--accent-primary);
+}
+
+.node-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+}
+
+.node-card:hover {
+    border-color: var(--text-tertiary);
+}
+
+.node-meta {
+    font-size: 0.8rem;
+    color: var(--accent-primary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+/* --- Timeline / Feed --- */
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+    border-left: 1px solid var(--border-color);
+    margin: 2rem 0;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 3rem;
+    padding-left: 1.5rem;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.45rem;
+    top: 0.4rem;
+    width: 0.8rem;
+    height: 0.8rem;
+    background: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+
+.timeline-item:hover::before {
+    border-color: var(--text-primary);
+    background: var(--text-primary);
+}
+
+.timeline-date {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.timeline-content {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+}
+
+.timeline-content:hover {
+    border-color: var(--text-tertiary);
+}
+
+.timeline-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-content p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+}

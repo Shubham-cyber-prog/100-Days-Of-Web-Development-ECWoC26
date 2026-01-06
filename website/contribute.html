@@ -5,7 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contribute | 100 Days of Code</title>
+
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="manifest" href="../manifest.webmanifest">
     <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="styles/main.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -13,14 +19,26 @@
 
 <body>
     <nav class="navbar">
-        <div class="logo">DevChallenge 🚀</div>
-        <ul class="nav-links">
-            <li><a href="/index.html" class="active">Home</a></li>
-            <li><a href="/website/projects.html">Projects</a></li>
-            <li><a href="/website/showcase.html">Contributors Projects</a></li>
-            <li><a href="/website/contribute.html">Contribute</a></li>
-            <li><a href="/website/structure.html">Structure</a></li>
-        </ul>
+        <div class="container nav-content">
+            <div class="logo">
+                <span>100</span> Days of Web
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contributors.html">Contributors</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5" />
+                    <path
+                        d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
+                </svg>
+            </button>
+        </div>
     </nav>
 
     <header class="projects-header">
@@ -32,24 +50,24 @@
 
         <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
             <div class="contribute-card">
-                <h2>👥 Who Can Contribute?</h2>
+                <h2>Who Can Contribute?</h2>
                 <p style="color: var(--text-secondary); margin-top: 1rem;">
                     Everyone! Whether you are a beginner, a student, or a seasoned developer. If you have the passion to
                     learn and share, this place is for you.
                 </p>
             </div>
             <div class="contribute-card">
-                <h2>🛠 Ways to Help</h2>
+                <h2>Ways to Help</h2>
                 <ul style="list-style: none; margin-top: 1rem; color: var(--text-secondary);">
-                    <li style="margin-bottom: 0.5rem">📚 <strong>Content:</strong> Fix typos, improve docs.</li>
-                    <li style="margin-bottom: 0.5rem">💻 <strong>Code:</strong> Add new projects, fix bugs.</li>
-                    <li style="margin-bottom: 0.5rem">🎨 <strong>Design:</strong> Improve UI/UX.</li>
+                    <li style="margin-bottom: 0.5rem"><strong>Content:</strong> Fix typos, improve docs.</li>
+                    <li style="margin-bottom: 0.5rem"><strong>Code:</strong> Add new projects, fix bugs.</li>
+                    <li style="margin-bottom: 0.5rem"><strong>Design:</strong> Improve UI/UX.</li>
                 </ul>
             </div>
         </section>
 
         <section class="contribute-card">
-            <h2>🚀 Quick Start Guide</h2>
+            <h2>Quick Start Guide</h2>
             <ol class="step-list" style="margin-top: 1.5rem;">
                 <li>
                     <strong>Fork the Repository</strong>
@@ -77,14 +95,13 @@
                 </li>
             </ol>
         </section>
-
-        <div style="text-align: center; margin: 3rem 0;">
-            <a href="https://github.com/Shubham-cyber-prog/100-days-of-web-development/blob/main/CONTRIBUTING.md"
-                class="btn" target="_blank">Read Full Guidelines</a>
+        
+        <div style="margin-top: 2rem; text-align: center;">
+            <a href="../CONTRIBUTING.md" class="btn">Read Full Guidelines</a>
         </div>
 
         <section>
-            <h2>✨ Hall of Fame</h2>
+            <h2>Hall of Fame</h2>
             <p style="color: var(--text-secondary); margin-bottom: 2rem;">
                 A huge thanks to all the amazing developers who have contributed to this journey!
             </p>
@@ -95,8 +112,97 @@
 
     </main>
 
-    <footer>
-        <p>Maintained by the Shubham-cyber-prog</p>
+    <footer class="main-footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>
+                    <svg class="icon icon-sm" viewBox="0 0 24 24">
+                        <path
+                            d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z">
+                        </path>
+                        <path
+                            d="M12 15l-3 3a2.21 2.21 0 0 0-.1 2.9c1.24 1.26 5 2 5 2s-.74-3.76-2-5a2.23 2.23 0 0 0-3 .1z">
+                        </path>
+                        <path d="M14.31 9.86 5 19"></path>
+                        <path d="M22 2 11 13"></path>
+                    </svg>
+                    100 Days Challenge
+                </h4>
+                <p class="footer-description">
+                    A community-driven journey to master web development through daily projects.
+                </p>
+                <div class="footer-socials">
+                    <a href="https://instagram.com" class="social-link" aria-label="Instagram">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <defs>
+                                <linearGradient id="ig-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#f09433;stop-opacity:1" />
+                                    <stop offset="25%" style="stop-color:#e6683c;stop-opacity:1" />
+                                    <stop offset="50%" style="stop-color:#dc2743;stop-opacity:1" />
+                                    <stop offset="75%" style="stop-color:#cc2366;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#bc1888;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="url(#ig-grad)"
+                                stroke-width="2" fill="none"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" stroke="url(#ig-grad)"
+                                stroke-width="2" fill="none"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="url(#ig-grad)" stroke-width="2"></line>
+                        </svg>
+                    </a>
+                    <a href="https://github.com" class="social-link" aria-label="GitHub">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24" fill="white">
+                            <path
+                                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="https://linkedin.com" class="social-link" aria-label="LinkedIn">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24" fill="#0077b5">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
+                            </path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="about.html">About Challenge</a></li>
+                    <li><a href="contributors.html">Contributors</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Technologies</h4>
+                <div class="tech-tags">
+                    <span class="tech-tag tag-html">HTML5</span>
+                    <span class="tech-tag tag-css">CSS3</span>
+                    <span class="tech-tag tag-js">JavaScript</span>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <div class="legal-links">
+                    <a href="#" class="legal-btn">Privacy Policy</a>
+                    <a href="#" class="legal-btn">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 100 Days of Web.</p>
+            <div class="created-by">
+                Maintained by <a href="#">Shubham</a> & Contributors
+            </div>
+        </div>
     </footer>
 
     <script src="theme.js"></script>
