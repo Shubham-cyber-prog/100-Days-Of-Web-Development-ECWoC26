@@ -48,7 +48,11 @@ const projects = [
     // ADVANCED & CAPSTONE - Follow same pattern
     { day: 61, title: "Doodle Jump Game", folder: "Day 61", level: "Advanced" },
     // ... add more as you complete them
+
     { day: 100, title: "Server Survival", folder: "Day100", level: "Capstone" }
+
+    { day: 100, title: "Server Survival", folder: "Day 100", level: "Capstone" }
+
 ];
 
 const repoBaseUrl = "https://github.com/Shubham-cyber-prog/100-days-of-web-development/tree/main/public/";
@@ -186,8 +190,23 @@ function renderProjects(category = 'All', searchQuery = '', preserveScroll = fal
             <h3>${project.title}</h3>
             <p>Project for Day ${project.day}</p>
             <div class="card-actions">
-                <a href="${liveBaseUrl}${project.folder}/index.html" target="_blank" class="btn-small">Live Demo</a>
-                <a href="${repoBaseUrl}${project.folder}" target="_blank" class="btn-small outline">View Code</a>
+                <a href="${liveBaseUrl}${project.folder}/index.html" target="_blank" class="btn-small" 
+                style="background: rgba(0, 255, 0, 0.3);
+                border: 1px solid rgba(0, 255, 0, 0.6);
+                box-shadow: 0 4px 30px rgba(0, 255, 0, 0.5);
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+                color: white;">
+                Live Demo</a>
+                <a href="${repoBaseUrl}${project.folder}" target="_blank" class="btn-small outline" 
+                style="background: rgba(0, 0, 255, 0.3);
+                border: 1px solid rgba(0, 0, 255, 0.6);
+                box-shadow: 0 4px 30px rgba(0, 0, 255, 0.5);
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+                color: white;
+                ">
+                View Code</a>
             </div>
         `;
         grid.appendChild(card);

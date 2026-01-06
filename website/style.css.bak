@@ -376,7 +376,11 @@ body.light-mode .navbar {
     color: var(--text-secondary);
     position: relative;
     padding: 0.5rem 0;
+<<<<<<< HEAD:website/style.css
+    transition: color 0.2s ease;
+=======
     transition: color var(--duration-fast) var(--ease-out);
+>>>>>>> main:website/style.css.bak
 }
 
 .nav-links a::after {
@@ -387,8 +391,12 @@ body.light-mode .navbar {
     width: 0;
     height: 2px;
     background: var(--text-primary);
+<<<<<<< HEAD:website/style.css
+    transition: width 0.3s ease;
+=======
     background: var(--text-primary);
     transition: width var(--duration-normal) var(--ease-out-quad);
+>>>>>>> main:website/style.css.bak
 }
 
 .nav-links a:hover::after,
@@ -413,12 +421,19 @@ body.light-mode .navbar {
     display: flex;
     align-items: center;
     justify-content: center;
+<<<<<<< HEAD:website/style.css
+    transition: all 0.2s ease;
+=======
     transition: all var(--duration-normal) var(--ease-out-quad);
+>>>>>>> main:website/style.css.bak
 }
 
 .theme-toggle:hover {
     color: var(--text-primary);
     background: var(--bg-hover);
+<<<<<<< HEAD:website/style.css
+    transform: rotate(15deg);
+=======
     transform: rotate(15deg) scale(1.1);
 }
 
@@ -455,12 +470,28 @@ main {
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
+>>>>>>> main:website/style.css.bak
 }
 
 .hero {
     padding: 4rem 0 3rem;
     text-align: center;
+<<<<<<< HEAD:website/style.css
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+=======
     /* Animation handled by main wrapper now, but can stagger if needed */
+>>>>>>> main:website/style.css.bak
 }
 
 .hero h1 {
@@ -756,16 +787,23 @@ main {
     border-radius: var(--radius-md);
     font-weight: 600;
     font-size: 0.95rem;
+<<<<<<< HEAD:website/style.css
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+=======
     transition: all var(--duration-normal) var(--ease-out-quad);
+>>>>>>> main:website/style.css.bak
     cursor: pointer;
     border: 1px solid transparent;
     position: relative;
     overflow: hidden;
+<<<<<<< HEAD:website/style.css
+=======
     transform: scale(1);
 }
 
 .btn:active {
     transform: scale(0.97);
+>>>>>>> main:website/style.css.bak
 }
 
 .btn::before {

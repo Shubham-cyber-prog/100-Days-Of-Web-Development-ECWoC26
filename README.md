@@ -163,7 +163,7 @@ This repository documents my **100 Days of Web Development journey**, where I:
 │   ├── 📁 day-85-auction-platform/
 │   ├── 📁 day-86-freelance-marketplace/
 │   ├── 📁 day-87-music-streaming/
-│   ├── 📁 day-88-video-streaming/
+│   ├── 📁 day-88-Medicine-Reminder /
 │   ├── 📁 day-89-smart-home-dashboard/
 │   └── 📁 day-90-enterprise-crm/
 │

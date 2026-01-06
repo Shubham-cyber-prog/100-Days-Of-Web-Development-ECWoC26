@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel=stylesheet href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Schoolbell&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="bg-img"></div>
+    <div class="container">
+        <div class="todo-app">
+            <h1>To-Do App</h1>
+            <div class="stat-container">
+                <div class="details">
+                    <h3>Keep it Up!</h3>
+
+                    <div id="progressbar">
+                        <div id="progress"></div>
+                    </div>
+                </div>
+                <div class="stat-number">
+                    <p id="progress-nos">0/0</p>
+                </div>
+            </div>
+            <form action="" class="input-area">
+                <input type="text" id="task-input" placeholder="Add a new task...">
+                <button type="button"><i class="fa-solid fa-plus"></i></button>
+            </form>
+            <div class="todos-container">
+                <ul id="task-list"></ul>
+                <img class="empty-img" src="assets/Checklist-rafiki (2).svg" alt="">
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
+</body>
+
+</html>
