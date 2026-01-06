@@ -5,11 +5,6 @@ on:
   # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
-    paths:
-      - 'website/**'
-      - 'index.html'
-      - 'public/**'
-      - '.github/workflows/static.yml'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -41,8 +36,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload root directory containing index.html
-          path: './'
+          # Upload entire repository
+          path: '.'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
