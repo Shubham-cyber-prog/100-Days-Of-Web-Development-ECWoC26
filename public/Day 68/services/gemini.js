@@ -1,9 +1,4 @@
-const API_URL =
-<<<<<<< HEAD
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=Your_API_key_here";
-=======
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=Your Api key here";
->>>>>>> 03bfa1b (updated api key)
+const API_URL ="https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=Your_API_key_here";
 
 export async function askGemini(text, imageBase64 = null) {
   const parts = [];
