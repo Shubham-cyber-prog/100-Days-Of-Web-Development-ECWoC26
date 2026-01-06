@@ -1,73 +1,85 @@
 :root {
-    /* Darker glass for better contrast */
-    --glass: rgba(0, 0, 0, 0.75);
-    --glass-border: rgba(255, 255, 255, 0.1);
+    --primary: #4361ee;
+    --secondary: #3f37c9;
+    --accent: #4cc9f0;
+    --light: #f8f9fa;
+    --dark: #212529;
+    --glass: rgba(255, 255, 255, 0.15);
+    --glass-border: rgba(255, 255, 255, 0.2);
     --text: #ffffff;
-    --accent: #00d4ff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
 }
 
 body {
+    font-family: 'Poppins', sans-serif;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Keeps the vibrant animated background */
-    background: linear-gradient(45deg, #FF3CAC, #784BA0, #2B86C5);
-    background-size: 400% 400%;
-    animation: gradientBG 10s ease infinite;
     color: var(--text);
+    overflow-y: auto;
+    position: relative;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); /* Simple gradient fallback */
 }
 
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* THE CARD - Now darker and more solid */
 .card {
     background: var(--glass);
-    /* High blur to hide the background details behind text */
-    backdrop-filter: blur(25px); 
-    -webkit-backdrop-filter: blur(25px);
-    padding: 2.5rem;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-radius: 24px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--shadow);
     border: 1px solid var(--glass-border);
+    padding: 2.5rem;
+    transition: var(--transition);
+    position: relative;
+    /* overflow-x: hidden; */
+    max-width: 400px;
     width: 90%;
-    max-width: 420px;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card::before {
+    display: none;
+    content: '';
+    /* max-width: 95%; */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    border-radius: 24px 24px 0 0;
 }
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 15px 40px rgba(31, 38, 135, 0.3);
 }
 
-/* Search Box */
 .search-box {
+    /* overflow-x: hidden; */
     display: flex;
     align-items: center;
-    /* Lighter background to pop against the dark card */
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 50px;
     padding: 12px 20px;
-    margin-bottom: 30px;
-    transition: background 0.3s;
+    margin-bottom: 1rem;
+    transition: var(--transition);
+    position: relative;
 }
 
 .search-box:focus-within {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.2);
     border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.2);
 }
 
 input {
@@ -76,20 +88,26 @@ input {
     border: none;
     outline: none;
     color: #fff;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 500;
 }
 
 input::placeholder {
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-secondary);
 }
 
 button {
     background: transparent;
     border: none;
     cursor: pointer;
-    color: #fff;
-    transition: transform 0.2s, color 0.2s;
+    color: var(--text);
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    margin-left: 10px;
 }
 
 button:hover {
@@ -97,10 +115,14 @@ button:hover {
     color: var(--accent);
 }
 
-/* Weather Info */
+svg {
+    width: 20px;
+    height: 20px;
+}
+
 .weather-data {
     opacity: 1;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.5s ease;
 }
 
 .weather-data.hidden {
@@ -111,69 +133,67 @@ button:hover {
 .city-name {
     font-size: 1.8rem;
     font-weight: 600;
-    margin-bottom: 5px;
+    margin-bottom: 1rem;
+    text-align: center;
     letter-spacing: 0.5px;
 }
 
 .temp-box {
-    margin: 25px 0;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
 }
 
 .temperature {
-    font-size: 5rem;
+    font-size: 4rem;
     font-weight: 700;
     line-height: 1;
-    background: -webkit-linear-gradient(#fff, #bbb);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--text);
+    margin-right: 0.5rem;
 }
 
 .unit {
-    font-size: 2rem;
-    vertical-align: top;
+    font-size: 1.5rem;
     color: var(--accent);
     font-weight: 400;
 }
 
 .condition {
-    font-size: 1.3rem;
-    margin-bottom: 35px;
-    font-weight: 400;
-    text-transform: capitalize;
-    color: #eee;
-    background: rgba(255,255,255,0.1);
-    display: inline-block;
-    padding: 5px 15px;
-    border-radius: 20px;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    font-weight: 500;
+    text-align: center;
+    color: var(--text-secondary);
 }
 
 .details {
     display: flex;
-    justify-content: space-around; /* Better spacing */
-    padding: 0 10px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: 20px;
+    justify-content: space-around;
+    margin-bottom: 1rem;
 }
 
 .col {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
+    flex: 1;
 }
 
 .label {
     font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--text-secondary);
     margin-bottom: 5px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    font-weight: 500;
 }
 
 .val {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 600;
-    color: var(--accent);
+    color: var(--text);
 }
 
 /* Loader & Error */
@@ -191,12 +211,31 @@ button:hover {
 .error-msg {
     color: #ff6b6b;
     background: rgba(255, 0, 0, 0.1);
-    padding: 10px;
-    border-radius: 8px;
+    padding: 12px;
+    border-radius: 12px;
     margin-bottom: 20px;
     display: none;
     font-size: 0.95rem;
+    text-align: center;
     animation: shake 0.5s;
+    border: 1px solid rgba(255, 107, 107, 0.3);
+}
+
+/* Suggestions Dropdown */
+#suggestions {
+    color: #212529;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 6px;
+    width: 100%;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    max-height: 250px;
+    overflow-y: auto;
+    z-index: 999;
+    display: none;
 }
 
 @keyframes spin {
@@ -212,17 +251,19 @@ button:hover {
     100% { transform: translateX(0); }
 }
 
-#suggestions {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    margin-top: 6px;
-    width: 100%;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    max-height: 250px;
-    overflow-y: auto;
-    z-index: 999;
-    display: none;
+/* Responsive */
+@media (max-width: 480px) {
+    .card {
+        padding: 2rem 1.5rem;
+        margin: 20px;
+    }
+    
+    .temperature {
+        font-size: 3rem;
+    }
+    
+    .details {
+        flex-direction: column;
+        gap: 1rem;
+    }
 }
