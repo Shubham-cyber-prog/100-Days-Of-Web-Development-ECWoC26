@@ -1,0 +1,75 @@
+* {
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: #f4f6f9;
+}
+
+.dashboard {
+    padding: 20px;
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin-bottom: 5px;
+}
+
+header p {
+    color: #555;
+}
+
+/* KPI Cards */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.card {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+}
+
+.card h3 {
+    font-size: 13px;
+    color: #666;
+}
+
+.card p {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+/* Charts */
+.charts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+}
+
+.chart-box {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    height: 260px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+}
+
+.chart-box.full {
+    grid-column: span 2;
+}
+
+.chart-box canvas {
+    height: 100% !important;
+}
