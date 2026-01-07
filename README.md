@@ -1,4 +1,5 @@
-# 100 Days of Web Development
+
+![100 Days 100 Projects Banner](https://capsule-render.vercel.app/api?type=waving&color=0:1E90FF,50:9370DB,100:0000CD&height=250&section=header&text=100%20Days%20100%20Projects&fontSize=65&fontAlignY=40&fontColor=ffffff&animation=fadeIn&stroke=00BFFF&strokeWidth=2)
 
 Level up your **frontend skills** with this **100 Days of Web Development Challenge** using **HTML, CSS & JavaScript**. Build **mini-projects**, practice **daily coding**, and create a **portfolio-worthy collection**!  
 
