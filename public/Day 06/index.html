@@ -21,29 +21,29 @@
             <p>Test your knowledge and challenge your mind!</p>
         </div>
 
-        <div class="screen active" id="start-screen">
-            <div class="category-selector">
-                <button class="category-btn active" data-category="general">General</button>
-                <button class="category-btn" data-category="science">Science</button>
-                <button class="category-btn" data-category="history">History</button>
-                <button class="category-btn" data-category="geography">Geography</button>
+        <div class="screen active" id="start-screen" role="region" aria-label="Start Screen">
+            <div class="category-selector" role="group" aria-label="Quiz Categories">
+                <button class="category-btn active" data-category="general" aria-pressed="true">General</button>
+                <button class="category-btn" data-category="science" aria-pressed="false">Science</button>
+                <button class="category-btn" data-category="history" aria-pressed="false">History</button>
+                <button class="category-btn" data-category="geography" aria-pressed="false">Geography</button>
             </div>
 
-            <div class="difficulty-selector">
-                <button class="difficulty-btn" data-difficulty="easy">E</button>
-                <button class="difficulty-btn active" data-difficulty="medium">M</button>
-                <button class="difficulty-btn" data-difficulty="hard">H</button>
+            <div class="difficulty-selector" role="group" aria-label="Difficulty Levels">
+                <button class="difficulty-btn" data-difficulty="easy" aria-pressed="false" aria-label="Easy">E</button>
+                <button class="difficulty-btn active" data-difficulty="medium" aria-pressed="true" aria-label="Medium">M</button>
+                <button class="difficulty-btn" data-difficulty="hard" aria-pressed="false" aria-label="Hard">H</button>
             </div>
 
             <button id="start-btn" class="btn">Start Quiz</button>
         </div>
 
-        <div class="screen" id="quiz-screen">
+        <div class="screen" id="quiz-screen" role="region" aria-label="Quiz Screen" aria-live="polite">
             <div class="quiz-header">
                 <h2 id="question-text">Question goes here</h2>
                 <div class="quiz-info">
                     <p>Question <span id="current-question">1</span> of <span id="total-question">5</span></p>
-                    <div class="timer-container">
+                    <div class="timer-container" role="timer" aria-live="assertive" aria-atomic="true">
                         <i class="fas fa-clock"></i>
                         <span id="timer">15</span>s
                     </div>
@@ -52,22 +52,22 @@
             </div>
 
             <div class="progress-container">
-                <div class="progress-bar">
+                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
                     <div id="progress" class="progress"></div>
                 </div>
             </div>
 
-            <div id="answer-container" class="answer-container"></div>
+            <div id="answer-container" class="answer-container" role="group" aria-label="Answer Options"></div>
         </div>
 
-        <div id="result-screen" class="screen result-screen">
+        <div id="result-screen" class="screen result-screen" role="region" aria-label="Quiz Results">
             <h1>Quiz Results</h1>
             <div class="result-info">
-                <div class="score-circle" style="--score: 0">
+                <div class="score-circle" style="--score: 0" role="img" aria-label="Score visualization">
                     <div class="score-text">0%</div>
                 </div>
                 <p>You scored <span id="final-score">0</span> out of <span id="max-score">5</span></p>
-                <div id="result-message">Good Job!</div>
+                <div id="result-message" role="status" aria-live="polite">Good Job!</div>
                 <div class="result-stats">
                     <div class="stat">
                         <div class="stat-value" id="correct-answers">0</div>
