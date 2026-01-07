@@ -1,0 +1,18 @@
+[
+  {
+    "username": "Shubham-cyber-prog",
+    "avatar": "https://github.com/github.png",
+    "profileUrl": "https://github.com/Shubham-cyber-prog",
+    "completedDays": [1, 2, 3, 4, 5, 10, 15, 20],
+    "currentProject": "Fitness Tracker",
+    "status": "active"
+  },
+  {
+    "username": "Gaurav Karakoti",
+    "avatar": "https://github.com/github.png",
+    "profileUrl": "https://github.com/GauravKarakoti",
+    "completedDays": [1, 2, 3],
+    "currentProject": "Todo List",
+    "status": "beginner"
+  }
+]

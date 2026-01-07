@@ -1,0 +1,209 @@
+/* --- Search --- */
+.search-container {
+    position: relative;
+    max-width: 400px;
+    width: 100%;
+}
+
+.search-input {
+    width: 100%;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1rem 0.75rem 2.8rem;
+    /* Space for icon */
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.search-input:focus {
+    border-color: var(--text-tertiary);
+    background: var(--bg-hover);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.05);
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    pointer-events: none;
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Inputs */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.input-wrapper .form-input {
+    width: 100%;
+    /* Match button length */
+    background: var(--bg-hover);
+    border: none;
+    border-bottom: 2px solid transparent;
+    border-radius: 4px;
+    padding: 0.8rem 1rem;
+    /* Slightly more space as requested */
+    font-size: 1rem;
+    transition: all 0.2s;
+    box-sizing: border-box;
+    /* Ensure padding doesn't increase width */
+    color: #fff;
+    /* Ensure text is visible on dark background */
+}
+
+.input-wrapper .form-input.error {
+    border-bottom-color: #ef4444;
+}
+
+.input-wrapper .form-input:focus {
+    background: var(--bg-hover);
+    border-bottom-color: var(--text-primary);
+    outline: none;
+    box-shadow: none;
+}
+
+/* Form inputs */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    left: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    pointer-events: none;
+}
+
+/* Options */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-items: center;
+    margin-bottom: 1.25rem;
+    font-size: 0.9rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+    user-select: none;
+}
+
+.checkbox-label input {
+    display: none;
+}
+
+.checkbox-custom {
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--bg-hover);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.checkbox-label input:checked+.checkbox-custom {
+    background: var(--text-primary);
+    border-color: var(--text-primary);
+}
+
+.checkbox-label input:checked+.checkbox-custom::after {
+    content: '✓';
+    font-size: 12px;
+    color: var(--bg-primary);
+    font-weight: bold;
+}
+
+/* Contact Form Specifics */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+@media (max-width: 600px) {
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.required {
+    color: #f43f5e;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 0.85rem 1rem;
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    font-size: 0.95rem;
+    resize: vertical;
+    transition: all 0.3s ease;
+}
+
+.form-group input:hover,
+.form-group textarea:hover {
+    border-color: var(--text-tertiary);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--accent-secondary);
+    background: rgba(255, 255, 255, 0.02);
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.form-note {
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+    text-align: center;
+    margin-top: 1rem;
+}
