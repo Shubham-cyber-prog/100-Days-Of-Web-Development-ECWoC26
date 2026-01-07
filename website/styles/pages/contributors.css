@@ -1,2 +1,74 @@
-/* Page specific styles for Contributors */
-/* Currently handled by components, but reserved for future overrides */
+/* --- Contributors --- */
+.contributors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
+.contributor-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: all 0.2s;
+    text-decoration: none;
+    /* Ensure link underline doesn't interfere */
+}
+
+.contributor-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--text-secondary);
+    background: var(--bg-hover);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+}
+
+.contributor-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--bg-hover);
+    margin-bottom: 1rem;
+    object-fit: cover;
+    border: 2px solid var(--border-color);
+}
+
+.contributor-info h3,
+.contributor-name {
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+    color: var(--text-primary);
+    font-weight: 600;
+    display: block;
+}
+
+.contributor-stats,
+.contributor-commits {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.highlight-count {
+    color: var(--accent-secondary);
+    /* Blue or distinct color */
+    font-weight: 800;
+    font-size: 1.1em;
+}
+
+.view-profile {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    margin-top: 0.5rem;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.contributor-card:hover .view-profile {
+    opacity: 1;
+    color: var(--accent-secondary);
+}

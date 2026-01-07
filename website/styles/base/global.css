@@ -21,6 +21,12 @@ body.light-mode {
     --badge-text: #18181b;
 }
 
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 body {
     font-family: var(--font-main);
     background-color: var(--bg-primary);
@@ -35,11 +41,7 @@ body {
 a {
     text-decoration: none;
     color: inherit;
-    transition: color 0.2s ease;
-}
-
-ul {
-    list-style: none;
+    transform: translateY(-2px);
 }
 
 /* --- SVG Icons Utility --- */
@@ -58,5 +60,9 @@ ul {
 
 .icon-lg {
     width: 32px;
-    height: 32px;
+
+
+    @media (max-width: 768px) {
+        /* Padding handled in footer.css now */
+    }
 }

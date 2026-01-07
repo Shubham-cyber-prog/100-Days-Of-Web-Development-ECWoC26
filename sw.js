@@ -19,7 +19,7 @@ const CORE_ASSETS = [
   'website/login.html',
   'website/contribute.html',
 
-  'website/showcase.json',
+
   'website/community.json',
 
   'manifest.webmanifest',

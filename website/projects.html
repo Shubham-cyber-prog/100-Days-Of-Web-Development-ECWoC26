@@ -8,8 +8,6 @@
 
     <meta name="theme-color" content="#0a0a0a">
     <link rel="manifest" href="../manifest.webmanifest">
-    <link rel="stylesheet" href="style.css">
-
     <link rel="stylesheet" href="styles/main.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,76 +48,54 @@
             <h1>Project Compendium</h1>
             <p>A searchable archive of all 100 web development projects.</p>
 
-            <div class="search-container" style="margin: 2rem auto 0;">
-                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="11" cy="11" r="8" />
-                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                </svg>
-                <input type="text" id="projectSearch" class="search-input"
-                    placeholder="Search by title, day, or tech...">
-                <button id="clearSearch" class="clear-search-btn" aria-label="Clear search">
-                    ✕
-                </button>
-            </div>
+            <div class="projects-controls">
+                <div class="search-container">
+                    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                    <input type="text" id="projectSearch" class="search-input"
+                        placeholder="Search by title, day, or tech...">
+                    <button id="clearSearch" class="clear-search-btn" aria-label="Clear search">
+                        ✕
+                    </button>
+                </div>
 
-            <div class="filters-container" style="margin: 2rem auto 0; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                <select id="difficultyFilter" class="filter-select">
-                    <option value="All">All Difficulties</option>
-                    <option value="Beginner">Beginner</option>
-                    <option value="Intermediate">Intermediate</option>
-                    <option value="Advanced">Advanced</option>
-                    <option value="Capstone">Capstone</option>
-                </select>
-
-                <div class="tech-filters">
-                    <label>Technologies:</label>
-                    <div class="tech-checkboxes">
-                        <label><input type="checkbox" value="HTML" checked> HTML</label>
-                        <label><input type="checkbox" value="CSS" checked> CSS</label>
-                        <label><input type="checkbox" value="JS" checked> JS</label>
-                        <label><input type="checkbox" value="API"> API</label>
-                        <label><input type="checkbox" value="Canvas"> Canvas</label>
-                        <label><input type="checkbox" value="React"> React</label>
-                    </div>
+                <!-- Filter Buttons -->
+                <div class="filter-tabs" aria-label="Project filters">
+                    <button class="tab-btn active" data-category="All">All Projects</button>
+                    <button class="tab-btn" data-category="Beginner">🟢 Beginner</button>
+                    <button class="tab-btn" data-category="Intermediate">🟡 Intermediate</button>
+                    <button class="tab-btn" data-category="Advanced">🟣 Advanced</button>
                 </div>
             </div>
-
-            
-
         </header>
 
         <section class="container">
 
-            <!-- Filter Buttons: All/Beginner/Intermediate/Advanced (All active) -->
-            <div class="filter-tabs" aria-label="Project filters" style="margin-bottom: 1.5rem;">
-                <button class="tab-btn active" data-category="All">All Projects</button>
-                <button class="tab-btn" data-category="Beginner">🟢 Beginner</button>
-                <button class="tab-btn" data-category="Intermediate">🟡 Intermediate</button>
-                <button class="tab-btn" data-category="Advanced">🟣 Advanced</button>
-            </div>
-
             <div id="projects-grid" class="projects-grid">
                 <!-- Injected by script.js -->
 
-<div class="project-card">
-<div class="card-header">
-    <span class="day-number">Day 45</span>
-    <span class="badge">Beginner</span>
-        <h3>Insta Boi Bio Generator</h3>
-        <p>Day 45 - Generate catchy Instagram bios with a click!</p>
-        <div class="card-action">
-            <a href="insta-bio-suggesstion.html">live demo</a>
-        </div>
+                <div class="project-card">
+                    <div class="card-header">
+                        <span class="day-number">Day 45</span>
+                        <span class="badge">Beginner</span>
+                        <h3>Insta Boi Bio Generator</h3>
+                        <p>Day 45 - Generate catchy Instagram bios with a click!</p>
+                        <div class="card-action">
+                            <a href="insta-bio-suggesstion.html">live demo</a>
+                        </div>
 
-</div></div>
-                
+                    </div>
+                </div>
+
             </div>
 
         </section>
-        
+
     </main>
-    
+
     <footer class="main-footer">
         <div class="footer-grid">
             <div class="footer-col">
