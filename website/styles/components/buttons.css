@@ -105,13 +105,6 @@
     background: var(--bg-hover);
 }
 
-/* New Horizontal Social Row */
-.social-row {
-    display: flex;
-    gap: 0.8rem;
-    margin-top: 0.5rem;
-}
-
 .btn-social {
     flex: 1;
     display: flex;
@@ -129,10 +122,4 @@
     background: var(--bg-hover);
     transform: translateY(-1px);
     border-color: var(--text-primary);
-}
-
-.btn-block {
-    width: 100%;
-    padding: 0.85rem;
-    font-size: 1rem;
 }

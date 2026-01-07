@@ -1,3 +1,4 @@
+/* --- Header / Hero --- */
 .hero {
     padding: 4rem 0 3rem;
     text-align: center;
@@ -24,33 +25,8 @@
     line-height: 1.6;
 }
 
-
-
-/* --- Standardized Internal Page Header --- */
-.page-hero {
-    text-align: center;
-    padding: 3rem 0 2.5rem;
-    /* Compact vertical matching user request */
-    max-width: 800px;
-    margin: 0 auto;
-    animation: enter var(--duration-normal) var(--ease-out-quad) forwards;
-}
-
-.page-hero h1 {
-    font-size: 2.5rem;
-    background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 1rem;
-    letter-spacing: -0.5px;
-    line-height: 1.2;
-}
-
-.page-hero p {
-    color: var(--text-secondary);
-    font-size: 1.1rem;
-    line-height: 1.6;
-    max-width: 600px;
-    margin: 0 auto;
+@media (max-width: 640px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
 }

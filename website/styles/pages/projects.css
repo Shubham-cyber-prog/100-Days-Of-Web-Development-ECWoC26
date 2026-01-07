@@ -1,2 +1,79 @@
-/* Page specific styles to ensure specificity overrides for Projects */
-/* Currently handled by components, but reserved for future overrides */
+/* --- Projects Layout --- */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    /* Slightly wider cards */
+    gap: 2rem;
+    padding-bottom: 6rem;
+}
+
+/* ===== CONTROLS SECTION ===== */
+.projects-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 2.5rem;
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+.search-container {
+    max-width: 500px;
+    /* Wider search bar */
+    width: 100%;
+}
+
+/* ===== FILTER TABS ===== */
+.filter-tabs {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.tab-btn {
+    padding: 0.6rem 1.25rem;
+    background: var(--bg-card);
+    /* Glass-like if alpha */
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 100px;
+    /* Full pill shape */
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tab-btn:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+    transform: translateY(-2px);
+    border-color: var(--text-tertiary);
+}
+
+.tab-btn.active {
+    background: var(--text-primary);
+    /* Solid accent */
+    color: var(--bg-primary);
+    /* Inverted text */
+    border-color: var(--text-primary);
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 640px) {
+    .tab-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+        /* Single column on mobile */
+    }
+}

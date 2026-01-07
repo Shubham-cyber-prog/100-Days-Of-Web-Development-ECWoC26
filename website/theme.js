@@ -1,3 +1,10 @@
+
+// Theme Toggle Functionality
+(function() {
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+    
+
 document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('themeToggle');
     const body = document.body;
@@ -20,16 +27,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // Apply the theme on page load
     if (currentTheme === 'light') {
         body.classList.add('light-mode');
+
+
         updateIcon(true);
     } else {
         updateIcon(false);
+
     }
     
     // Toggle theme on button click
     if (themeToggle) {
         themeToggle.addEventListener('click', () => {
             body.classList.toggle('light-mode');
-            
+
+            // Save the preference
+            const theme = body.classList.contains('light-mode') ? 'light' : 'dark';
+            localStorage.setItem('theme', theme);
+        });
+    }
+})();
+
             const isLight = body.classList.contains('light-mode');
             
             // Update Icon
@@ -50,3 +67,4 @@ if ('serviceWorker' in navigator) {
         });
     });
 }
+

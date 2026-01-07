@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('userEmail', email);
 
                 // Redirect
-                window.location.href = '../index.html';
+                window.location.href = 'dashboard.html';
             }, 1500);
         }
     });
@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 localStorage.setItem('isAuthenticated', 'true');
                 localStorage.setItem('userEmail', 'social_user@example.com');
-                window.location.href = '../index.html';
+                window.location.href = 'dashboard.html';
             }, 1000);
         });
     });

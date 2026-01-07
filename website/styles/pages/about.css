@@ -60,11 +60,40 @@
     font-family: var(--font-mono);
 }
 
+/* --- Standardized Internal Page Header --- */
+.page-hero {
+    text-align: center;
+    padding: 3rem 0 2.5rem;
+    /* Compact vertical matching user request */
+    max-width: 800px;
+    margin: 0 auto;
+    animation: enter var(--duration-normal) var(--ease-out-quad) forwards;
+}
+
+.page-hero h1 {
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+
+.page-hero p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
 .section-box {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
-    padding: 3rem;
+    padding: 2rem;
     margin-bottom: 2rem;
     position: relative;
     overflow: hidden;
@@ -75,8 +104,8 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 4rem;
-    margin-bottom: 4rem;
+    gap: 2rem;
+    margin-bottom: 0;
 }
 
 .mission-text {
@@ -121,4 +150,50 @@
     font-weight: 800;
     color: var(--text-primary);
     z-index: 1;
+}
+
+/* Features Grid (Pro Cards) */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+}
+
+.feature-card {
+    background: var(--bg-secondary);
+    padding: 2rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    transition: all var(--duration-normal) var(--ease-out-quad);
+}
+
+.feature-card:hover {
+    border-color: var(--text-secondary);
+    transform: translateY(-4px);
+    background: var(--bg-hover);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+}
+
+.feature-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.feature-icon-box {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-hover);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+}
+
+.feature-card h3 {
+    font-size: 1.1rem;
+    color: var(--text-primary);
 }

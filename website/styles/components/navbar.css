@@ -11,6 +11,38 @@
     transition: all 0.3s ease;
 }
 
+@media (max-width: 768px) {
+
+    .nav-content {
+        padding: 0 1rem;
+        /* reduce horizontal padding */
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+    }
+
+    .nav-links {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+        /* reduced from 2rem */
+        margin-top: 0.5rem;
+        flex-basis: 100%;
+    }
+
+    .nav-links a {
+        padding: 0.4rem 0;
+        white-space: nowrap;
+        font-size: 0.85rem;
+    }
+
+    .theme-toggle {
+        margin-left: auto;
+    }
+}
+
 body.light-mode .navbar {
     background: rgba(255, 255, 255, 0.85);
 }
@@ -112,4 +144,10 @@ body.light-mode .navbar {
 
 .theme-toggle:active {
     transform: rotate(15deg) scale(0.95);
+}
+
+@media (max-width: 640px) {
+    .nav-links {
+        display: none;
+    }
 }
