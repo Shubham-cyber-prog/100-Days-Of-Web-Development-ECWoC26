@@ -111,6 +111,7 @@
 
         nav ul {
             display: flex;
+            align-items: center;
             list-style: none;
             gap: 30px;
         }
@@ -121,11 +122,11 @@
             position: relative;
         }
 
-        nav ul li a:hover {
+        nav ul li a:not(.btn):hover {
             color: var(--primary-color);
         }
 
-        nav ul li a::after {
+        nav ul li a:not(.btn)::after {
             content: '';
             position: absolute;
             bottom: -5px;
@@ -136,12 +137,13 @@
             transition: var(--transition);
         }
 
-        nav ul li a:hover::after {
+        nav ul li a:not(.btn):hover::after {
             width: 100%;
         }
 
         .mobile-menu-btn {
             display: none;
+            margin-left: auto;
             background: none;
             border: none;
             font-size: 1.5rem;
@@ -487,22 +489,7 @@
 
         /* Responsive Design */
         @media (max-width: 992px) {
-            .hero-content h1 {
-                font-size: 2.8rem;
-            }
-            
-            .hero-container {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .hero-btns {
-                justify-content: center;
-            }
-        }
-
-        @media (max-width: 768px) {
-            nav ul {
+             nav ul {
                 position: fixed;
                 top: 80px;
                 left: 0;
@@ -527,6 +514,21 @@
                 display: block;
             }
 
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-btns {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
             .hero-content h1 {
                 font-size: 2.3rem;
             }
