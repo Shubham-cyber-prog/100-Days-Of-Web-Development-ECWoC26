@@ -4,32 +4,41 @@ document.addEventListener('DOMContentLoaded', () => {
     const barFill = document.getElementById('progressBarFill');
     const totalDays = 100;
 
-    // 1. Load progress from localStorage (or initialize empty array)
-    let progress = JSON.parse(localStorage.getItem('webDev100Progress')) || [];
+    // 1. Auto-sync progress from projects array if available
+    let progress = [];
+    
+    if (typeof projects !== 'undefined') {
+        // Filter projects that are NOT "Coming Soon"
+        const completedProjects = projects.filter(p => 
+            p.title !== "Coming Soon" && 
+            p.title.length > 0
+        );
+        progress = completedProjects.map(p => p.day);
+        
+        // Update localStorage to match reality
+        localStorage.setItem('webDev100Progress', JSON.stringify(progress));
+    } else {
+        // Fallback for when script.js isn't loaded or projects is undefined
+        progress = JSON.parse(localStorage.getItem('webDev100Progress')) || [];
+    }
 
     // 2. Function to update stats (text and progress bar)
     function updateStats() {
         const completed = progress.length;
         countSpan.textContent = completed;
+        
+        // Update circular progress or bar if they exist
+        if (barFill) {
+             const percentage = (completed / totalDays) * 100;
+             barFill.style.width = `${percentage}%`;
+        }
     }
 
-    // 3. Function to toggle a day's status
+    // 3. Toggle disabled for auto-mode, or purely for visual play (doesn't save)
     function toggleDay(dayNumber, boxElement) {
-        if (progress.includes(dayNumber)) {
-            // Remove from progress
-            progress = progress.filter(d => d !== dayNumber);
-            boxElement.classList.remove('completed');
-        } else {
-            // Add to progress
-            progress.push(dayNumber);
-            boxElement.classList.add('completed');
-
-            // Optional: Add a little confetti effect or log here
-        }
-
-        // Save to Local Storage
-        localStorage.setItem('webDev100Progress', JSON.stringify(progress));
-        updateStats();
+       // Optional: Make it read-only or just a visual effect
+       // For now, we'll keep it read-only to reflect the "Auto Update" request
+       // console.log("Tracker is in auto-mode based on repo contents.");
     }
 
     // 4. Render the 100 boxes in 4 columns (Quarters) of 25
@@ -46,14 +55,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 const dayNum = (q * 25) + i;
                 const box = document.createElement('div');
                 box.className = 'day-cell';
-                box.setAttribute('data-tooltip', `Day ${dayNum}`);
-
+                
                 // Check if completed
                 if (progress.includes(dayNum)) {
                     box.classList.add('completed');
                 }
 
                 // Add click event
+                box.textContent = dayNum; // Show number inside
                 box.addEventListener('click', () => toggleDay(dayNum, box));
                 quarterBlock.appendChild(box);
             }

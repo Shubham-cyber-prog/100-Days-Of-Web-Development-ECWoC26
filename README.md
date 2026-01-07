@@ -1,4 +1,4 @@
-# 🚀 100 Days of Web Development
+# 100 Days of Web Development
 
 Level up your **frontend skills** with this **100 Days of Web Development Challenge** using **HTML, CSS & JavaScript**. Build **mini-projects**, practice **daily coding**, and create a **portfolio-worthy collection**!  
 
@@ -122,7 +122,7 @@ This repository documents my **100 Days of Web Development journey**, where I:
 │   ├── 📁 day-47-banking-dashboard/
 │   ├── 📁 day-48-flight-booking-system/
 │   ├── 📁 day-49-recipe-sharing-platform/
-│   ├── 📁 day-50-blog-with-cms/
+│   ├── 📁 day-50-resume-builder/
 │   ├── 📁 day-51-portfolio-with-blog/
 │   ├── 📁 day-52-task-management-board/
 │   ├── 📁 day-53-file-uploader/
@@ -163,7 +163,7 @@ This repository documents my **100 Days of Web Development journey**, where I:
 │   ├── 📁 day-85-auction-platform/
 │   ├── 📁 day-86-freelance-marketplace/
 │   ├── 📁 day-87-music-streaming/
-│   ├── 📁 day-88-video-streaming/
+│   ├── 📁 day-88-Medicine-Reminder /
 │   ├── 📁 day-89-smart-home-dashboard/
 │   └── 📁 day-90-enterprise-crm/
 │
@@ -202,91 +202,114 @@ This repository documents my **100 Days of Web Development journey**, where I:
 ```
                # Dependencies configuration
 
+---
 
-- **DayX/** → Each day contains a mini-project or practice file  
-- **.github/workflows/** → Automated workflows for:
-  - GitHub Pages deployment  
-  - First-time contributor welcome  
-  - Stale issue & PR reminders  
-  - Workflow validation  
+## 🚀 Setup Guide for New Contributors
+
+Welcome to the **100 Days of Web Development** challenge! Follow these steps to get started as a contributor:
+
+### Prerequisites
+- Basic knowledge of HTML, CSS, and JavaScript
+- Git installed on your system
+- A code editor (e.g., VS Code, Sublime Text)
+- A GitHub account
+
+### Steps to Contribute
+1. **Fork the Repository**: Click the "Fork" button on the top right of this repository's page on GitHub.
+2. **Clone Your Fork**: Open your terminal and run:
+   ```
+   git clone https://github.com/your-username/100-Days-Of-Web-Development.git
+   cd 100-Days-Of-Web-Development
+   ```
+3. **Set Up the Development Environment**:
+   - Ensure you have Node.js installed (for any JS tooling if needed).
+   - Open the project in your code editor.
+   - For projects using external APIs, obtain necessary API keys (e.g., for weather apps).
+4. **Create a New Branch**: Always work on a new branch for your changes:
+   ```
+   git checkout -b feature/your-feature-name
+   ```
+5. **Make Your Changes**: Add your project or improvements following the repository structure.
+6. **Test Your Changes**: Open the project in a browser to ensure it works correctly.
+7. **Commit and Push**:
+   ```
+   git add .
+   git commit -m "Add brief description of your changes"
+   git push origin feature/your-feature-name
+   ```
+8. **Create a Pull Request**: Go to the original repository and create a PR with a clear description.
+
+### Additional Tips
+- Follow the project naming conventions (e.g., `day-XX-project-name`).
+- Ensure your code is well-commented and follows best practices.
+- Check the `CONTRIBUTING.md` file for more detailed guidelines.
 
 ---
 
-## 🌐 Live Demo
+## 📋 Project Template for Quick Start
 
-The website is hosted on **GitHub Pages**:
+To accelerate your development process, use the pre-built templates in the `templates/` folder. These provide a solid foundation for common project types.
 
-[🔗 View Live Site](https://shubham-cyber-prog.github.io/100-Days-Of-Web-Development-ECWoC26/)
+### Available Templates
+- **HTML Template**: Basic HTML structure with meta tags, header, and footer.
+- **CSS Template**: Starter CSS with variables, utilities, and responsive design helpers.
+- **JS Template**: JavaScript boilerplate with common functions and event handlers.
+- **API Template**: Setup for projects involving external APIs (e.g., fetch requests).
+- **Component Library**: Reusable UI components (buttons, forms, etc.).
 
----
-## 🛠 Skills & Tools
+### How to Use a Template
+1. Navigate to the `templates/` folder.
+2. Copy the desired template folder to your project directory (e.g., `BEGINNER/day-XX-your-project/`).
+3. Rename files as needed and customize the content.
+4. Integrate with your project's specific requirements.
 
-<p align="center">
-<img src="https://img.shields.io/badge/HTML5-orange?style=for-the-badge&logo=html5" alt="HTML5"/>
-<img src="https://img.shields.io/badge/CSS3-blue?style=for-the-badge&logo=css3" alt="CSS3"/>
-<img src="https://img.shields.io/badge/JavaScript-yellow?style=for-the-badge&logo=javascript" alt="JavaScript"/>
-<img src="https://img.shields.io/badge/GitHub-lightgrey?style=for-the-badge&logo=github" alt="GitHub"/>
-<img src="https://img.shields.io/badge/GitHub%20Pages-blueviolet?style=for-the-badge&logo=github" alt="GitHub Pages"/>
-</p>
-
----
-
-## 🎯 How to Contribute
-
-1. **Fork the repository**  
-2. **Create a new branch**: `git checkout -b DayX-feature`  
-3. **Add your project files** (`index.html`, `style.css`, `script.js`)  
-4. **Push branch**: `git push origin DayX-feature`  
-5. **Create a Pull Request**  
-
-⚡ **Tips:**  
-- Use **descriptive commit messages**  
-- Keep your **folder and file names consistent**  
-- Follow coding standards  
-- Join our **Discord community** for guidance and support  
+### Example: Starting a New Todo List Project
+```
+cp -r templates/html-template BEGINNER/day-03-todo-list/
+cp -r templates/css-template BEGINNER/day-03-todo-list/
+cp -r templates/js-template BEGINNER/day-03-todo-list/
+```
+Then, modify the files to build your todo list functionality.
 
 ---
 
-## 📅 Milestones & Releases
+## 🔄 Git Workflow Guidelines
 
-| Milestone | Tag |
-|-----------|-----|
-| GitHub Pages + Workflows | `v1.0.0` |
-| Day 1–10 Projects | `v1.1.0` |
-| Day 25 Projects | `v1.2.0` |
-| Day 50 – Midway | `v2.0.0` |
-| Day 100 – Completion | `v3.0.0` |
+To maintain a clean and collaborative codebase, follow these Git workflow guidelines:
 
----
+### Branching Strategy
+- **Main Branch**: `main` is the production-ready branch. Only merge tested, reviewed code.
+- **Feature Branches**: Use `feature/description` for new features or projects.
+- **Bugfix Branches**: Use `bugfix/description` for bug fixes.
+- **Hotfix Branches**: Use `hotfix/description` for urgent fixes.
 
-## 💡 Notes & Best Practices
+### Commit Guidelines
+- Write clear, concise commit messages (e.g., "Add responsive design to landing page").
+- Use present tense (e.g., "Fix bug" not "Fixed bug").
+- Reference issue numbers if applicable (e.g., "Fix #123: Resolve mobile layout issue").
 
-- Every project/day is **self-contained**, so you can view it by opening `index.html` in browser  
-- All workflows are **automatic**, including:  
-  - Status updates & reminders  
-  - First-time contributor recognition  
-  - Workflow validation & GitHub Pages deployment  
-- **Discord** is the best place for discussion, help, and collaboration: [Join Discord](https://discord.gg/SW7puwEm)  
-- Follow **good coding practices**, comment your code, and make PRs clean  
+### Pull Request Process
+1. Ensure your branch is up-to-date with `main`:
+   ```
+   git checkout main
+   git pull origin main
+   git checkout your-branch
+   git rebase main
+   ```
+2. Create a PR with:
+   - Descriptive title
+   - Detailed description of changes
+   - Screenshots/videos if UI changes
+   - Testing instructions
+3. Request reviews from maintainers.
+4. Address feedback and make necessary changes.
+5. Once approved, merge using "Squash and merge" to keep history clean.
 
----
-
-## 🎉 Motivation
-
-> "Small consistent steps every day lead to massive growth in coding skills."  
-
-Keep contributing, stay motivated, and complete your **100-day web development journey**!  
-
----
-
-
-
-## 👥 Contributors Wall of Fame
-
-[![Contributors](https://contributors-img.web.app/image?repo=Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26&animated=true&columns=12)](https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26/graphs/contributors)
-
-
-**Happy Coding! 🚀**
+### Best Practices
+- Keep commits atomic (one logical change per commit).
+- Avoid force pushes to shared branches.
+- Regularly sync your fork with the upstream repository.
+- Use `.gitignore` to exclude unnecessary files (e.g., `node_modules/`, `.env`).
 
 
-
+**Happy Coding!**

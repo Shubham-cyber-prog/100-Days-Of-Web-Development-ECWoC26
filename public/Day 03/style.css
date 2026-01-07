@@ -1,190 +1,206 @@
+/* ===== Global Reset ===== */
 * {
   box-sizing: border-box;
-  font-family: "Tagesschrift", system-ui;
-}
-
-/* Theme variables */
-:root {
-  --bg-color: #f4f4f4;
-  --container-bg: #ffffff;
-  --text-color: #000000;
-  --btn-bg: #e0e0e0;
-  --btn-text: #000000;
-  --btn-edit:rgb(255, 209, 58);
-  --btn-delete:rgb(255, 109, 84);
-  --err-msg: rgb(255, 38, 0);
-  --err-msg-bg: rgba(255, 134, 134, 0.453);
-   --succ-msg:  rgb(0, 134, 0);
-  --succ-msg-bg: rgba(52, 247, 68, 0.829);
-  --task-bg: #ffffff;
-}
-
-body {
-  background: var(--bg-color);
-  color: var(--text-color);
-  padding: 40px;
-}
-
-.container {
-  max-width: 400px;
-  margin: auto;
-  background: var(--container-bg);
-  padding: 20px;
-  border-radius: 6px;
-}
-
-h1 {
-  text-align: center;
-}
-
-.input-box {
-  display: flex;
-  gap: 10px;
-}
-
-input {
-  flex: 1;
-  padding: 8px;
-}
-
-button {
-  padding: 8px 12px;
-  cursor: pointer;
-  background: var(--btn-bg);
-  color: var(--btn-text);
-  border: none;
-}
-
-ul {
-  list-style: none;
+  margin: 0;
   padding: 0;
+}
+
+/* ===== Body ===== */
+body {
+  font-family: 'Poppins', sans-serif;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  text-align: center;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+body.dark-theme {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #f5f5f5;
+}
+
+/* ===== Header ===== */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 25px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  margin-bottom: 30px;
+}
+
+body.dark-theme header {
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.logo {
+  height: 90px;
+}
+
+/* ===== Heading ===== */
+.heading-text h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.heading-text p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+/* ===== Theme Toggle ===== */
+#theme-toggle {
+  font-size: 1.8rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: inherit;
+  transition: transform 0.3s ease;
+}
+
+#theme-toggle:hover {
+  transform: rotate(20deg) scale(1.1);
+}
+
+/* ===== Kanban Title ===== */
+.kanban-title {
+  font-size: 2.4rem;
+  margin: 20px 0;
+  font-weight: 700;
+}
+
+/* ===== Kanban Container ===== */
+.kanban-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
   margin-top: 20px;
 }
 
-li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* ===== Columns ===== */
+.column {
+  width: 320px;
+  padding: 15px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  transition: transform 0.3s ease;
+}
+
+.column:hover {
+  transform: translateY(-6px);
+}
+
+body.dark-theme .column {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* ===== Column Titles ===== */
+.column h2 {
   margin-bottom: 10px;
+  font-weight: 600;
 }
 
-.task-text {
-  cursor: pointer;
+/* ===== Task Lists ===== */
+.task-list {
+  min-height: 200px;
+  padding: 10px;
+  border-radius: 12px;
+  transition: background 0.3s ease;
 }
 
-.completed {
-  text-decoration: line-through;
-  color: gray;
+/* ===== Tasks ===== */
+.task {
+  background: rgba(255, 255, 255, 0.9);
+  color: #222;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  cursor: grab;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.actions button {
-  margin-left: 5px;
+.task:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
 
-/* Dark mode */
-body.dark {
-  --bg-color: #121212;
-  --container-bg: #1e1e1e;
-  --text-color: #ffffff;
-  --btn-bg: #333333;
-  --btn-text: #ffffff;
-  --btn-edit:#fed20b;
-  --btn-delete:#df2b2b;
-  --task-bg:#1e1e1e;
-  --err-msg: rgb(255, 255, 255);
-  --err-msg-bg: rgba(255, 0, 0, 0.929);
-  --succ-msg: rgb(255, 255, 255);
-  --succ-msg-bg:  rgb(18, 171, 31);
-  --task-bg: #ededed;
-  --task-color: #4d4c4c;
+/* ===== Column Colors ===== */
+#todo .task-list {
+  background: linear-gradient(135deg, #ff6a6a, #ff3d3d);
 }
 
-
-
-
-#addBtn {
-    height: 8vh;
-    width: 80px;
-    padding: 5px;
-    border: none;
-    border-radius: 15px;
-    box-shadow: 5px 5px 15px rgb(154, 154, 154);
-   
-    color: rgb(255, 171, 14);
-    background-color: white;
-    font-size: 20px;
-    cursor: pointer;
-}
-#addBtn:hover{
-    background-color: rgb(255, 255, 255);
-    box-shadow: 6px 6px 20px rgb(154, 154, 154);
+#inprogress .task-list {
+  background: linear-gradient(135deg, #ffe259, #ffa751);
 }
 
-#taskInput{
-    width: 300px;
-    height: 8vh;
-    padding: 5px;
-    border: none;
-    border-radius: 15px;
-    box-shadow: 5px 5px 15px rgb(154, 154, 154);
-   
+#done .task-list {
+  background: linear-gradient(135deg, #56ab2f, #a8e063);
 }
 
-.task-text {
-   
-    min-height: 10vh;
-    width: 70vw;
-    list-style-type: none;
-    font-size: 20px;
-    padding: 5px;
-    margin: 10px;
-    color: var(--task-color);
-    background-color: var(--task-bg);
-    border:none;
-    border-radius: 15px;
-   overflow: break-word;
-   padding: 10px 5px 10px 20px;
-   box-shadow: 5px 5px 15px rgb(205, 205, 205);
+/* ===== Progress Bar ===== */
+#progress-container {
+  width: 100%;
+  height: 18px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 10px;
+  margin-top: 20px;
+  overflow: hidden;
 }
 
-.btn {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
-}
-.edit-btn {
-    background-color:var(--btn-edit);
-    color: white;
-}
-.edit-btn:hover{
-    background-color: rgb(255, 159, 0);
-}
-.delete-btn {
-    background-color:var(--btn-delete);
-    color: white;
-    margin-top: 10px;
-}
-.delete-btn:hover{
-    background-color: rgb(255, 41, 41);
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #00c853, #b2ff59);
+  color: #000;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+  transition: width 0.5s ease;
 }
 
-.tempMsg{
-    width: 360px; 
-    text-align: center;
-    height: 5vh;
-    padding: 1vh;
-   position: absolute;
-   top: 0px;
-  border-radius: 20px;
-   z-index: 2;
+/* ===== Bottom Controls ===== */
+.bottom-controls {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
-.errMsg{
-   background-color:var(--err-msg-bg);
-    color:var(--err-msg);
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .kanban-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .column {
+    width: 90%;
+  }
+
+  .heading-text h1 {
+    font-size: 2.2rem;
+  }
 }
-.succMsg{
-    background-color:var(--succ-msg-bg);
-    color:var(--succ-msg);
+
+@media (max-width: 480px) {
+  .logo {
+    height: 60px;
+  }
+
+  .heading-text h1 {
+    font-size: 1.8rem;
+  }
+
+  .task {
+    font-size: 0.85rem;
+  }
 }
