@@ -1,63 +1,87 @@
 * {
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-  }
-  
-  body {
-    margin: 0;
-    padding: 20px;
-    background: #0f0f0f;
-    color: #fff;
-    text-align: center;
-  }
-  
-  h1 {
-    margin-bottom: 20px;
-  }
-  
-  .gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 15px;
-  }
-  
-  .gallery img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-  
-  .gallery img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-  }
-  
-  /* Modal */
-  .modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.9);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .modal-img {
-    max-width: 90%;
-    max-height: 90%;
-    border-radius: 8px;
-  }
-  
-  .close {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    font-size: 40px;
-    cursor: pointer;
-    color: #fff;
-  }
-  
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: #111;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.title {
+  margin-bottom: 15px;
+}
+
+/* ADD IMAGE */
+.add-image {
+  margin-bottom: 20px;
+}
+
+.add-image input {
+  padding: 10px;
+  width: 280px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+}
+
+.add-image button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  background: #00adb5;
+  color: white;
+  cursor: pointer;
+}
+
+.add-image button:hover {
+  background: #00969d;
+}
+
+/* GALLERY */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.gallery img {
+  width: 100%;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.gallery img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(255,255,255,0.2);
+}
+
+/* LIGHTBOX */
+#lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+#lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 12px;
+}
+
+#close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 40px;
+  cursor: pointer;
+}

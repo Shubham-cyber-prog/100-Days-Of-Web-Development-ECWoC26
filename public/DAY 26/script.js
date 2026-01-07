@@ -1,39 +1,63 @@
-const images = [
-    "https://picsum.photos/id/1015/600/400",
-    "https://picsum.photos/id/1016/600/400",
-    "https://picsum.photos/id/1018/600/400",
-    "https://picsum.photos/id/1020/600/400",
-    "https://picsum.photos/id/1024/600/400",
-    "https://picsum.photos/id/1025/600/400"
-  ];
-  
-  const gallery = document.getElementById("gallery");
-  const modal = document.getElementById("modal");
-  const modalImg = document.getElementById("modalImg");
-  const closeBtn = document.getElementById("close");
-  
-  // Render images
+const gallery = document.getElementById("gallery");
+const imageUrlInput = document.getElementById("imageUrl");
+const addImageBtn = document.getElementById("addImageBtn");
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightbox-img");
+const closeBtn = document.getElementById("close");
+
+/* LOAD SAVED IMAGES */
+let images = JSON.parse(localStorage.getItem("galleryImages")) || [
+  "https://picsum.photos/400/300?1",
+  "https://picsum.photos/400/300?2",
+  "https://picsum.photos/400/300?3",
+  "https://picsum.photos/400/300?4"
+];
+
+function renderGallery() {
+  gallery.innerHTML = "";
   images.forEach(src => {
     const img = document.createElement("img");
     img.src = src;
-    img.alt = "Gallery image";
-    img.addEventListener("click", () => openModal(src));
+
+    img.addEventListener("click", () => {
+      lightbox.style.display = "flex";
+      lightboxImg.src = src;
+    });
+
     gallery.appendChild(img);
   });
-  
-  function openModal(src) {
-    modal.style.display = "flex";
-    modalImg.src = src;
+}
+
+renderGallery();
+
+/* ADD IMAGE */
+addImageBtn.addEventListener("click", () => {
+  const url = imageUrlInput.value.trim();
+
+  if (!url) {
+    alert("Please enter an image URL");
+    return;
   }
-  
-  closeBtn.addEventListener("click", () => {
-    modal.style.display = "none";
-  });
-  
-  // Close modal on background click
-  modal.addEventListener("click", e => {
-    if (e.target === modal) {
-      modal.style.display = "none";
-    }
-  });
-  
+
+  images.push(url);
+  localStorage.setItem("galleryImages", JSON.stringify(images));
+  imageUrlInput.value = "";
+  renderGallery();
+});
+
+/* CLOSE LIGHTBOX */
+closeBtn.addEventListener("click", () => {
+  lightbox.style.display = "none";
+});
+
+lightbox.addEventListener("click", e => {
+  if (e.target !== lightboxImg) {
+    lightbox.style.display = "none";
+  }
+});
+
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") {
+    lightbox.style.display = "none";
+  }
+});
