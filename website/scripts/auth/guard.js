@@ -6,7 +6,7 @@
 
 (function () {
     const protectedRoutes = [
-        'home.html',
+        'dashboard.html',
         'projects.html',
         'about.html',
         'contributors.html',
@@ -51,6 +51,6 @@
 
     // 2. If authenticated and on login page, redirect to home
     if (isAuthenticated && isLoginPage) {
-        window.location.href = 'home.html';
+        window.location.href = 'dashboard.html';
     }
 })();

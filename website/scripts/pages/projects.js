@@ -8,72 +8,72 @@ const REPO_URL = "https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Developm
 // Map of existing folders found in public/ to handle inconsistencies
 const folderMap = {
     1: "Day 01", 2: "Day 02", 3: "Day 03", 4: "Day 04", 5: "Day 05",
-    6: "Day 06", 7: "Day 07", 8: "Day 08", 9: "Day 09", 10: "Day 10", 
-    11: "Day 11",12: "Day 12",13: "Day 13", 14: "Day 14", 15: "Day 15", 
-    16: "Day 16", 17:"Day 17",18: "Day 18", 19: "Day 19", 20: "Day 20",
-    21: "Day 21", 22:"Day 22", 23: "Day 23", 24: "Day 24", 25: "Day 25",
+    6: "Day 06", 7: "Day 07", 8: "Day 08", 9: "Day 09", 10: "Day 10",
+    11: "Day 11", 12: "Day 12", 13: "Day 13", 14: "Day 14", 15: "Day 15",
+    16: "Day 16", 17: "Day 17", 18: "Day 18", 19: "Day 19", 20: "Day 20",
+    21: "Day 21", 22: "Day 22", 23: "Day 23", 24: "Day 24", 25: "Day 25",
     26: "DAY 26", 27: "Day 27", 28: "Day 28", 29: "Day 29", 30: "Day 30",
     31: "Day 31", 32: "Day 32", 33: "Day 33", 34: "Day 34", 35: "Day 35",
-    36: "Day 36",37: "Day 37", 38: "Day 38", 39: "Day 39", 40: "Day 40",
-    41: "Day 41",42: "Day 42",43: "Day 43", 44: "Day 44", 45: "Day 45",
-    46: "Day 46",47: "Day 47", 48: "Day 48", 49: "Day 49", 50: "Day 50",
-    51: "Day 51",52: "Day 52", 53: "Day 53", 54: "Day 54",55: "Day 55",
-    56: "Day 56",57: "Day 57", 58: "Day 58", 59: "Day 59", 60: "Day 60", 
-    61: "Day 61",62: "Day 62", 63: "Day 63", 64: "Day 64",65: "Day 65", 
-    66: "Day 66", 67: "Day 67", 68: "Day 68", 69: "Day 69",70: "Day 70", 
-    71: "Day 71", 72: "Day 72", 73: "Day 73",74: "Day 74", 75: "Day 75",
-    76: "Day 76", 77: "Day 77",78: "Day 78", 79: "Day 79",80: "Day 80", 
-    81: "Day 81", 82: "Day 82", 83: "Day 83", 84: "Day 84",85: "Day 85",
-    86: "Day 86", 87: "Day 87", 88: "Day 88",89: "Day 89", 90: "Day 90",
-    91: "Day 91", 92: "Day 92", 93: "Day 93", 94: "Day 94",95: "Day 95", 
-    96: "Day 96", 97: "Day 97", 98: "Day 98",99: "Day 99", 100: "Day100"
+    36: "Day 36", 37: "Day 37", 38: "Day 38", 39: "Day 39", 40: "Day 40",
+    41: "Day 41", 42: "Day 42", 43: "Day 43", 44: "Day 44", 45: "Day 45",
+    46: "Day 46", 47: "Day 47", 48: "Day 48", 49: "Day 49", 50: "Day 50",
+    51: "Day 51", 52: "Day 52", 53: "Day 53", 54: "Day 54", 55: "Day 55",
+    56: "Day 56", 57: "Day 57", 58: "Day 58", 59: "Day 59", 60: "Day 60",
+    61: "Day 61", 62: "Day 62", 63: "Day 63", 64: "Day 64", 65: "Day 65",
+    66: "Day 66", 67: "Day 67", 68: "Day 68", 69: "Day 69", 70: "Day 70",
+    71: "Day 71", 72: "Day 72", 73: "Day 73", 74: "Day 74", 75: "Day 75",
+    76: "Day 76", 77: "Day 77", 78: "Day 78", 79: "Day 79", 80: "Day 80",
+    81: "Day 81", 82: "Day 82", 83: "Day 83", 84: "Day 84", 85: "Day 85",
+    86: "Day 86", 87: "Day 87", 88: "Day 88", 89: "Day 89", 90: "Day 90",
+    91: "Day 91", 92: "Day 92", 93: "Day 93", 94: "Day 94", 95: "Day 95",
+    96: "Day 96", 97: "Day 97", 98: "Day 98", 99: "Day 99", 100: "Day100"
 };
 
 // Full 100-Day Project List
 const allProjects = [
     // BEGINNER (Days 1-30)
-    { day: 1, title: "Personal Portfolio" }, { day: 2, title: "Responsive Landing Page" }, { day: 3, title: "Todo List" },
-    { day: 4, title: "Weather App" }, { day: 5, title: "Calculator" }, { day: 6, title: "Quiz App" },
-    { day: 7, title: "Expense Tracker" }, { day: 8, title: "Pomodoro Timer" }, { day: 9, title: "Note Taking App" },
-    { day: 10, title: "Recipe Book" }, { day: 11, title: "Blog Website" }, { day: 12, title: "Ecommerce Product Page" },
-    { day: 13, title: "Chat UI" }, { day: 14, title: "Music Player" }, { day: 15, title: "Drawing App" },
-    { day: 16, title: "Password Generator" }, { day: 17, title: "Unit Converter" }, { day: 18, title: "Countdown Timer" },
-    { day: 19, title: "Tip Calculator" }, { day: 20, title: "QR Code Generator" }, { day: 21, title: "Flashcards App" },
-    { day: 22, title: "Markdown Previewer" }, { day: 23, title: "Currency Converter" }, { day: 24, title: "BMI Calculator" },
-    { day: 25, title: "Random Quote Generator" }, { day: 26, title: "Image Gallery" }, { day: 27, title: "Dice Roller" },
-    { day: 28, title: "Rock Paper Scissors" }, { day: 29, title: "Memory Game" }, { day: 30, title: "Tic Tac Toe" },
+    { day: 1, title: "Personal Portfolio", tech: ["HTML", "CSS", "JS"] }, { day: 2, title: "Responsive Landing Page", tech: ["HTML", "CSS"] }, { day: 3, title: "Todo List", tech: ["HTML", "CSS", "JS"] },
+    { day: 4, title: "Weather App", tech: ["HTML", "CSS", "JS", "API"] }, { day: 5, title: "Calculator", tech: ["HTML", "CSS", "JS"] }, { day: 6, title: "Quiz App", tech: ["HTML", "CSS", "JS"] },
+    { day: 7, title: "Expense Tracker", tech: ["HTML", "CSS", "JS"] }, { day: 8, title: "Pomodoro Timer", tech: ["HTML", "CSS", "JS"] }, { day: 9, title: "Note Taking App", tech: ["HTML", "CSS", "JS", "Local Storage"] },
+    { day: 10, title: "Recipe Book", tech: ["HTML", "CSS", "JS"] }, { day: 11, title: "Blog Website", tech: ["HTML", "CSS"] }, { day: 12, title: "Ecommerce Product Page", tech: ["HTML", "CSS", "JS"] },
+    { day: 13, title: "Chat UI", tech: ["HTML", "CSS"] }, { day: 14, title: "Music Player", tech: ["HTML", "CSS", "JS"] }, { day: 15, title: "Drawing App", tech: ["HTML", "CSS", "JS", "Canvas"] },
+    { day: 16, title: "Password Generator", tech: ["HTML", "CSS", "JS"] }, { day: 17, title: "Unit Converter", tech: ["HTML", "CSS", "JS"] }, { day: 18, title: "Countdown Timer", tech: ["HTML", "CSS", "JS"] },
+    { day: 19, title: "Tip Calculator", tech: ["HTML", "CSS", "JS"] }, { day: 20, title: "QR Code Generator", tech: ["HTML", "CSS", "JS", "API"] }, { day: 21, title: "Flashcards App", tech: ["HTML", "CSS", "JS"] },
+    { day: 22, title: "Markdown Previewer", tech: ["HTML", "CSS", "JS"] }, { day: 23, title: "Currency Converter", tech: ["HTML", "CSS", "JS", "API"] }, { day: 24, title: "BMI Calculator", tech: ["HTML", "CSS", "JS"] },
+    { day: 25, title: "Random Quote Generator", tech: ["HTML", "CSS", "JS", "API"] }, { day: 26, title: "Image Gallery", tech: ["HTML", "CSS", "JS"] }, { day: 27, title: "Dice Roller", tech: ["HTML", "CSS", "JS"] },
+    { day: 28, title: "Rock Paper Scissors", tech: ["HTML", "CSS", "JS"] }, { day: 29, title: "Memory Game", tech: ["HTML", "CSS", "JS"] }, { day: 30, title: "Tic Tac Toe", tech: ["HTML", "CSS", "JS"] },
 
     // INTERMEDIATE (Days 31-60)
-    { day: 31, title: "Job Board" }, { day: 32, title: "Social Media Dashboard" }, { day: 33, title: "Real Estate Website" },
-    { day: 34, title: "Hotel Booking System" }, { day: 35, title: "Food Delivery App" }, { day: 36, title: "Fitness Tracker" },
-    { day: 37, title: "Event Management" }, { day: 38, title: "Booking Appointment System" }, { day: 39, title: "Online Learning Platform" },
-    { day: 40, title: "Movie Database" }, { day: 41, title: "Github Profile Finder" }, { day: 42, title: "Stock Market Tracker" },
-    { day: 43, title: "News Aggregator" }, { day: 44, title: "Chat Application" }, { day: 45, title: "Project Management Tool" },
-    { day: 46, title: "Ecommerce Cart" }, { day: 47, title: "Banking Dashboard" }, { day: 48, title: "Flight Booking System" },
-    { day: 49, title: "Recipe Sharing Platform" }, { day: 50, title: "Blog with CMS" }, { day: 51, title: "Portfolio with Blog" },
-    { day: 52, title: "Task Management Board" }, { day: 53, title: "File Uploader" }, { day: 54, title: "Code Editor" },
-    { day: 55, title: "Voice Notes App" }, { day: 56, title: "Expense Splitter" }, { day: 57, title: "Habit Tracker" },
-    { day: 58, title: "Budget Planner" }, { day: 59, title: "Meal Planner" }, { day: 60, title: "Travel Planner" },
+    { day: 31, title: "Job Board", tech: ["HTML", "CSS", "JS"] }, { day: 32, title: "Social Media Dashboard", tech: ["HTML", "CSS", "JS"] }, { day: 33, title: "Real Estate Website", tech: ["HTML", "CSS", "JS"] },
+    { day: 34, title: "Hotel Booking System", tech: ["HTML", "CSS", "JS"] }, { day: 35, title: "Food Delivery App", tech: ["HTML", "CSS", "JS"] }, { day: 36, title: "Fitness Tracker", tech: ["HTML", "CSS", "JS"] },
+    { day: 37, title: "Event Management", tech: ["HTML", "CSS", "JS"] }, { day: 38, title: "Booking Appointment System", tech: ["HTML", "CSS", "JS"] }, { day: 39, title: "Online Learning Platform", tech: ["HTML", "CSS", "JS"] },
+    { day: 40, title: "Movie Database", tech: ["HTML", "CSS", "JS", "API"] }, { day: 41, title: "Github Profile Finder", tech: ["HTML", "CSS", "JS", "API"] }, { day: 42, title: "Stock Market Tracker", tech: ["HTML", "CSS", "JS", "API"] },
+    { day: 43, title: "News Aggregator", tech: ["HTML", "CSS", "JS", "API"] }, { day: 44, title: "Chat Application", tech: ["HTML", "CSS", "JS", "Firebase"] }, { day: 45, title: "Project Management Tool", tech: ["HTML", "CSS", "JS"] },
+    { day: 46, title: "Ecommerce Cart", tech: ["HTML", "CSS", "JS"] }, { day: 47, title: "Banking Dashboard", tech: ["HTML", "CSS", "JS"] }, { day: 48, title: "Flight Booking System", tech: ["HTML", "CSS", "JS"] },
+    { day: 49, title: "Recipe Sharing Platform", tech: ["HTML", "CSS", "JS"] }, { day: 50, title: "Blog with CMS", tech: ["HTML", "CSS", "JS", "Node.js"] }, { day: 51, title: "Portfolio with Blog", tech: ["HTML", "CSS", "JS"] },
+    { day: 52, title: "Task Management Board", tech: ["HTML", "CSS", "JS"] }, { day: 53, title: "File Uploader", tech: ["HTML", "CSS", "JS"] }, { day: 54, title: "Code Editor", tech: ["HTML", "CSS", "JS"] },
+    { day: 55, title: "Voice Notes App", tech: ["HTML", "CSS", "JS", "Web Speech API"] }, { day: 56, title: "Expense Splitter", tech: ["HTML", "CSS", "JS"] }, { day: 57, title: "Habit Tracker", tech: ["HTML", "CSS", "JS"] },
+    { day: 58, title: "Budget Planner", tech: ["HTML", "CSS", "JS"] }, { day: 59, title: "Meal Planner", tech: ["HTML", "CSS", "JS"] }, { day: 60, title: "Travel Planner", tech: ["HTML", "CSS", "JS"] },
 
     // ADVANCED (Days 61-90)
-    { day: 61, title: "Fullstack Ecommerce" }, { day: 62, title: "GitHub Profile Stats Dashboard" }, { day: 63, title: "Video Conferencing" },
-    { day: 64, title: "Online Code Editor" }, { day: 65, title: "Real Time Collaboration" }, { day: 66, title: "Stock Trading Simulator" },
-    { day: 67, title: "Multiplayer Game" }, { day: 68, title: "AI Chatbot" }, { day: 69, title: "Open-Source E-Commerce Template" },
-    { day: 70, title: "Data Visualization Dashboard" }, { day: 71, title: "Open-Source Portfolio Template" }, { day: 72, title: "IoT Dashboard" },
-    { day: 73, title: "Machine Learning UI" }, { day: 74, title: "Voice Assistant" }, { day: 75, title: "AR Web App" },
-    { day: 76, title: "PWA News App" }, { day: 77, title: "Real Time Analytics" }, { day: 78, title: "Open-Source Learning Games" },
-    { day: 79, title: "Job Application Platform " }, { day: 80, title: "Project Management SaaS" }, { day: 81, title: "Healthcare Portal" },
-    { day: 82, title: "E-learning Platform" }, { day: 83, title: "Open-Source “AI Tools / Bots Directory" }, 
-    { day: 84, title: "Real Time Chat Support" },  { day: 85, title: "Open-Source UI Component Library" }, 
-    { day: 86, title: "Uber Eats-Like Campus Food Delivery System" },  { day: 87, title: "AI-Powered Personal Assistant" },
-    { day: 88, title: "Video Streaming" }, { day: 89, title: "Smart Home Dashboard" }, { day: 90, title: "Enterprise CRM" },
+    { day: 61, title: "Fullstack Ecommerce", tech: ["React", "Node.js", "MongoDB"] }, { day: 62, title: "GitHub Profile Stats Dashboard", tech: ["HTML", "CSS", "JS", "API"] }, { day: 63, title: "Video Conferencing", tech: ["WebRTC", "JS"] },
+    { day: 64, title: "Online Code Editor", tech: ["HTML", "CSS", "JS"] }, { day: 65, title: "Real Time Collaboration", tech: ["Socket.io", "JS"] }, { day: 66, title: "Stock Trading Simulator", tech: ["HTML", "CSS", "JS", "API"] },
+    { day: 67, title: "Multiplayer Game", tech: ["Canvas", "Socket.io", "JS"] }, { day: 68, title: "AI Chatbot", tech: ["OpenAI API", "JS"] }, { day: 69, title: "Open-Source E-Commerce Template", tech: ["HTML", "CSS", "JS"] },
+    { day: 70, title: "Data Visualization Dashboard", tech: ["D3.js", "JS"] }, { day: 71, title: "Open-Source Portfolio Template", tech: ["HTML", "CSS"] }, { day: 72, title: "IoT Dashboard", tech: ["MQTT", "JS"] },
+    { day: 73, title: "Machine Learning UI", tech: ["TensorFlow.js", "JS"] }, { day: 74, title: "Voice Assistant", tech: ["JS", "Web Speech API"] }, { day: 75, title: "AR Web App", tech: ["Three.js", "WebXR"] },
+    { day: 76, title: "PWA News App", tech: ["PWA", "JS"] }, { day: 77, title: "Real Time Analytics", tech: ["Socket.io", "D3.js"] }, { day: 78, title: "Open-Source Learning Games", tech: ["HTML", "CSS", "JS"] },
+    { day: 79, title: "Job Application Platform ", tech: ["React", "Node.js"] }, { day: 80, title: "Project Management SaaS", tech: ["React", "Firebase"] }, { day: 81, title: "Healthcare Portal", tech: ["Next.js", "Tailwind"] },
+    { day: 82, title: "E-learning Platform", tech: ["Next.js", "PostgreSQL"] }, { day: 83, title: "Open-Source “AI Tools / Bots Directory", tech: ["Next.js", "AI API"] },
+    { day: 84, title: "Real Time Chat Support", tech: ["Socket.io", "Node.js"] }, { day: 85, title: "Open-Source UI Component Library", tech: ["React", "CSS"] },
+    { day: 86, title: "Uber Eats-Like Campus Food Delivery System", tech: ["React Native", "Firebase"] }, { day: 87, title: "AI-Powered Personal Assistant", tech: ["OpenAI", "Node.js"] },
+    { day: 88, title: "Video Streaming", tech: ["HLS.js", "Node.js"] }, { day: 89, title: "Smart Home Dashboard", tech: ["React", "IoT"] }, { day: 90, title: "Enterprise CRM", tech: ["Next.js", "Prisma"] },
 
     // CAPSTONE (Days 91-100)
-    { day: 91, title: "Leetcode Clone "}, { day: 92, title: "Hackathon Registration Website" },
-    { day: 93, title: "Open Source Contribution" }, { day: 94, title: "Progressive Web App" },
-    { day: 95, title: "Fullstack Application"}, { day: 96, title: "AI-Powered App" },
-    { day: 97, title: "Open-Source “Smart Community Hub”"}, { day: 98, title: "Smart Campus Platform" },
-    { day: 99, title: "Music App using Next.js" }, { day: 100, title: "Survival Protocol"}
+    { day: 91, title: "Leetcode Clone ", tech: ["Next.js", "Docker", "Go"] }, { day: 92, title: "Hackathon Registration Website", tech: ["Next.js", "PostgreSQL"] },
+    { day: 93, title: "Open Source Contribution", tech: ["Git", "GitHub"] }, { day: 94, title: "Progressive Web App", tech: ["PWA", "Service Workers"] },
+    { day: 95, title: "Fullstack Application", tech: ["MERN Stack"] }, { day: 96, title: "AI-Powered App", tech: ["LangChain", "OpenAI"] },
+    { day: 97, title: "Open-Source “Smart Community Hub”", tech: ["Next.js", "Supabase"] }, { day: 98, title: "Smart Campus Platform", tech: ["Next.js", "PostgreSQL"] },
+    { day: 99, title: "Music App using Next.js", tech: ["Next.js", "Spotify API"] }, { day: 100, title: "Survival Protocol", tech: ["Next.js", "TypeScript"] }
 ];
 
 function getDifficulty(day) {
@@ -122,6 +122,9 @@ function renderProjects(filter = 'All') {
         // Stagger animation
         delay += 30;
 
+        // Tech Tags HTML
+        const techTags = project.tech ? project.tech.map(t => `<span class="tech-tag">${t}</span>`).join('') : '';
+
         card.innerHTML = `
             <div class="card-header">
                 <span class="text-flame" style="font-size: var(--text-xs); font-weight: bold; letter-spacing: 1px;">
@@ -129,9 +132,13 @@ function renderProjects(filter = 'All') {
                 </span>
             </div>
             
-            <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-4); min-height: 60px;">
+            <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-2); min-height: 40px;">
                 ${project.title}
             </h3>
+
+            <div class="tech-stack" style="margin-bottom: var(--space-4); display: flex; flex-wrap: wrap; gap: 5px;">
+                ${techTags}
+            </div>
 
             <div class="flex gap-4 mt-auto">
                 <a href="${liveLink}" class="btn btn-primary ${isDisabled ? 'disabled' : ''}" 
