@@ -1,6 +1,6 @@
 /**
  * Navigation Component
- * Handles Mobile Menu, User Dropdown and Logout
+ * Handles Mobile Menu, User Dropdown, Logout, and Theme Toggling
  */
 
 /* Mobile Menu */
@@ -23,39 +23,87 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Highlight active link & Check Guest Mode
+/* Theme Logic */
+function toggleTheme() {
+    const html = document.documentElement;
+    const currentTheme = html.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+    html.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+
+    updateThemeIcon(newTheme);
+}
+
+function updateThemeIcon(theme) {
+    const btn = document.getElementById('theme-toggle-btn');
+    if (!btn) return;
+
+    // Simple Icon Switch (Sun vs Moon)
+    if (theme === 'light') {
+        // Sun Icon
+        btn.innerHTML = `
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-core);">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+        `;
+    } else {
+        // Moon Icon
+        btn.innerHTML = `
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-secondary);">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+        `;
+    }
+}
+
+// Initialize Logic
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. Navigation Active State
     const currentPath = window.location.pathname;
     const links = document.querySelectorAll('.nav-link');
 
     links.forEach(link => {
-        // Simple heuristic for active state
         if (currentPath.includes(link.getAttribute('href'))) {
-            // Remove from all others just in case
             links.forEach(l => l.classList.remove('active'));
             link.classList.add('active');
         }
     });
 
-    // GUEST MODE CHECK
+    // 2. Avatar Logic (Guest checks)
     if (sessionStorage.getItem('authGuest') === 'true') {
         const avatarImg = document.querySelector('.user-avatar img');
         if (avatarImg) {
-            // Use the rocket logo for guests
-            // Accessing from pages/, so ../assets is correct
-            avatarImg.src = '../assets/images/logo.png';
-            avatarImg.style.padding = '2px'; // Adjust fitting
+            // Use the NEW Pilot Avatar
+            // Check path depth
+            const isPages = currentPath.includes('/pages/');
+            // If in /pages/, go up to ../assets/images/pilot_avatar.png
+            // If at root, go to assets/images/pilot_avatar.png
+            avatarImg.src = isPages ? '../assets/images/pilot_avatar.png' : 'website/assets/images/pilot_avatar.png';
+            avatarImg.style.padding = '0';
         }
     }
+
+    // 3. Theme Init
+    const savedTheme = localStorage.getItem('theme') || 'dark'; // Default dark
+    // Apply immediately to avoid flash
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
 });
 
 /* Logout Logic */
 function handleLogout() {
-    // Only simple confirm for now
     if (confirm('Abort mission and logout?')) {
         sessionStorage.removeItem('authToken');
         sessionStorage.removeItem('authGuest');
-        // assume root redirect handles it
-        window.location.href = '../pages/login.html';
+        window.location.href = window.location.pathname.includes('/pages/') ? '../pages/login.html' : 'website/pages/login.html';
     }
 }

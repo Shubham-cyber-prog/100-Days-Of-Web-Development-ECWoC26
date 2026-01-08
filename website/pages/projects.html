@@ -165,14 +165,14 @@
             /* Border width */
             border-radius: inherit;
             z-index: -1;
-            background: #0a0a0a;
+            background: var(--bg-nebula);
             /* Card Base Color */
             transition: background 0.3s;
         }
 
         /* Lighten body slightly on hover for depth */
         .project-card:hover::after {
-            background: #0f0f0f;
+            background: var(--bg-surface);
         }
 
         /* Layer 3: Ensure Content is Above */
@@ -205,12 +205,24 @@
                     class="nav-link active">Projects</a><a href="about.html" class="nav-link">About</a><a
                     href="contributors.html" class="nav-link">Contributors</a><a href="contact.html"
                     class="nav-link">Contact</a></nav>
-            <div class="nav-user"><button class="mobile-toggle" onclick="toggleMobileMenu()"><svg class="icon icon-lg"
-                        viewBox="0 0 24 24">
+            <div class="nav-user">
+                <button class="mobile-toggle" onclick="toggleMobileMenu()">
+                    <svg class="icon icon-lg" viewBox="0 0 24 24">
                         <line x1="3" y1="12" x2="21" y2="12"></line>
                         <line x1="3" y1="6" x2="21" y2="6"></line>
                         <line x1="3" y1="18" x2="21" y2="18"></line>
-                    </svg></button>
+                    </svg>
+                </button>
+
+                <!-- Theme Toggle -->
+                <button id="theme-toggle-btn" class="icon-btn" onclick="toggleTheme()"
+                    style="margin-right: 15px; background: none; border: none; cursor: pointer;">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-secondary);">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+
                 <div class="user-avatar-wrapper"><button class="user-avatar" onclick="toggleUserMenu()"><img
                             src="https://github.com/ntbnaren7.png" alt="User"
                             style="width: 100%; height: 100%; border-radius: 50%;"></button>
@@ -317,6 +329,7 @@
             </p>
         </div>
     </footer>
+    <script src="../scripts/components/cursor.js"></script>
     <script src="../scripts/pages/projects.js"></script>
     <script src="../scripts/components/navigation.js"></script>
 </body>

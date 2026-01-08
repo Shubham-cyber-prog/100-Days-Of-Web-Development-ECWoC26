@@ -9,15 +9,24 @@ const REPO_URL = "https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Developm
 const folderMap = {
     1: "Day 01", 2: "Day 02", 3: "Day 03", 4: "Day 04", 5: "Day 05",
     6: "Day 06", 7: "Day 07", 8: "Day 08", 9: "Day 09", 10: "Day 10", 
-    11: "Day 11", 12: "Day 12",
-    13: "Day 13", 14: "Day 14", 15: "Day 15", 16: "Day 16", 20: "Day 20",
-    21: "Day 21", 23: "Day 23", 24: "Day 24", 25: "Day 25", 26: "DAY 26",
-    27: "Day 27", 28: "Day 28", 29: "Day 29", 30: "Day 30", 36: "Day 36",
-    37: "Day 37", 42: "Day 42", 50: "Day 50", 53: "Day 53", 54: "Day 54",
-    56: "Day 56", 58: "Day 58", 59: "Day 59", 60: "Day 60", 61: "Day 61",
-    63: "Day 63", 64: "Day 64", 68: "Day 68", 70: "Day 70", 72: "Day 72",
-    73: "Day 73", 76: "Day 76", 77: "Day 77", 84: "Day 84", 88: "Day 88",
-    100: "Day100"
+    11: "Day 11",12: "Day 12",13: "Day 13", 14: "Day 14", 15: "Day 15", 
+    16: "Day 16", 17:"Day 17",18: "Day 18", 19: "Day 19", 20: "Day 20",
+    21: "Day 21", 22:"Day 22", 23: "Day 23", 24: "Day 24", 25: "Day 25",
+    26: "DAY 26", 27: "Day 27", 28: "Day 28", 29: "Day 29", 30: "Day 30",
+    31: "Day 31", 32: "Day 32", 33: "Day 33", 34: "Day 34", 35: "Day 35",
+    36: "Day 36",37: "Day 37", 38: "Day 38", 39: "Day 39", 40: "Day 40",
+    41: "Day 41",42: "Day 42",43: "Day 43", 44: "Day 44", 45: "Day 45",
+    46: "Day 46",47: "Day 47", 48: "Day 48", 49: "Day 49", 50: "Day 50",
+    51: "Day 51",52: "Day 52", 53: "Day 53", 54: "Day 54",55: "Day 55",
+    56: "Day 56",57: "Day 57", 58: "Day 58", 59: "Day 59", 60: "Day 60", 
+    61: "Day 61",62: "Day 62", 63: "Day 63", 64: "Day 64",65: "Day 65", 
+    66: "Day 66", 67: "Day 67", 68: "Day 68", 69: "Day 69",70: "Day 70", 
+    71: "Day 71", 72: "Day 72", 73: "Day 73",74: "Day 74", 75: "Day 75",
+    76: "Day 76", 77: "Day 77",78: "Day 78", 79: "Day 79",80: "Day 80", 
+    81: "Day 81", 82: "Day 82", 83: "Day 83", 84: "Day 84",85: "Day 85",
+    86: "Day 86", 87: "Day 87", 88: "Day 88",89: "Day 89", 90: "Day 90",
+    91: "Day 91", 92: "Day 92", 93: "Day 93", 94: "Day 94",95: "Day 95", 
+    96: "Day 96", 97: "Day 97", 98: "Day 98",99: "Day 99", 100: "Day100"
 };
 
 // Full 100-Day Project List
@@ -47,23 +56,24 @@ const allProjects = [
     { day: 58, title: "Budget Planner" }, { day: 59, title: "Meal Planner" }, { day: 60, title: "Travel Planner" },
 
     // ADVANCED (Days 61-90)
-    { day: 61, title: "Fullstack Ecommerce" }, { day: 62, title: "Social Network" }, { day: 63, title: "Video Conferencing" },
+    { day: 61, title: "Fullstack Ecommerce" }, { day: 62, title: "GitHub Profile Stats Dashboard" }, { day: 63, title: "Video Conferencing" },
     { day: 64, title: "Online Code Editor" }, { day: 65, title: "Real Time Collaboration" }, { day: 66, title: "Stock Trading Simulator" },
-    { day: 67, title: "Multiplayer Game" }, { day: 68, title: "AI Chatbot" }, { day: 69, title: "Blockchain Explorer" },
-    { day: 70, title: "Data Visualization Dashboard" }, { day: 71, title: "Crypto Wallet" }, { day: 72, title: "IoT Dashboard" },
+    { day: 67, title: "Multiplayer Game" }, { day: 68, title: "AI Chatbot" }, { day: 69, title: "Open-Source E-Commerce Template" },
+    { day: 70, title: "Data Visualization Dashboard" }, { day: 71, title: "Open-Source Portfolio Template" }, { day: 72, title: "IoT Dashboard" },
     { day: 73, title: "Machine Learning UI" }, { day: 74, title: "Voice Assistant" }, { day: 75, title: "AR Web App" },
-    { day: 76, title: "PWA News App" }, { day: 77, title: "Real Time Analytics" }, { day: 78, title: "Document Editor" },
-    { day: 79, title: "Email Client" }, { day: 80, title: "Project Management SaaS" }, { day: 81, title: "Healthcare Portal" },
-    { day: 82, title: "E-learning Platform" }, { day: 83, title: "Recruitment Platform" }, { day: 84, title: "Real Time Chat Support" },
-    { day: 85, title: "Auction Platform" }, { day: 86, title: "Freelance Marketplace" }, { day: 87, title: "Music Streaming" },
+    { day: 76, title: "PWA News App" }, { day: 77, title: "Real Time Analytics" }, { day: 78, title: "Open-Source Learning Games" },
+    { day: 79, title: "Job Application Platform " }, { day: 80, title: "Project Management SaaS" }, { day: 81, title: "Healthcare Portal" },
+    { day: 82, title: "E-learning Platform" }, { day: 83, title: "Open-Source “AI Tools / Bots Directory" }, 
+    { day: 84, title: "Real Time Chat Support" },  { day: 85, title: "Open-Source UI Component Library" }, 
+    { day: 86, title: "Uber Eats-Like Campus Food Delivery System" },  { day: 87, title: "AI-Powered Personal Assistant" },
     { day: 88, title: "Video Streaming" }, { day: 89, title: "Smart Home Dashboard" }, { day: 90, title: "Enterprise CRM" },
 
     // CAPSTONE (Days 91-100)
-    { day: 91, title: "Microservices Project", endDay: 92 },
-    { day: 93, title: "Open Source Contribution", endDay: 94 },
-    { day: 95, title: "Fullstack Application", endDay: 96 },
-    { day: 97, title: "Complex Dashboard", endDay: 98 },
-    { day: 99, title: "Master Project", endDay: 100 }
+    { day: 91, title: "Leetcode Clone "}, { day: 92, title: "Hackathon Registration Website" },
+    { day: 93, title: "Open Source Contribution" }, { day: 94, title: "Progressive Web App" },
+    { day: 95, title: "Fullstack Application"}, { day: 96, title: "AI-Powered App" },
+    { day: 97, title: "Open-Source “Smart Community Hub”"}, { day: 98, title: "Smart Campus Platform" },
+    { day: 99, title: "Music App using Next.js" }, { day: 100, title: "Survival Protocol"}
 ];
 
 function getDifficulty(day) {

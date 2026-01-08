@@ -7,167 +7,7 @@
     <link rel="icon" href="/website/assets/images/logo.png">
     <title>About & Leaderboard | 100 Days of Web Dev</title>
     <link rel="stylesheet" href="../styles/index.css">
-    <style>
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--space-8);
-            align-items: start;
-            margin-top: var(--space-12);
-        }
-
-        /* Leaderboard Panel - Cosmic Container (Layer 1: Outer Shell) */
-        .leaderboard-panel {
-            /* Hard Clipping Boundary */
-            position: relative;
-            border-radius: var(--radius-xl);
-            overflow: hidden;
-            /* CRITICAL: Prevents any leak */
-            isolation: isolate;
-            /* New stacking context */
-            padding: var(--space-8);
-
-            /* Fallback background */
-            background: #050505;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
-        }
-
-        /* Layer 2: Cosmic Energy Layer (The Animated Source) */
-        .leaderboard-panel::before {
-            content: "";
-            position: absolute;
-            /* Oversized to allow movement */
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            z-index: -2;
-
-            /* Aurora-like Nebula Gradient */
-            background: radial-gradient(circle at 50% 50%,
-                    rgba(255, 159, 28, 0.15),
-                    rgba(99, 102, 241, 0.1),
-                    rgba(5, 5, 5, 1) 60%), conic-gradient(from 0deg,
-                    #050505 0%,
-                    #1a0b00 20%,
-                    /* Deep Orange Void */
-                    #2d1b0e 40%,
-                    #ff9f1c 50%,
-                    /* The Cosmic Streak (Orange) */
-                    #2d1b0e 60%,
-                    #1a0b00 80%,
-                    #050505 100%);
-            background-size: 100% 100%;
-
-            /* Slow, Diagonal Drift */
-            animation: cosmicDrift 30s linear infinite;
-        }
-
-        /* Layer 2.5: The Surface Mask (Creates the Border & Background) */
-        .leaderboard-panel::after {
-            content: "";
-            position: absolute;
-            /* inset: 1.5px is the Border Width */
-            inset: 1.5px;
-            border-radius: inherit;
-            /* Follows parent radius exacty */
-            z-index: -1;
-
-            /* The "Body" background - Dark enough for text, transparent enough for glow */
-            /* Using a very dark, slightly transparent cyclic color to let the cosmic energy bleed through faintly */
-            background: rgba(5, 5, 5, 0.94);
-            backdrop-filter: blur(40px);
-            /* Smooths the glow behind */
-        }
-
-        /* Layer 3: Content (Static & Readable) */
-        .leaderboard-panel>* {
-            position: relative;
-            z-index: 10;
-        }
-
-        @keyframes cosmicDrift {
-            0% {
-                transform: rotate(0deg) translate(0, 0);
-            }
-
-            100% {
-                transform: rotate(360deg) translate(0, 0);
-            }
-        }
-
-        /* Leaderboard Stats Cards */
-        .stat-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-lg);
-            padding: var(--space-4);
-            margin-bottom: var(--space-4);
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            border-color: rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateY(-2px);
-        }
-
-        .stat-label {
-            font-size: var(--text-xs);
-            color: var(--text-tertiary);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 600;
-        }
-
-        .stat-value {
-            font-family: var(--font-display);
-            font-size: var(--text-4xl);
-            font-weight: 800;
-            color: var(--text-primary);
-            margin-top: var(--space-2);
-        }
-
-        .live-indicator {
-            display: flex;
-            align-items: center;
-            gap: var(--space-2);
-            font-size: var(--text-sm);
-            color: var(--text-secondary);
-            background: rgba(255, 255, 255, 0.03);
-            padding: var(--space-3) var(--space-4);
-            border-radius: 100px;
-            margin-top: var(--space-2);
-            border: 1px solid var(--glass-border);
-        }
-
-        .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-
-        .dot-green {
-            background: #10b981;
-            box-shadow: 0 0 8px #10b981;
-        }
-
-        .dot-blue {
-            background: #3b82f6;
-            box-shadow: 0 0 8px #3b82f6;
-        }
-
-        .dot-purple {
-            background: #a855f7;
-            box-shadow: 0 0 8px #a855f7;
-        }
-
-        @media (max-width: 900px) {
-            .about-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="../styles/pages/about.css">
 </head>
 
 <body>
@@ -192,6 +32,16 @@
                         <line x1="3" y1="18" x2="21" y2="18"></line>
                     </svg>
                 </button>
+
+                <!-- Theme Toggle -->
+                <button id="theme-toggle-btn" class="icon-btn" onclick="toggleTheme()"
+                    style="margin-right: 15px; background: none; border: none; cursor: pointer;">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-secondary);">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+
                 <div class="user-avatar-wrapper">
                     <button class="user-avatar" onclick="toggleUserMenu()">
                         <img src="https://github.com/ntbnaren7.png" alt="User" style="width: 100%; height: 100%;">
@@ -223,16 +73,14 @@
                 </div>
 
                 <!-- Points Stat -->
-                <div class="stat-card"
-                    style="background: rgba(99, 102, 241, 0.1); border-color: rgba(99, 102, 241, 0.2);">
-                    <div class="stat-label" style="color: #a5b4fc;">Total Points</div>
+                <div class="stat-card points">
+                    <div class="stat-label">Total Points</div>
                     <div class="stat-value" id="statPoints">--</div>
                 </div>
 
                 <!-- PRs Stat -->
-                <div class="stat-card"
-                    style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2);">
-                    <div class="stat-label" style="color: #6ee7b7;">Merged PRs</div>
+                <div class="stat-card prs">
+                    <div class="stat-label">Merged PRs</div>
                     <div class="stat-value" id="statPRs">--</div>
                 </div>
 
@@ -240,13 +88,13 @@
                 <div class="live-indicator">
                     <div class="dot dot-green"></div>
                     <span style="flex: 1;">LAST UPDATED</span>
-                    <span class="live-timestamp font-mono text-white">Fetching...</span>
+                    <span class="live-timestamp font-mono">Fetching...</span>
                 </div>
 
                 <div class="live-indicator">
                     <div class="dot dot-blue"></div>
                     <span style="flex: 1;">LIVE (IST)</span>
-                    <span class="live-timestamp font-mono text-white">Fetching...</span>
+                    <span class="live-timestamp font-mono">Fetching...</span>
                 </div>
 
                 <div class="live-indicator">
@@ -268,29 +116,28 @@
                     cycles.
                 </p>
 
-                <div
-                    style="padding: var(--space-6); border-left: 2px solid var(--accent-core); background: linear-gradient(90deg, rgba(255,159,28,0.05) 0%, transparent 100%); margin-bottom: var(--space-8);">
-                    <p class="text-lg italic text-white">
+                <div class="mission-quote">
+                    <p class="text-lg italic">
                         "We do not build to pass time. We build to conquer the unknown."
                     </p>
                 </div>
 
                 <div class="grid grid-2" style="gap: var(--space-4);">
-                    <div>
-                        <h4 class="text-white mb-2">Phase 1: Foundation</h4>
-                        <p class="text-sm text-tertiary">HTML5, CSS3, Modern Layouts</p>
+                    <div class="mission-phase">
+                        <h4>Phase 1: Foundation</h4>
+                        <p>HTML5, CSS3, Modern Layouts</p>
                     </div>
-                    <div>
-                        <h4 class="text-white mb-2">Phase 2: Logic</h4>
-                        <p class="text-sm text-tertiary">Vanilla JS, DOM Manipulation</p>
+                    <div class="mission-phase">
+                        <h4>Phase 2: Logic</h4>
+                        <p>Vanilla JS, DOM Manipulation</p>
                     </div>
-                    <div>
-                        <h4 class="text-white mb-2">Phase 3: Reactor</h4>
-                        <p class="text-sm text-tertiary">React, State, Component Architecture</p>
+                    <div class="mission-phase">
+                        <h4>Phase 3: Reactor</h4>
+                        <p>React, State, Component Architecture</p>
                     </div>
-                    <div>
-                        <h4 class="text-white mb-2">Phase 4: Mastery</h4>
-                        <p class="text-sm text-tertiary">Full Stack Integration & Capstone</p>
+                    <div class="mission-phase">
+                        <h4>Phase 4: Mastery</h4>
+                        <p>Full Stack Integration & Capstone</p>
                     </div>
                 </div>
 
@@ -374,6 +221,7 @@
         </div>
     </footer>
 
+    <script src="../scripts/components/cursor.js"></script>
     <script src="../scripts/pages/about.js"></script>
     <script src="../scripts/components/navigation.js"></script>
 </body>
