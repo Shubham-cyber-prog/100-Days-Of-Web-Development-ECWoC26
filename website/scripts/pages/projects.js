@@ -8,14 +8,19 @@ const REPO_URL = "https://github.com/Shubham-cyber-prog/100-Days-Of-Web-Developm
 // Map of existing folders found in public/ to handle inconsistencies
 const folderMap = {
     1: "Day 01", 2: "Day 02", 3: "Day 03", 4: "Day 04", 5: "Day 05",
-    6: "Day 06", 7: "Day 07", 8: "Day 08", 9: "Day 09", 11: "Day 11",
-    13: "Day 13", 14: "Day 14", 15: "Day 15", 16: "Day 16", 20: "Day 20",
+    6: "Day 06", 7: "Day 07", 8: "Day 08", 9: "Day 09", 10: "Day 10", 
+    11: "Day 11", 12: "Day 12",13: "Day 13", 14: "Day 14", 15: "Day 15", 
+    16: "Day 16", 20: "Day 20",
     21: "Day 21", 23: "Day 23", 24: "Day 24", 25: "Day 25", 26: "DAY 26",
-    27: "Day 27", 28: "Day 28", 29: "Day 29", 30: "Day 30", 36: "Day 36",
-    37: "Day 37", 42: "Day 42", 50: "Day 50", 53: "Day 53", 54: "Day 54",
-    56: "Day 56", 58: "Day 58", 59: "Day 59", 60: "Day 60", 61: "Day 61",
-    63: "Day 63", 64: "Day 64", 68: "Day 68", 70: "Day 70", 72: "Day 72",
-    73: "Day 73", 76: "Day 76", 77: "Day 77", 84: "Day 84", 88: "Day 88",
+    27: "Day 27", 28: "Day 28", 29: "Day 29", 30: "Day 30",35: "Day 35",
+    36: "Day 36",
+    37: "Day 37", 42: "Day 42",46: "Day 46", 49: "Day 49", 50: "Day 50",
+    51: "Day 51", 53: "Day 53", 54: "Day 54",
+    55: "Day 55",56: "Day 56", 58: "Day 58", 59: "Day 59", 60: "Day 60", 
+    61: "Day 61", 63: "Day 63", 64: "Day 64", 68: "Day 68", 70: "Day 70", 
+    72: "Day 72",
+    73: "Day 73", 76: "Day 76", 77: "Day 77",80: "Day 80", 84: "Day 84", 
+    88: "Day 88",
     100: "Day100"
 };
 
@@ -58,11 +63,11 @@ const allProjects = [
     { day: 88, title: "Video Streaming" }, { day: 89, title: "Smart Home Dashboard" }, { day: 90, title: "Enterprise CRM" },
 
     // CAPSTONE (Days 91-100)
-    { day: 91, title: "Microservices Project", endDay: 92 },
-    { day: 93, title: "Open Source Contribution", endDay: 94 },
-    { day: 95, title: "Fullstack Application", endDay: 96 },
-    { day: 97, title: "Complex Dashboard", endDay: 98 },
-    { day: 99, title: "Master Project", endDay: 100 }
+    { day: 91, title: "Microservices Project"}, { day: 92, title: "DevOps Pipeline" },
+    { day: 93, title: "Open Source Contribution" }, { day: 94, title: "Progressive Web App" },
+    { day: 95, title: "Fullstack Application"}, { day: 96, title: "AI-Powered App" },
+    { day: 97, title: "Complex Dashboard"}, { day: 98, title: "Scalable Web Service" },
+    { day: 99, title: "Music App " }, { day: 100, title: "Survival Protocol"}
 ];
 
 function getDifficulty(day) {

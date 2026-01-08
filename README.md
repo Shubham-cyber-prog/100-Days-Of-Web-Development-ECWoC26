@@ -7,6 +7,7 @@
   />
 </p>
 
+<img src="https://github.com/Mayur-Pagote/README_Design_Kit/blob/45123f007c79aa8d0c8d9b11b3ff72d6bf4744c7/Assets/Star%20Light%20Line.gif" width="100%">
 
 Level up your **frontend skills** with this **100 Days of Web Development Challenge** using **HTML, CSS & JavaScript**. Build **mini-projects**, practice **daily coding**, and create a **portfolio-worthy collection**!  
 
@@ -71,7 +72,7 @@ This repository documents my **100 Days of Web Development journey**, where I:
 │   ├── 📁 Day 01
 │   ├── 📁 Day 02
 │   ├── 📁 Day 03... (and so on)
-│   └── 📁 Day100
+│   └── 📁 Unlimited
 │
 ├── 📁 website/                            # Zenith Portfolio Site
 │   ├── 📁 assets/                         # Images, Fonts, Icons
@@ -195,4 +196,5 @@ To maintain a clean and collaborative codebase, follow these Git workflow guidel
 - Regularly sync your fork with the upstream repository.
 - Use `.gitignore` to exclude unnecessary files (e.g., `node_modules/`, `.env`).
 
-![100 Days 100 Projects Banner](https://capsule-render.vercel.app/api?type=waving&color=0:1E90FF,50:9370DB,100:0000CD&height=250&section=header&text=100%20Days%20100%20Projects&fontSize=65&fontAlignY=40&fontColor=ffffff&animation=fadeIn&stroke=00BFFF&strokeWidth=2)
+<img src="https://contributors-img.web.app/image?repo=Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26"/>
+

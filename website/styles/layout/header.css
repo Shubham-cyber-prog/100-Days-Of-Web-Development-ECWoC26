@@ -25,20 +25,41 @@
     /* Constrained pill width */
     padding: 0 var(--space-4);
 
-    background: rgba(10, 10, 10, 0.6);
+    background: var(--bg-glass-nav);
     /* Semi-transparent void */
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--glass-border);
     border-radius: 100px;
     /* Full Capsule Shape */
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 30px -10px var(--shadow-depth);
     transition: all 0.3s ease;
+}
+
+/* Light Mode Header & Nav "Glow" */
+[data-theme="light"] .nav-container {
+    background: #FFFFFF;
+    /* Pure white to stand out from #F2F4F8 */
+    border-color: rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    /* Inner highlight */
+}
+
+[data-theme="light"] .nav-container:hover {
+    border-color: var(--accent-alpha);
+    box-shadow: 0 8px 30px -5px rgba(255, 136, 0, 0.15);
+    /* Orange glow on hover */
 }
 
 /* Scrolled state (optional: could shrink) */
 .site-header.scrolled .nav-container {
-    background: rgba(5, 5, 5, 0.9);
+    background: var(--bg-overlay);
+}
+
+[data-theme="light"] .site-header.scrolled .nav-container {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
 }
 
 /* Logo */
@@ -64,16 +85,17 @@
 .nav-links {
     display: flex;
     gap: var(--space-1);
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--accent-core);
     padding: 4px;
     border-radius: 100px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--accent-glow);
+    box-shadow: 0 4px 15px var(--accent-alpha);
 }
 
 .nav-link {
     font-family: var(--font-body);
     font-weight: var(--weight-medium);
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.9);
     font-size: var(--text-sm);
     padding: 0.5rem 1.25rem;
     border-radius: 100px;
@@ -81,17 +103,16 @@
 }
 
 .nav-link:hover {
-    color: var(--text-primary);
-    background: rgba(255, 255, 255, 0.05);
-    /* Subtle hover pill */
+    color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .nav-link.active {
-    color: var(--bg-void);
-    background: var(--text-primary);
-    /* High contrast active pill */
+    color: #FFFFFF;
+    background: #050505;
+    /* Deep Void for high contrast on orange */
     font-weight: var(--weight-bold);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 /* User Actions */

@@ -18,9 +18,41 @@
 .card:hover {
     transform: translateY(-5px);
     border-color: var(--glass-highlight);
-    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5),
+    box-shadow: 0 10px 40px -10px var(--shadow-depth),
         0 0 0 1px var(--glass-highlight) inset;
     /* Inner rim */
+}
+
+/* --- Light Mode Card "Glow" Effect --- */
+[data-theme="light"] .card {
+    background: #FFFFFF;
+    /* Ensure pure white cards */
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="light"] .card:hover {
+    border-color: var(--accent-core);
+    /* Orange outline */
+    box-shadow: 0 10px 25px -5px rgba(255, 136, 0, 0.15),
+        0 0 0 1px var(--accent-core) inset;
+    /* Double border effect */
+    transform: translateY(-3px);
+}
+
+/* Special case for Project Cards in Light Mode */
+[data-theme="light"] .project-card {
+    /* Inherits the above, but ensure inner content layers don't block it */
+    background: #FFFFFF;
+}
+
+/* Fix project card masquerading layers in light mode */
+[data-theme="light"] .project-card::after {
+    background: #FFFFFF;
+}
+
+[data-theme="light"] .project-card:hover::after {
+    background: #FAFAFA;
 }
 
 /* Neon Glow Variant (Active items) */
