@@ -1,68 +1,58 @@
-/* Light Mode Overrides */
-body.light-mode {
-    --bg-primary: #f8f9fa;
-    /* Slightly off-white background */
-    --bg-secondary: #ffffff;
-    /* Pure white for elements */
-    --bg-card: #ffffff;
-    /* Pure white for cards */
-    --bg-hover: #f1f5f9;
-
-    --text-primary: #09090b;
-    --text-secondary: #52525b;
-    --text-tertiary: #a1a1aa;
-
-    --accent-primary: #09090b;
-    --border-color: #e2e8f0;
-    /* Slightly darker border for visibility */
-    --border-hover: #cbd5e1;
-
-    --badge-bg: #f4f4f5;
-    --badge-text: #18181b;
-}
-
-html,
-body {
-    max-width: 100%;
-    overflow-x: hidden;
-}
+/* --- Global Base --- */
 
 body {
-    font-family: var(--font-main);
-    background-color: var(--bg-primary);
+    background-color: var(--bg-void);
+    background-image:
+        radial-gradient(circle at 15% 50%, rgba(255, 159, 28, 0.08) 0%, transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(78, 205, 196, 0.05) 0%, transparent 25%);
+    background-attachment: fixed;
     color: var(--text-primary);
-    line-height: 1.5;
+    font-family: var(--font-body);
+    font-weight: var(--weight-regular);
+    line-height: 1.6;
+    overflow-x: hidden;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    -webkit-font-smoothing: antialiased;
 }
 
-a {
-    text-decoration: none;
-    color: inherit;
-    transform: translateY(-2px);
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-display);
+    color: var(--text-primary);
+    line-height: 1.2;
 }
 
-/* --- SVG Icons Utility --- */
-.icon {
-    width: 20px;
-    height: 20px;
-    stroke: currentColor;
-    stroke-width: 2;
-    fill: none;
+/* Utilities */
+.text-flame {
+    color: var(--accent-core);
 }
 
-.icon-sm {
-    width: 16px;
-    height: 16px;
+.text-orbit {
+    color: var(--accent-success);
+    /* Changed to teal/success for contrast */
 }
 
-.icon-lg {
-    width: 32px;
+.text-secondary {
+    color: var(--text-secondary);
+}
 
+/* Custom Scrollbar for the Void */
+::-webkit-scrollbar {
+    width: 8px;
+}
 
-    @media (max-width: 768px) {
-        /* Padding handled in footer.css now */
-    }
+::-webkit-scrollbar-track {
+    background: var(--bg-void);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--glass-border);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-tertiary);
 }
