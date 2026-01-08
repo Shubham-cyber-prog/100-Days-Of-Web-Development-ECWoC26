@@ -1,0 +1,38 @@
+/* --- Zenith: Cosmic Engine Colors --- */
+
+:root {
+    /* 1. The Void (Backgrounds) */
+    --bg-void: #050505;
+    /* Deepest Black */
+    --bg-nebula: #0a0a0a;
+    /* Panel Background */
+    --bg-surface: rgba(255, 255, 255, 0.03);
+    /* Glass Surface */
+    --bg-overlay: rgba(0, 0, 0, 0.8);
+
+    /* 2. Ignition (Accents - Orange/Flame) */
+    --accent-core: #FF9F1C;
+    /* Primary Orange (from Logo) */
+    --accent-glow: #FF4B1F;
+    /* Deep Orange/Red for gradients */
+    --accent-alpha: rgba(255, 159, 28, 0.2);
+    /* Glows */
+
+    /* 3. Starlight (Text) */
+    --text-primary: #FFFFFF;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-tertiary: rgba(255, 255, 255, 0.4);
+
+    /* 4. Glass & Borders */
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-highlight: rgba(255, 255, 255, 0.2);
+    --border-light: var(--glass-border);
+
+    /* 5. Functional */
+    --accent-success: #2EC4B6;
+    --accent-danger: #E71D36;
+
+    /* Gradients */
+    --gradient-glow: linear-gradient(135deg, var(--accent-core) 0%, var(--accent-glow) 100%);
+    --gradient-void: radial-gradient(circle at top right, #1a1a1a 0%, var(--bg-void) 50%);
+}
