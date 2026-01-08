@@ -140,15 +140,32 @@ function renderProjects(filter = 'All') {
                 ${techTags}
             </div>
 
-            <div class="flex gap-4 mt-auto">
-                <a href="${liveLink}" class="btn btn-primary ${isDisabled ? 'disabled' : ''}" 
-                   style="flex: 1; justify-content: center; font-size: 0.9rem; opacity: ${isDisabled ? '0.5' : '1'}; pointer-events: ${isDisabled ? 'none' : 'auto'};">
+                <div class="flex gap-4 mt-auto">
+                    <a href="${liveLink}"
+                    class="btn"
+                    style="
+                        flex: 1;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        font-size: 0.9rem;
+                        padding: 10px 14px;
+                        border-radius: 10px;
+                        background-color: ${isDisabled ? '#FFE0C2' : '#FF7A18'};
+                        color: ${isDisabled ? '#9A5A1C' : '#FFFFFF'};
+                        font-weight: 500;
+                        opacity: ${isDisabled ? '0.6' : '1'};
+                        pointer-events: ${isDisabled ? 'none' : 'auto'};
+                        text-decoration: none;
+                        transition: all 0.2s ease;
+                    ">
                     ${isDisabled ? 'Pending' : 'Live Demo'}
-                </a>
-                <a href="${codeLink}" target="_blank" class="btn btn-social" style="flex: 1; justify-content: center; font-size: 0.9rem;">
-                    View Code
-                </a>
-            </div>
+                    </a>
+
+                    <a href="${codeLink}" target="_blank" class="btn btn-social" style="flex: 1; justify-content: center; font-size: 0.9rem;">
+                        View Code
+                    </a>
+                </div>
         `;
 
         setupTiltEffect(card); // Attach 3D Tilt Logic
