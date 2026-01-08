@@ -1,29 +1,68 @@
-        
-        const startScreen = document.getElementById("start-screen");
-        const quizScreen = document.getElementById("quiz-screen");
-        const resultScreen = document.getElementById("result-screen");
-        const startButton = document.getElementById("start-btn");
-        const questionText = document.getElementById("question-text");
-        const answersContainer = document.getElementById("answer-container");
-        const currentQuestionSpan = document.getElementById("current-question");
-        const totalQuestionsSpan = document.getElementById("total-question");
-        const scoreSpan = document.getElementById("score");
-        const finalScoreSpan = document.getElementById("final-score");
-        const maxScoreSpan = document.getElementById("max-score");
-        const resultMessage = document.getElementById("result-message");
-        const restartButton = document.getElementById("restart-btn");
-        const progressBar = document.getElementById("progress");
-        const timerElement = document.getElementById("timer");
-        const timerContainer = document.querySelector(".timer-container");
-        const scoreCircle = document.querySelector(".score-circle");
-        const scoreText = document.querySelector(".score-text");
-        const correctAnswersElement = document.getElementById("correct-answers");
-        const incorrectAnswersElement = document.getElementById("incorrect-answers");
-        const accuracyElement = document.getElementById("accuracy");
+        // ===== CONFIGURATION CONSTANTS =====
+        const TIMER_CONFIG = {
+            easy: 20,
+            medium: 15,
+            hard: 10
+        };
+        const WARNING_TIME = 5; // seconds
+        const ANSWER_DELAY = 1500; // milliseconds before showing next question
+        const PARTICLE_COUNT = 10;
+        const CONFETTI_COUNT = 100;
+        const CONFETTI_DURATION = 5000; // milliseconds
+
+        // ===== DOM ELEMENTS WITH ERROR HANDLING =====
+        const getDOMElement = (id) => {
+            const element = document.getElementById(id);
+            if (!element) console.warn(`DOM element with id "${id}" not found`);
+            return element;
+        };
+
+        const getQueryElement = (selector) => {
+            const element = document.querySelector(selector);
+            if (!element) console.warn(`DOM element with selector "${selector}" not found`);
+            return element;
+        };
+
+        const startScreen = getDOMElement("start-screen");
+        const quizScreen = getDOMElement("quiz-screen");
+        const resultScreen = getDOMElement("result-screen");
+        const startButton = getDOMElement("start-btn");
+        const questionText = getDOMElement("question-text");
+        const answersContainer = getDOMElement("answer-container");
+        const currentQuestionSpan = getDOMElement("current-question");
+        const totalQuestionsSpan = getDOMElement("total-question");
+        const scoreSpan = getDOMElement("score");
+        const finalScoreSpan = getDOMElement("final-score");
+        const maxScoreSpan = getDOMElement("max-score");
+        const resultMessage = getDOMElement("result-message");
+        const restartButton = getDOMElement("restart-btn");
+        const progressBar = getDOMElement("progress");
+        const timerElement = getDOMElement("timer");
+        const timerContainer = getQueryElement(".timer-container");
+        const scoreCircle = getQueryElement(".score-circle");
+        const scoreText = getQueryElement(".score-text");
+        const correctAnswersElement = getDOMElement("correct-answers");
+        const incorrectAnswersElement = getDOMElement("incorrect-answers");
+        const accuracyElement = getDOMElement("accuracy");
 
         
         const categoryButtons = document.querySelectorAll(".category-btn");
         const difficultyButtons = document.querySelectorAll(".difficulty-btn");
+
+        // ===== VALIDATION CHECK =====
+        const validateDOM = () => {
+            const requiredElements = [
+                startScreen, quizScreen, resultScreen, startButton, questionText,
+                answersContainer, scoreSpan, finalScoreSpan, maxScoreSpan, resultMessage,
+                restartButton, progressBar, timerElement, timerContainer, scoreCircle, scoreText
+            ];
+            
+            const allValid = requiredElements.every(el => el !== null);
+            if (!allValid) {
+                console.error("Some required DOM elements are missing. Quiz may not function correctly.");
+            }
+            return allValid;
+        };
 
         
         const quizData = {
@@ -613,88 +652,150 @@
         let incorrectAnswers = 0;
         let quizQuestions = [];
 
-        // Event listeners
-        if (startButton) startButton.addEventListener("click", startQuiz);
-        if (restartButton) restartButton.addEventListener("click", restartQuiz);
-
-        // Category selection
-        if (categoryButtons && categoryButtons.length) {
-            categoryButtons.forEach(button => {
-                button.addEventListener("click", function() {
-                    categoryButtons.forEach(btn => btn.classList.remove("active"));
-                    this.classList.add("active");
-                    selectedCategory = this.dataset.category;
-                });
-            });
-        }
-
-        // Difficulty selection
-        if (difficultyButtons && difficultyButtons.length) {
-            difficultyButtons.forEach(button => {
-                button.addEventListener("click", function() {
-                    difficultyButtons.forEach(btn => btn.classList.remove("active"));
-                    this.classList.add("active");
-                    selectedDifficulty = this.dataset.difficulty;
-                });
-            });
-        }
-
         function startQuiz() {
             // Reset variables
             currentQuestionIndex = 0;
             score = 0;
             correctAnswers = 0;
             incorrectAnswers = 0;
-            scoreSpan.textContent = 0;
+            if (scoreSpan) scoreSpan.textContent = 0;
 
             // Get questions based on selected category and difficulty
             quizQuestions = quizData[selectedCategory][selectedDifficulty];
 
             // Update UI
-            startScreen.classList.remove("active");
-            quizScreen.classList.add("active");
+            if (startScreen) startScreen.classList.remove("active");
+            if (quizScreen) quizScreen.classList.add("active");
 
             // Show first question
             showQuestion();
+        }
+
+        function restartQuiz() {
+            if (resultScreen) resultScreen.classList.remove("active");
+            if (startScreen) startScreen.classList.add("active");
+            
+            // Reset selections
+            categoryButtons.forEach(btn => {
+                if (btn.dataset.category === "general") {
+                    btn.classList.add("active");
+                    btn.setAttribute("aria-pressed", "true");
+                } else {
+                    btn.classList.remove("active");
+                    btn.setAttribute("aria-pressed", "false");
+                }
+            });
+            
+            difficultyButtons.forEach(btn => {
+                if (btn.dataset.difficulty === "medium") {
+                    btn.classList.add("active");
+                    btn.setAttribute("aria-pressed", "true");
+                } else {
+                    btn.classList.remove("active");
+                    btn.setAttribute("aria-pressed", "false");
+                }
+            });
+            
+            selectedCategory = "general";
+            selectedDifficulty = "medium";
+        }
+
+        // ===== INITIALIZE EVENT LISTENERS =====
+        const initializeEventListeners = () => {
+            if (startButton) {
+                startButton.addEventListener("click", startQuiz);
+            }
+            if (restartButton) {
+                restartButton.addEventListener("click", restartQuiz);
+            }
+
+            // Category selection
+            if (categoryButtons && categoryButtons.length) {
+                categoryButtons.forEach(button => {
+                    button.addEventListener("click", function() {
+                        categoryButtons.forEach(btn => {
+                            btn.classList.remove("active");
+                            btn.setAttribute("aria-pressed", "false");
+                        });
+                        this.classList.add("active");
+                        this.setAttribute("aria-pressed", "true");
+                        selectedCategory = this.dataset.category;
+                    });
+                });
+            }
+
+            // Difficulty selection
+            if (difficultyButtons && difficultyButtons.length) {
+                difficultyButtons.forEach(button => {
+                    button.addEventListener("click", function() {
+                        difficultyButtons.forEach(btn => {
+                            btn.classList.remove("active");
+                            btn.setAttribute("aria-pressed", "false");
+                        });
+                        this.classList.add("active");
+                        this.setAttribute("aria-pressed", "true");
+                        selectedDifficulty = this.dataset.difficulty;
+                    });
+                });
+            }
+        };
+
+        // ===== START APPLICATION =====
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", () => {
+                if (validateDOM()) {
+                    initializeEventListeners();
+                }
+            });
+        } else {
+            if (validateDOM()) {
+                initializeEventListeners();
+            }
         }
 
         function showQuestion() {
             // Reset state
             answersDisabled = false;
             clearInterval(timer);
-            timeLeft = selectedDifficulty === "easy" ? 20 : selectedDifficulty === "medium" ? 15 : 10;
-            timerElement.textContent = timeLeft;
-            timerContainer.classList.remove("warning");
+            timeLeft = TIMER_CONFIG[selectedDifficulty] || TIMER_CONFIG.medium;
+            if (timerElement) timerElement.textContent = timeLeft;
+            if (timerContainer) timerContainer.classList.remove("warning");
 
             const currentQuestion = quizQuestions[currentQuestionIndex];
 
             // Update question number
-            currentQuestionSpan.textContent = currentQuestionIndex + 1;
-            totalQuestionsSpan.textContent = quizQuestions.length;
+            if (currentQuestionSpan) currentQuestionSpan.textContent = currentQuestionIndex + 1;
+            if (totalQuestionsSpan) totalQuestionsSpan.textContent = quizQuestions.length;
 
             // Update progress bar
             const progressPercent = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
-            progressBar.style.width = progressPercent + "%";
+            if (progressBar) progressBar.style.width = progressPercent + "%";
+            
+            // Update ARIA progressbar
+            if (quizScreen) quizScreen.setAttribute("aria-valuenow", progressPercent);
 
             // Display question
-            questionText.textContent = currentQuestion.question;
+            if (questionText) questionText.textContent = currentQuestion.question;
 
             // Clear and populate answer buttons
-            answersContainer.innerHTML = "";
+            if (answersContainer) {
+                answersContainer.innerHTML = "";
 
-            currentQuestion.answers.forEach((answer, index) => {
-                const button = document.createElement("button");
-                button.textContent = answer.text;
-                button.classList.add("answer-btn");
-                button.dataset.correct = answer.correct;
-                button.addEventListener("click", selectAnswer);
-                
-                // Add animation delay for staggered appearance
-                button.style.animationDelay = `${index * 0.1}s`;
-                button.style.animation = "fadeIn 0.5s ease-in-out forwards";
-                
-                answersContainer.appendChild(button);
-            });
+                currentQuestion.answers.forEach((answer, index) => {
+                    const button = document.createElement("button");
+                    button.textContent = answer.text;
+                    button.classList.add("answer-btn");
+                    button.dataset.correct = answer.correct;
+                    button.addEventListener("click", selectAnswer);
+                    button.setAttribute("aria-label", `Answer option ${index + 1}: ${answer.text}`);
+                    
+                    // Add animation delay for staggered appearance
+                    button.style.animationDelay = `${index * 0.1}s`;
+                    button.style.animation = "fadeIn 0.5s ease-in-out forwards";
+                    
+                    answersContainer.appendChild(button);
+                });
+            }
 
             // Start timer
             startTimer();
@@ -703,9 +804,9 @@
         function startTimer() {
             timer = setInterval(() => {
                 timeLeft--;
-                timerElement.textContent = timeLeft;
+                if (timerElement) timerElement.textContent = timeLeft;
 
-                if (timeLeft <= 5) {
+                if (timeLeft <= WARNING_TIME && timerContainer) {
                     timerContainer.classList.add("warning");
                 }
 
@@ -734,19 +835,24 @@
             }
 
             // Show correct and incorrect answers
-            Array.from(answersContainer.children).forEach(button => {
-                if (button.dataset.correct === "true") {
-                    button.classList.add("correct");
-                } else if (button === selectedButton) {
-                    button.classList.add("incorrect");
-                }
-            });
+            if (answersContainer) {
+                Array.from(answersContainer.children).forEach(button => {
+                    button.disabled = true;
+                    if (button.dataset.correct === "true") {
+                        button.classList.add("correct");
+                        button.setAttribute("aria-label", button.getAttribute("aria-label") + " (Correct Answer)");
+                    } else if (button === selectedButton) {
+                        button.classList.add("incorrect");
+                        button.setAttribute("aria-label", button.getAttribute("aria-label") + " (Your Answer - Incorrect)");
+                    }
+                });
+            }
 
             // Update score and statistics
             if (isCorrect) {
                 score++;
                 correctAnswers++;
-                scoreSpan.textContent = score;
+                if (scoreSpan) scoreSpan.textContent = score;
                 createParticles(selectedButton);
             } else {
                 incorrectAnswers++;
@@ -761,7 +867,7 @@
                 } else {
                     showResults();
                 }
-            }, 1500);
+            }, ANSWER_DELAY);
         }
 
         function createParticles(element) {
@@ -771,7 +877,7 @@
             const x = rect.left + rect.width / 2;
             const y = rect.top + rect.height / 2;
 
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
                 const particle = document.createElement("div");
                 particle.classList.add("particle");
                 particle.style.left = `${x}px`;
@@ -779,54 +885,68 @@
                 particle.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
                 document.body.appendChild(particle);
 
-                setTimeout(() => {
-                    particle.remove();
+                // Cleanup after animation completes
+                const timeoutId = setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.remove();
+                    }
                 }, 1000);
+                
+                // Store timeout ID for potential cleanup on unmount
+                particle.dataset.timeoutId = timeoutId;
             }
         }
 
         function showResults() {
             // Switch screens
-            quizScreen.classList.remove("active");
-            resultScreen.classList.add("active");
+            if (quizScreen) quizScreen.classList.remove("active");
+            if (resultScreen) resultScreen.classList.add("active");
 
             // Update score display
-            finalScoreSpan.textContent = score;
-            maxScoreSpan.textContent = quizQuestions.length;
+            if (finalScoreSpan) finalScoreSpan.textContent = score;
+            if (maxScoreSpan) maxScoreSpan.textContent = quizQuestions.length;
 
             // Calculate percentage
             const percentage = Math.round((score / quizQuestions.length) * 100);
             
             // Update circular progress
-            scoreCircle.style.setProperty("--score", percentage);
-            scoreText.textContent = `${percentage}%`;
+            if (scoreCircle) {
+                scoreCircle.style.setProperty("--score", percentage);
+                scoreCircle.setAttribute("aria-label", `Your score: ${percentage}%`);
+            }
+            if (scoreText) scoreText.textContent = `${percentage}%`;
 
             // Update statistics
-            correctAnswersElement.textContent = correctAnswers;
-            incorrectAnswersElement.textContent = incorrectAnswers;
-            accuracyElement.textContent = `${percentage}%`;
+            if (correctAnswersElement) correctAnswersElement.textContent = correctAnswers;
+            if (incorrectAnswersElement) incorrectAnswersElement.textContent = incorrectAnswers;
+            if (accuracyElement) accuracyElement.textContent = `${percentage}%`;
 
             // Update result message based on percentage
+            let message = "Keep studying! You'll get better!";
             if (percentage === 100) {
-                resultMessage.textContent = "Perfect! You're a genius!";
+                message = "Perfect! You're a genius!";
                 createConfetti();
             } else if (percentage >= 80) {
-                resultMessage.textContent = "Excellent work! You know your stuff!";
+                message = "Excellent work! You know your stuff!";
                 createConfetti();
             } else if (percentage >= 60) {
-                resultMessage.textContent = "Good job! Keep learning!";
+                message = "Good job! Keep learning!";
             } else if (percentage >= 40) {
-                resultMessage.textContent = "Not bad! Try again to improve!";
-            } else {
-                resultMessage.textContent = "Keep studying! You'll get better!";
+                message = "Not bad! Try again to improve!";
+            }
+            
+            if (resultMessage) {
+                resultMessage.textContent = message;
+                resultMessage.setAttribute("aria-live", "polite");
             }
         }
 
         function createConfetti() {
             const colors = ["#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5", "#2196f3", "#03a9f4", "#00bcd4", "#009688", "#4caf50", "#8bc34a", "#cddc39", "#ffeb3b", "#ffc107", "#ff9800", "#ff5722"];
+            const timeoutIds = [];
             
-            for (let i = 0; i < 100; i++) {
-                setTimeout(() => {
+            for (let i = 0; i < CONFETTI_COUNT; i++) {
+                const timeoutId = setTimeout(() => {
                     const confetti = document.createElement("div");
                     confetti.classList.add("confetti");
                     confetti.style.left = `${Math.random() * 100}%`;
@@ -835,15 +955,15 @@
                     confetti.style.opacity = Math.random();
                     document.body.appendChild(confetti);
 
-                    setTimeout(() => {
-                        confetti.remove();
-                    }, 5000);
+                    const cleanupId = setTimeout(() => {
+                        if (confetti.parentNode) {
+                            confetti.remove();
+                        }
+                    }, CONFETTI_DURATION);
+                    
+                    confetti.dataset.cleanupId = cleanupId;
                 }, i * 30);
+                
+                timeoutIds.push(timeoutId);
             }
         }
-
-        function restartQuiz() {
-            resultScreen.classList.remove("active");
-            startScreen.classList.add("active");
-        }
-    
