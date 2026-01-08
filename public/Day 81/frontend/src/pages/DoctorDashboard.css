@@ -1,11 +1,11 @@
 /* General Dashboard Layout */
 .dashboard {
   width: 70vw;
- 
+ height: 90vh;
   padding: 20px;
   font-family: "Segoe UI", Arial, sans-serif;
   background-color: #f4f6f8;
-  
+  border-radius: 20px;
   position: relative;
   left: 12vw;
 }
@@ -25,7 +25,9 @@
   margin-bottom: 25px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
-
+.patientList{
+  margin-top: 100px;
+}
 .card h2 {
   margin-bottom: 15px;
   color: #34495e;

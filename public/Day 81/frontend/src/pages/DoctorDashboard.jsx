@@ -1,44 +1,69 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./DoctorDashboard.css";
 
 const DoctorDashboard = () => {
-  const [patients] = useState([
-    { id: 1, name: "Sunetra Bar", age: 20 },
-    { id: 2, name: "Debjani Bar", age: 22 },
-    { id: 3, name: "Anima Bar", age: 22},
-  ]);
-
-  const [appointments, setAppointments] = useState([
-    { id: 1, patient: "Sunetra Bar", date: "2026-01-10", time: "10:00 AM", status: "Pending" },
-    { id: 2, patient: "Debjani Bar", date: "2026-01-11", time: "2:00 PM", status: "Pending" },
-    { id: 3, patient: "Anima Bar", date: "2026-01-12", time: "11:00 AM", status: "Pending" },
-  ]);
-
+  const [appointments, setAppointments] = useState([]);
   const [prescriptions, setPrescriptions] = useState({});
+  // inside DoctorDashboard.jsx
+const uniquePatients = Array.from(
+  new Map(appointments.map(a => [a.name, { name: a.name, age: a.age }])).values()
+);
+  // Fetch appointments from backend
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/appointments/all");
+        const data = await res.json();
+        setAppointments(data);
+      } catch (err) {
+        console.error("Error fetching appointments:", err);
+      }
+    };
+    fetchAppointments();
+  }, []);
 
-  const handleStatusChange = (id, newStatus) => {
-    setAppointments(
-      appointments.map((a) =>
-        a.id === id ? { ...a, status: newStatus } : a
-      )
-    );
+  // Change appointment status
+  const handleStatusChange = async (id, newStatus) => {
+    try {
+      const res = await fetch(`http://localhost:5000/api/appointments/update/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus }),
+      });
+      const updated = await res.json();
+      setAppointments(
+        appointments.map((a) => (a._id === updated._id ? updated : a))
+      );
+    } catch (err) {
+      console.error("Error updating status:", err);
+    }
   };
 
-  const handlePostpone = (id, newDate) => {
+  // Postpone appointment
+  const handlePostpone = async (id, newDate) => {
     if (!newDate) return;
-    setAppointments(
-      appointments.map((a) =>
-        a.id === id ? { ...a, date: newDate, status: "Postponed" } : a
-      )
-    );
+    try {
+      const res = await fetch(`http://localhost:5000/api/appointments/update/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ date: newDate, status: "Postponed" }),
+      });
+      const updated = await res.json();
+      setAppointments(
+        appointments.map((a) => (a._id === updated._id ? updated : a))
+      );
+    } catch (err) {
+      console.error("Error postponing appointment:", err);
+    }
   };
 
-  const handlePrescriptionUpload = (patientId, e) => {
+  // Prescription upload (local state for now)
+  const handlePrescriptionUpload = (appointmentId, e) => {
     const file = e.target.files[0];
     if (file) {
       setPrescriptions({
         ...prescriptions,
-        [patientId]: file.name,
+        [appointmentId]: file.name,
       });
     }
   };
@@ -46,34 +71,32 @@ const DoctorDashboard = () => {
   return (
     <div className="dashboard">
       <h1 className="dashboard-title">🩺 Doctor Dashboard</h1>
-
-      {/* Patient List */}
-      <section className="card">
-        <h2>👨‍👩‍👧 Patient List</h2>
-        <ul>
-          {patients.map((p) => (
-            <li key={p.id} className="list-item">
-              <span className="patient-name">{p.name}</span> (Age: {p.age})
-            </li>
-          ))}
-        </ul>
-      </section>
+      <section className="card patientList">
+  <h2>👨‍👩‍👧 Patient List</h2>
+  <ul>
+    {uniquePatients.map((p, idx) => (
+      <li key={idx} className="list-item">
+        <span className="patient-name">{p.name}</span> (Age: {p.age})
+      </li>
+    ))}
+  </ul>
+</section>
 
       {/* Appointment Management */}
       <section className="card">
         <h2>📅 Appointment Management</h2>
         <ul>
           {appointments.map((a) => (
-            <li key={a.id} className="appointment-item">
+            <li key={a._id} className="appointment-item">
               <div>
-                <span className="appointment-patient">{a.patient}</span> — {a.date} at {a.time}
+                <span className="appointment-patient">{a.name}</span> — {a.date} at {a.time}
                 <span className={`status ${a.status.toLowerCase()}`}> [{a.status}]</span>
               </div>
               <div className="actions">
-                <button onClick={() => handleStatusChange(a.id, "Okay")}>Okay</button>
+                <button onClick={() => handleStatusChange(a._id, "Okay")}>Okay</button>
                 <input
                   type="date"
-                  onChange={(e) => handlePostpone(a.id, e.target.value)}
+                  onChange={(e) => handlePostpone(a._id, e.target.value)}
                   className="date-input"
                 />
               </div>
@@ -86,15 +109,15 @@ const DoctorDashboard = () => {
       <section className="card">
         <h2>💊 Prescription Upload</h2>
         <ul>
-          {patients.map((p) => (
-            <li key={p.id} className="prescription-item">
-              <span className="patient-name">{p.name}</span>
+          {appointments.map((a) => (
+            <li key={a._id} className="prescription-item">
+              <span className="patient-name">{a.name}</span>
               <input
                 type="file"
-                onChange={(e) => handlePrescriptionUpload(p.id, e)}
+                onChange={(e) => handlePrescriptionUpload(a._id, e)}
               />
-              {prescriptions[p.id] && (
-                <span className="uploaded-file">Uploaded: {prescriptions[p.id]}</span>
+              {prescriptions[a._id] && (
+                <span className="uploaded-file">Uploaded: {prescriptions[a._id]}</span>
               )}
             </li>
           ))}
