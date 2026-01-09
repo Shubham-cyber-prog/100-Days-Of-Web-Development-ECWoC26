@@ -399,6 +399,66 @@ function showNotification(message, type = 'info') {
 }
 
 
+// Add this to your DOM elements
+const themeToggle = document.getElementById('themeToggle');
+
+// Theme management
+function initTheme() {
+    const savedTheme = localStorage.getItem('jobBoardTheme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    updateThemeToggle(savedTheme);
+}
+
+function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('jobBoardTheme', newTheme);
+    updateThemeToggle(newTheme);
+    
+    // Add transition animation
+    document.body.classList.add('theme-transition');
+    setTimeout(() => {
+        document.body.classList.remove('theme-transition');
+    }, 300);
+}
+
+function updateThemeToggle(theme) {
+    const icon = themeToggle.querySelector('i');
+    const text = themeToggle.querySelector('span');
+    
+    if (theme === 'dark') {
+        icon.className = 'fas fa-sun';
+        text.textContent = 'Light Mode';
+    } else {
+        icon.className = 'fas fa-moon';
+        text.textContent = 'Dark Mode';
+    }
+}
+
+// Add smooth transition for theme change
+const transitionStyles = document.createElement('style');
+transitionStyles.textContent = `
+    .theme-transition * {
+        transition: background-color 0.3s ease, 
+                    color 0.3s ease, 
+                    border-color 0.3s ease,
+                    box-shadow 0.3s ease !important;
+    }
+`;
+document.head.appendChild(transitionStyles);
+
+// Initialize theme on page load
+document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
+    // ... your existing initialization code
+});
+
+// Add event listener
+themeToggle.addEventListener('click', toggleTheme);
+
+
 const notificationStyles = document.createElement('style');
 notificationStyles.textContent = `
     .notification {
