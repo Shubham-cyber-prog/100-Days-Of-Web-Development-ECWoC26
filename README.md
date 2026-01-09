@@ -7,6 +7,7 @@
   />
 </p>
 
+<img src="https://github.com/Mayur-Pagote/README_Design_Kit/blob/45123f007c79aa8d0c8d9b11b3ff72d6bf4744c7/Assets/Star%20Light%20Line.gif" width="100%">
 
 Level up your **frontend skills** with this **100 Days of Web Development Challenge** using **HTML, CSS & JavaScript**. Build **mini-projects**, practice **daily coding**, and create a **portfolio-worthy collection**!  
 
@@ -63,151 +64,27 @@ This repository documents my **100 Days of Web Development journey**, where I:
 ---
 
 ## 📂 Repository Structure
+
 ```
-> Each folder represents daily projects organized by difficulty level.
-100-days-web-projects/
+100-Days-Of-Web-Development/
 │
-├── 📁 README.md                           # Main project overview
-├── 📁 progress-tracker.md                 # Check off completed projects
-├── 📁 resources.md                        # Learning resources
+├── 📁 public/                             # Daily Projects
+│   ├── 📁 Day 01
+│   ├── 📁 Day 02
+│   ├── 📁 Day 03... (and so on)
+│   └── 📁 Day 100 + extended 50 
 │
-├── 📁 BEGINNER (Days 1-30)                # Basic Projects
-│   │
-│   ├── 📁 day-01-personal-portfolio/
-│   │   ├── index.html
-│   │   ├── style.css
-│   │   ├── script.js
-│   │   └── README.md
-│   │
-│   ├── 📁 day-02-responsive-landing-page/
-│   ├── 📁 day-03-todo-list/
-│   ├── 📁 day-04-weather-app/
-│   ├── 📁 day-05-calculator/
-│   ├── 📁 day-06-quiz-app/
-│   ├── 📁 day-07-expense-tracker/
-│   ├── 📁 day-08-pomodoro-timer/
-│   ├── 📁 day-09-note-taking-app/
-│   ├── 📁 day-10-recipe-book/
-│   ├── 📁 day-11-blog-website/
-│   ├── 📁 day-12-ecommerce-product-page/
-│   ├── 📁 day-13-chat-ui/
-│   ├── 📁 day-14-music-player/
-│   ├── 📁 day-15-drawing-app/
-│   ├── 📁 day-16-password-generator/
-│   ├── 📁 day-17-unit-converter/
-│   ├── 📁 day-18-countdown-timer/
-│   ├── 📁 day-19-tip-calculator/
-│   ├── 📁 day-20-qr-code-generator/
-│   ├── 📁 day-21-flashcards-app/
-│   ├── 📁 day-22-markdown-previewer/
-│   ├── 📁 day-23-currency-converter/
-│   ├── 📁 day-24-bmi-calculator/
-│   ├── 📁 day-25-random-quote-generator/
-│   ├── 📁 day-26-image-gallery/
-│   ├── 📁 day-27-dice-roller/
-│   ├── 📁 day-28-rock-paper-scissors/
-│   ├── 📁 day-29-memory-game/
-│   └── 📁 day-30-tic-tac-toe/
+├── 📁 website/                            # Zenith Portfolio Site
+│   ├── 📁 assets/                         # Images, Fonts, Icons
+│   ├── 📁 pages/                          # HTML Pages (Login, Home, Projects...)
+│   ├── 📁 styles/                         # Modular CSS System
+│   └── 📁 scripts/                        # Logic & Connectors
 │
-├── 📁 INTERMEDIATE (Days 31-60)           # Intermediate Projects
-│   │
-│   ├── 📁 day-31-job-board/
-│   ├── 📁 day-32-social-media-dashboard/
-│   ├── 📁 day-33-real-estate-website/
-│   ├── 📁 day-34-hotel-booking-system/
-│   ├── 📁 day-35-food-delivery-app/
-│   ├── 📁 day-36-fitness-tracker/
-│   ├── 📁 day-37-event-management/
-│   ├── 📁 day-38-booking-appointment-system/
-│   ├── 📁 day-39-online-learning-platform/
-│   ├── 📁 day-40-movie-database/
-│   ├── 📁 day-41-github-profile-finder/
-│   ├── 📁 day-42-stock-market-tracker/
-│   ├── 📁 day-43-news-aggregator/
-│   ├── 📁 day-44-chat-application/
-│   ├── 📁 day-45-project-management-tool/
-│   ├── 📁 day-46-ecommerce-cart/
-│   ├── 📁 day-47-banking-dashboard/
-│   ├── 📁 day-48-flight-booking-system/
-│   ├── 📁 day-49-recipe-sharing-platform/
-│   ├── 📁 day-50-resume-builder/
-│   ├── 📁 day-51-portfolio-with-blog/
-│   ├── 📁 day-52-task-management-board/
-│   ├── 📁 day-53-file-uploader/
-│   ├── 📁 day-54-code-editor/
-│   ├── 📁 day-55-voice-notes-app/
-│   ├── 📁 day-56-expense-splitter/
-│   ├── 📁 day-57-habit-tracker/
-│   ├── 📁 day-58-budget-planner/
-│   ├── 📁 day-59-meal-planner/
-│   └── 📁 day-60-travel-planner/
-│
-├── 📁 ADVANCED (Days 61-90)               # Advanced Projects
-│   │
-│   ├── 📁 day-61-fullstack-ecommerce/
-│   ├── 📁 day-62-social-network/
-│   ├── 📁 day-63-video-conferencing/
-│   ├── 📁 day-64-online-code-editor/
-│   ├── 📁 day-65-real-time-collaboration/
-│   ├── 📁 day-66-stock-trading-simulator/
-│   ├── 📁 day-67-multiplayer-game/
-│   ├── 📁 day-68-ai-chatbot/
-│   ├── 📁 day-69-blockchain-explorer/
-│   ├── 📁 day-70-data-visualization-dashboard/
-│   ├── 📁 day-71-crypto-wallet/
-│   ├── 📁 day-72-iot-dashboard/
-│   ├── 📁 day-73-machine-learning-ui/
-│   ├── 📁 day-74-voice-assistant/
-│   ├── 📁 day-75-ar-web-app/
-│   ├── 📁 day-76-pwa-news-app/
-│   ├── 📁 day-77-real-time-analytics/
-│   ├── 📁 day-78-document-editor/
-│   ├── 📁 day-79-email-client/
-│   ├── 📁 day-80-project-management-saas/
-│   ├── 📁 day-81-healthcare-portal/
-│   ├── 📁 day-82-elearning-platform/
-│   ├── 📁 day-83-recruitment-platform/
-│   ├── 📁 day-84-real-time-chat-support/
-│   ├── 📁 day-85-auction-platform/
-│   ├── 📁 day-86-freelance-marketplace/
-│   ├── 📁 day-87-music-streaming/
-│   ├── 📁 day-88-Medicine-Reminder /
-│   ├── 📁 day-89-smart-home-dashboard/
-│   └── 📁 day-90-enterprise-crm/
-│
-├── 📁 CAPSTONE (Days 91-100)              # Final Projects
-│   │
-│   ├── 📁 day-91-92-microservices-project/
-│   ├── 📁 day-93-94-open-source-contribution/
-│   ├── 📁 day-95-96-fullstack-application/
-│   ├── 📁 day-97-98-complex-dashboard/
-│   └── 📁 day-99-100-master-project/
-│
-├── 📁 templates/                          # Reusable templates
-│   ├── 📁 html-template/
-│   ├── 📁 css-template/
-│   ├── 📁 js-template/
-│   ├── 📁 api-template/
-│   └── 📁 component-library/
-│
-├── 📁 assets/                             # Shared assets
-│   ├── 📁 images/
-│   ├── 📁 icons/
-│   ├── 📁 fonts/
-│   └── 📁 styles/
-│       ├── variables.css
-│       ├── utilities.css
-│       └── animations.css
-│
-├── 📁 tools/                              # Development tools
-│   ├── 📁 generators/
-│   │   ├── component-generator.js
-│   │   └── project-scaffold.js
-│   ├── 📁 scripts/
-│   └── 📁 config/
-│
-└── 📁 packages.json
+├── 📄 index.html                          # Entry Redirect (Auth Gate)
+├── 📄 README.md                           # Documentation
+└── 📄 CONTRIBUTING.md                     # Contribution Guidelines
 ```
+
                # Dependencies configuration
 
 ---
@@ -319,4 +196,5 @@ To maintain a clean and collaborative codebase, follow these Git workflow guidel
 - Regularly sync your fork with the upstream repository.
 - Use `.gitignore` to exclude unnecessary files (e.g., `node_modules/`, `.env`).
 
-![100 Days 100 Projects Banner](https://capsule-render.vercel.app/api?type=waving&color=0:1E90FF,50:9370DB,100:0000CD&height=250&section=header&text=100%20Days%20100%20Projects&fontSize=65&fontAlignY=40&fontColor=ffffff&animation=fadeIn&stroke=00BFFF&strokeWidth=2)
+<img src="https://contributors-img.web.app/image?repo=Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26"/>
+
