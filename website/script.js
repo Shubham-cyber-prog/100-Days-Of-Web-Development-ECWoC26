@@ -62,6 +62,19 @@ let currentFilters = {
     tech: ['HTML', 'CSS', 'JS']
 };
 
+// Completed days tracking
+let completedDays = [];
+
+// localStorage functions
+function getCompletedDays() {
+    const stored = localStorage.getItem('completedDays');
+    return stored ? JSON.parse(stored) : [];
+}
+
+function saveCompletedDays(days) {
+    localStorage.setItem('completedDays', JSON.stringify(days));
+}
+
 // Event listeners for filters
 document.getElementById('projectSearch').addEventListener('input', (e) => {
     currentFilters.search = e.target.value.toLowerCase();
@@ -160,6 +173,28 @@ function renderProjects() {
         grid.appendChild(card);
     });
 }
+
+// Event listener for completion checkboxes
+document.addEventListener('change', (e) => {
+    if (e.target.type === 'checkbox' && e.target.hasAttribute('data-day')) {
+        const day = parseInt(e.target.getAttribute('data-day'));
+        const isChecked = e.target.checked;
+
+        if (isChecked) {
+            if (!completedDays.includes(day)) {
+                completedDays.push(day);
+            }
+        } else {
+            completedDays = completedDays.filter(d => d !== day);
+        }
+
+        saveCompletedDays(completedDays);
+        renderProjects(); // Re-render to update styles
+    }
+});
+
+// Initialize completed days from localStorage
+completedDays = getCompletedDays();
 
 // Initial Render
 renderProjects();
