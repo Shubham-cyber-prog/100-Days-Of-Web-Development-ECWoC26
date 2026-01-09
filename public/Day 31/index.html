@@ -4,35 +4,77 @@
     <meta charset="UTF-8">
     <title>Job Board</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
     <header class="header">
-        <h1>💼 Job Board</h1>
-        <p>Find your next opportunity</p>
+         <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-briefcase"></i>
+                <h1>Job Board</h1>
+            </div>
+            <p class="tagline">Find your next opportunity</p>
+        </div>
     </header>
 
     <main class="container">
-        <section class="filters">
-            <input type="text" id = "searchInput" placeholder="Search jobs..." />
-            <select id = "locationFilter">
-                <option value = "all">All Locations</option>
-                <option value = "Remote">Remote</option>
-                <option value = "Bangalore">Bangalore</option>
-                <option value = "Hyderabad">Hyderabad</option>
-                <option value = "Chennai">Chennai</option>
-            </select>
+        <section class = "filters-section">
+            <div class="filters">
+                <div class = "search-box">
+                    <i class = "fas fa-search"></i>
+                    <input type="text" id = "searchInput" placeholder="Search jobs by title, company or keywords..." />
+                </div>
 
-            <select id = "typeFilter">
-                <option value = "all">All Types</option>
-                <option value = "Full Time">Full Time</option>
-                <option value = "Internship">Internship</option>
-            </select>
+                <div class = "filter-group">
+                    <select id = "locationFilter">
+                        <option value="all">📍 All Locations</option>
+                        <option value="Remote">Remote</option>
+                        <option value="Bangalore">Bangalore</option>
+                        <option value="Hyderabad">Hyderabad</option>
+                        <option value="Chennai">Chennai</option>
+                        <option value="Mumbai">Mumbai</option>
+                        <option value="Delhi">Delhi</option>
+                    </select>
+                </div>
+
+                <div class = "filter-group">
+                    <select id = "typeFilter">
+                        <option value="all">📋 All Types</option>
+                        <option value="Full Time">💼 Full Time</option>
+                        <option value="Part Time">⏰ Part Time</option>
+                        <option value="Internship">🎓 Internship</option>
+                        <option value="Contract">📝 Contract</option>
+                    </select>
+                </div>
+                <button id = "clearFilters" class = "clear-btn">
+                    <i class = "fas fa-times"></i>Clear Filters
+                </button>
+            </div>
+
+            <div class = "stats">
+                <span id = "jobsCount">4 jobs found</span>
+                <button id = "toggleView" class = "view-toggle">
+                    <i class = "fas fa-th"></i>Grid View
+                </button>
+            </div>
         </section>
 
         <section class="jobs" id = "jobsContainer">
         </section>
+
+        <div class = "empty-state" id = "emptyState" style = "display: none;">
+            <i class = "fas fa-search"></i>
+            <h3>No jobs found</h3>
+            <p>Try adjusting your search or filter criteria</p>
+            <button id = "resetSearch" class = "reset-btn">Reset Search</button>
+        </div>
     </main>
+
+    <footer class = "footer">
+        <p>Job Board © 2024 | Find your dream job</p>
+        <a href = "#" id = "viewSavedJobs"><i class = "fas fa-bookmark"></i></a>
+    </footer>
 
     <script src="script.js"></script>
 </body>
