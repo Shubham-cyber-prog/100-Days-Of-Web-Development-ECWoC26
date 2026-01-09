@@ -46,3 +46,17 @@ function renderJobs(jobList) {
 }
 
 renderJobs(jobs);
+
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("keyup", function () {
+    const searchText = searchInput.value.toLowerCase();
+
+    const filteredJobs = jobs.filter(job => {
+        return (
+            job.title.toLowerCase().includes(searchText) ||
+            job.company.toLowerCase().includes(searchText)
+        );
+    });
+    renderJobs(filteredJobs);
+});
