@@ -47,13 +47,32 @@
                         <option value="Contract">📝 Contract</option>
                     </select>
                 </div>
+
+                <div class="filter-group">
+                    <select id="sortFilter">
+                        <option value="newest">📅 Newest First</option>
+                        <option value="salary-high">💰 Salary (High to Low)</option>
+                        <option value="salary-low">💰 Salary (Low to High)</option>
+                        <option value="experience-low">🎓 Experience (Low to High)</option>
+                        <option value="experience-high">🎓 Experience (High to Low)</option>
+                        <option value="title-asc">🔤 Title (A-Z)</option>
+                        <option value="title-desc">🔤 Title (Z-A)</option>
+                    </select>
+                </div>
+
                 <button id = "clearFilters" class = "clear-btn">
                     <i class = "fas fa-times"></i>Clear Filters
                 </button>
             </div>
 
             <div class = "stats">
+                <div class = "stats-left">
                 <span id = "jobsCount">4 jobs found</span>
+                <span class="sort-indicator" id="currentSort">
+                    <i class="fas fa-sort-amount-down"></i>
+                        Sorted by: Newest First
+                </span>
+                </div>
                 <button id = "toggleView" class = "view-toggle">
                     <i class = "fas fa-th"></i>Grid View
                 </button>

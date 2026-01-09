@@ -5,23 +5,28 @@ const jobs = [
         company: "ABC Tech",
         location: "Remote",
         type: "Full Time",
-        salary: "$80,000 - $100,000",
+        salary: 90000,
+        salaryDisplay: "$80,000 - $100,000",
         experience: "2-4 years",
+        experienceLevel: 3,
         description: "We are looking for a skilled Frontend Developer to join our team.",
-        posted: "2 days ago",
+        posted: "2025-01-15",
+        postedDisplay: "2 days ago",
         tags: ["React", "JavaScript", "CSS"]
     },
     {
         id: 2,
-
         title: "Backend Developer",
         company: "CodeBase",
         location: "Bangalore",
         type: "Internship",
-        salary: "$30,000 - $40,000",
+        salary: 35000,
+        salaryDisplay: "$30,000 - $40,000",
         experience: "0-1 years",
+        experienceLevel: 1,
         description: "Exciting internship opportunity for backend development.",
-        posted: "1 week ago",
+        posted: "2025-01-1",
+        postedDisplay: "1 week ago",
         tags: ["Node.js", "Python", "MongoDB"]
     },
     {
@@ -30,10 +35,13 @@ const jobs = [
         company: "DesignPro",
         location: "Hyderabad",
         type: "Full Time",
-        salary: "$70,000 - $90,000",
+        salary: 80000,
+        salaryDisplay: "$70,000 - $90,000",
         experience: "3-5 years",
+        experienceLevel: 4,
         description: "Creative UI/UX designer needed for innovative projects.",
-        posted: "3 days ago",
+        posted: "2025-01-14",
+        postedDisplay: "3 days ago",
         tags: ["Figma", "Sketch", "Adobe XD"]
     },
     {
@@ -42,10 +50,13 @@ const jobs = [
         company: "TechSoft",
         location: "Chennai",
         type: "Internship",
-        salary: "$25,000 - $35,000",
+        salary: 30000,
+        salaryDisplay: "$25,000 - $35,000",
         experience: "0-2 years",
+        experienceLevel: 1,
         description: "Java development internship with mentoring.",
-        posted: "5 days ago",
+        posted: "2025-01-12",
+        postedDisplay: "5 days ago",
         tags: ["Java", "Spring", "SQL"]
     },
     {
@@ -54,10 +65,13 @@ const jobs = [
         company: "CloudTech",
         location: "Remote",
         type: "Full Time",
-        salary: "$90,000 - $120,000",
+        salary: 105000,
+        salaryDisplay: "$90,000 - $120,000",
         experience: "3-6 years",
+        experienceLevel: 5,
         description: "DevOps engineer for cloud infrastructure.",
-        posted: "1 day ago",
+        posted: "2025-01-16",
+        postedDisplay: "1 day ago",
         tags: ["AWS", "Docker", "Kubernetes"]
     },
     {
@@ -66,10 +80,13 @@ const jobs = [
         company: "DataCorp",
         location: "Mumbai",
         type: "Contract",
-        salary: "$100,000 - $130,000",
+        salary: 120000,
+        salaryDisplay: "$100,000 - $130,000",
         experience: "4-7 years",
+        experienceLevel: 6,
         description: "Data scientist for machine learning projects.",
-        posted: "1 week ago",
+        posted: "2025-01-16",
+        postedDisplay: "1 day ago",
         tags: ["Python", "TensorFlow", "SQL"]
     }
 ];
@@ -84,7 +101,8 @@ const jobsCount = document.getElementById("jobsCount");
 const emptyState = document.getElementById("emptyState");
 const viewSavedJobsBtn = document.getElementById("viewSavedJobs");
 const toggleViewBtn = document.getElementById("toggleView");
-
+const sortFilter = document.getElementById("sortFilter");
+let currentSort = 'newest';
 
 let currentView = 'grid';
 
@@ -112,13 +130,13 @@ function renderJobs(jobList) {
             <div class="job-meta">
                 <span class="job-tag"><i class="fas fa-map-marker-alt"></i> ${job.location}</span>
                 <span class="job-tag"><i class="fas fa-briefcase"></i> ${job.type}</span>
-                <span class="job-tag"><i class="fas fa-money-bill-wave"></i> ${job.salary}</span>
+                <span class="job-tag"><i class="fas fa-money-bill-wave"></i> ${job.salaryDisplay}</span>
             </div>
             
             <p class="description">${job.description}</p>
             
             <div class="job-meta">
-                <span class="job-tag"><i class="fas fa-clock"></i> ${job.posted}</span>
+                <span class="job-tag"><i class="fas fa-clock"></i> ${job.postedDisplay}</span>
                 <span class="job-tag"><i class="fas fa-user-graduate"></i> ${job.experience}</span>
             </div>
             
@@ -141,13 +159,62 @@ function renderJobs(jobList) {
     attachEventListeners(jobList);
 }
 
+function sortJobs(jobList, sortBy) {
+    const jobsCopy = [...jobList];
+    
+    switch(sortBy) {
+        case 'newest':
+            return jobsCopy.sort((a, b) => new Date(b.posted) - new Date(a.posted));
+        
+        case 'salary-high':
+            return jobsCopy.sort((a, b) => b.salary - a.salary);
+        
+        case 'salary-low':
+            return jobsCopy.sort((a, b) => a.salary - b.salary);
+        
+        case 'experience-low':
+            return jobsCopy.sort((a, b) => a.experienceLevel - b.experienceLevel);
+        
+        case 'experience-high':
+            return jobsCopy.sort((a, b) => b.experienceLevel - a.experienceLevel);
+        
+        case 'title-asc':
+            return jobsCopy.sort((a, b) => a.title.localeCompare(b.title));
+        
+        case 'title-desc':
+            return jobsCopy.sort((a, b) => b.title.localeCompare(a.title));
+        
+        default:
+            return jobsCopy;
+    }
+}
+
+
+function updateSortIndicator(sortValue) {
+    const sortTextMap = {
+        'newest': 'Newest First',
+        'salary-high': 'Salary (High to Low)',
+        'salary-low': 'Salary (Low to High)',
+        'experience-low': 'Experience (Low to High)',
+        'experience-high': 'Experience (High to Low)',
+        'title-asc': 'Title (A-Z)',
+        'title-desc': 'Title (Z-A)'
+    };
+    
+    const indicator = document.getElementById('currentSort');
+    if (indicator) {
+        indicator.innerHTML = `<i class="fas fa-sort-amount-down"></i> Sorted by: ${sortTextMap[sortValue]}`;
+    }
+}
+
 
 function applyFilters() {
     const searchText =  searchInput.value.toLowerCase();
     const selectedLocation = locationFilter.value;
     const selectedType = typeFilter.value;
+    const selectedSort = sortFilter.value;
 
-    const filteredJobs = jobs.filter(job => {
+    let filteredJobs = jobs.filter(job => {
         const matchesSearch = 
             job.title.toLowerCase().includes(searchText) ||
             job.company.toLowerCase().includes(searchText)||
@@ -163,9 +230,15 @@ function applyFilters() {
         return matchesSearch && matchesLocation && matchesType;
     });
 
+    filteredJobs = sortJobs(filteredJobs, selectedSort);
+
+    updateSortIndicator(selectedSort);
+
     renderJobs(filteredJobs);
     updateJobsCount(filteredJobs.length);
     checkEmptyState(filteredJobs.length);
+
+    currentSort = selectedSort;
 }
 
 
@@ -189,6 +262,7 @@ function clearFilters() {
     searchInput.value = '';
     locationFilter.value = 'all';
     typeFilter.value = 'all';
+    sortFilter.value = 'newest';
     applyFilters();
 }
 
@@ -378,6 +452,7 @@ clearFiltersBtn.addEventListener('click', clearFilters);
 resetSearchBtn.addEventListener('click', clearFilters);
 viewSavedJobsBtn.addEventListener('click', viewSavedJobs);
 toggleViewBtn.addEventListener('click', toggleView);
+sortFilter.addEventListener('change', applyFilters);
 
 
 renderJobs(jobs);
