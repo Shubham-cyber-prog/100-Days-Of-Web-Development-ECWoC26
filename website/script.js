@@ -156,10 +156,15 @@ function renderProjects() {
     filteredProjects.sort((a, b) => a.day - b.day);
 
     filteredProjects.forEach(project => {
+        const isCompleted = completedDays.includes(project.day);
         const card = document.createElement('div');
-        card.className = 'project-card';
+        card.className = `project-card ${isCompleted ? 'completed' : ''}`;
         card.innerHTML = `
             <div class="card-header">
+                <label class="completion-checkbox">
+                    <input type="checkbox" data-day="${project.day}" ${isCompleted ? 'checked' : ''}>
+                    <span class="checkmark">${isCompleted ? '✓' : ''}</span>
+                </label>
                 <span class="day-number">Day ${project.day}</span>
                 <span class="badge">${project.level}</span>
             </div>
