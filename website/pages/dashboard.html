@@ -58,6 +58,7 @@
             font-weight: var(--weight-bold);
             font-size: var(--text-lg);
             transition: transform 0.2s;
+            margin: 80px;
         }
 
         .btn-zenith-primary:hover {
@@ -71,7 +72,15 @@
 
     <!-- Header -->
     <header class="site-header">
-        <div class="nav-container">
+        <div
+            class="nav-container"
+            style="
+                filter:
+                drop-shadow(0 2px 8px rgba(0,0,0,0.3))
+                drop-shadow(0 0 14px color-mix(in srgb, var(--accent-core) 22%, transparent))
+                drop-shadow(0 0 28px color-mix(in srgb, var(--accent-core) 12%, transparent));
+            "
+            >
             <a href="dashboard.html" class="nav-logo">
                 <img src="../assets/images/logo.png" alt="100 Days of Web Dev" class="brand-logo-img">
             </a>
@@ -132,7 +141,7 @@
         </section>
 
         <!-- Stats Grid (Floating) -->
-        <div class="grid grid-3" style="margin-top: -40px; position: relative; z-index: 2;">
+        <div class="grid grid-3" style="margin-top: 40px; position: relative; z-index: 2;">
             <!-- Stat Card 1 -->
             <div class="card stat-card glow-active">
                 <h3 class="text-secondary"
