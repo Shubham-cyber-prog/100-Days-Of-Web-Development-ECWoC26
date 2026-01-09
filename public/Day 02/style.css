@@ -122,13 +122,15 @@
             position: relative;
         }
 
-        nav ul li a:hover {
+        nav ul li a:not(.btn):hover {
             color: var(--primary-color);
         }
+
 
         nav ul li a .btn:hover {
             color: white;
         }
+
         nav ul li a:not(.btn)::after {
             content: '';
             position: absolute;
@@ -146,6 +148,7 @@
 
         .mobile-menu-btn {
             display: none;
+            margin-left: auto;
             background: none;
             border: none;
             font-size: 1.5rem;
@@ -383,7 +386,7 @@
         }
 
         .cta h2 {
-            font-size: 2.5rem;
+            font-size: clamp(2rem, 5vw, 2.5rem);
             margin-bottom: 20px;
         }
 
@@ -491,6 +494,7 @@
 
         /* Responsive Design */
         @media (max-width: 992px) {
+
             .hero-content h1 {
                 font-size: 2.8rem;
             }
@@ -500,6 +504,12 @@
                 text-align: center;
             }
             
+            .hero-content p {
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+            }
+
             .hero-btns {
                 justify-content: center;
             }
@@ -507,10 +517,13 @@
 
         @media (max-width: 768px) {
             nav ul {
+             nav ul {
+
                 position: fixed;
                 top: 80px;
                 left: 0;
-                width: 100%;
+                right: 0;
+                width: auto;
                 background-color: var(--white);
                 flex-direction: column;
                 align-items: center;
@@ -531,6 +544,21 @@
                 display: block;
             }
 
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-btns {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
             .hero-content h1 {
                 font-size: 2.3rem;
             }

@@ -6,6 +6,7 @@ const addBtn = document.getElementById("addBtn");
 const descInput = document.getElementById("description");
 const amountInput = document.getElementById("amount");
 const categoryInput = document.getElementById("category");
+const dateInput = document.getElementById("expense-date");
 
 const expenseList = document.querySelector(".expense-list");
 const totalEl = document.getElementById("total-expense");
@@ -25,6 +26,13 @@ const CATEGORY_COLORS = {
   travel: "#3b82f6",
   health: "#ef4444"
 };
+
+function formatDate(dateString) {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  const options = { day: 'numeric', month: 'short', year: 'numeric' };
+  return date.toLocaleDateString('en-GB', options);
+}
 
 let expenses = [];
 
@@ -57,12 +65,14 @@ addBtn.onclick = () => {
   const desc = descInput.value.trim();
   const amt = Number(amountInput.value);
   const cat = categoryInput.value;
+  const date = dateInput.value;
 
   if (!desc || amt <= 0 || isNaN(amt)) return;
 
-  expenses.push({ desc, amount: amt, category: cat });
+  expenses.push({ desc, amount: amt, category: cat, date: date });
   descInput.value = "";
   amountInput.value = "";
+  dateInput.value = "";
   modal.classList.remove("show");
 
   render();
@@ -81,7 +91,13 @@ function render() {
 
     const div = document.createElement("div");
     div.className = "expense-item";
-    div.innerHTML = `<span>${e.desc}</span><strong>₹${e.amount.toFixed(2)}</strong>`;
+    div.innerHTML = `
+      <div>
+        <div>${e.desc}</div>
+        <small style="color: #6b7280; font-size: 12px;">${e.date ? formatDate(e.date) : ''}</small>
+      </div>
+      <strong>₹${e.amount.toFixed(2)}</strong>
+    `;
     expenseList.appendChild(div);
   });
 
