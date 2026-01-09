@@ -32,6 +32,9 @@ const HomePage = () => {
         <div className="box" onClick={() => navigate("/dashboard")}>
           Doctor Dashboard
         </div>
+        <div className="box" onClick={() => navigate("/check-status")}>
+          Check Status
+        </div>
         <div className="box" onClick={() => navigate("/appointment")}>
           Appointment Booking
         </div>
