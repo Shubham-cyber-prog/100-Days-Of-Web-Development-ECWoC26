@@ -72,7 +72,7 @@ This repository documents my **100 Days of Web Development journey**, where I:
 │   ├── 📁 Day 01
 │   ├── 📁 Day 02
 │   ├── 📁 Day 03... (and so on)
-│   └── 📁 Unlimited
+│   └── 📁 Day 100 + extended 50 
 │
 ├── 📁 website/                            # Zenith Portfolio Site
 │   ├── 📁 assets/                         # Images, Fonts, Icons

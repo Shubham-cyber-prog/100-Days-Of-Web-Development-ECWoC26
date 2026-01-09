@@ -30,12 +30,21 @@ const AppointmentForm = () => {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Appointment Data:", formData);
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await fetch("http://localhost:5000/api/appointments/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+    const data = await response.json();
     alert("Appointment submitted successfully!");
-  };
-
+    console.log(data);
+  } catch (err) {
+    console.error("Error submitting appointment:", err);
+  }
+};
   return (
     <>  
      

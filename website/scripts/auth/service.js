@@ -14,7 +14,7 @@ function handleLogin(provider) {
     setTimeout(() => {
         sessionStorage.setItem('authToken', 'true');
         // Redirect
-        window.location.href = 'home.html';
+        window.location.href = 'dashboard.html';
     }, 800);
 }
 
@@ -28,7 +28,7 @@ function handleEmailLogin(e) {
 
     setTimeout(() => {
         sessionStorage.setItem('authToken', 'true');
-        window.location.href = 'home.html';
+        window.location.href = 'dashboard.html';
     }, 1000);
 }
 
@@ -40,6 +40,6 @@ function handleGuestLogin() {
     setTimeout(() => {
         sessionStorage.setItem('authToken', 'true');
         sessionStorage.setItem('authGuest', 'true');
-        window.location.href = 'home.html';
+        window.location.href = 'dashboard.html';
     }, 800);
 }
