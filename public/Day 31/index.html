@@ -15,11 +15,18 @@
     <main class="container">
         <section class="filters">
             <input type="text" id = "searchInput" placeholder="Search jobs..." />
-            <select>
-                <option>All Locations</option>
+            <select id = "locationFilter">
+                <option value = "all">All Locations</option>
+                <option value = "Remote">Remote</option>
+                <option value = "Bangalore">Bangalore</option>
+                <option value = "Hyderabad">Hyderabad</option>
+                <option value = "Chennai">Chennai</option>
             </select>
-            <select>
-                <option>All Types</option>
+
+            <select id = "typeFilter">
+                <option value = "all">All Types</option>
+                <option value = "Full Time">Full Time</option>
+                <option value = "Internship">Internship</option>
             </select>
         </section>
 

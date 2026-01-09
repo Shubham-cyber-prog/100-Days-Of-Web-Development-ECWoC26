@@ -48,15 +48,30 @@ function renderJobs(jobList) {
 renderJobs(jobs);
 
 const searchInput = document.getElementById("searchInput");
+const locationFilter = document.getElementById("locationFilter");
+const typeFilter = document.getElementById("typeFilter");
 
-searchInput.addEventListener("keyup", function () {
-    const searchText = searchInput.value.toLowerCase();
+function applyFilters() {
+    const searchText =  searchInput.value.toLowerCase();
+    const selectedLocation = locationFilter.value;
+    const selectedType = typeFilter.value;
 
     const filteredJobs = jobs.filter(job => {
-        return (
+        const matchesSearch = 
             job.title.toLowerCase().includes(searchText) ||
-            job.company.toLowerCase().includes(searchText)
-        );
+            job.company.toLowerCase().includes(searchText);
+
+        const matchesLocation = 
+            selectedLocation === "all" || job.location === selectedLocation;
+
+        const matchesType = 
+            selectedType === "all" || job.type === selectedType;
+
+        return matchesSearch && matchesLocation && matchesType;
     });
     renderJobs(filteredJobs);
-});
+}
+
+searchInput.addEventListener("keyup", applyFilters);
+locationFilter.addEventListener("change", applyFilters);
+typeFilter.addEventListener("change", applyFilters);
