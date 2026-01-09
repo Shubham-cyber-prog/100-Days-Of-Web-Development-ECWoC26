@@ -51,6 +51,13 @@
                 </svg>
                 <input type="text" id="projectSearch" class="search-input"
                     placeholder="Search by title, day, or tech...">
+                <button id="clearSearch" class="clear-search-btn" aria-label="Clear search">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
             </div>
 
             <div class="filters-container" style="margin: 2rem auto 0; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
@@ -73,7 +80,11 @@
                         <label><input type="checkbox" value="React"> React</label>
                     </div>
                 </div>
+
+                <button id="clearFilters" class="btn btn-outline">Clear All Filters</button>
             </div>
+
+            <div id="resultsCount" class="results-count" style="margin: 1rem auto 0; text-align: center; color: var(--text-secondary); font-size: 0.9rem;"></div>
         </header>
 
         <section class="container">

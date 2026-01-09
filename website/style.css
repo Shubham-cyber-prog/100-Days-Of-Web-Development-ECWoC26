@@ -138,6 +138,37 @@ ul {
     height: 1rem;
 }
 
+.clear-search-btn {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.2s ease;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.search-container:hover .clear-search-btn,
+.search-input:focus + .clear-search-btn,
+.clear-search-btn:hover {
+    opacity: 1;
+}
+
+.clear-search-btn:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
 /* --- About Page: Learning Path Timeline --- */
 .learning-path {
     position: relative;

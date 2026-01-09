@@ -52,47 +52,8 @@ const projects = [
 ];
 
 const grid = document.getElementById('projects-grid');
-const tabs = document.querySelectorAll('.tab-btn');
 const repoBaseUrl = "https://github.com/Shubham-cyber-prog/100-days-of-web-development/tree/main/public/";
 const liveBaseUrl = "../public/";
-
-function renderProjects(category = 'All') {
-    grid.innerHTML = '';
-
-    const filteredProjects = category === 'All'
-        ? projects
-        : projects.filter(p => p.level === category);
-
-    // Ensure sorted by day
-    filteredProjects.sort((a, b) => a.day - b.day);
-
-    filteredProjects.forEach(project => {
-        const card = document.createElement('div');
-        card.className = 'project-card';
-        card.innerHTML = `
-            <div class="card-header">
-                <span class="day-number">Day ${project.day}</span>
-                <span class="badge">${project.level}</span>
-            </div>
-            <h3>${project.title}</h3>
-            <p>${project.tech ? project.tech.join(', ') : 'HTML, CSS, JS'}</p>
-            <div class="card-actions">
-                <a href="${liveBaseUrl}${project.folder}/index.html" target="_blank" class="btn-small">Live Demo</a>
-                <a href="${repoBaseUrl}${project.folder}" target="_blank" class="btn-small outline">View Code</a>
-            </div>
-        `;
-        grid.appendChild(card);
-    });
-}
-
-// Tab Switching Logic
-tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        renderProjects(tab.dataset.category);
-    });
-});
 
 // Filter state
 let currentFilters = {
@@ -117,6 +78,32 @@ document.querySelectorAll('.tech-checkboxes input').forEach(checkbox => {
         currentFilters.tech = Array.from(document.querySelectorAll('.tech-checkboxes input:checked')).map(cb => cb.value);
         renderProjects();
     });
+});
+
+// Clear search button
+document.getElementById('clearSearch').addEventListener('click', () => {
+    document.getElementById('projectSearch').value = '';
+    currentFilters.search = '';
+    renderProjects();
+});
+
+// Clear filters button
+document.getElementById('clearFilters').addEventListener('click', () => {
+    // Reset difficulty filter
+    document.getElementById('difficultyFilter').value = 'All';
+    currentFilters.difficulty = 'All';
+
+    // Reset tech checkboxes
+    document.querySelectorAll('.tech-checkboxes input').forEach(checkbox => {
+        checkbox.checked = checkbox.value === 'HTML' || checkbox.value === 'CSS' || checkbox.value === 'JS';
+    });
+    currentFilters.tech = ['HTML', 'CSS', 'JS'];
+
+    // Reset search
+    document.getElementById('projectSearch').value = '';
+    currentFilters.search = '';
+
+    renderProjects();
 });
 
 // Modified renderProjects function
@@ -144,6 +131,12 @@ function renderProjects() {
             p.day.toString().includes(currentFilters.search) ||
             (p.tech && p.tech.some(t => t.toLowerCase().includes(currentFilters.search)))
         );
+    }
+
+    // Update results count
+    const resultsCountEl = document.getElementById('resultsCount');
+    if (resultsCountEl) {
+        resultsCountEl.textContent = `Showing ${filteredProjects.length} of ${projects.length} projects`;
     }
 
     // Ensure sorted by day
