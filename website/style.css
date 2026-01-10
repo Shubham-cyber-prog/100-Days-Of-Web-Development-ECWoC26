@@ -1064,6 +1064,54 @@ main {
     gap: 0.75rem;
 }
 
+/* Completion Checkbox Styles */
+.completion-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.completion-checkbox input[type="checkbox"] {
+    display: none;
+}
+
+.checkmark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--bg-hover);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+}
+
+.completion-checkbox input:checked + .checkmark {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: var(--bg-primary);
+}
+
+/* Completed Project Styles */
+.project-card.completed {
+    opacity: 0.7;
+    border-color: var(--accent-primary);
+    background: rgba(237, 237, 237, 0.05);
+}
+
+.project-card.completed .checkmark {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: var(--bg-primary);
+}
+
 /* Tooltip for Day Cell */
 .day-cell::after {
     content: attr(data-tooltip);

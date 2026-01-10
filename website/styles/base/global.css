@@ -1,0 +1,58 @@
+/* --- Global Base --- */
+
+body {
+    background-color: var(--bg-void);
+    background-image:
+        radial-gradient(circle at 15% 50%, rgba(255, 159, 28, 0.08) 0%, transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(78, 205, 196, 0.05) 0%, transparent 25%);
+    background-attachment: fixed;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-weight: var(--weight-regular);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-display);
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+/* Utilities */
+.text-flame {
+    color: var(--accent-core);
+}
+
+.text-orbit {
+    color: var(--accent-success);
+    /* Changed to teal/success for contrast */
+}
+
+.text-secondary {
+    color: var(--text-secondary);
+}
+
+/* Custom Scrollbar for the Void */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-void);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--glass-border);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-tertiary);
+}

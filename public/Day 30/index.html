@@ -1,36 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic-Tac-Toe</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tic Tac Toe</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-    <h1>TIC TAC TOE</h1>
+  <h1>TIC TAC TOE</h1>
 
-    <div class="msg-container hide">
-        <button id="new">New Game</button>
-        <winner id="winmsg">winner</winner>
+  <!-- TURN -->
+  <p id="turn">Turn: O</p>
+
+  <!-- SCOREBOARD -->
+  <div id="scoreboard">
+    <p>O Wins: <span id="oScore">0</span></p>
+    <p>X Wins: <span id="xScore">0</span></p>
+    <p>Draws: <span id="drawScore">0</span></p>
+  </div>
+
+  <!-- MESSAGE -->
+  <div class="msg-container hide">
+    <p id="msg"></p>
+    <button id="new">New Game</button>
+  </div>
+
+  <!-- BOARD -->
+  <div class="container">
+    <div class="game">
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
+      <button class="box"></button>
     </div>
+  </div>
 
-    <div class="container">
-        <div class="game">
-            <button class="box"></button>
-            <button class="box"></button>
-            <button class="box"></button>
-            <button class="box"></button>
-            <button class="box"></button>
-            <button class="box"></button>
-            <button class="box"></button>
-            <button class="box"></button>
-            <button class="box"></button>
-        </div>
-    </div>
+  <!-- CONTROLS -->
+  <div class="controls">
+    <button id="reset">Reset Board</button>
+    <button id="resetHistory">Reset History</button>
+  </div>
 
-    <button class="reset">Reset</button>
-
-    <script src="java.js"></script>
+  <script src="games.js"></script>
 </body>
 </html>

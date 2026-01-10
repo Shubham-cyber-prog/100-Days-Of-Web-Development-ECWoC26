@@ -62,6 +62,21 @@ let currentFilters = {
     tech: ['HTML', 'CSS', 'JS']
 };
 
+
+// Completed days tracking
+let completedDays = [];
+
+// localStorage functions
+function getCompletedDays() {
+    const stored = localStorage.getItem('completedDays');
+    return stored ? JSON.parse(stored) : [];
+}
+
+function saveCompletedDays(days) {
+    localStorage.setItem('completedDays', JSON.stringify(days));
+}
+
+
 // Event listeners for filters
 document.getElementById('projectSearch').addEventListener('input', (e) => {
     currentFilters.search = e.target.value.toLowerCase();
@@ -143,10 +158,15 @@ function renderProjects() {
     filteredProjects.sort((a, b) => a.day - b.day);
 
     filteredProjects.forEach(project => {
+        const isCompleted = completedDays.includes(project.day);
         const card = document.createElement('div');
-        card.className = 'project-card';
+        card.className = `project-card ${isCompleted ? 'completed' : ''}`;
         card.innerHTML = `
             <div class="card-header">
+                <label class="completion-checkbox">
+                    <input type="checkbox" data-day="${project.day}" ${isCompleted ? 'checked' : ''}>
+                    <span class="checkmark">${isCompleted ? '✓' : ''}</span>
+                </label>
                 <span class="day-number">Day ${project.day}</span>
                 <span class="badge">${project.level}</span>
             </div>
@@ -160,6 +180,29 @@ function renderProjects() {
         grid.appendChild(card);
     });
 }
+
+
+// Event listener for completion checkboxes
+document.addEventListener('change', (e) => {
+    if (e.target.type === 'checkbox' && e.target.hasAttribute('data-day')) {
+        const day = parseInt(e.target.getAttribute('data-day'));
+        const isChecked = e.target.checked;
+
+        if (isChecked) {
+            if (!completedDays.includes(day)) {
+                completedDays.push(day);
+            }
+        } else {
+            completedDays = completedDays.filter(d => d !== day);
+        }
+
+        saveCompletedDays(completedDays);
+        renderProjects(); // Re-render to update styles
+    }
+});
+
+// Initialize completed days from localStorage
+completedDays = getCompletedDays();
 
 // Initial Render
 renderProjects();
