@@ -60,8 +60,12 @@ function setBackground(type) {
   if (type === "mountain") {
     document.body.style.backgroundImage = "url('https://images.unsplash.com/photo-1501785888041-af3ef285b470')";
   }
+  if (type === "nature") {
+    document.body.style.backgroundImage = "url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e')";
+  }
+}
 
-  /* 📸 Camera */
+/* 📸 Camera */
 function openCamera() {
   navigator.mediaDevices.getUserMedia({ video: true })
     .then(stream => {
@@ -77,8 +81,4 @@ function capturePhoto(video) {
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
   canvas.getContext("2d").drawImage(video, 0, 0);
-}
-  if (type === "nature") {
-    document.body.style.backgroundImage = "url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e')";
-  }
 }
