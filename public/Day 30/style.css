@@ -1,141 +1,126 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-
 
 body {
-    min-height: 100vh;
-    background: linear-gradient(135deg, #0f172a, #020617);
-    font-family: "Segoe UI", system-ui, sans-serif;
-    color: #e5e7eb;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a, #020617);
+  font-family: "Segoe UI", system-ui, sans-serif;
+  color: #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
 }
-
 
 h1 {
-    font-size: 2.6rem;
-    margin-bottom: 1rem;
-    letter-spacing: 3px;
-    color: #38bdf8;
+  font-size: 2.6rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 3px;
+  color: #38bdf8;
 }
 
+/* TURN */
+#turn {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
 
+/* SCOREBOARD */
+#scoreboard {
+  margin-bottom: 0.6rem;
+  text-align: center;
+}
+
+#scoreboard p {
+  font-size: 0.95rem;
+}
+
+/* MESSAGE */
 .msg-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.6rem;
 }
 
-#winmsg {
-    font-size: 2rem;
-    color: #22c55e;
-    font-weight: bold;
+#msg {
+  font-size: 1.8rem;
+  color: #22c55e;
+  font-weight: bold;
 }
 
+.hide {
+  display: none;
+}
 
+/* BOARD */
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 1.5rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
 }
 
 .game {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    padding: 1.5rem;
-    background: rgba(30, 41, 59, 0.8);
-    backdrop-filter: blur(12px);
-    border-radius: 1.5rem;
-    box-shadow: 0 25px 40px rgba(0,0,0,0.4);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  padding: 1.5rem;
+  background: rgba(30, 41, 59, 0.8);
+  border-radius: 1.5rem;
 }
-
 
 .box {
-    width: 110px;
-    height: 110px;
-    border-radius: 1rem;
-    border: none;
-    font-size: 3.5rem;
-    font-weight: bold;
-    cursor: pointer;
-    background: #020617;
-    color: #38bdf8;
-    box-shadow: inset 0 0 0 2px #334155;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.box:hover {
-    box-shadow: inset 0 0 0 2px #38bdf8;
-    transform: scale(1.05);
+  width: 110px;
+  height: 110px;
+  border-radius: 1rem;
+  border: none;
+  font-size: 3.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  background: #020617;
+  color: #38bdf8;
 }
 
 .box:disabled {
-    cursor: not-allowed;
-    opacity: 1;
-    color: #f43f5e;
+  cursor: not-allowed;
+  color: #f43f5e;
 }
 
+/* BUTTONS */
+.controls {
+  display: flex;
+  gap: 1rem;
+}
 
-.reset,
+#reset,
+#new,
+#resetHistory {
+  margin-top: 0.8rem;
+  padding: 0.7rem 1.6rem;
+  font-size: 0.95rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+#reset {
+  background: #f97316;
+  color: #fff;
+}
+
 #new {
-    margin-top: 1rem;
-    padding: 0.8rem 2.2rem;
-    font-size: 1.1rem;
-    border-radius: 999px;
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.2s ease;
+  background: #22c55e;
+  color: #022c22;
 }
 
-.reset {
-    background: #ef4444;
-    color: #fff;
-}
-
-.reset:hover {
-    background: #dc2626;
-    transform: translateY(-2px);
-}
-
-#new {
-    background: #22c55e;
-    color: #022c22;
-}
-
-#new:hover {
-    background: #16a34a;
-    transform: translateY(-2px);
-}
-
-
-.hide {
-    display: none;
-}
-
-
-@media (max-width: 500px) {
-    h1 {
-        font-size: 2rem;
-    }
-
-    .box {
-        width: 85px;
-        height: 85px;
-        font-size: 2.6rem;
-    }
-
-    #winmsg {
-        font-size: 1.6rem;
-    }
+#resetHistory {
+  background: #ef4444;
+  color: #fff;
 }
