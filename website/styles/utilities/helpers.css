@@ -1,0 +1,31 @@
+/* --- Responsive Helpers --- */
+@media (max-width: 768px) {
+    .auth-card {
+        flex-direction: column;
+        max-width: 450px;
+    }
+
+    .auth-visual {
+        display: none;
+        /* Hide visual on mobile for compactness, or can reduce to header */
+    }
+
+    .auth-form-side {
+        width: 100%;
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .nav-links {
+        display: none;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+}
+
+.hidden {
+    display: none;
+}

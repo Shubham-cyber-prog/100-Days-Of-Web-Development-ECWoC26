@@ -1,0 +1,73 @@
+/* --- Components: Buttons --- */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: 0.75rem 1.5rem;
+    font-family: var(--font-display);
+    font-weight: var(--weight-bold);
+    font-size: var(--text-base);
+    border-radius: var(--radius-md);
+    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Primary "Launch" Button */
+.btn-primary {
+    background: var(--grad-flame);
+    color: var(--text-inverse);
+    box-shadow: 0 4px 12px rgba(255, 159, 28, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 159, 28, 0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Social Login Buttons */
+.btn-social {
+    width: 100%;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-weight: var(--weight-medium);
+    justify-content: center;
+}
+
+.btn-social:hover {
+    background: var(--bg-panel);
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+    transform: translateY(-1px);
+}
+
+/* Social Brand Colors (Optional Hovers) */
+.btn-social.google:hover {
+    border-color: #EA4335;
+    color: #EA4335;
+}
+
+.btn-social.github:hover {
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+.btn-social.linkedin:hover {
+    border-color: #0077b5;
+    color: #0077b5;
+}
+
+/* Icon sizes */
+.btn-icon {
+    width: 20px;
+    height: 20px;
+}

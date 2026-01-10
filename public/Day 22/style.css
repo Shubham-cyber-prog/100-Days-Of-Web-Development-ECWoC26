@@ -1,0 +1,64 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #1e1e2f, #252540);
+  color: white;
+  height: 100vh;
+}
+
+header {
+  text-align: center;
+  padding: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  background: #111;
+}
+
+.container {
+  display: flex;
+  height: calc(100vh - 60px);
+}
+
+textarea {
+  width: 50%;
+  padding: 20px;
+  background: #0f172a;
+  color: #f8fafc;
+  border: none;
+  resize: none;
+  font-size: 16px;
+  outline: none;
+}
+
+#preview {
+  width: 50%;
+  padding: 20px;
+  overflow-y: auto;
+  background: #020617;
+}
+
+#preview h1 { color: #38bdf8; }
+#preview h2 { color: #7dd3fc; }
+#preview strong { color: #facc15; }
+#preview em { color: #fb7185; }
+#preview code {
+  background: #1e293b;
+  padding: 3px 6px;
+  border-radius: 4px;
+  color: #22d3ee;
+}
+#preview pre {
+  background: #020617;
+  padding: 10px;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+#preview a {
+  color: #60a5fa;
+  text-decoration: underline;
+}

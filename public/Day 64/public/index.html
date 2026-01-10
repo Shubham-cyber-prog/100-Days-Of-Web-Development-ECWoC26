@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Online Code Editor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../src/styles.css" />
+</head>
+<body>
+
+  <header class="header">
+    <h1>💻 Online Code Editor</h1>
+    <p>Frontend UI – ECWoC Day 64</p>
+  </header>
+
+  <main class="editor-container">
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <select id="languageSelect">
+        <option value="javascript">JavaScript</option>
+        <option value="html">HTML</option>
+        <option value="css">CSS</option>
+      </select>
+
+      <button id="runBtn">Run</button>
+      <button id="clearBtn">Clear</button>
+      <button id="saveBtn">Save</button>
+    </div>
+
+    <!-- Editor Area -->
+    <div class="editor-area">
+      <textarea id="codeEditor" placeholder="Write your code here..."></textarea>
+    </div>
+
+    <!-- Output -->
+    <div class="output-area">
+      <h3>Output</h3>
+      <iframe id="outputFrame"></iframe>
+    </div>
+
+  </main>
+
+  <script src="../src/app.js"></script>
+</body>
+</html>
