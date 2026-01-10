@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Product Page</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <main class="container">
+
+    <section class="product">
+
+      <!-- Left: Product Selector -->
+      <div class="product-images">
+        <img id="mainImage" src="images/headphones.png" alt="Product" />
+
+        <div class="thumbnails">
+          <img src="images/headphones.png" data-id="0" class="active" />
+          <img src="images/earphones.png" data-id="1" />
+          <img src="images/airpods.png" data-id="2" />
+        </div>
+      </div>
+
+      <!-- Right: Product Info -->
+      <div class="product-info">
+        <h1 id="title">Wireless Headphones</h1>
+
+        <p class="price">
+          ₹<span id="price">2999</span>
+          <span class="original" id="originalPrice">₹3999</span>
+        </p>
+
+        <p class="rating">⭐ <span id="rating">4.4</span> (128 reviews)</p>
+
+        <div class="quantity">
+          <button id="decrease">−</button>
+          <span id="qty">1</span>
+          <button id="increase">+</button>
+        </div>
+
+        <button id="addToCart">Add to Cart</button>
+        <a href="cart.html" class="back-link">View Cart</a>
+      </div>
+
+    </section>
+
+    <section class="description">
+      <h2>Description</h2>
+      <p id="description">
+        High-quality wireless headphones with noise cancellation and long battery life.
+      </p>
+    </section>
+
+    <section class="related">
+  <h2>Related Products</h2>
+
+  <div class="related-grid">
+    <div class="related-card">
+      <img src="images/earphones.png" />
+      <p>Wired Earphones</p>
+      <span>₹999</span>
+    </div>
+
+    <div class="related-card">
+      <img src="images/airpods.png" />
+      <p>Bluetooth AirPods</p>
+      <span>₹1999</span>
+    </div>
+  </div>
+</section>
+
+<a href="cart.html" class="back-link">View Cart</a>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

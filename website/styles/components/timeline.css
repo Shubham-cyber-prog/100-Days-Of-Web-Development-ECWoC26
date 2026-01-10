@@ -1,0 +1,65 @@
+/* --- Timeline Flow (New Implementation) --- */
+.timeline-flow {
+    position: relative;
+    padding-left: 3rem;
+}
+
+/* The vertical line */
+.timeline-flow::before {
+    content: '';
+    position: absolute;
+    left: 11px;
+    /* Center of the 24px icon roughly */
+    top: 1rem;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent-primary), var(--bg-hover));
+}
+
+.timeline-node {
+    position: relative;
+    margin-bottom: 3rem;
+}
+
+.node-marker {
+    position: absolute;
+    left: -3rem;
+    top: 0;
+    width: 24px;
+    height: 24px;
+    background: var(--bg-primary);
+    border: 2px solid var(--accent-primary);
+    border-radius: 50%;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.node-marker svg {
+    width: 14px;
+    height: 14px;
+    color: var(--accent-primary);
+}
+
+.node-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+}
+
+.node-card:hover {
+    border-color: var(--text-tertiary);
+}
+
+.node-meta {
+    font-size: 0.8rem;
+    color: var(--accent-primary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+    display: block;
+}

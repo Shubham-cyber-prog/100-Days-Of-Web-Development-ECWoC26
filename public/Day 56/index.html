@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form Validation</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <form class="form" id="signupForm">
+    <h2>Create Account</h2>
+
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" id="username" placeholder="Enter username">
+      <small></small>
+    </div>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="email" placeholder="Enter email">
+      <small></small>
+    </div>
+
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="password" placeholder="Enter password">
+
+      <!-- Password strength meter -->
+      <div class="strength-meter">
+        <div class="strength-bar"></div>
+      </div>
+      <p class="strength-text"></p>
+
+      <small></small>
+    </div>
+
+    <button type="submit">Sign Up</button>
+  </form>
+
+  <script src="script.js"></script>
+</body>
+</html>

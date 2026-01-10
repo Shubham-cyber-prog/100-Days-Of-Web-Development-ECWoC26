@@ -1,26 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Day 3 - Todo List App</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Edu+SA+Beginner:wght@400..700&family=Lakki+Reddy&family=Lobster&family=Roboto:ital,wght@0,100..900;1,100..900&family=Tagesschrift&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo list App</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="/logo.jpg" type="image/x-icon">
+    <link rel="icon" href="/logo.jpg" type="image/png">
+    <script defer src="script.js"></script>
 </head>
 <body>
-
-  <div class="container">
-    <button id="themeToggle" class="btn" aria-label="Toggle theme">🌙 Dark Mode</button>
-    <h1>Todo List</h1>
-
-
-    <div class="input-box">
-      <input type="text" id="taskInput"  placeholder="Enter a task" />
-      <button id="addBtn">Add</button>
+    
+    <header>
+        <img src="/logo.jpg" alt="innoverse Logo" class="logo">
+        <div class="heading-text">
+            <h1>Day 2 of 100 days code Challenge</h1>
+            
+        </div>
+        <button id="theme-toggle" onclick="toggleTheme()">🌞</button>
+    </header>
+    
+    <h2 class="kanban-title">Task Board</h2>
+    
+    <div class="kanban-container">
+        <div class="column" id="todo" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h2>To-Do</h2>
+            <div class="task-list"></div>
+            <button onclick="addTask('todo')">+ Add Task</button>
+        </div>
+        <div class="column" id="inprogress" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h2>In Progress</h2>
+            <div class="task-list"></div>
+            <button onclick="addTask('inprogress')">+ Add Task</button>
+        </div>
+        <div class="column" id="done" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h2>Done</h2>
+            <div class="task-list"></div>
+            <button onclick="addTask('done')">+ Add Task</button>
+        </div>
     </div>
-
-    <ul id="taskList"></ul>
-  </div>
-
-  <script src="script.js"></script>
+    
+    <div id="progress-container">
+        <div id="progress-bar">0%</div>
+    </div>
+    
+    
+    <div class="bottom-controls">
+        <button onclick="importTasks()">Import</button>
+        <button onclick="exportTasks()">Export</button>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>

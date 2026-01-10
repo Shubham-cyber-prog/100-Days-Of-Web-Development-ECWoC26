@@ -1,0 +1,88 @@
+/* --- Zenith: Glass Cards --- */
+
+.card {
+    background: var(--bg-surface);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover Effect: Lift & Internal Glow */
+.card:hover {
+    transform: translateY(-5px);
+    border-color: var(--glass-highlight);
+    box-shadow: 0 10px 40px -10px var(--shadow-depth),
+        0 0 0 1px var(--glass-highlight) inset;
+    /* Inner rim */
+}
+
+/* --- Light Mode Card "Glow" Effect --- */
+[data-theme="light"] .card {
+    background: #FFFFFF;
+    /* Ensure pure white cards */
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="light"] .card:hover {
+    border-color: var(--accent-core);
+    /* Orange outline */
+    box-shadow: 0 10px 25px -5px rgba(255, 136, 0, 0.15),
+        0 0 0 1px var(--accent-core) inset;
+    /* Double border effect */
+    transform: translateY(-3px);
+}
+
+/* Special case for Project Cards in Light Mode */
+[data-theme="light"] .project-card {
+    /* Inherits the above, but ensure inner content layers don't block it */
+    background: #FFFFFF;
+}
+
+/* Fix project card masquerading layers in light mode */
+[data-theme="light"] .project-card::after {
+    background: #FFFFFF;
+}
+
+[data-theme="light"] .project-card:hover::after {
+    background: #FAFAFA;
+}
+
+/* Neon Glow Variant (Active items) */
+.card.glow-active {
+    box-shadow: 0 0 30px var(--accent-alpha);
+    border-color: var(--accent-core);
+}
+
+/* Glass Header (for stats etc) */
+.card-header {
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: var(--space-4);
+    margin-bottom: var(--space-4);
+}
+
+/* Project Cards Specifics */
+.project-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.project-card h4 {
+    color: var(--text-primary);
+    font-size: var(--text-lg);
+    font-weight: var(--weight-bold);
+    margin-bottom: var(--space-2);
+}
+
+/* Stat Cards */
+.stat-card {
+    text-align: center;
+    background: linear-gradient(180deg, var(--bg-surface) 0%, rgba(255, 255, 255, 0.01) 100%);
+}

@@ -62,6 +62,7 @@ let currentFilters = {
     tech: ['HTML', 'CSS', 'JS']
 };
 
+
 // Completed days tracking
 let completedDays = [];
 
@@ -74,6 +75,7 @@ function getCompletedDays() {
 function saveCompletedDays(days) {
     localStorage.setItem('completedDays', JSON.stringify(days));
 }
+
 
 // Event listeners for filters
 document.getElementById('projectSearch').addEventListener('input', (e) => {
@@ -178,6 +180,7 @@ function renderProjects() {
         grid.appendChild(card);
     });
 }
+
 
 // Event listener for completion checkboxes
 document.addEventListener('change', (e) => {
