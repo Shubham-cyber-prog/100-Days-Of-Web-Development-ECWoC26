@@ -264,7 +264,13 @@ body {
     font-family: 'Poppins', sans-serif;
     font-size: 24px;
     font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
     color: var(--primary-color);
+}
+
+.logo:hover {
+    opacity: 0.85;
 }
 
 
@@ -1216,9 +1222,19 @@ textarea.form-control:focus {
         border-radius: var(--radius-md);
     }
 
+    .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+
+    .quick-action-btn span {
+        display: none;
+    }
+
     .mobile-menu {
         width: 100%;
-        right: -100%:
+        right: -100%;
     }
 
     .mobile-menu.active {
@@ -1276,6 +1292,10 @@ textarea.form-control:focus {
     .main-content {
         padding: 15px;
     }
+
+    .welcome-section {
+        display: none;
+    }
     
     .balance-card {
         padding: 15px;
@@ -1286,7 +1306,7 @@ textarea.form-control:focus {
     }
 }
 
-@media (hover: none) and (pointer: cursor) {
+@media (hover: none) and (pointer: coarse) {
     .nav-link,
     .btn-primary,
     .btn-secondary,

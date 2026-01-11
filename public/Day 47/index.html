@@ -103,9 +103,7 @@
                     <i class="fas fa-university"></i>
                     <span>SecureBank</span>
                 </div>
-                <button class="mobile-menu-btn" id="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
-                </button>
+    
                 <div class="nav-links" id = "nav-links">
                     <a href="#overview" class="nav-link active"><i class="fas fa-home"></i> Overview</a>
                     <a href="#accounts" class="nav-link"><i class="fas fa-wallet"></i> Accounts</a>
@@ -114,6 +112,11 @@
                     <a href="#payments" class="nav-link"><i class="fas fa-credit-card"></i> Payments</a>
                 </div>
             </div>
+
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+            </button>
+
             <div class="nav-right">
                 <div class="user-profile">
                     <div class="user-info">
@@ -126,8 +129,10 @@
                     <div class="dropdown-menu">
                         <a href="#profile"><i class="fas fa-user-cog"></i> Profile Settings</a>
                         <a href="#security"><i class="fas fa-shield-alt"></i> Security</a>
-                        <a href="#" class="mobile-nav-link" id="mobile-dark-mode-toggle"><i class="fas fa-moon"></i><span>Dark Mode</span>
-                    </a>
+                        <a href="#" id="desktop-dark-mode-toggle">
+                            <i class="fas fa-moon dark-toggle-icon"></i>
+                            <span class="dark-mode-text">Dark Mode</span>
+                        </a>
                         <hr>
                         <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
                     </div>
@@ -184,8 +189,8 @@
                     </a>
 
                     <a href="#" class="mobile-nav-link" id="mobile-dark-mode-toggle">
-                        <i class="fas fa-moon"></i>
-                        <span>Dark Mode</span>
+                        <i class="fas fa-moon dark-toggle-icon"></i>
+                        <span class = "dark-mode-text">Dark Mode</span>
                     </a>
 
                     <div class="mobile-menu-divider"></div>

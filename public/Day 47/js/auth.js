@@ -231,17 +231,16 @@ class Auth {
         const dashboard = document.getElementById('dashboard');
         dashboard.style.display = 'block';
 
-        if (window.UI) {
-            window.UI.updateUI();
-        }
-
-
         if (window.Dashboard) {
             window.Dashboard.init(this.currentUser);
         }
 
-        
         this.updateUserInfo();
+
+
+        if (window.UI) {
+            window.UI.updateDarkModeUI();
+        }
     }
 
     updateUserInfo() {

@@ -33,6 +33,12 @@ class Dashboard {
             });
         });
 
+        document.getElementById('home-logo')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.switchSection('overview');
+        });
+
+
         
         document.getElementById('balance-toggle')?.addEventListener('click', this.toggleBalance.bind(this));
 

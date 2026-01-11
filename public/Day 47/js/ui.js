@@ -7,6 +7,7 @@ class UI {
     }
 
     init() {
+        this.updateDarkModeUI();
         this.loadDarkMode();
         this.bindEvents();
         this.initMobileMenu();
@@ -15,6 +16,22 @@ class UI {
         this.initSecuritySettings();
         this.updateUI();
     }
+
+    updateDarkModeUI() {
+    const modeText = this.darkMode ? 'Light Mode' : 'Dark Mode';
+    const iconClass = this.darkMode ? 'fas fa-sun' : 'fas fa-moon';
+
+    
+    document.querySelectorAll('.dark-toggle-icon').forEach(icon => {
+        icon.className = iconClass + ' dark-toggle-icon';
+    });
+
+    
+    document.querySelectorAll('.dark-mode-text').forEach(text => {
+        text.textContent = modeText;
+    });
+}
+
 
     loadDarkMode() {
         const savedMode = localStorage.getItem('darkMode');
@@ -26,6 +43,12 @@ class UI {
     }
 
     bindEvents() {
+
+        document.getElementById('desktop-dark-mode-toggle')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.toggleDarkMode();
+        });
+
         
         document.getElementById('dark-mode-toggle')?.addEventListener('click', (e) => {
             e.preventDefault();
@@ -166,28 +189,13 @@ class UI {
     toggleDarkMode() {
         this.darkMode = !this.darkMode;
         
-        if (this.darkMode) {
-            document.body.classList.add('dark-mode');
-        } else {
-            document.body.classList.remove('dark-mode');
-        }
-        
+        document.body.classList.toggle('dark-mode', this.darkMode);
         localStorage.setItem('darkMode', this.darkMode);
-        
-        
-        const icon = document.querySelector('#dark-mode-toggle i');
-        if (icon) {
-            icon.className = this.darkMode ? 'fas fa-sun' : 'fas fa-moon';
-        }
-        
-        const mobileIcon = document.querySelector('#mobile-dark-mode-toggle i');
-        if (mobileIcon) {
-            mobileIcon.className = this.darkMode ? 'fas fa-sun' : 'fas fa-moon';
-        }
-        
-        
-        const mode = this.darkMode ? 'Dark' : 'Light';
-        this.showToast(`${mode} mode activated`, 'success');
+
+        this.updateDarkModeUI();
+
+        this.showToast(
+            `${this.darkMode ? 'Dark' : 'Light'} mode activated`, 'success');
     }
 
     openMobileMenu() {
