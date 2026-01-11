@@ -49,7 +49,7 @@ const projects = [
     { day: 61, title: "Doodle Jump Game", folder: "Day 61", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
     // ... add more as you complete them
     { day: 100, title: "Master Project", folder: "Day 100", level: "Capstone", tech: ["HTML", "CSS", "JS", "React"] },
-    { day: 101, title: "Advanced Portfolio Website", folder: "Day 101", level: "Advanced", tech: ["HTML", "CSS", "JS"] }
+    { day: 101, title: "Canvas Image Particle Animation", folder: "Day 101", level: "Intermediate", tech: ["HTML", "CSS", "JS", "HTML Canvas"] }
 ];
 
 const grid = document.getElementById('projects-grid');
