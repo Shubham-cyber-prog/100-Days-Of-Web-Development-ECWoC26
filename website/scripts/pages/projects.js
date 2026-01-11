@@ -73,7 +73,35 @@ const allProjects = [
     { day: 93, title: "Open Source Contribution", tech: ["Git", "GitHub"] }, { day: 94, title: "Progressive Web App", tech: ["PWA", "Service Workers"] },
     { day: 95, title: "Fullstack Application", tech: ["MERN Stack"] }, { day: 96, title: "AI-Powered App", tech: ["LangChain", "OpenAI"] },
     { day: 97, title: "Open-Source “Smart Community Hub”", tech: ["Next.js", "Supabase"] }, { day: 98, title: "Smart Campus Platform", tech: ["Next.js", "PostgreSQL"] },
-    { day: 99, title: "Music App using Next.js", tech: ["Next.js", "Spotify API"] }, { day: 100, title: "Survival Protocol", tech: ["Next.js", "TypeScript"] }
+    { day: 99, title: "Music App using Next.js", tech: ["Next.js", "Spotify API"] }, { day: 100, title: "Survival Protocol", tech: ["Next.js", "TypeScript"] },
+     
+    //Extended Capstone Projects (Day 101-150) medium level HTML, CSS, JAVASCRIPT , TYPESCRIPT ,  FOR ECWoC26 Extended Program
+    { day: 101, title: "Advanced Portfolio Website", tech: ["HTML", "CSS", "JS"] }, { day: 102, title: "Interactive Storytelling Website", tech: ["HTML", "CSS", "JS"] },
+    { day: 103, title: "Readme Tool Kit", tech: ["HTML", "CSS", "JS"] }, { day: 104, title: "3D Model Viewer", tech: ["Three.js", "JS"] },
+    { day: 105, title: "Advanced Form Builder", tech: ["HTML", "CSS", "JS"] }, { day: 106, title: "Smart Campus Life Dashboard", tech: ["D3.js", "JS"] },
+    { day: 107, title: "Solar System", tech: ["Socket.io", "JS"] }, { day: 108, title: "AI-Powered Image Editor", tech: ["TensorFlow.js", "JS"] },
+    { day: 109, title: "Custom CMS", tech: ["Node.js", "Express", "MongoDB"] }, { day: 110, title: "Advanced E-commerce Platform", tech: ["React", "Node.js", "MongoDB"] },
+    { day: 111, title: "Social Networking Site", tech: ["React", "Firebase"] }, { day: 112, title: "Online Learning Management System", tech: ["Next.js", "PostgreSQL"] },
+    { day: 113, title: "AI-Powered Content Generator", tech: ["OpenAI API", "Node.js"] }, { day: 114, title: "Blockchain Explorer", tech: ["React", "Web3.js"] },
+    { day: 115, title: "Decentralized Application (DApp)", tech: ["Solidity", "Ethereum"] }, { day: 116, title: "Advanced PWA", tech: ["PWA", "Service Workers"] },
+    { day: 117, title: "Real-Time Analytics Platform", tech: ["Socket.io", "D3.js"] }, { day: 118, title: "AI-Powered Personal Finance Manager", tech: ["Python", "Flask"] },
+    { day: 119, title: "Custom Video Conferencing Tool", tech: ["WebRTC", "JS"] }, { day: 120, title: "Advanced Task Management System", tech: ["React", "Node.js"] },
+    { day: 121, title: "AI-Powered Resume Builder", tech: ["OpenAI API", "JS"] }, { day: 122, title: "Smart Contract Development", tech: ["Solidity", "Truffle"] },
+    { day: 123, title: "Advanced Blogging Platform", tech: ["Next.js", "GraphQL"] }, { day: 124, title: "AI-Powered Chat Application", tech: ["OpenAI API", "Socket.io"] },
+    { day: 125, title: "Sustainable Development Platform", tech: ["React", "Firebase"] }, { day: 126, title: "AI-Powered Code Review Tool", tech: ["OpenAI API", "Node.js"] },
+    { day: 127, title: "Advanced Social Media Platform", tech: ["React", "Node.js"] }, { day: 128, title: "AI-Powered Image Recognition App", tech: ["TensorFlow.js", "JS"] },
+    { day: 129, title: "Custom Project Management Tool", tech: ["React", "Node.js"] }, { day: 130, title: "AI-Powered Language Translation App", tech: ["OpenAI API", "JS"] },
+    { day: 131, title: "Advanced CRM System", tech: ["Next.js", "Prisma"] }, { day: 132, title: "AI-Powered Virtual Assistant", tech: ["OpenAI API", "Node.js"] },
+    { day: 133, title: "Custom Inventory Management System", tech: ["React", "Node.js"] }, { day: 134, title: "AI-Powered Sentiment Analysis Tool", tech: ["Python", "Flask"] },
+    { day: 135, title: "Advanced Event Management Platform", tech: ["Next.js", "PostgreSQL"] }, { day: 136, title: "AI-Powered Content Moderation Tool", tech: ["OpenAI API", "Node.js"] },
+    { day: 137, title: "Custom Helpdesk Ticketing System", tech: ["React", "Node.js"] }, { day: 138, title: "AI-Powered Market Research Tool", tech: ["Python", "Django"] },
+    { day: 139, title: "Advanced Learning Management System", tech: ["Next.js", "PostgreSQL"] }, { day: 140, title: "AI-Powered Email Marketing Tool", tech: ["OpenAI API", "Node.js"] },
+    { day: 141, title: "Custom Time Tracking Application", tech: ["React", "Node.js"] }, { day: 142, title: "AI-Powered SEO Optimization Tool", tech: ["Python", "Flask"] },
+    { day: 143, title: "Advanced Recruitment Platform", tech: ["Next.js", "PostgreSQL"] }, { day: 144, title: "AI-Powered Social Media Management Tool", tech: ["OpenAI API", "Node.js"] },
+    { day: 145, title: "Chess Game", tech: ["React", "Node.js"] }, { day: 146, title: "AI-Powered Customer Support Chatbot", tech: ["OpenAI API", "JS"] },
+    { day: 147, title: "Advanced Financial Planning Tool", tech: ["Next.js", "Prisma"] }, { day: 148, title: "AI-Powered Document Summarization Tool", tech: ["OpenAI API", "Node.js"] },
+    { day: 149, title: "Custom Knowledge Base System", tech: ["React", "Node.js"] }, { day: 150, title: "AI-Powered Video Analysis Tool", tech: ["Python", "Django"] },
+
 ];
 
 function getDifficulty(day) {
