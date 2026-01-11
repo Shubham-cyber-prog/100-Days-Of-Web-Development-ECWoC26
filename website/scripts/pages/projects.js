@@ -100,8 +100,7 @@ const allProjects = [
     { day: 143, title: "Advanced Recruitment Platform", tech: ["Next.js", "PostgreSQL"] }, { day: 144, title: "AI-Powered Social Media Management Tool", tech: ["OpenAI API", "Node.js"] },
     { day: 145, title: "Chess Game", tech: ["React", "Node.js"] }, { day: 146, title: "AI-Powered Customer Support Chatbot", tech: ["OpenAI API", "JS"] },
     { day: 147, title: "Advanced Financial Planning Tool", tech: ["Next.js", "Prisma"] }, { day: 148, title: "AI-Powered Document Summarization Tool", tech: ["OpenAI API", "Node.js"] },
-    { day: 149, title: "Custom Knowledge Base System", tech: ["React", "Node.js"] }, { day: 150, title: "AI-Powered Video Analysis Tool", tech: ["Python", "Django"] },
-    { day: 151, title: "Advanced Portfolio Website", tech: ["HTML", "CSS", "JS"]}
+    { day: 149, title: "Custom Knowledge Base System", tech: ["React", "Node.js"] }, { day: 150, title: "AI-Powered Video Analysis Tool", tech: ["Python", "Django"] }
 
 ];
 
