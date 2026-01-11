@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flight Booking System</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root{
+  --primary:#2563eb;
+  --success:#16a34a;
+  --danger:#dc2626;
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --border:#e5e7eb;
+  --text:#0f172a;
+  --muted:#64748b;
+}
+.dark{
+  --bg:#020617;
+  --card:#020617;
+  --border:#1e293b;
+  --text:#e5e7eb;
+  --muted:#94a3b8;
+}
+*{box-sizing:border-box;font-family:Inter,system-ui,sans-serif}
+body{margin:0;background:var(--bg);color:var(--text);transition:.3s}
+
+/* NAV */
+nav{
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  padding:18px 30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+nav h1 span{color:var(--primary)}
+nav ul{
+  list-style:none;
+  display:flex;
+  gap:22px;
+  margin:0;
+  padding:0;
+}
+nav li{cursor:pointer}
+nav li.active{color:var(--primary)}
+#themeToggle{
+  border:1px solid var(--border);
+  background:none;
+  padding:8px 10px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+/* LAYOUT */
+.container{
+  max-width:1100px;
+  margin:40px auto;
+  padding:0 20px;
+}
+.tab{display:none}
+.tab.active{display:block}
+
+/* CARD */
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:30px;
+  margin-bottom:35px;
+}
+
+/* FEATURES */
+.features{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:22px;
+}
+.feature{
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:22px;
+  text-align:center;
+  transition:.3s;
+}
+.feature:hover{
+  transform:translateY(-6px);
+  border-color:var(--primary);
+}
+.feature i{font-size:30px;color:var(--primary)}
+
+/* STEPS */
+.steps{display:grid;gap:18px}
+.step{
+  display:flex;
+  gap:16px;
+  align-items:center;
+  border-left:5px solid var(--primary);
+  padding:16px 20px;
+  border-radius:12px;
+  background:var(--card);
+}
+
+/* FORM */
+form{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:18px;
+}
+input,select,button{
+  padding:14px;
+  border-radius:10px;
+  border:1px solid var(--border);
+}
+button{
+  background:var(--primary);
+  color:white;
+  border:none;
+  cursor:pointer;
+}
+
+/* FLIGHTS */
+.flights{display:grid;gap:20px}
+.flight{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:22px;
+  display:flex;
+  justify-content:space-between;
+}
+.price{font-size:18px;font-weight:600}
+.book{background:var(--success)}
+
+/* BOOKINGS */
+.booking{
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:22px;
+  margin-bottom:18px;
+}
+.actions{
+  margin-top:14px;
+  display:flex;
+  gap:12px;
+}
+.actions button{
+  padding:8px 16px;
+  border-radius:10px;
+  font-size:13px;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  cursor:pointer;
+  transition:.25s;
+}
+.pdf{
+  background:var(--success);
+  box-shadow:0 6px 14px rgba(22,163,74,.25);
+}
+.delete{
+  background:var(--danger);
+  box-shadow:0 6px 14px rgba(220,38,38,.25);
+}
+.actions button:hover{transform:translateY(-2px)}
+.actions button:active{transform:scale(.96)}
+
+/* PROFILE */
+.profile{
+  display:grid;
+  grid-template-columns:150px 1fr;
+  gap:30px;
+  align-items:center;
+}
+.profile img{
+  width:140px;
+  height:140px;
+  border-radius:50%;
+  border:4px solid var(--primary);
+}
+.profile-info p{color:var(--muted);margin:6px 0}
+
+/* CONTACT */
+.contact{display:grid;gap:14px}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.4);
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+.modal-content{
+  background:white;
+  padding:30px;
+  border-radius:18px;
+  width:420px;
+  text-align:center;
+}
+
+/* TICKET */
+#ticket{display:none;padding:40px}
+.ticket-box{
+  border:6px solid var(--primary);
+  padding:40px;
+  text-align:center;
+}
+@media print{
+  body *{display:none}
+  #ticket,#ticket *{display:block}
+}
+
+footer{text-align:center;padding:25px;color:var(--muted)}
+#themeToggle{
+  width:40px;
+  height:40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  border:1.5px solid var(--border);
+  background:var(--card);
+  cursor:pointer;
+  font-size:16px;
+  color:var(--text);
+  transition:all 0.3s ease;
+}
+
+#themeToggle:hover{
+  background:var(--primary);
+  color:#ffffff;
+  transform:rotate(10deg);
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+  <h1><span>Flight</span> Booking</h1>
+  <ul>
+    <li class="active" onclick="openTab('home',this)">Home</li>
+    <li onclick="openTab('search',this)">Search Flights</li>
+    <li onclick="openTab('bookingsTab',this)">My Bookings</li>
+    <li onclick="openTab('profileTab',this)">Profile</li>
+    <li onclick="openTab('contact',this)">Contact</li>
+  </ul>
+  <button id="themeToggle"><i class="fa-solid fa-moon"></i></button>
+</nav>
+
+<div class="container">
+
+<!-- HOME -->
+<div id="home" class="tab active">
+  <div class="card">
+    <h2>Welcome ✈️</h2>
+    <p>Book flights smarter with instant tickets and secure storage.</p>
+  </div>
+
+  <div class="card">
+    <h2>Why Choose Us?</h2>
+    <div class="features">
+      <div class="feature"><i class="fa-solid fa-magnifying-glass"></i><p>Smart Search</p></div>
+      <div class="feature"><i class="fa-solid fa-ticket"></i><p>Instant Booking</p></div>
+      <div class="feature"><i class="fa-solid fa-file-pdf"></i><p>PDF Tickets</p></div>
+      <div class="feature"><i class="fa-solid fa-lock"></i><p>Secure Storage</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>How It Works</h2>
+    <div class="steps">
+      <div class="step"><b>1</b> Search flights</div>
+      <div class="step"><b>2</b> Book instantly</div>
+      <div class="step"><b>3</b> Download ticket</div>
+      <div class="step"><b>4</b> Manage bookings</div>
+    </div>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div id="search" class="tab">
+  <div class="card">
+    <h2>Search Flights</h2>
+    <form id="searchForm">
+      <input id="from" placeholder="From" required>
+      <input id="to" placeholder="To" required>
+      <input id="date" type="date" required>
+      <select id="travelClass">
+        <option>Economy</option>
+        <option>Business</option>
+      </select>
+      <button>Search</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>Available Flights</h2>
+    <div class="flights" id="flightList"></div>
+  </div>
+</div>
+
+<!-- BOOKINGS -->
+<div id="bookingsTab" class="tab">
+  <div class="card">
+    <h2>My Bookings</h2>
+    <div id="bookings"></div>
+  </div>
+</div>
+
+<!-- PROFILE -->
+<div id="profileTab" class="tab">
+  <div class="card">
+    <h2>My Profile</h2>
+    <div class="profile">
+      <img src="https://i.imgur.com/8Km9tLL.png">
+      <div class="profile-info">
+        <h3>Riya Kharade</h3>
+        <p>Email: riya@example.com</p>
+        <p>Phone: +91 98765 43210</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact" class="tab">
+  <div class="card">
+    <h2>Contact Us</h2>
+    <div class="contact">
+      <input placeholder="Your Name">
+      <input placeholder="Email">
+      <textarea rows="4" placeholder="Message"></textarea>
+      <button>Send Message</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h3>✈️ Booking Confirmed</h3>
+    <p>Your flight has been booked successfully.</p>
+    <button onclick="closeModal()">OK</button>
+  </div>
+</div>
+
+<!-- TICKET -->
+<div id="ticket">
+  <div class="ticket-box">
+    <h1>Flight Ticket</h1>
+    <p id="ticketInfo"></p>
+    <button onclick="window.print()">Download Ticket (PDF)</button>
+  </div>
+</div>
+
+<footer>© 2026 Flight Booking System – Day 48</footer>
+
+<script>
+function openTab(id,el){
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  document.querySelectorAll("nav li").forEach(l=>l.classList.remove("active"));
+  el.classList.add("active");
+}
+
+/* DARK MODE */
+themeToggle.onclick=()=>{
+  document.body.classList.toggle("dark");
+  localStorage.setItem("theme",document.body.classList.contains("dark")?"dark":"light");
+};
+if(localStorage.getItem("theme")==="dark")document.body.classList.add("dark");
+
+/* LOGIC */
+const flights=[
+  {id:1,from:"Mumbai",to:"Delhi",time:"08:30 AM",price:4200},
+  {id:2,from:"Mumbai",to:"Bangalore",time:"10:15 AM",price:5200},
+  {id:3,from:"Delhi",to:"Kolkata",time:"01:00 PM",price:4800},
+  {id:4,from:"Pune",to:"Goa",time:"03:45 PM",price:3500},
+  {id:5,from:"Hyderabad",to:"Chennai",time:"06:30 PM",price:4000}
+];
+
+let bookings=JSON.parse(localStorage.getItem("bookings"))||[];
+const flightList=document.getElementById("flightList");
+const bookingList=document.getElementById("bookings");
+
+searchForm.onsubmit=e=>{e.preventDefault();renderFlights();};
+
+function renderFlights(){
+  flightList.innerHTML="";
+  flights.forEach(f=>{
+    flightList.innerHTML+=`
+    <div class="flight">
+      <div><b>${f.from} → ${f.to}</b><br><small>${f.time}</small></div>
+      <div><div class="price">₹${f.price}</div>
+      <button class="book" onclick="bookFlight(${f.id})">Book</button></div>
+    </div>`;
+  });
+}
+
+function bookFlight(id){
+  const f=flights.find(x=>x.id===id);
+  bookings.push({
+    ticketId:"FL-"+Math.floor(100000+Math.random()*900000),
+    ...f,
+    date:date.value,
+    class:travelClass.value
+  });
+  localStorage.setItem("bookings",JSON.stringify(bookings));
+  renderBookings();
+  modal.style.display="flex";
+}
+
+function renderBookings(){
+  bookingList.innerHTML=bookings.length?"":"<p>No bookings yet</p>";
+  bookings.forEach((b,i)=>{
+    bookingList.innerHTML+=`
+    <div class="booking">
+      <b>${b.from} → ${b.to}</b><br>
+      Ticket ID: <b>${b.ticketId}</b><br>
+      ${b.date} • ${b.time}<br>
+      Class: ${b.class} • ₹${b.price}
+      <div class="actions">
+        <button class="pdf" onclick="downloadTicket(${i})">
+          <i class="fa-solid fa-file-pdf"></i> PDF
+        </button>
+        <button class="delete" onclick="deleteBooking(${i})">
+          <i class="fa-solid fa-trash"></i> Delete
+        </button>
+      </div>
+    </div>`;
+  });
+}
+
+function deleteBooking(i){
+  bookings.splice(i,1);
+  localStorage.setItem("bookings",JSON.stringify(bookings));
+  renderBookings();
+}
+
+function downloadTicket(i){
+  const b=bookings[i];
+  ticketInfo.innerHTML=`
+    <b>Ticket ID:</b> ${b.ticketId}<br><br>
+    <b>Route:</b> ${b.from} → ${b.to}<br>
+    <b>Date:</b> ${b.date}<br>
+    <b>Time:</b> ${b.time}<br>
+    <b>Class:</b> ${b.class}<br>
+    <b>Price:</b> ₹${b.price}`;
+  ticket.style.display="block";
+}
+
+function closeModal(){modal.style.display="none";}
+renderBookings();
+</script>
+
+</body>
+</html>
