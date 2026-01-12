@@ -118,17 +118,14 @@
             </button>
 
             <div class="nav-right">
-                <div class="user-profile">
-                    <div class="user-info">
-                        <span class="user-name" id="dashboard-username">User</span>
-                        <span class="user-role">Account Holder</span>
-                    </div>
+                <div class="user-profile" id = "user-profile">
                     <div class="user-avatar" id="user-avatar">
                         <i class="fas fa-user"></i>
                     </div>
+
                     <div class="dropdown-menu">
-                        <a href="#profile"><i class="fas fa-user-cog"></i> Profile Settings</a>
-                        <a href="#security"><i class="fas fa-shield-alt"></i> Security</a>
+                        <a href="#profile" id = "profile-settings-btn"><i class="fas fa-user-cog"></i> Profile</a>
+                        <a href="#security" id = "security-settings-btn"><i class="fas fa-shield-alt"></i> Security</a>
                         <a href="#" id="desktop-dark-mode-toggle">
                             <i class="fas fa-moon dark-toggle-icon"></i>
                             <span class="dark-mode-text">Dark Mode</span>
@@ -137,6 +134,7 @@
                         <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
                     </div>
                 </div>
+
                 <div class="notifications">
                     <i class="fas fa-bell"></i>
                     <span class="notification-badge">3</span>
@@ -525,7 +523,18 @@
             <span class="close-modal">&times;</span>
         </div>
         <div class="modal-body">
-            <form id="profile-form">
+
+            <div class="profile-view" id="profile-view">
+                    <p><strong>Name:</strong> <span id="pv-name"></span></p>
+                    <p><strong>Email:</strong> <span id="pv-email"></span></p>
+                    <p><strong>Phone:</strong> <span id="pv-phone"></span></p>
+                    <p><strong>Address:</strong> <span id="pv-address"></span></p>
+                
+                    <button class="btn-primary" id="edit-profile-btn">Edit Profile</button>
+                </div>
+
+            <form id="profile-form" style = "display: none;">
+
                 <div class="form-group">
                     <label for="profile-name">Full Name</label>
                     <input type="text" id="profile-name" placeholder="Enter your full name" required>

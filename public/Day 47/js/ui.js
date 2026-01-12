@@ -44,6 +44,28 @@ class UI {
 
     bindEvents() {
 
+        const profile = document.getElementById('user-profile');
+
+        profile?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            profile.classList.add('open');
+        });
+
+        document.addEventListener('click', () => {
+            profile?.classList.remove('open');
+        });
+
+        document.getElementById('edit-profile-btn')?.addEventListener('click', () => {
+            document.getElementById('profile-view').style.display = 'none';
+            document.getElementById('profile-form').style.display = 'block';
+        });
+
+        document.getElementById('cancel-profile-edit')?.addEventListener('click', () => {
+            document.getElementById('profile-form').style.display = 'none';
+            document.getElementById('profile-view').style.display = 'block';
+        });
+
+
         document.getElementById('desktop-dark-mode-toggle')?.addEventListener('click', (e) => {
             e.preventDefault();
             this.toggleDarkMode();
@@ -64,11 +86,13 @@ class UI {
         
         document.getElementById('profile-settings-btn')?.addEventListener('click', (e) => {
             e.preventDefault();
+            this.closeProfileDropdown();
             this.showProfileModal();
         });
 
         document.getElementById('mobile-profile-settings')?.addEventListener('click', (e) => {
             e.preventDefault();
+            this.closeProfileDropdown();
             this.showProfileModal();
             this.closeMobileMenu();
         });
@@ -230,12 +254,24 @@ class UI {
         });
     }
 
+    closeProfileDropdown() {
+        const profile = document.getElementById('user-profile');
+        profile?.classList.remove('open');
+    }
+
     showProfileModal() {
         this.closeAllModals();
-        document.getElementById('profile-modal').classList.add('active');
         
-        
+        const view = document.getElementById('profile-view');
+        const form = document.getElementById('profile-form');
+
+        view.style.display = 'block';
+        form.style.display = 'none';
+
+        this.populateProfileView();
         this.populateProfileForm();
+
+        document.getElementById('profile-modal').classList.add('active');
     }
 
     closeProfileModal() {
@@ -256,6 +292,8 @@ class UI {
         document.querySelectorAll('.modal').forEach(modal => {
             modal.classList.remove('active');
         });
+
+        this.closeProfileDropdown();
     }
 
     loadProfileData() {
@@ -272,6 +310,25 @@ class UI {
         
         this.securityPreferences = securityPrefs;
     }
+
+    populateProfileView() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+    const profileData =
+        JSON.parse(localStorage.getItem(`profile_${currentUser.username}`)) || {};
+
+    document.getElementById('pv-name').textContent =
+        currentUser.fullName || '—';
+
+    document.getElementById('pv-email').textContent =
+        profileData.email || '—';
+
+    document.getElementById('pv-phone').textContent =
+        profileData.phone || '—';
+
+    document.getElementById('pv-address').textContent =
+        profileData.address || '—';
+}
+
 
     populateProfileForm() {
         const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
@@ -323,6 +380,10 @@ class UI {
         
         this.closeProfileModal();
         this.showToast('Profile updated successfully', 'success');
+
+        document.getElementById('profile-form').style.display = 'none';
+        document.getElementById('profile-view').style.display = 'block';
+        this.populateProfileView();
     }
 
     saveSecuritySettings() {

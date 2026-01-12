@@ -33,6 +33,7 @@
 }
 
 .dark-mode {
+    color-scheme: dark;
     --primary-color: #60a5fa;
     --primary-dark: #3b82f6;
     --secondary-color: #a78bfa;
@@ -53,6 +54,17 @@
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+}
+
+.dark-mode a,
+.dark-mode p,
+.dark-mode span,
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4,
+.dark-mode label {
+    color: var(--text-primary);
 }
 
 body {
@@ -457,6 +469,7 @@ body {
     align-items: center;
     justify-content: center;
     color: white;
+    cursor: pointer;
 }
 
 .dropdown-menu {
@@ -474,7 +487,7 @@ body {
     transition: all 0.3s ease;
 }
 
-.user-profile:hover .dropdown-menu {
+.user-profile.open .dropdown-menu {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
@@ -605,6 +618,7 @@ body {
     border-radius: var(--radius-lg);
     padding: 25px;
     box-shadow: var(--shadow-md);
+    margin-bottom: 20px;
 }
 
 .balance-card.main-balance {
@@ -671,12 +685,19 @@ body {
     margin-top: 10px;
 }
 
+.account-actions {
+    display: flex;
+    margin-top: 10px;
+    gap: 10px;
+}
+
 
 .card {
     background-color: var(--bg-primary);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
     overflow: hidden;
+    margin-bottom: 20px;
 }
 
 .card-header {
