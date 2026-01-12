@@ -175,10 +175,10 @@ function renderProjects(filter = 'All') {
 
         // Code button opens repository without triggering card click
         const codeChip = card.querySelector('.code-chip');
-        codeChip.addEventListener('click', (e) => {
+        codeChip.onclick = (e) => {
             e.stopPropagation();
             window.open(codeLink, '_blank');
-        });
+        };
 
         // Whole card opens live demo if available
         if (!isDisabled) {
