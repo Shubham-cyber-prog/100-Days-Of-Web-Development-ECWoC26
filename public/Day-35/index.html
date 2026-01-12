@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QuickBite - Food Delivery App</title>
@@ -135,5 +136,37 @@
     <div id="toast">Added to Cart</div>
 
     <script src="script.js"></script>
+
+  <meta charset="UTF-8" />
+  <title>Foodie Express</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>
+  <h1>🍔 Foodie Express</h1>
+  <input type="text" id="search" placeholder="Search food..." />
+  <button id="cart-btn">🛒 Cart (<span id="cart-count">0</span>)</button>
+</header>
+
+<nav>
+  <button onclick="filterFood('all')">All</button>
+  <button onclick="filterFood('fast')">Fast Food</button>
+  <button onclick="filterFood('meal')">Meals</button>
+  <button onclick="filterFood('dessert')">Desserts</button>
+</nav>
+
+<main id="food-list"></main>
+
+<!-- CART SIDEBAR -->
+<aside id="cart">
+  <h2>Your Cart</h2>
+  <ul id="cart-items"></ul>
+  <h3>Total: ₹<span id="total">0</span></h3>
+  <button class="checkout">Checkout</button>
+</aside>
+
+<script src="script.js"></script>
+
 </body>
 </html>
