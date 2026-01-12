@@ -333,6 +333,7 @@
             color: white;
         }
 
+
         /* 🔽 NEW: Edit / Delete buttons */
         .device-actions {
             display: flex;
@@ -368,7 +369,6 @@
             background: #2c3e50;
             color: white;
         }
-
 
 
         @keyframes slideIn {
@@ -469,7 +469,6 @@
             </div>
         </div>
     </div>
-
     <!-- 🔽 NEW: Delete Confirmation Modal -->
     <div class="modal" id="deleteConfirmModal">
         <div class="modal-content">
@@ -482,6 +481,7 @@
             </div>
         </div>
     </div>
+
 
 
     <script>
@@ -762,4 +762,37 @@
     </script>
 </body>
 
+            const icons = {
+                Light: '💡',
+                Fan: '🌀',
+                Thermostat: '🌡️',
+                Security: '🔒',
+                Appliance: '🔌'
+            };
+
+            const newDevice = {
+                id: Date.now(),
+                name,
+                type,
+                room,
+                icon: icons[type],
+                status: false,
+                brightness: type === 'Light' ? 50 : undefined,
+                temperature: type === 'Thermostat' ? 22 : undefined,
+                speed: type === 'Fan' ? 'Low' : undefined,
+                locked: type === 'Security'
+            };
+
+            devices.push(newDevice);
+            renderDevices();
+            modal.style.display = 'none';
+
+            document.getElementById('deviceName').value = '';
+            document.getElementById('deviceRoom').value = '';
+
+            showNotification(`${name} added successfully`);
+        });
+
+    </script>
+</body>
 </html>
