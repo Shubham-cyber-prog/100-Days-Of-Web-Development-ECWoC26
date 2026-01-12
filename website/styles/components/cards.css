@@ -1,150 +1,88 @@
-/* Projects Grid */
-.project-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-lg);
-    padding: 1.75rem;
-    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-    display: flex;
-    flex-direction: column;
+/* --- Zenith: Glass Cards --- */
+
+.card {
+    background: var(--bg-surface);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
     position: relative;
     overflow: hidden;
 }
 
-.project-card:hover {
-    transform: translateY(-6px);
-    border-color: var(--text-secondary);
-    box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.3);
+/* Hover Effect: Lift & Internal Glow */
+.card:hover {
+    transform: translateY(-5px);
+    border-color: var(--glass-highlight);
+    box-shadow: 0 10px 40px -10px var(--shadow-depth),
+        0 0 0 1px var(--glass-highlight) inset;
+    /* Inner rim */
 }
 
-/* Gradient shine effect on hover */
-.project-card::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 200%;
-    height: 100%;
-    background: linear-gradient(90deg,
-            transparent,
-            rgba(255, 255, 255, 0.03),
-            transparent);
-    transition: 0.5s;
-    pointer-events: none;
+/* --- Light Mode Card "Glow" Effect --- */
+[data-theme="light"] .card {
+    background: #FFFFFF;
+    /* Ensure pure white cards */
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
 }
 
-.project-card:hover::after {
-    left: 100%;
+[data-theme="light"] .card:hover {
+    border-color: var(--accent-core);
+    /* Orange outline */
+    box-shadow: 0 10px 25px -5px rgba(255, 136, 0, 0.15),
+        0 0 0 1px var(--accent-core) inset;
+    /* Double border effect */
+    transform: translateY(-3px);
 }
 
+/* Special case for Project Cards in Light Mode */
+[data-theme="light"] .project-card {
+    /* Inherits the above, but ensure inner content layers don't block it */
+    background: #FFFFFF;
+}
+
+/* Fix project card masquerading layers in light mode */
+[data-theme="light"] .project-card::after {
+    background: #FFFFFF;
+}
+
+[data-theme="light"] .project-card:hover::after {
+    background: #FAFAFA;
+}
+
+/* Neon Glow Variant (Active items) */
+.card.glow-active {
+    box-shadow: 0 0 30px var(--accent-alpha);
+    border-color: var(--accent-core);
+}
+
+/* Glass Header (for stats etc) */
 .card-header {
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: var(--space-4);
+    margin-bottom: var(--space-4);
+}
+
+/* Project Cards Specifics */
+.project-card {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.25rem;
+    flex-direction: column;
 }
 
-.day-number {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--text-tertiary);
-    background: var(--bg-hover);
-    padding: 0.25rem 0.75rem;
-    border-radius: 6px;
-    letter-spacing: 0.5px;
-}
-
-.badge {
-    font-size: 0.7rem;
-    padding: 0.25rem 0.75rem;
-    border-radius: 100px;
-    text-transform: uppercase;
-    font-weight: 700;
-    letter-spacing: 0.8px;
-    border: 1px solid transparent;
-}
-
-.badge.beginner {
-    background: rgba(39, 201, 63, 0.1);
-    color: #27c93f;
-    border-color: rgba(39, 201, 63, 0.2);
-}
-
-.badge.intermediate {
-    background: rgba(255, 189, 46, 0.1);
-    color: #ffbd2e;
-    border-color: rgba(255, 189, 46, 0.2);
-}
-
-.badge.advanced {
-    background: rgba(255, 95, 86, 0.1);
-    color: #ff5f56;
-    border-color: rgba(255, 95, 86, 0.2);
-}
-
-.badge.capstone {
-    background: rgba(189, 147, 249, 0.1);
-    color: #bd93f9;
-    border-color: rgba(189, 147, 249, 0.2);
-}
-
-.project-card h3 {
-    font-size: 1.35rem;
-    margin-bottom: 0.75rem;
+.project-card h4 {
     color: var(--text-primary);
-    font-weight: 700;
-    letter-spacing: -0.5px;
+    font-size: var(--text-lg);
+    font-weight: var(--weight-bold);
+    margin-bottom: var(--space-2);
 }
 
-.project-card p {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin-bottom: 2rem;
-    flex-grow: 1;
-}
-
-.card-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-top: auto;
-}
-
-.btn-small {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.6rem 1rem;
-    border-radius: var(--radius-md);
-    font-size: 0.9rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.2s;
+/* Stat Cards */
+.stat-card {
     text-align: center;
-}
-
-/* Primary Button Style (Live Demo) */
-.btn-small:not(.outline) {
-    background: var(--text-primary);
-    color: var(--bg-primary);
-}
-
-.btn-small:not(.outline):hover {
-    opacity: 0.9;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
-}
-
-/* Outline Button Style (View Code) */
-.btn-small.outline {
-    background: transparent;
-    border: 1px solid var(--border-color);
-    color: var(--text-secondary);
-}
-
-.btn-small.outline:hover {
-    border-color: var(--text-primary);
-    color: var(--text-primary);
-    background: var(--bg-hover);
+    background: linear-gradient(180deg, var(--bg-surface) 0%, rgba(255, 255, 255, 0.01) 100%);
 }

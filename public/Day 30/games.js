@@ -1,75 +1,120 @@
 let boxes = document.querySelectorAll(".box");
-let resetbtn = document.querySelector("#reset");
+let resetBtn = document.querySelector("#reset");
 let newBtn = document.querySelector("#new");
-let msgcontainer = document.querySelector(".msg-container");
-let msg = document.querySelector("#msg");
-let turnO = true;
+let resetHistoryBtn = document.querySelector("#resetHistory");
 
-const winpatterns = [
-    [0, 1, 2],
-    [0, 3, 6],
-    [0, 4, 8],
-    [3, 4, 5],
-    [6, 7, 8],
-    [2, 4, 6],
-    [2, 5, 8],
-    [1, 4, 7],
+let msgContainer = document.querySelector(".msg-container");
+let msg = document.querySelector("#msg");
+let turnText = document.querySelector("#turn");
+
+let oScoreText = document.querySelector("#oScore");
+let xScoreText = document.querySelector("#xScore");
+let drawScoreText = document.querySelector("#drawScore");
+
+let turnO = true;
+let count = 0;
+let gameOver = false;
+
+let oScore = 0;
+let xScore = 0;
+let drawScore = 0;
+
+const winPatterns = [
+  [0,1,2],[0,3,6],[0,4,8],
+  [3,4,5],[6,7,8],[2,4,6],
+  [2,5,8],[1,4,7]
 ];
 
-const resetgame = () => {
-    turnO = true;
-    enableboxes();
-    msgcontainer.classList.add("hide");
+// ---------------- RESET BOARD ----------------
+const resetGame = () => {
+  turnO = true;
+  count = 0;
+  gameOver = false;
+
+  turnText.innerText = "Turn: O";
+  msg.innerText = "";
+  msgContainer.classList.add("hide");
+
+  boxes.forEach(box => {
+    box.innerText = "";
+    box.disabled = false;
+  });
 };
 
-boxes.forEach((box) => {
-    box.addEventListener("click", () => {
-        //console.log("Box was clicked!");
-        if (turnO === true) {
-            box.innerText = "O";
-            turnO = false;
-        } else {
-            box.innerText = "X";
-            turnO = true;
-        }
-        box.style.pointerEvents = "none"; // Prevent further clicks
-        checkWinner();
-    });
-});                   
+// ---------------- RESET HISTORY ----------------
+const resetHistory = () => {
+  oScore = 0;
+  xScore = 0;
+  drawScore = 0;
 
-const enableboxes = () => {
-    for (let box of boxes) {
-        box.style.pointerEvents = "auto"; // Fixed: Enable clicking
-        box.innerText = "";
-    }
+  oScoreText.innerText = 0;
+  xScoreText.innerText = 0;
+  drawScoreText.innerText = 0;
+
+  resetGame();
 };
 
-const disableboxes = () => {
-    for (let box of boxes) {
-        box.style.pointerEvents = "none"; // Fixed: Disable clicking
-    }
+// ---------------- CLICK HANDLER ----------------
+boxes.forEach(box => {
+  box.addEventListener("click", () => {
+    if (box.innerText !== "" || gameOver) return;
+
+    box.innerText = turnO ? "O" : "X";
+    count++;
+
+    turnO = !turnO;
+    turnText.innerText = `Turn: ${turnO ? "O" : "X"}`;
+
+    checkWinner();
+  });
+});
+
+// ---------------- SHOW WINNER ----------------
+const showWinner = (winner) => {
+  gameOver = true;
+  msg.innerText = `Winner: ${winner}`;
+  msgContainer.classList.remove("hide");
+
+  if (winner === "O") {
+    oScore++;
+    oScoreText.innerText = oScore;
+  } else {
+    xScore++;
+    xScoreText.innerText = xScore;
+  }
+
+  boxes.forEach(box => box.disabled = true);
 };
 
-const showwinner = (winner) => {
-    msg.innerText = `Congratulations, winner is ${winner}`; // Fixed string interpolation
-    msgcontainer.classList.remove("hide"); // Fixed `classList`
-    disableboxes();
+// ---------------- SHOW DRAW ----------------
+const showDraw = () => {
+  gameOver = true;
+  msg.innerText = "It's a Draw!";
+  msgContainer.classList.remove("hide");
+
+  drawScore++;
+  drawScoreText.innerText = drawScore;
+
+  boxes.forEach(box => box.disabled = true);
 };
 
+// ---------------- CHECK WIN ----------------
 const checkWinner = () => {
-    for (let pattern of winpatterns) {
-        let pos1val = boxes[pattern[0]].innerText;
-        let pos2val = boxes[pattern[1]].innerText;
-        let pos3val = boxes[pattern[2]].innerText;
+  for (let p of winPatterns) {
+    let a = boxes[p[0]].innerText;
+    let b = boxes[p[1]].innerText;
+    let c = boxes[p[2]].innerText;
 
-        if (pos1val !== "" && pos2val !== "" && pos3val !== "") {
-            if (pos1val === pos2val && pos2val === pos3val) {
-              //  console.log("Winner:", pos1val);
-                showwinner(pos1val); // Fixed: Pass winner to function
-            }
-        }
+    if (a && a === b && b === c) {
+      showWinner(a);
+      return;
     }
+  }
+
+  if (count === 9) showDraw();
 };
 
-newBtn.addEventListener("click", resetgame); // Fixed event listener
-resetbtn.addEventListener("click", resetgame); // Fixed event listener
+// ---------------- BUTTONS ----------------
+newBtn.addEventListener("click", resetGame);          // new round
+resetBtn.addEventListener("click", resetGame);        // clear board
+resetHistoryBtn.addEventListener("click", resetHistory); // clear board + scores
