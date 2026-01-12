@@ -122,6 +122,14 @@ Welcome to the **100 Days of Web Development** challenge! Follow these steps to 
    git commit -m "Add brief description of your changes"
    git push origin feature/your-feature-name
    ```
+   > **Note:** `git add .` stages **all modified and untracked files** in the repository.
+>  
+> If you want to stage only a specific file, you can use:
+> ```bash
+> git add <filename>
+> ```
+>  
+> This can help avoid accidentally committing unrelated changes.
 8. **Create a Pull Request**: Go to the original repository and create a PR with a clear description.
 
 ### Additional Tips
