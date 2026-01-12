@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureCrypto Wallet</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header>
+            <div class="logo">
+                <i class="fas fa-wallet"></i>
+                <span>SecureCrypto Wallet</span>
+            </div>
+            <div class="user-info">
+                <div class="user-avatar">
+                    <span id="userInitials">JD</span>
+                </div>
+                <div class="wallet-address" id="walletAddress">
+                    0x71C7...E42f
+                </div>
+                <button class="btn-logout" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Balance Section -->
+            <section class="balance-section">
+                <div class="balance-card">
+                    <div class="balance-header">
+                        <h2>Total Balance</h2>
+                        <div class="currency-selector">
+                            <select id="currencySelector">
+                                <option value="USD">USD</option>
+                                <option value="EUR">EUR</option>
+                                <option value="GBP">GBP</option>
+                                <option value="JPY">JPY</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="balance-amount">
+                        <span class="amount" id="totalBalance">$24,567.89</span>
+                        <span class="change positive" id="balanceChange">+2.34%</span>
+                    </div>
+                    <div class="balance-details">
+                        <div class="detail">
+                            <span class="label">Available</span>
+                            <span class="value" id="availableBalance">$22,450.12</span>
+                        </div>
+                        <div class="detail">
+                            <span class="label">Staked</span>
+                            <span class="value" id="stakedBalance">$2,117.77</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Action Buttons -->
+            <section class="action-buttons">
+                <button class="action-btn" id="sendBtn">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>Send</span>
+                </button>
+                <button class="action-btn" id="receiveBtn">
+                    <i class="fas fa-qrcode"></i>
+                    <span>Receive</span>
+                </button>
+                <button class="action-btn" id="swapBtn">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>Swap</span>
+                </button>
+                <button class="action-btn" id="stakeBtn">
+                    <i class="fas fa-lock"></i>
+                    <span>Stake</span>
+                </button>
+            </section>
+
+            <!-- Assets Section -->
+            <section class="assets-section">
+                <div class="section-header">
+                    <h3>My Assets</h3>
+                    <button class="btn-add-asset" id="addAssetBtn">
+                        <i class="fas fa-plus"></i> Add Asset
+                    </button>
+                </div>
+                <div class="assets-list" id="assetsList">
+                    <!-- Assets will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Transaction History -->
+            <section class="transaction-section">
+                <div class="section-header">
+                    <h3>Recent Transactions</h3>
+                    <button class="btn-view-all" id="viewAllBtn">
+                        View All
+                    </button>
+                </div>
+                <div class="transactions-list" id="transactionsList">
+                    <!-- Transactions will be populated by JavaScript -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Modals -->
+        <div class="modal" id="sendModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Send Cryptocurrency</h3>
+                    <button class="close-modal" id="closeSendModal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="sendForm">
+                        <div class="form-group">
+                            <label for="recipientAddress">Recipient Address</label>
+                            <input type="text" id="recipientAddress" placeholder="0x..." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sendAmount">Amount</label>
+                            <div class="amount-input">
+                                <input type="number" id="sendAmount" placeholder="0.00" step="0.000001" required>
+                                <select id="sendAsset">
+                                    <option value="BTC">BTC</option>
+                                    <option value="ETH">ETH</option>
+                                    <option value="USDT">USDT</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="networkFee">Network Fee</label>
+                            <div class="fee-options">
+                                <label class="fee-option">
+                                    <input type="radio" name="fee" value="slow" checked>
+                                    <span>Slow ($1.20)</span>
+                                </label>
+                                <label class="fee-option">
+                                    <input type="radio" name="fee" value="medium">
+                                    <span>Medium ($2.50)</span>
+                                </label>
+                                <label class="fee-option">
+                                    <input type="radio" name="fee" value="fast">
+                                    <span>Fast ($5.00)</span>
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-submit">Send Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="receiveModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Receive Cryptocurrency</h3>
+                    <button class="close-modal" id="closeReceiveModal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="qrcode-container">
+                        <div class="qrcode" id="qrcode">
+                            <!-- QR Code would be generated here in a real app -->
+                            <div class="qrcode-placeholder">
+                                <i class="fas fa-qrcode"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="address-display">
+                        <p>Your wallet address:</p>
+                        <div class="address-value" id="fullWalletAddress">0x71C7656EC7ab88b098defB751B7401B5f6d8976f</div>
+                        <button class="btn-copy" id="copyAddressBtn">
+                            <i class="fas fa-copy"></i> Copy Address
+                        </button>
+                    </div>
+                    <div class="warning">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Only send supported assets to this address</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification -->
+        <div class="notification" id="notification">
+            <span id="notificationText"></span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

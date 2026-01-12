@@ -1,0 +1,92 @@
+:root {
+  --bg: #f4f6fa;
+  --card: #ffffff;
+  --text: #222;
+  --accent: #4a6cf7;
+}
+
+.dark {
+  --bg: #1e1e2f;
+  --card: #2a2a40;
+  --text: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+header h1 {
+  font-size: 26px;
+}
+
+header button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 20px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+}
+
+.overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.card h3 {
+  margin-bottom: 10px;
+}
+
+.count {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.facebook { border-top: 4px solid #1877f2; }
+.twitter { border-top: 4px solid #1da1f2; }
+.instagram { border-top: 4px solid #e1306c; }
+.youtube { border-top: 4px solid #ff0000; }
+
+.activity {
+  margin-top: 40px;
+}
+
+.activity h2 {
+  margin-bottom: 20px;
+}
+
+.activity-card {
+  background: var(--card);
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+}
