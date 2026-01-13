@@ -1,4 +1,132 @@
 
+// DOM Elements
+const searchBtn = document.getElementById('searchBtn');
+const cityInput = document.getElementById('cityInput');
+const weatherData = document.getElementById('weatherData');
+const errorMsg = document.getElementById('errorMsg');
+const loader = document.getElementById('loader');
+
+// Elements to update
+const cityName = document.getElementById('cityName');
+const temperature = document.getElementById('temperature');
+const condition = document.getElementById('condition');
+const windSpeed = document.getElementById('windSpeed');
+const humidity = document.getElementById('humidity');
+const weatherIcon = document.getElementById('weatherIcon');
+const feelsLike = document.getElementById('feelsLike');
+const uvIndex = document.getElementById('uvIndex');
+const visibility = document.getElementById('visibility');
+
+const suggestionsBox = document.getElementById('suggestions');
+
+// ===================== EVENTS =====================
+
+searchBtn.addEventListener('click', () => {
+    const city = cityInput.value.trim();
+    if (!city) {
+        errorMsg.textContent = "Please enter a city name";
+        errorMsg.style.display = "block";
+        return;
+    }
+    getCityCoordinates(city);
+});
+
+cityInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        const city = cityInput.value.trim();
+        if (!city) return;
+        getCityCoordinates(city);
+    }
+});
+
+// ===================== API LOGIC =====================
+
+// Step 1: Get coordinates
+async function getCityCoordinates(city) {
+    weatherData.classList.add('hidden');
+    errorMsg.style.display = 'none';
+    loader.style.display = 'block';
+
+    try {
+        const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=en&format=json`;
+        const geoResponse = await fetch(geoUrl);
+        const geoData = await geoResponse.json();
+
+        if (!geoData.results || geoData.results.length === 0) {
+            throw new Error("City not found");
+        }
+
+        const { latitude, longitude, name, country } = geoData.results[0];
+        getWeather(latitude, longitude, name, country);
+    } catch (error) {
+        loader.style.display = 'none';
+        errorMsg.textContent = "City not found. Try again.";
+        errorMsg.style.display = 'block';
+    }
+}
+
+// Step 2: Get weather
+async function getWeather(lat, lon, name, country) {
+    try {
+        const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=relativehumidity_2m,apparent_temperature,uv_index,visibility`;
+        const response = await fetch(weatherUrl);
+        const data = await response.json();
+
+        const currentHour = new Date().toISOString().slice(0, 13) + ":00";
+        const hourIndex = data.hourly.time.indexOf(currentHour);
+        const index = hourIndex !== -1 ? hourIndex : 0;
+
+        cityName.textContent = `${name}, ${country}`;
+        temperature.textContent = Math.round(data.current_weather.temperature);
+        windSpeed.textContent = `${data.current_weather.windspeed} km/h`;
+        humidity.textContent = `${data.hourly.relativehumidity_2m[index]}%`;
+        feelsLike.textContent = `${Math.round(data.hourly.apparent_temperature[index])}°C`;
+        uvIndex.textContent = data.hourly.uv_index[index];
+        visibility.textContent = `${data.hourly.visibility[index] / 1000} km`;
+
+        const code = data.current_weather.weathercode;
+        const weatherInfo = getWeatherInfo(code);
+
+        condition.textContent = weatherInfo.description;
+        weatherIcon.innerHTML = weatherInfo.icon;
+
+        loader.style.display = 'none';
+        weatherData.classList.remove('hidden');
+    } catch (error) {
+        console.error(error);
+        loader.style.display = 'none';
+        errorMsg.textContent = "Error fetching weather data.";
+        errorMsg.style.display = 'block';
+// DOM
+const cityInput = document.getElementById("cityInput");
+const searchBtn = document.getElementById("searchBtn");
+const weatherData = document.getElementById("weatherData");
+const errorMsg = document.getElementById("errorMsg");
+const loader = document.getElementById("loader");
+const suggestionsBox = document.getElementById("suggestions");
+
+// Weather fields
+const cityName = document.getElementById("cityName");
+const temperature = document.getElementById("temperature");
+const condition = document.getElementById("condition");
+const windSpeed = document.getElementById("windSpeed");
+const humidity = document.getElementById("humidity");
+const weatherIcon = document.getElementById("weatherIcon");
+const feelsLike = document.getElementById("feelsLike");
+const uvIndex = document.getElementById("uvIndex");
+const visibility = document.getElementById("visibility");
+
+// Events
+searchBtn.addEventListener("click", searchCity);
+cityInput.addEventListener("keydown", e => e.key === "Enter" && searchCity());
+
+// UI helpers
+function showLoader() {
+    loader.style.display = "block";
+    errorMsg.style.display = "none";
+    weatherData.classList.add("hidden");
+}
+
 
 class WeatherApp {
     constructor() {
@@ -88,7 +216,36 @@ class WeatherApp {
         setTimeout(() => {
             this.weatherContent.classList.remove('weather-update');
         }, 600);
+
     }
+
+// ===================== WEATHER CODE MAP =====================
+
+function getWeatherInfo(code) {
+    const weatherCodes = {
+        0: { description: "Clear Sky", icon: "<i class='fas fa-sun'></i>" },
+        1: { description: "Mainly Clear", icon: "<i class='fas fa-cloud-sun'></i>" },
+        2: { description: "Partly Cloudy", icon: "<i class='fas fa-cloud-sun'></i>" },
+        3: { description: "Overcast", icon: "<i class='fas fa-cloud'></i>" },
+        45: { description: "Fog", icon: "<i class='fas fa-smog'></i>" },
+        48: { description: "Rime Fog", icon: "<i class='fas fa-smog'></i>" },
+        51: { description: "Light Drizzle", icon: "<i class='fas fa-cloud-rain'></i>" },
+        61: { description: "Rain", icon: "<i class='fas fa-cloud-rain'></i>" },
+        71: { description: "Snow", icon: "<i class='fas fa-snowflake'></i>" },
+        80: { description: "Rain Showers", icon: "<i class='fas fa-cloud-sun-rain'></i>" },
+        95: { description: "Thunderstorm", icon: "<i class='fas fa-bolt'></i>" }
+    };
+
+    return weatherCodes[code] || {
+        description: "Unknown Weather",
+        icon: "<i class='fas fa-question'></i>"
+    };
+}
+
+// ===================== AUTOCOMPLETE =====================
+
+function debounce(fn, delay = 400) {
+    let timer;
 
     async handleSearch() {
         const city = this.searchInput.value.trim();
@@ -104,231 +261,90 @@ class WeatherApp {
             return;
         }
 
-        this.showLoading();
-        
-        navigator.geolocation.getCurrentPosition(
-            async (position) => {
-                const { latitude, longitude } = position.coords;
-                await this.getWeatherByCoords(latitude, longitude);
-            },
-            () => {
-                this.showError('Unable to retrieve your location.');
-            },
-            { timeout: 10000 }
-        );
+// Autocomplete
+function debounce(fn, delay = 400) {
+    let t;
+
+    return (...args) => {
+        clearTimeout(t);
+        t = setTimeout(() => fn(...args), delay);
+    };
+}
+
+async function fetchSuggestions(query) {
+    if (query.length < 2) {
+        suggestionsBox.style.display = "none";
+        return;
     }
 
-    async getWeatherByCity(city) {
-        try {
-            this.showLoading();
-            
-            // Get coordinates from city name
-            const geoResponse = await fetch(`${this.geoUrl}/direct?q=${encodeURIComponent(city)}&limit=1&appid=${this.apiKey}`);
-            const geoData = await geoResponse.json();
-            
-            if (!geoData.length) {
-                throw new Error('City not found');
-            }
 
-            const { lat, lon } = geoData[0];
-            await this.getWeatherByCoords(lat, lon);
-            
-        } catch (error) {
-            console.error('Error fetching weather by city:', error);
-            this.showError();
-        }
-    }
+    try {
+        const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=5&language=en&format=json`;
+        const res = await fetch(url);
+        const data = await res.json();
 
-    async getWeatherByCoords(lat, lon) {
-        try {
-            const units = this.isCelsius ? 'metric' : 'imperial';
-            
-            // Fetch current weather
-            const currentResponse = await fetch(`${this.baseUrl}/weather?lat=${lat}&lon=${lon}&appid=${this.apiKey}&units=${units}`);
-            const currentData = await currentResponse.json();
-
-            // Fetch 5-day forecast
-            const forecastResponse = await fetch(`${this.baseUrl}/forecast?lat=${lat}&lon=${lon}&appid=${this.apiKey}&units=${units}`);
-            const forecastData = await forecastResponse.json();
-
-            // Fetch UV Index
-            const uvResponse = await fetch(`${this.baseUrl}/uvi?lat=${lat}&lon=${lon}&appid=${this.apiKey}`);
-            const uvData = await uvResponse.json();
-
-            // Update UI with weather data
-            this.updateCurrentWeather(currentData, uvData);
-            this.updateForecast(forecastData);
-            this.updateBackground(currentData.weather[0].main);
-            this.showWeatherContent();
-            
-        } catch (error) {
-            console.error('Error fetching weather by coordinates:', error);
-            this.showError('Failed to fetch weather data.');
-        }
-    }
-
-    updateCurrentWeather(data, uvData) {
-        const tempUnit = this.isCelsius ? '°C' : '°F';
-        const speedUnit = this.isCelsius ? 'km/h' : 'mph';
-        
-        // Current temperature and location
-        this.currentTemp.textContent = `${Math.round(data.main.temp)}${tempUnit}`;
-        this.currentLocation.textContent = `${data.name}, ${data.sys.country}`;
-        this.currentDate.textContent = this.formatDate(new Date());
-
-        // Weather icon and description
-        this.currentWeatherIcon.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png`;
-        this.currentWeatherIcon.alt = data.weather[0].description;
-        this.weatherDescription.textContent = data.weather[0].description;
-
-        // Weather stats
-        this.feelsLike.textContent = `${Math.round(data.main.feels_like)}${tempUnit}`;
-        this.humidity.textContent = `${data.main.humidity}%`;
-        this.windSpeed.textContent = `${Math.round(data.wind.speed * (this.isCelsius ? 3.6 : 1))} ${speedUnit}`;
-        this.pressure.textContent = `${data.main.pressure} hPa`;
-
-        // Highlights
-        if (uvData && uvData.value !== undefined) {
-            this.uvIndex.textContent = Math.round(uvData.value);
-            this.uvDescription.textContent = this.getUVDescription(uvData.value);
+        if (!data.results) {
+            suggestionsBox.style.display = 'none';
+            return;
         }
 
-        this.visibility.textContent = `${(data.visibility / 1000).toFixed(1)} km`;
-        this.sunrise.textContent = this.formatTime(data.sys.sunrise);
-        this.sunset.textContent = this.formatTime(data.sys.sunset);
+        suggestionsBox.innerHTML = '';
+        suggestionsBox.style.display = 'block';
 
-        // Mock air quality (OpenWeatherMap's air pollution API requires separate call)
-        this.airQuality.textContent = 'Good';
-        this.airQualityDescription.textContent = 'Air quality is good';
-    }
+        data.results.forEach(city => {
+            const div = document.createElement('div');
+            div.textContent = `${city.name}, ${city.country}`;
+            div.style.padding = '12px 16px';
+            div.style.cursor = 'pointer';
 
-    updateForecast(data) {
-        this.forecastContainer.innerHTML = '';
-        
-        // Get one forecast per day (every 24 hours / 8 intervals of 3 hours)
-        const dailyForecasts = [];
-        for (let i = 0; i < data.list.length; i += 8) {
-            if (dailyForecasts.length >= 5) break;
-            dailyForecasts.push(data.list[i]);
-        }
+            div.addEventListener('click', () => {
+                cityInput.value = city.name;
+                suggestionsBox.style.display = 'none';
+                getCityCoordinates(city.name);
+            });
 
-        dailyForecasts.forEach(forecast => {
-            const forecastItem = this.createForecastItem(forecast);
-            this.forecastContainer.appendChild(forecastItem);
+            suggestionsBox.appendChild(div);
         });
-    }
-
-    createForecastItem(forecast) {
-        const tempUnit = this.isCelsius ? '°C' : '°F';
-        const date = new Date(forecast.dt * 1000);
-        
-        const item = document.createElement('div');
-        item.className = 'forecast-item';
-        
-        item.innerHTML = `
-            <div class="forecast-date">${this.formatForecastDate(date)}</div>
-            <div class="forecast-icon">
-                <img src="https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png" 
-                     alt="${forecast.weather[0].description}">
-            </div>
-            <div class="forecast-temps">
-                <span class="forecast-high">${Math.round(forecast.main.temp_max)}${tempUnit}</span>
-                <span class="forecast-low">${Math.round(forecast.main.temp_min)}${tempUnit}</span>
-            </div>
-            <div class="forecast-desc">${forecast.weather[0].description}</div>
-        `;
-        
-        return item;
-    }
-
-    updateBackground(weatherCondition) {
-        const body = document.body;
-        const hour = new Date().getHours();
-        const isNight = hour < 6 || hour > 20;
-        
-        // Remove existing weather classes
-        body.className = body.className.replace(/\b(sunny|cloudy|rainy|snowy|night)\b/g, '');
-        
-        if (isNight) {
-            body.classList.add('night');
-        } else {
-            switch (weatherCondition.toLowerCase()) {
-                case 'clear':
-                    body.classList.add('sunny');
-                    break;
-                case 'clouds':
-                    body.classList.add('cloudy');
-                    break;
-                case 'rain':
-                case 'drizzle':
-                case 'thunderstorm':
-                    body.classList.add('rainy');
-                    break;
-                case 'snow':
-                    body.classList.add('snowy');
-                    break;
-                default:
-                    body.classList.add('cloudy');
-            }
-        }
-    }
-
-    toggleUnits() {
-        this.isCelsius = !this.isCelsius;
-        this.unitToggle.textContent = this.isCelsius ? '°C' : '°F';
-        
-        // Get current coordinates from the displayed location and refresh
-        if (!this.weatherContent.classList.contains('hidden')) {
-            const locationText = this.currentLocation.textContent;
-            if (locationText && locationText !== '--') {
-                const cityName = locationText.split(',')[0];
-                this.getWeatherByCity(cityName);
-            }
-        }
-    }
-
-    formatDate(date) {
-        return date.toLocaleDateString('en-US', {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-    }
-
-    formatForecastDate(date) {
-        const today = new Date();
-        const tomorrow = new Date(today);
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        
-        if (date.toDateString() === today.toDateString()) {
-            return 'Today';
-        } else if (date.toDateString() === tomorrow.toDateString()) {
-            return 'Tomorrow';
-        } else {
-            return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-        }
-    }
-
-    formatTime(timestamp) {
-        return new Date(timestamp * 1000).toLocaleTimeString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false
-        });
-    }
-
-    getUVDescription(uvValue) {
-        if (uvValue < 3) return 'Low';
-        if (uvValue < 6) return 'Moderate';
-        if (uvValue < 8) return 'High';
-        if (uvValue < 11) return 'Very High';
-        return 'Extreme';
+    } catch (err) {
+        console.error(err);
+        suggestionsBox.style.display = 'none';
     }
 }
 
-// Initialize the weather app when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    new WeatherApp();
+cityInput.addEventListener(
+    'input',
+    debounce(e => fetchCitySuggestions(e.target.value))
+);
+
+document.addEventListener('click', e => {
+    if (!e.target.closest('#suggestions') && e.target !== cityInput) {
+        suggestionsBox.style.display = 'none';
+    }
 });
+
+
+    const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=5&language=en&format=json`;
+    const res = await fetch(url);
+    const data = await res.json();
+
+    suggestionsBox.innerHTML = "";
+    if (!data.results) return;
+
+    suggestionsBox.style.display = "block";
+    data.results.forEach(city => {
+        const div = document.createElement("div");
+        div.textContent = `${city.name}, ${city.country}`;
+        div.onclick = () => {
+            cityInput.value = city.name;
+            suggestionsBox.style.display = "none";
+            getCityCoordinates(city.name);
+        };
+        suggestionsBox.appendChild(div);
+    });
+}
+
+cityInput.addEventListener("input", debounce(e => fetchSuggestions(e.target.value)));
+
+const lastCity = localStorage.getItem("lastCity");
+if (lastCity) getCityCoordinates(lastCity);
 

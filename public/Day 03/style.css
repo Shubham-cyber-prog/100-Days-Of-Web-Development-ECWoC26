@@ -1,190 +1,326 @@
+:root {
+  --bg: #0f172a;
+  --card: #0b1220;
+  --card-alt: #020617;
+  --text: #e5e7eb;
+  --text-muted: #94a3b8;
+  --primary: #6c63ff;
+  --shadow: rgba(0,0,0,0.35);
+}
+
+/* LIGHT THEME */
+[data-theme="light"] {
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --card-alt: #f1f5f9;
+  --text: #0f172a;
+  --text-muted: #475569;
+  --primary: #6c63ff;
+  --shadow: rgba(0,0,0,0.12);
+}
+
+
+
+
 * {
   box-sizing: border-box;
-  font-family: "Tagesschrift", system-ui;
 }
 
-/* Theme variables */
-:root {
-  --bg-color: #f4f4f4;
-  --container-bg: #ffffff;
-  --text-color: #000000;
-  --btn-bg: #e0e0e0;
-  --btn-text: #000000;
-  --btn-edit:rgb(255, 209, 58);
-  --btn-delete:rgb(255, 109, 84);
-  --err-msg: rgb(255, 38, 0);
-  --err-msg-bg: rgba(255, 134, 134, 0.453);
-   --succ-msg:  rgb(0, 134, 0);
-  --succ-msg-bg: rgba(52, 247, 68, 0.829);
-  --task-bg: #ffffff;
+* {
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
+
 
 body {
-  background: var(--bg-color);
-  color: var(--text-color);
-  padding: 40px;
+  background: var(--bg);
+  color: var(--text);
 }
 
-.container {
-  max-width: 400px;
-  margin: auto;
-  background: var(--container-bg);
-  padding: 20px;
-  border-radius: 6px;
-}
 
-h1 {
-  text-align: center;
-}
 
-.input-box {
-  display: flex;
-  gap: 10px;
-}
-
-input {
-  flex: 1;
-  padding: 8px;
-}
-
-button {
-  padding: 8px 12px;
-  cursor: pointer;
-  background: var(--btn-bg);
-  color: var(--btn-text);
-  border: none;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-  margin-top: 20px;
-}
-
-li {
+/* ================= NAVBAR ================= */
+.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  padding: 16px 32px;
+  background: var(--card);
+  color: var(--text);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
 }
 
-.task-text {
+/* ================= BOARD ================= */
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  padding: 32px;
+  max-width: 1200px;
+  margin: auto;
+  animation: fadeIn 0.4s ease;
+}
+
+/* ================= COLUMN ================= */
+.column {
+  background: linear-gradient(
+  180deg,
+  var(--card),
+  var(--card-alt)
+);
+
+box-shadow: 0 10px 30px var(--shadow);
+
+  border-radius: 20px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  min-height: 420px;
+  
+}
+
+.column-header h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* ================= TASK LIST ================= */
+.task-list {
+  flex: 1;
+  margin-bottom: 12px;
+}
+
+/* EMPTY STATE */
+.task-list:empty::after {
+  content: "No tasks yet. Click + Add Task to get started.";
+  display: block;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: 40px;
+  opacity: 0.8;
+}
+
+/* ================= TASK CARD ================= */
+.task {
+  background: var(--card-alt);
+  color: var(--text);
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+  cursor: grab;
+  transition: transform 0.15s ease;
+}
+
+.task:hover {
+  transform: scale(1.02);
+}
+
+/* PRIORITY */
+.priority-low {
+  border-left: 4px solid #22c55e;
+}
+
+.priority-medium {
+  border-left: 4px solid #f59e0b;
+}
+
+.priority-high {
+  border-left: 4px solid #ef4444;
+}
+
+.priority-tag {
+  font-size: 0.7rem;
+  opacity: 0.8;
+}
+
+/* ================= ADD BUTTON ================= */
+.add-btn {
+  margin-top: 12px;
+  background: linear-gradient(135deg, var(--primary), #7c72ff);
+  border: none;
+  padding: 12px;
+  border-radius: 14px;
+  color: #ffffff; /* FORCE TEXT VISIBILITY */
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Light mode contrast boost */
+[data-theme="light"] .add-btn {
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(108, 99, 255, 0.35);
+}
+
+.add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(108,99,255,0.4);
+}
+
+/* ================= MODAL ================= */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: #0b1220;
+  padding: 24px;
+  width: 340px;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+.modal-content h2 {
+  margin-bottom: 14px;
+}
+
+.modal-content input,
+.modal-content textarea,
+.modal-content select {
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #020617;
+  color: #e5e7eb;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+/* ================= MODAL BUTTONS ================= */
+.primary-btn {
+  background: #6c63ff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  color: white;
   cursor: pointer;
 }
 
-.completed {
-  text-decoration: line-through;
-  color: gray;
+.secondary-btn {
+  background: transparent;
+  border: 1px solid #334155;
+  color: #e5e7eb;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
-.actions button {
-  margin-left: 5px;
+/* ================= FOOTER / PROGRESS ================= */
+.footer {
+  max-width: 1200px;
+  margin: 20px auto 40px;
+  padding: 0 32px;
 }
 
-/* Dark mode */
-body.dark {
-  --bg-color: #121212;
-  --container-bg: #1e1e1e;
-  --text-color: #ffffff;
-  --btn-bg: #333333;
-  --btn-text: #ffffff;
-  --btn-edit:#fed20b;
-  --btn-delete:#df2b2b;
-  --task-bg:#1e1e1e;
-  --err-msg: rgb(255, 255, 255);
-  --err-msg-bg: rgba(255, 0, 0, 0.929);
-  --succ-msg: rgb(255, 255, 255);
-  --succ-msg-bg:  rgb(18, 171, 31);
-  --task-bg: #ededed;
-  --task-color: #4d4c4c;
+.progress-label {
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Progress track */
+#progress-bar {
+  height: 12px;
+  background: var(--card-alt);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Progress fill */
+#progress-text {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #22c55e, #4ade80);
+  color: #0f172a;
+  font-size: 0.7rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  transition: width 0.3s ease;
 }
 
 
-
-
-#addBtn {
-    height: 8vh;
-    width: 80px;
-    padding: 5px;
-    border: none;
-    border-radius: 15px;
-    box-shadow: 5px 5px 15px rgb(154, 154, 154);
-   
-    color: rgb(255, 171, 14);
-    background-color: white;
-    font-size: 20px;
-    cursor: pointer;
-}
-#addBtn:hover{
-    background-color: rgb(255, 255, 255);
-    box-shadow: 6px 6px 20px rgb(154, 154, 154);
+/* ================= ANIMATION ================= */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-#taskInput{
-    width: 300px;
-    height: 8vh;
-    padding: 5px;
-    border: none;
-    border-radius: 15px;
-    box-shadow: 5px 5px 15px rgb(154, 154, 154);
-   
+/* ================= DRAG UX ================= */
+
+/* Task while dragging */
+.task.dragging {
+  opacity: 0.5;
+  transform: scale(1.05);
 }
 
-.task-text {
-   
-    min-height: 10vh;
-    width: 70vw;
-    list-style-type: none;
-    font-size: 20px;
-    padding: 5px;
-    margin: 10px;
-    color: var(--task-color);
-    background-color: var(--task-bg);
-    border:none;
-    border-radius: 15px;
-   overflow: break-word;
-   padding: 10px 5px 10px 20px;
-   box-shadow: 5px 5px 15px rgb(205, 205, 205);
+/* Column highlight when dragging over */
+.column.drag-over {
+  outline: 2px dashed rgba(108, 99, 255, 0.6);
+  outline-offset: -6px;
+  background: linear-gradient(
+  180deg,
+  var(--card),
+  var(--card-alt)
+);
+
+box-shadow: 0 10px 30px var(--shadow);
+
 }
 
-.btn {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
-}
-.edit-btn {
-    background-color:var(--btn-edit);
-    color: white;
-}
-.edit-btn:hover{
-    background-color: rgb(255, 159, 0);
-}
-.delete-btn {
-    background-color:var(--btn-delete);
-    color: white;
-    margin-top: 10px;
-}
-.delete-btn:hover{
-    background-color: rgb(255, 41, 41);
+/* Smooth placement animation */
+.task {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.tempMsg{
-    width: 360px; 
-    text-align: center;
-    height: 5vh;
-    padding: 1vh;
-   position: absolute;
-   top: 0px;
-  border-radius: 20px;
-   z-index: 2;
+.theme-toggle {
+  background: var(--card-alt);
+  border: 1px solid rgba(0,0,0,0.1);
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px var(--shadow);
+  transition: transform 0.15s ease, background 0.15s ease;
 }
-.errMsg{
-   background-color:var(--err-msg-bg);
-    color:var(--err-msg);
+
+.theme-toggle:hover {
+  transform: scale(1.05);
 }
-.succMsg{
-    background-color:var(--succ-msg-bg);
-    color:var(--succ-msg);
+
+/* Light mode polish */
+[data-theme="light"] .theme-toggle {
+  background: #ffffff;
 }
