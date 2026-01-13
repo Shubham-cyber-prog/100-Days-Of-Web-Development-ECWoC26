@@ -1,0 +1,52 @@
+/* --- Components: Forms --- */
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+}
+
+.form-label {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--text-secondary);
+}
+
+.form-input {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1rem;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    transition: all 0.2s ease;
+}
+
+.form-input::placeholder {
+    color: var(--text-tertiary);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--accent-flame);
+    box-shadow: 0 0 0 3px rgba(255, 159, 28, 0.15);
+    background: var(--bg-panel);
+}
+
+/* Link Style */
+.form-link {
+    font-size: var(--text-sm);
+    color: var(--accent-orbit);
+    text-align: center;
+    display: block;
+    margin-top: var(--space-4);
+    transition: color 0.2s;
+}
+
+.form-link:hover {
+    color: var(--accent-success);
+    text-decoration: underline;
+}
