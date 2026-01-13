@@ -1,10 +1,6 @@
-# Update script.js for localStorage integration
+# Fix Duplicate Weather API Implementations in Day 4 Script
 
-## Tasks to Complete
-
-- [x] Add localStorage functions: getCompletedDays() and saveCompletedDays()
-- [x] Add completedDays array to track completed days
-- [x] Modify renderProjects to add a checkbox for marking completed and style completed cards
-- [x] Add event listener for checkbox changes to toggle completed status and save to localStorage
-- [x] On init, load completed days from localStorage and apply to projects
-- [ ] Test marking/unmarking projects and persistence across reloads
+## Tasks
+- [x] Remove simple Open-Meteo implementation from public/Day 04/script.js, keep only WeatherApp class
+- [x] Remove simple card HTML structure from public/Day 04/index.html, keep only WeatherPro layout
+- [x] Verify the app loads and functions correctly with the single WeatherPro implementation
