@@ -6,51 +6,69 @@
     <title>Movie Database</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <header class="header">
+        
+        <header>
             <h1><i class="fas fa-film"></i> Movie Database</h1>
-            <div class="search-container">
-                <input type="text" id="search-input" placeholder="Search for movies...">
-                <button id="search-btn"><i class="fas fa-search"></i></button>
-            </div>
-            <div class="filter-container">
-                <select id="genre-filter">
-                    <option value="">All Genres</option>
-                </select>
-                <select id="year-filter">
-                    <option value="">All Years</option>
-                </select>
-                <select id="sort-by">
-                    <option value="popularity.desc">Popularity Desc</option>
-                    <option value="popularity.asc">Popularity Asc</option>
-                    <option value="vote_average.desc">Rating Desc</option>
-                    <option value="vote_average.asc">Rating Asc</option>
-                    <option value="release_date.desc">Release Date Desc</option>
-                    <option value="release_date.asc">Release Date Asc</option>
-                </select>
-            </div>
+            <p class="subtitle">Search and discover movies from OMDB API</p>
         </header>
 
-        <main>
-            <div class="movies-grid" id="movies-container">
-                <!-- Movies will be loaded here -->
+        
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search for movies (e.g., 'Inception', 'The Dark Knight')">
+                <button id="searchBtn">
+                    <i class="fas fa-search"></i> Search
+                </button>
+                <button id="randomBtn">
+                    <i class="fas fa-random"></i> Random
+                </button>
             </div>
             
-            <div class="pagination" id="pagination">
-                <!-- Pagination buttons will be added here -->
-            </div>
-        </main>
-
-        <div class="movie-modal" id="movie-modal">
-            <div class="modal-content">
-                <span class="close-btn" id="close-modal">&times;</span>
-                <div id="modal-body">
-                    <!-- Movie details will be loaded here -->
-                </div>
+            <div class="filters">
+                <select id="yearFilter">
+                    <option value="">All Years</option>
+                    
+                </select>
+                <select id="typeFilter">
+                    <option value="">All Types</option>
+                    <option value="movie">Movie</option>
+                    <option value="series">Series</option>
+                    <option value="episode">Episode</option>
+                </select>
             </div>
         </div>
+
+        
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Loading movies...</p>
+        </div>
+
+        
+        <div id="results" class="results">
+            <div id="movieCount" class="movie-count"></div>
+            <div id="movieGrid" class="movie-grid">
+                
+            </div>
+        </div>
+
+        
+        <div id="movieModal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <div id="modalBody"></div>
+            </div>
+        </div>
+
+        
+        <footer>
+            <p>Powered by <a href="http://www.omdbapi.com/" target="_blank">OMDB API</a></p>
+            <p class="api-notice">Free API tier limited to 1000 requests per day</p>
+        </footer>
     </div>
 
     <script src="script.js"></script>
