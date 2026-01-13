@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ConnectX - Social Network</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+  <h1>🌐 ConnectX</h1>
+  <input type="text" id="searchInput" placeholder="Search posts...">
+  <button id="themeToggle">🌙</button>
+</header>
+
+<section class="stories">
+  <div class="story">You</div>
+  <div class="story">Alex</div>
+  <div class="story">Emma</div>
+  <div class="story">John</div>
+</section>
+
+<main>
+  <aside class="profile">
+    <img src="https://i.pravatar.cc/150?img=32">
+    <h2>Sheetal</h2>
+    <p>Web Developer 💻</p>
+  </aside>
+
+  <section class="feed">
+    <div class="create-post">
+      <textarea id="postText" placeholder="What's on your mind?"></textarea>
+      <button onclick="addPost()">Post</button>
+    </div>
+
+    <div id="posts"></div>
+  </section>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>

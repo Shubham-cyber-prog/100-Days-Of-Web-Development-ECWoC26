@@ -64,68 +64,22 @@
                         </div>
                     </div>
                 </div>
-                <div class="current-weather-details">
-                    <div class="weather-description">
-                        <span id="weatherDescription">--</span>
-                    </div>
-                    <div class="weather-stats">
-                        <div class="stat">
-                            <span class="stat-label">Feels like</span>
-                            <span id="feelsLike">--°</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-label">Humidity</span>
-                            <span id="humidity">--%</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-label">Wind</span>
-                            <span id="windSpeed">-- km/h</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-label">Pressure</span>
-                            <span id="pressure">-- hPa</span>
-                        </div>
-                    </div>
+                <div class="extra-detail-item">
+                    <span class="extra-label">UV Index</span>
+                    <span class="extra-val" id="uvIndex"></span>
                 </div>
-            </section>
-
-            <!-- 5-Day Forecast -->
-            <section class="forecast">
-                <h2 class="forecast-title">5-Day Forecast</h2>
-                <div class="forecast-container" id="forecastContainer">
-                    <!-- Forecast items will be populated by JavaScript -->
+                <div class="extra-detail-item">
+                    <span class="extra-label">Visibility</span>
+                    <span class="extra-val" id="visibility"></span>
                 </div>
-            </section>
-
-            <!-- Today's Highlights -->
-            <section class="highlights">
-                <h2 class="highlights-title">Today's Highlights</h2>
-                <div class="highlights-grid">
-                    <div class="highlight-card">
-                        <h3>UV Index</h3>
-                        <div class="highlight-value" id="uvIndex">--</div>
-                        <div class="highlight-description" id="uvDescription">--</div>
-                    </div>
-                    <div class="highlight-card">
-                        <h3>Visibility</h3>
-                        <div class="highlight-value" id="visibility">-- km</div>
-                        <div class="highlight-description">Normal</div>
-                    </div>
-                    <div class="highlight-card">
-                        <h3>Sunrise</h3>
-                        <div class="highlight-value" id="sunrise">--:--</div>
-                        <div class="highlight-description">Sunset</div>
-                        <div class="highlight-value" id="sunset">--:--</div>
-                    </div>
-                    <div class="highlight-card">
-                        <h3>Air Quality</h3>
-                        <div class="highlight-value" id="airQuality">--</div>
-                        <div class="highlight-description" id="airQualityDescription">--</div>
-                    </div>
-                </div>
-            </section>
-        </main>
+            </div>
+        </div>
     </div>
+
+    <div class="footer">
+        Powered by Open-Meteo API
+    </div>
+</div>
 
     <script src="script.js"></script>
     <footer class="footer">
@@ -134,4 +88,3 @@
     </footer>
 </body>
 </html>
-

@@ -1,0 +1,98 @@
+/* --- Zenith: Cosmic Engine Colors --- */
+
+:root {
+    /* 1. The Void (Backgrounds) */
+    --bg-void: #050505;
+    /* Deepest Black */
+    --bg-nebula: #0a0a0a;
+    /* Panel Background */
+    --bg-surface: rgba(255, 255, 255, 0.03);
+    /* Glass Surface */
+    --bg-overlay: rgba(0, 0, 0, 0.8);
+
+    /* 2. Ignition (Accents - Orange/Flame) */
+    --accent-core: #FF9F1C;
+    /* Primary Orange (from Logo) */
+    --accent-glow: #FF4B1F;
+    /* Deep Orange/Red for gradients */
+    --accent-alpha: rgba(255, 159, 28, 0.2);
+    /* Glows */
+
+    /* 3. Starlight (Text) */
+    --text-primary: #FFFFFF;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-tertiary: rgba(255, 255, 255, 0.4);
+
+    /* 4. Glass & Borders */
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-highlight: rgba(255, 255, 255, 0.2);
+    --border-light: var(--glass-border);
+
+    /* 5. Functional */
+    --accent-success: #2EC4B6;
+    --accent-danger: #E71D36;
+
+    /* Gradients */
+    --gradient-glow: linear-gradient(135deg, var(--accent-core) 0%, var(--accent-glow) 100%);
+    --gradient-void: radial-gradient(circle at top right, #1a1a1a 0%, var(--bg-void) 50%);
+
+    /* Component Semantics */
+    --bg-glass-nav: rgba(10, 10, 10, 0.6);
+    --bg-glass-panel: rgba(255, 255, 255, 0.03);
+    --bg-glass-hover: rgba(255, 255, 255, 0.05);
+    --shadow-depth: rgba(0, 0, 0, 0.5);
+
+    /* Text overrides for specific contexts */
+    --text-on-dark: #FFFFFF;
+    /* Always white (e.g. over dark images) */
+    --text-inverse: #000000;
+}
+
+/* --- LIGHT MODE OVERRIDES ("Digital Paper" Aesthetic) --- */
+[data-theme="light"] {
+    /* 1. The Void -> Paper */
+    --bg-void: #F2F4F8;
+    /* Soft Cool Grey */
+    --bg-nebula: #FFFFFF;
+    /* Pure White */
+    --bg-surface: #FFFFFF;
+    --bg-overlay: rgba(255, 255, 255, 0.9);
+
+    /* 2. Ignition -> High Contrast Flame */
+    --accent-core: #FF8800;
+    /* Darker Orange for visibility on white */
+    --accent-glow: #FF3300;
+    --accent-alpha: rgba(255, 136, 0, 0.15);
+
+    /* 3. Starlight -> Ink */
+    --text-primary: #111827;
+    /* Rich Black */
+    --text-secondary: #4B5563;
+    /* Cool Grey */
+    --text-tertiary: #9CA3AF;
+
+    /* 4. Glass -> Borders & Shadows */
+    --glass-border: rgba(0, 0, 0, 0.08);
+    --glass-highlight: rgba(0, 0, 0, 0.05);
+
+    /* 5. Functional */
+    --accent-success: #059669;
+    /* Darker Green */
+    --accent-danger: #DC2626;
+    /* Distinct Red */
+
+    /* Gradients */
+    --gradient-void: linear-gradient(180deg, #FFFFFF 0%, #F2F4F8 100%);
+
+    /* Component Semantics (Light Mode) */
+    --bg-glass-nav: rgba(255, 255, 255, 0.85);
+    /* Frosted white */
+    --bg-glass-panel: rgba(240, 242, 245, 0.5);
+    --bg-glass-hover: rgba(0, 0, 0, 0.05);
+    /* Grey hover */
+    --shadow-depth: rgba(0, 0, 0, 0.08);
+    /* Soft shadow */
+
+    --text-on-dark: #FFFFFF;
+    --text-inverse: #FFFFFF;
+}
