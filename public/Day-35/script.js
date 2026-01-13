@@ -1,422 +1,358 @@
-// Sample Data
-const restaurants = [
-    {
-        id: 1,
-        name: "Burger Palace",
-        cuisine: "American, Fast Food",
-        rating: 4.5,
-        deliveryTime: "25-35",
-        deliveryFee: "Free",
-        image: "burger",
-        category: "burger",
-        menu: [
-            { id: 101, name: "Classic Burger", description: "Juicy beef patty with lettuce, tomato, and special sauce", price: 12.99, category: "burgers" },
-            { id: 102, name: "Cheese Burger", description: "Double cheese with crispy bacon", price: 14.99, category: "burgers" },
-            { id: 103, name: "Veggie Burger", description: "Plant-based patty with fresh vegetables", price: 11.99, category: "burgers" },
-            { id: 104, name: "French Fries", description: "Crispy golden fries with sea salt", price: 4.99, category: "sides" },
-            { id: 105, name: "Onion Rings", description: "Crispy battered onion rings", price: 5.99, category: "sides" }
-        ]
-    },
-    {
-        id: 2,
-        name: "Pizza Express",
-        cuisine: "Italian, Pizza",
-        rating: 4.7,
-        deliveryTime: "30-40",
-        deliveryFee: "$2.99",
-        image: "pizza",
-        category: "pizza",
-        menu: [
-            { id: 201, name: "Margherita Pizza", description: "Fresh mozzarella, tomato, and basil", price: 15.99, category: "pizza" },
-            { id: 202, name: "Pepperoni Pizza", description: "Classic pepperoni with extra cheese", price: 17.99, category: "pizza" },
-            { id: 203, name: "Veggie Supreme", description: "Bell peppers, mushrooms, olives, and onions", price: 16.99, category: "pizza" },
-            { id: 204, name: "Garlic Bread", description: "Toasted bread with garlic butter and herbs", price: 6.99, category: "sides" },
-            { id: 205, name: "Caesar Salad", description: "Romaine lettuce with parmesan and croutons", price: 8.99, category: "salads" }
-        ]
-    },
-    {
-        id: 3,
-        name: "Sushi Master",
-        cuisine: "Japanese, Sushi",
-        rating: 4.8,
-        deliveryTime: "35-45",
-        deliveryFee: "$3.99",
-        image: "sushi",
-        category: "sushi",
-        menu: [
-            { id: 301, name: "California Roll", description: "Crab, avocado, and cucumber", price: 12.99, category: "rolls" },
-            { id: 302, name: "Salmon Nigiri", description: "Fresh salmon over seasoned rice", price: 14.99, category: "nigiri" },
-            { id: 303, name: "Tuna Sashimi", description: "Premium tuna slices", price: 18.99, category: "sashimi" },
-            { id: 304, name: "Miso Soup", description: "Traditional soybean paste soup", price: 4.99, category: "soup" },
-            { id: 305, name: "Edamame", description: "Steamed soybeans with sea salt", price: 3.99, category: "appetizers" }
-        ]
-    },
-    {
-        id: 4,
-        name: "Spice Garden",
-        cuisine: "Indian, Curry",
-        rating: 4.6,
-        deliveryTime: "40-50",
-        deliveryFee: "$2.49",
-        image: "indian",
-        category: "indian",
-        menu: [
-            { id: 401, name: "Butter Chicken", description: "Tender chicken in creamy tomato sauce", price: 16.99, category: "curry" },
-            { id: 402, name: "Palak Paneer", description: "Cottage cheese in spinach gravy", price: 14.99, category: "curry" },
-            { id: 403, name: "Biryani", description: "Fragrant rice with spices and meat", price: 15.99, category: "rice" },
-            { id: 404, name: "Naan Bread", description: "Freshly baked Indian flatbread", price: 3.99, category: "bread" },
-            { id: 405, name: "Samosas", description: "Crispy pastry with potato filling", price: 5.99, category: "appetizers" }
-        ]
-    },
-    {
-        id: 5,
-        name: "Dragon Wok",
-        cuisine: "Chinese, Asian",
-        rating: 4.4,
-        deliveryTime: "30-40",
-        deliveryFee: "$1.99",
-        image: "chinese",
-        category: "chinese",
-        menu: [
-            { id: 501, name: "Sweet & Sour Chicken", description: "Crispy chicken with tangy sauce", price: 13.99, category: "main" },
-            { id: 502, name: "Beef Chow Mein", description: "Stir-fried noodles with beef", price: 12.99, category: "noodles" },
-            { id: 503, name: "Fried Rice", description: "Wok-fried rice with vegetables", price: 10.99, category: "rice" },
-            { id: 504, name: "Spring Rolls", description: "Crispy vegetable rolls", price: 4.99, category: "appetizers" },
-            { id: 505, name: "Hot & Sour Soup", description: "Spicy and tangy vegetable soup", price: 5.99, category: "soup" }
-        ]
-    },
-    {
-        id: 6,
-        name: "Green Bowl",
-        cuisine: "Healthy, Salads",
-        rating: 4.5,
-        deliveryTime: "20-30",
-        deliveryFee: "Free",
-        image: "healthy",
-        category: "healthy",
-        menu: [
-            { id: 601, name: "Greek Salad", description: "Fresh vegetables with feta cheese", price: 10.99, category: "salads" },
-            { id: 602, name: "Quinoa Bowl", description: "Nutritious quinoa with roasted vegetables", price: 12.99, category: "bowls" },
-            { id: 603, name: "Acai Bowl", description: "Berry smoothie bowl with granola", price: 11.99, category: "bowls" },
-            { id: 604, name: "Green Smoothie", description: "Spinach, banana, and apple smoothie", price: 7.99, category: "drinks" },
-            { id: 605, name: "Protein Wrap", description: "Grilled chicken with vegetables", price: 9.99, category: "wraps" }
-        ]
-    }
-];
 
-// Global Variables
-let cart = [];
-let currentRestaurant = null;
-let currentCategory = 'all';
+        // Category-specific images (added from attachments)
+        const categoryImages = {
+            Pizza: "images/pizza.jpg",
+            Burger: "images/burger.jpg",
+            Sushi: "images/sushi.jpg",
+            Asian: "images/asian.jpg",
+            Healthy: "images/healthy.jpg"
+        };
 
-// Initialize App
-document.addEventListener('DOMContentLoaded', function() {
-    loadCartFromStorage();
-    displayRestaurants();
-    updateCartUI();
-});
+        const restaurants = [
+            { id: 1, name: "Burger Palace", 
+                category: "Burger", time: "25 - 35 min", fee: "Free", rating: 4.8, image:"https://cdn.pixabay.com/photo/2022/08/29/17/44/burger-7419420_1280.jpg", price: 12.99 },
+            { id: 2, name: "Pizza Express", category: "Pizza", time: "30 - 40 min", fee: "$2.99", rating: 4.5, image:"https://cdn.pixabay.com/photo/2020/05/17/04/22/pizza-5179939_1280.jpg", price: 15.50 },
+            { id: 3, name: "Sushi Master", category: "Sushi", time: "35 - 45 min", fee: "$3.99", rating: 4.9, image:"http://culinarydestinations.net/wp-content/uploads/2015/07/japan-sushi.jpeg", price: 22.00 },
+            { id: 4, name: "Green Bowl", category: "Healthy", time: "20 - 30 min", fee: "Free", rating: 4.6, image:"https://tse2.mm.bing.net/th/id/OIP.yuQtkcWsIfQufwrfgEIKagHaEJ?pid=Api&P=0&h=180", price: 10.99 },
+            { id: 5, name: "Wok N Roll", category: "Asian", time: "40 - 50 min", fee: "$1.99", rating: 4.3, image:"https://tse2.mm.bing.net/th/id/OIP.PVlSrrV3bsXE3-mcCpMc8QHaFj?pid=Api&P=0&h=180", price: 14.50 }
+        ];
 
-// Display Restaurants
-function displayRestaurants(filteredRestaurants = restaurants) {
-    const grid = document.getElementById('restaurantsGrid');
-    grid.innerHTML = '';
+        // Status Descriptions for Order Tracking
+        const statusDescriptions = {
+            0: "Initializing order...",
+            1: "Our chef is carefully preparing your delicious meal.",
+            2: "Your food is packed and the driver is on the way!",
+            3: "The driver is just around the corner. Please be ready.",
+            4: "Enjoy your meal! Bon appétit."
+        };
 
-    filteredRestaurants.forEach(restaurant => {
-        const card = document.createElement('div');
-        card.className = 'restaurant-card';
-        card.onclick = () => showMenu(restaurant);
-        
-        card.innerHTML = `
-            <img src="https://picsum.photos/seed/${restaurant.image}/400/200" alt="${restaurant.name}" class="restaurant-image">
-            <div class="restaurant-info">
-                <div class="restaurant-header">
-                    <h3 class="restaurant-name">${restaurant.name}</h3>
-                    <div class="restaurant-rating">
-                        ⭐ ${restaurant.rating}
-                    </div>
-                </div>
-                <p class="restaurant-cuisine">${restaurant.cuisine}</p>
-                <div class="restaurant-meta">
-                    <span class="delivery-time">🕐 ${restaurant.deliveryTime} min</span>
-                    <span class="delivery-fee">${restaurant.deliveryFee}</span>
-                </div>
-            </div>
-        `;
-        
-        grid.appendChild(card);
-    });
-}
+        // --- Application Logic ---
+        const app = {
+            state: {
+                cart: [],
+                currentCategory: 'All',
+                searchQuery: ''
+            },
 
-// Show Menu
-function showMenu(restaurant) {
-    currentRestaurant = restaurant;
-    const menuSection = document.getElementById('menuSection');
-    const restaurantsGrid = document.getElementById('restaurantsGrid');
-    const orderTracking = document.getElementById('orderTracking');
-    
-    restaurantsGrid.style.display = 'none';
-    orderTracking.style.display = 'none';
-    menuSection.style.display = 'block';
+            init: () => {
+                app.renderRestaurants();
+                app.updateCartUI();
+            },
 
-    // Get unique categories from menu
-    const categories = [...new Set(restaurant.menu.map(item => item.category))];
-    
-    menuSection.innerHTML = `
-        <div class="menu-header">
-            <button class="back-button" onclick="showHome()">← Back</button>
-            <div>
-                <h2>${restaurant.name}</h2>
-                <p>${restaurant.cuisine} • ⭐ ${restaurant.rating} • 🕐 ${restaurant.deliveryTime} min</p>
-            </div>
-        </div>
-        
-        <div class="menu-categories">
-            <button class="category-button active" onclick="filterMenu('all')">All</button>
-            ${categories.map(cat => `
-                <button class="category-button" onclick="filterMenu('${cat}')">${cat.charAt(0).toUpperCase() + cat.slice(1)}</button>
-            `).join('')}
-        </div>
-        
-        <div class="menu-items" id="menuItems">
-            ${restaurant.menu.map(item => `
-                <div class="menu-item" data-category="${item.category}">
-                    <img src="https://picsum.photos/seed/${item.name}/120/120" alt="${item.name}" class="menu-item-image">
-                    <div class="menu-item-info">
-                        <div>
-                            <h3 class="menu-item-name">${item.name}</h3>
-                            <p class="menu-item-description">${item.description}</p>
-                        </div>
-                        <div class="menu-item-footer">
-                            <span class="menu-item-price">$${item.price.toFixed(2)}</span>
-                            <button class="add-to-cart-button" onclick="addToCart(${JSON.stringify(item).replace(/"/g, '&quot;')})">
-                                Add to Cart
+            // Navigation
+            navigate: (viewId) => {
+                document.querySelectorAll('nav a').forEach(el => el.classList.remove('active'));
+                const navLink = document.getElementById(`nav-${viewId}`);
+                if(navLink) navLink.classList.add('active');
+
+                document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+                document.getElementById(`view-${viewId}`).classList.add('active');
+
+                if (viewId === 'cart') app.renderCart();
+            },
+
+            // Render Restaurants
+            renderRestaurants: () => {
+                const list = document.getElementById('restaurant-list');
+                list.innerHTML = '';
+
+                const filtered = restaurants.filter(r => {
+                    const matchesCat = app.state.currentCategory === 'All' || r.category === app.state.currentCategory;
+                    const matchesSearch = r.name.toLowerCase().includes(app.state.searchQuery.toLowerCase());
+                    return matchesCat && matchesSearch;
+                });
+
+                if (filtered.length === 0) {
+                    list.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #777;">No restaurants found.</p>`;
+                    return;
+                }
+
+                filtered.forEach(r => {
+                    const feeClass = r.fee === 'Free' ? 'free' : 'fee';
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <img src="${r.image}" alt="${r.name}" class="card-img">
+                        <div class="card-body">
+                            <div class="card-header">
+                                <div class="res-name">${r.name}</div>
+                                <div class="rating">${r.rating} ★</div>
+                            </div>
+                            <div class="res-meta">
+                                <span>${r.category}</span> • <span>${r.time}</span> • 
+                                <span class="delivery-tag ${feeClass}">${r.fee} Delivery</span>
+                            </div>
+                            <button class="btn-add" onclick="app.addToCart(${r.id})">
+                                Add Signature Dish ($${r.price.toFixed(2)})
                             </button>
                         </div>
-                    </div>
-                </div>
-            `).join('')}
-        </div>
+                    `;
+                    list.appendChild(card);
+                });
+            },
+
+            filterCategory: (cat, btnElement) => {
+                app.state.currentCategory = cat;
+                document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+                btnElement.classList.add('active');
+                app.renderRestaurants();
+            },
+
+            handleSearch: (val) => {
+                app.state.searchQuery = val;
+                app.renderRestaurants();
+            },
+
+            // Cart Logic
+            addToCart: (id) => {
+                const item = restaurants.find(r => r.id === id);
+                app.state.cart.push({ ...item, cartId: Date.now() });
+                app.updateCartUI();
+                app.showToast(`Added ${item.name} to cart`);
+            },
+
+            removeFromCart: (cartId) => {
+                app.state.cart = app.state.cart.filter(item => item.cartId !== cartId);
+                app.renderCart();
+                app.updateCartUI();
+            },
+
+            updateCartUI: () => {
+                document.getElementById('cart-count').innerText = app.state.cart.length;
+            },
+
+            renderCart: () => {
+                const container = document.getElementById('cart-content');
+                const cart = app.state.cart;
+                
+                if (cart.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-cart-msg">
+                            <h3>Your cart is empty</h3>
+                            <p>Add some delicious food!</p>
+                            <br>
+                            <button class="btn-checkout" onclick="app.navigate('home')">Browse Restaurants</button>
+                        </div>`;
+                    return;
+                }
+
+                let total = 0;
+                let html = '';
+                cart.forEach(item => {
+                    total += item.price;
+                    html += `
+                        <div class="cart-item">
+                            <div class="cart-item-info">
+                                <h4>${item.name}</h4>
+                                <p>${item.category} • Signature Dish</p>
+                                <p>$${item.price.toFixed(2)}</p>
+                            </div>
+                            <button class="btn-remove" onclick="app.removeFromCart(${item.cartId})">Remove</button>
+                        </div>`;
+                });
+
+                html += `<div class="cart-summary">
+                    <div class="total-row">Total: $${total.toFixed(2)}</div>
+                    <button class="btn-checkout" onclick="app.checkout()">Proceed to Checkout</button>
+                </div>`;
+                container.innerHTML = html;
+            },
+
+            checkout: () => {
+                const id = 'QB' + Math.floor(10000 + Math.random() * 90000);
+                document.getElementById('order-id-display').innerText = `Order #${id}`;
+                app.state.cart = [];
+                app.updateCartUI();
+
+                document.querySelectorAll('.progress-step').forEach(el => el.classList.remove('active'));
+                app.navigate('orders');
+                
+                // Start description text
+                document.getElementById('status-text').innerText = statusDescriptions[0];
+                
+                app.animateProgress();
+            },
+
+            // Profile Logic
+            saveProfile: (e) => {
+                e.preventDefault();
+                app.showToast("Profile updated successfully!");
+            },
+
+            // Progress Animation with Description
+            animateProgress: () => {
+                const steps = ['step-1', 'step-2', 'step-3', 'step-4'];
+                let currentStep = 0;
+
+                const nextStep = () => {
+                    if (currentStep < steps.length) {
+                        // Activate circle
+                        document.getElementById(steps[currentStep]).classList.add('active');
+                        // Update text description (using currentStep + 1 because 1-based index in object)
+                        document.getElementById('status-text').innerText = statusDescriptions[currentStep + 1];
+                        
+                        currentStep++;
+                        setTimeout(nextStep, 2500);
+                    }
+                };
+                setTimeout(nextStep, 500);
+            },
+
+            showToast: (message) => {
+                const toast = document.getElementById("toast");
+                toast.innerText = message;
+                toast.className = "show";
+                setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+            }
+        };
+
+        // --- Chatbot Logic ---
+        const chatbot = {
+            isOpen: false,
+            
+            toggle: () => {
+                const win = document.getElementById('chat-window');
+                chatbot.isOpen = !chatbot.isOpen;
+                if(chatbot.isOpen) win.classList.add('open');
+                else win.classList.remove('open');
+            },
+
+            handleEnter: (e) => {
+                if(e.key === 'Enter') chatbot.send();
+            },
+
+            send: () => {
+                const input = document.getElementById('chat-input');
+                const text = input.value.trim();
+                if(!text) return;
+
+                // Add User Message
+                chatbot.appendMessage(text, 'user');
+                input.value = '';
+
+                // Simulate Bot Response
+                setTimeout(() => {
+                    const response = chatbot.getResponse(text);
+                    chatbot.appendMessage(response, 'bot');
+                }, 1000);
+            },
+
+            appendMessage: (text, sender) => {
+                const container = document.getElementById('chat-messages');
+                const div = document.createElement('div');
+                div.className = `message ${sender}`;
+                div.innerText = text;
+                container.appendChild(div);
+                container.scrollTop = container.scrollHeight;
+            },
+
+            getResponse: (input) => {
+                const lower = input.toLowerCase();
+                if(lower.includes('hello') || lower.includes('hi')) return "Hi there! How can I assist you with your order?";
+                if(lower.includes('order')) return "You can view your active orders in the 'Orders' tab. Is there a specific issue?";
+                if(lower.includes('menu') || lower.includes('pizza') || lower.includes('burger')) return "We have a great selection! Check the Home page to see all restaurants.";
+                if(lower.includes('price') || lower.includes('cost')) return "Prices are listed on each restaurant card. Delivery fees vary by location.";
+                return "I'm a simple demo bot. Try asking about your 'order', 'menu', or 'prices'.";
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', app.init);
+
+const foods = [
+  { id: 1, name: "Pizza", price: 250, category: "fast" },
+  { id: 2, name: "Burger", price: 150, category: "fast" },
+  { id: 3, name: "Biryani", price: 300, category: "meal" },
+  { id: 4, name: "Pasta", price: 200, category: "meal" },
+  { id: 5, name: "Ice Cream", price: 120, category: "dessert" }
+];
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+const foodList = document.getElementById("food-list");
+const cartEl = document.getElementById("cart");
+const cartItems = document.getElementById("cart-items");
+const totalEl = document.getElementById("total");
+const cartCount = document.getElementById("cart-count");
+
+/* RENDER FOODS */
+function renderFoods(list) {
+  foodList.innerHTML = "";
+  list.forEach(food => {
+    foodList.innerHTML += `
+      <div class="food-card">
+        <h3>${food.name}</h3>
+        <p>₹${food.price}</p>
+        <button onclick="addToCart(${food.id})">Add</button>
+      </div>
     `;
+  });
+}
+renderFoods(foods);
+
+/* FILTER */
+function filterFood(category) {
+  if (category === "all") renderFoods(foods);
+  else renderFoods(foods.filter(f => f.category === category));
 }
 
-// Filter Menu
-function filterMenu(category) {
-    const buttons = document.querySelectorAll('.category-button');
-    const items = document.querySelectorAll('.menu-item');
-    
-    buttons.forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.textContent.toLowerCase() === category || (category === 'all' && btn.textContent === 'All')) {
-            btn.classList.add('active');
-        }
-    });
-    
-    items.forEach(item => {
-        if (category === 'all' || item.dataset.category === category) {
-            item.style.display = 'flex';
-        } else {
-            item.style.display = 'none';
-        }
-    });
-}
-
-// Add to Cart
-function addToCart(item) {
-    const existingItem = cart.find(cartItem => cartItem.id === item.id);
-    
-    if (existingItem) {
-        existingItem.quantity++;
-    } else {
-        cart.push({ ...item, quantity: 1 });
-    }
-    
-    saveCartToStorage();
-    updateCartUI();
-    showToast(`${item.name} added to cart!`);
-}
-
-// Update Cart UI
-function updateCartUI() {
-    const cartCount = document.getElementById('cartCount');
-    const cartItems = document.getElementById('cartItems');
-    const cartTotal = document.getElementById('cartTotal');
-    
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    cartCount.textContent = totalItems;
-    
-    if (cart.length === 0) {
-        cartItems.innerHTML = `
-            <div class="empty-state">
-                <div class="empty-state-icon">🛒</div>
-                <p class="empty-state-text">Your cart is empty</p>
-                <p>Add some delicious food!</p>
-            </div>
-        `;
-    } else {
-        cartItems.innerHTML = cart.map(item => `
-            <div class="cart-item">
-                <img src="https://picsum.photos/seed/${item.name}/60/60" alt="${item.name}" class="cart-item-image">
-                <div class="cart-item-info">
-                    <div class="cart-item-name">${item.name}</div>
-                    <div class="cart-item-price">$${item.price.toFixed(2)}</div>
-                </div>
-                <div class="quantity-controls">
-                    <button class="quantity-button" onclick="updateQuantity(${item.id}, -1)">-</button>
-                    <span>${item.quantity}</span>
-                    <button class="quantity-button" onclick="updateQuantity(${item.id}, 1)">+</button>
-                </div>
-            </div>
-        `).join('');
-    }
-    
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    cartTotal.textContent = `$${total.toFixed(2)}`;
-}
-
-// Update Quantity
-function updateQuantity(itemId, change) {
-    const item = cart.find(item => item.id === itemId);
-    if (item) {
-        item.quantity += change;
-        if (item.quantity <= 0) {
-            cart = cart.filter(item => item.id !== itemId);
-        }
-        saveCartToStorage();
-        updateCartUI();
-    }
-}
-
-// Toggle Cart
-function toggleCart() {
-    const cartSidebar = document.getElementById('cartSidebar');
-    const overlay = document.getElementById('overlay');
-    
-    cartSidebar.classList.toggle('open');
-    overlay.classList.toggle('active');
-}
-
-// Checkout
-function checkout() {
-    if (cart.length === 0) {
-        showToast('Your cart is empty!');
-        return;
-    }
-    
-    toggleCart();
-    
-    // Generate random order ID
-    const orderId = 'QB' + Math.floor(10000 + Math.random() * 90000);
-    document.getElementById('orderId').textContent = `Order #${orderId}`;
-    
-    // Show order tracking
-    document.getElementById('restaurantsGrid').style.display = 'none';
-    document.getElementById('menuSection').style.display = 'none';
-    document.getElementById('orderTracking').style.display = 'block';
-    
-    // Clear cart
-    cart = [];
-    saveCartToStorage();
-    updateCartUI();
-    
-    // Simulate order tracking
-    simulateOrderTracking();
-}
-
-// Simulate Order Tracking
-function simulateOrderTracking() {
-    let currentStep = 1;
-    const steps = ['step1', 'step2', 'step3', 'step4'];
-    
-    const interval = setInterval(() => {
-        if (currentStep < steps.length) {
-            document.getElementById(steps[currentStep]).classList.add('active');
-            currentStep++;
-        } else {
-            clearInterval(interval);
-            showToast('Order delivered! Enjoy your meal! 🎉');
-        }
-    }, 3000);
-}
-
-// Search Restaurants
-function searchRestaurants() {
-    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-    
-    if (!searchTerm) {
-        displayRestaurants();
-        return;
-    }
-    
-    const filtered = restaurants.filter(restaurant => 
-        restaurant.name.toLowerCase().includes(searchTerm) ||
-        restaurant.cuisine.toLowerCase().includes(searchTerm)
-    );
-    
-    displayRestaurants(filtered);
-}
-
-// Filter by Category
-function filterByCategory(element, category) {
-    // Update active state
-    document.querySelectorAll('.filter-tag').forEach(tag => {
-        tag.classList.remove('active');
-    });
-    element.classList.add('active');
-    
-    // Filter restaurants
-    if (category === 'all') {
-        displayRestaurants();
-    } else {
-        const filtered = restaurants.filter(restaurant => restaurant.category === category);
-        displayRestaurants(filtered);
-    }
-}
-
-// Show Home
-function showHome() {
-    document.getElementById('restaurantsGrid').style.display = 'grid';
-    document.getElementById('menuSection').style.display = 'none';
-    document.getElementById('orderTracking').style.display = 'none';
-}
-
-// Show Restaurants
-function showRestaurants() {
-    showHome();
-}
-
-// Show Orders
-function showOrders() {
-    document.getElementById('restaurantsGrid').style.display = 'none';
-    document.getElementById('menuSection').style.display = 'none';
-    document.getElementById('orderTracking').style.display = 'block';
-}
-
-// Local Storage Functions
-function saveCartToStorage() {
-    localStorage.setItem('quickbite_cart', JSON.stringify(cart));
-}
-
-function loadCartFromStorage() {
-    const savedCart = localStorage.getItem('quickbite_cart');
-    if (savedCart) {
-        cart = JSON.parse(savedCart);
-    }
-}
-
-// Toast Notification
-function showToast(message) {
-    const toast = document.getElementById('toast');
-    toast.textContent = message;
-    toast.classList.add('show');
-    
-    setTimeout(() => {
-        toast.classList.remove('show');
-    }, 3000);
-}
-
-// Search on Enter key
-document.getElementById('searchInput').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-        searchRestaurants();
-    }
+/* SEARCH */
+document.getElementById("search").addEventListener("input", e => {
+  const value = e.target.value.toLowerCase();
+  renderFoods(foods.filter(f => f.name.toLowerCase().includes(value)));
 });
+
+/* CART TOGGLE */
+document.getElementById("cart-btn").onclick = () => {
+  cartEl.classList.toggle("active");
+};
+
+/* ADD TO CART */
+function addToCart(id) {
+  const item = cart.find(i => i.id === id);
+  if (item) item.qty++;
+  else {
+    const food = foods.find(f => f.id === id);
+    cart.push({ ...food, qty: 1 });
+  }
+  updateCart();
+}
+
+/* UPDATE CART */
+function updateCart() {
+  cartItems.innerHTML = "";
+  let total = 0;
+  let count = 0;
+
+  cart.forEach(item => {
+    total += item.price * item.qty;
+    count += item.qty;
+
+    cartItems.innerHTML += `
+      <li>
+        ${item.name}
+        <div class="qty">
+          <button onclick="changeQty(${item.id}, -1)">-</button>
+          ${item.qty}
+          <button onclick="changeQty(${item.id}, 1)">+</button>
+        </div>
+      </li>
+    `;
+  });
+
+  totalEl.innerText = total;
+  cartCount.innerText = count;
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+/* CHANGE QTY */
+function changeQty(id, change) {
+  cart = cart.map(item => {
+    if (item.id === id) item.qty += change;
+    return item;
+  }).filter(item => item.qty > 0);
+
+  updateCart();
+}
+
+updateCart();
+
