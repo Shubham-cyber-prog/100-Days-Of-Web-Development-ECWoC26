@@ -48,8 +48,7 @@ const projects = [
     // ADVANCED & CAPSTONE - Follow same pattern
     { day: 61, title: "Doodle Jump Game", folder: "Day 61", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
     // ... add more as you complete them
-    { day: 100, title: "Master Project", folder: "Day 100", level: "Capstone", tech: ["HTML", "CSS", "JS", "React"] },
-    { day: 101, title: "Canvas Image Particle Animation", folder: "Day 101", level: "Intermediate", tech: ["HTML", "CSS", "JS", "HTML Canvas"] }
+    { day: 100, title: "Master Project", folder: "Day 100", level: "Capstone", tech: ["HTML", "CSS", "JS", "React"] }
 ];
 
 const grid = document.getElementById('projects-grid');
@@ -63,7 +62,6 @@ let currentFilters = {
     tech: ['HTML', 'CSS', 'JS']
 };
 
-
 // Completed days tracking
 let completedDays = [];
 
@@ -76,7 +74,6 @@ function getCompletedDays() {
 function saveCompletedDays(days) {
     localStorage.setItem('completedDays', JSON.stringify(days));
 }
-
 
 // Event listeners for filters
 document.getElementById('projectSearch').addEventListener('input', (e) => {
@@ -163,6 +160,7 @@ function renderProjects() {
         const card = document.createElement('div');
         card.className = `project-card ${isCompleted ? 'completed' : ''}`;
         card.innerHTML = `
+            <a class="code-chip" href="${repoBaseUrl}${project.folder}" target="_blank" aria-label="View Code">&lt;/&gt;</a>
             <div class="card-header">
                 <label class="completion-checkbox">
                     <input type="checkbox" data-day="${project.day}" ${isCompleted ? 'checked' : ''}>
@@ -178,10 +176,23 @@ function renderProjects() {
                 <a href="${repoBaseUrl}${project.folder}" target="_blank" class="btn-small outline">View Code</a>
             </div>
         `;
+
+        const codeChip = card.querySelector('.code-chip');
+        codeChip.addEventListener('click', (e) => {
+            e.stopPropagation();
+            window.open(`${repoBaseUrl}${project.folder}`, '_blank');
+        });
+
+        card.addEventListener('click', (e) => {
+            if (e.target.closest('.completion-checkbox') || e.target.closest('.code-chip')) {
+                return;
+            }
+            window.open(`${liveBaseUrl}${project.folder}/index.html`, '_blank');
+        });
+
         grid.appendChild(card);
     });
 }
-
 
 // Event listener for completion checkboxes
 document.addEventListener('change', (e) => {
