@@ -74,7 +74,7 @@ function addTask() {
   taskInput.value = "";
    const succMsg = document.createElement('div');
          succMsg.innerText = 'Task added successfully.';
-         container.appendChild(succMsg);
+         container.prepend(succMsg);
          succMsg.classList.add('tempMsg','succMsg');
          setTimeout(() => {
              container.removeChild(succMsg);
