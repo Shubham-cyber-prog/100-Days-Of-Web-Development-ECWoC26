@@ -1,290 +1,218 @@
-// script.js
-
-// Initialize Chart
 let dataChart;
+
 const chartColors = {
-    vibrant: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#FF6384', '#C9CBCF'],
-    pastel: ['#FFB3BA', '#BAFFC9', '#BAE1FF', '#FFFFBA', '#FFDFBA', '#E0BBE4', '#FEC8D8', '#D5E5D5'],
-    mono: ['#6C757D', '#868E96', '#ADB5BD', '#CED4DA', '#DEE2E6', '#E9ECEF', '#F8F9FA', '#FFFFFF'],
-    earth: ['#8D6E63', '#A1887F', '#BCAAA4', '#D7CCC8', '#3E2723', '#5D4037', '#795548', '#A1887F']
+    vibrant: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+    pastel: ['#FFB3BA', '#BAFFC9', '#BAE1FF', '#FFFFBA'],
+    mono: ['#6C757D', '#ADB5BD', '#CED4DA'],
+    earth: ['#795548', '#A1887F', '#BCAAA4']
 };
 
-// Datasets
 const datasets = {
     sales: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        data: [450, 620, 750, 430, 520, 680, 810, 950, 600, 720, 850, 920],
-        description: 'Monthly sales data for the current year. Shows seasonal trends with peaks in summer and end of year.'
+        labels: ['Jan','Feb','Mar','Apr'],
+        data: [450,620,750,430],
+        description: 'Monthly sales data'
     },
     expenses: {
-        labels: ['Rent', 'Salaries', 'Marketing', 'Utilities', 'Software', 'Travel', 'Supplies', 'Training'],
-        data: [12000, 45000, 8500, 3200, 2400, 5600, 1800, 4200],
-        description: 'Company expense breakdown for the last quarter. Salaries represent the largest portion of expenses.'
+        labels: ['Rent','Salaries','Marketing'],
+        data: [12000,45000,8500],
+        description: 'Company expenses'
     },
     population: {
-        labels: ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego'],
-        data: [8398748, 3990456, 2705994, 2325502, 1680992, 1584064, 1547253, 1425976],
-        description: 'Population of major US cities based on latest census data. New York has the highest population.'
+        labels: ['New York','LA','Chicago'],
+        data: [8398748,3990456,2705994],
+        description: 'City population'
     },
     performance: {
-        labels: ['Alex', 'Jamie', 'Taylor', 'Morgan', 'Casey', 'Riley', 'Jordan', 'Quinn'],
-        data: [85, 92, 78, 95, 88, 76, 90, 82],
-        description: 'Team performance scores based on quarterly evaluation. Morgan has the highest performance score.'
+        labels: ['Alex','Jamie','Taylor'],
+        data: [85,92,78],
+        description: 'Team performance'
     },
     custom: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        data: [450, 620, 750, 430, 520, 680, 810, 950, 600, 720, 850, 920],
-        description: 'Custom data entered by the user. Update the values in the customization section below.'
+        labels: [],
+        data: [],
+        description: 'Custom data'
+    },
+    uploaded: {
+        labels: [],
+        data: [],
+        description: 'Uploaded CSV dataset'
     }
 };
 
-// Initialize the application
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     initializeChart();
     setupEventListeners();
     updateDataTable();
-    updateChartInfo();
 });
 
-// Initialize the chart with default data
+
 function initializeChart() {
     const ctx = document.getElementById('data-chart').getContext('2d');
-    const chartType = document.getElementById('chart-type').value;
-    const dataset = document.getElementById('dataset').value;
-    const colorScheme = document.getElementById('color-scheme').value;
-    
-    const currentData = datasets[dataset];
-    
-    // Destroy existing chart if it exists
-    if (dataChart) {
-        dataChart.destroy();
-    }
-    
+    let chartType = document.getElementById('chart-type').value;
+    const datasetKey = document.getElementById('dataset').value;
+    const scheme = document.getElementById('color-scheme').value;
+
+    const currentData = datasets[datasetKey];
+
+    const MAX_VISIBLE = 200;
+
+    const labels =
+        currentData.labels.length > MAX_VISIBLE
+            ? currentData.labels.slice(0, MAX_VISIBLE)
+            : currentData.labels;
+
+    const data =
+        currentData.data.length > MAX_VISIBLE
+            ? currentData.data.slice(0, MAX_VISIBLE)
+            : currentData.data;
+
+    if (dataChart) dataChart.destroy();
+
     dataChart = new Chart(ctx, {
         type: chartType,
         data: {
-            labels: currentData.labels,
+            labels: labels,       
             datasets: [{
-                label: 'Data Values',
-                data: currentData.data,
-                backgroundColor: getChartColors(colorScheme, currentData.data.length),
-                borderColor: chartColors.vibrant[0],
-                borderWidth: chartType === 'bar' || chartType === 'line' ? 2 : 1,
-                fill: chartType === 'line',
-                tension: 0.4
+                label: 'Values',
+                data: data,        
+                backgroundColor: chartColors[scheme],
+                borderWidth: 2
             }]
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false,
-            animation: {
-                duration: parseInt(document.getElementById('animation-speed').value)
-            },
-            plugins: {
-                legend: {
-                    display: document.getElementById('show-legend').checked,
-                    position: 'top'
-                },
-                tooltip: {
-                    mode: 'index',
-                    intersect: false
-                }
-            },
-            scales: chartType === 'bar' || chartType === 'line' ? {
-                x: {
-                    grid: {
-                        display: document.getElementById('show-grid').checked
-                    },
-                    ticks: {
-                        display: document.getElementById('show-labels').checked
-                    }
-                },
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        display: document.getElementById('show-grid').checked
-                    },
-                    ticks: {
-                        display: document.getElementById('show-labels').checked
-                    }
-                }
-            } : {},
-            elements: {
-                point: {
-                    radius: chartType === 'line' ? 4 : 3
-                }
-            }
+            maintainAspectRatio: false
         }
     });
 }
 
-// Get colors based on selected scheme
-function getChartColors(scheme, count) {
-    const colors = chartColors[scheme];
-    const result = [];
-    
-    for (let i = 0; i < count; i++) {
-        result.push(colors[i % colors.length]);
-    }
-    
-    return result;
-}
 
-// Set up event listeners for controls
+
 function setupEventListeners() {
-    // Update chart button
-    document.getElementById('update-chart').addEventListener('click', function() {
+    document.getElementById('update-chart').addEventListener('click', () => {
         initializeChart();
         updateDataTable();
-        updateChartInfo();
     });
-    
-    // Export chart button
-    document.getElementById('export-chart').addEventListener('click', function() {
+
+    document.getElementById('export-chart').addEventListener('click', () => {
         const link = document.createElement('a');
-        link.download = 'data-visualization.png';
-        link.href = document.getElementById('data-chart').toDataURL('image/png');
+        link.download = 'chart.png';
+        link.href = document.getElementById('data-chart').toDataURL();
         link.click();
     });
-    
-    // Randomize data button
-    document.getElementById('random-data').addEventListener('click', function() {
-        const dataset = document.getElementById('dataset').value;
-        const currentData = datasets[dataset];
-        
-        // Generate random data
-        for (let i = 0; i < currentData.data.length; i++) {
-            currentData.data[i] = Math.floor(Math.random() * 1000) + 100;
-        }
-        
-        // If custom dataset, update the input field
-        if (dataset === 'custom') {
-            document.getElementById('custom-values').value = currentData.data.join(', ');
-        }
-        
+
+    document.getElementById('random-data').addEventListener('click', () => {
+        const key = document.getElementById('dataset').value;
+        datasets[key].data = datasets[key].data.map(
+            () => Math.floor(Math.random() * 1000)
+        );
         initializeChart();
         updateDataTable();
-        updateChartInfo();
     });
-    
-    // Apply custom data button
-    document.getElementById('apply-custom-data').addEventListener('click', function() {
-        const labels = document.getElementById('custom-labels').value.split(',').map(label => label.trim());
-        const values = document.getElementById('custom-values').value.split(',').map(value => parseFloat(value.trim())).filter(value => !isNaN(value));
-        
-        // Ensure we have the same number of labels and values
-        const minLength = Math.min(labels.length, values.length);
-        datasets.custom.labels = labels.slice(0, minLength);
-        datasets.custom.data = values.slice(0, minLength);
-        
-        // Switch to custom dataset
+
+    document.getElementById('apply-custom-data').addEventListener('click', () => {
+        const labels = document.getElementById('custom-labels').value.split(',').map(s => s.trim());
+        const values = document.getElementById('custom-values').value.split(',').map(Number);
+
+        datasets.custom.labels = labels;
+        datasets.custom.data = values;
+
         document.getElementById('dataset').value = 'custom';
-        
         initializeChart();
         updateDataTable();
-        updateChartInfo();
     });
-    
-    // Animation speed slider
-    document.getElementById('animation-speed').addEventListener('input', function() {
-        document.querySelector('.range-value').textContent = this.value + 'ms';
-    });
-    
-    // Dataset selector - update custom data fields when custom is selected
-    document.getElementById('dataset').addEventListener('change', function() {
-        const dataset = this.value;
-        const currentData = datasets[dataset];
-        
-        if (dataset === 'custom') {
-            document.getElementById('custom-labels').value = currentData.labels.join(', ');
-            document.getElementById('custom-values').value = currentData.data.join(', ');
-        }
-    });
+
+    document.getElementById('file-upload').addEventListener('change', handleUpload);
 }
 
-// Update the data table
-function updateDataTable() {
-    const dataset = document.getElementById('dataset').value;
-    const currentData = datasets[dataset];
-    const tableBody = document.querySelector('#data-table tbody');
-    
-    // Clear existing rows
-    tableBody.innerHTML = '';
-    
-    // Add new rows
-    for (let i = 0; i < currentData.labels.length; i++) {
-        const row = document.createElement('tr');
-        
-        // Calculate change from previous value (if available)
-        let change = '';
-        if (i > 0) {
-            const diff = currentData.data[i] - currentData.data[i-1];
-            const percentChange = ((diff / currentData.data[i-1]) * 100).toFixed(1);
-            
-            if (diff > 0) {
-                change = `<span style="color: #2ecc71;"><i class="fas fa-arrow-up"></i> ${percentChange}%</span>`;
-            } else if (diff < 0) {
-                change = `<span style="color: #e74c3c;"><i class="fas fa-arrow-down"></i> ${Math.abs(percentChange)}%</span>`;
-            } else {
-                change = `<span style="color: #7f8c8d;"><i class="fas fa-minus"></i> 0%</span>`;
+
+function handleUpload(e) {
+    const file = e.target.files[0];
+    if (!file || !file.name.endsWith('.csv')) {
+        alert('Only CSV files allowed');
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+        const rows = reader.result.trim().split('\n');
+
+        if (rows.length > 4000) {
+            alert('Max 4000 rows allowed');
+            return;
+        }
+
+        const labels = [];
+        const values = [];
+
+        let startIndex = 0;
+        const firstRowCols = rows[0].split(',');
+
+        if (isNaN(firstRowCols[1])) {
+            startIndex = 1;
+        }
+
+        for (let i = startIndex; i < rows.length; i++) {
+            const cols = rows[i].split(',');
+
+            if (cols.length < 2) {
+                alert('Each row must have at least 2 columns');
+                return;
             }
-        } else {
-            change = '<span style="color: #7f8c8d;">-</span>';
+
+            const col1 = cols[0].trim();
+            const col2 = cols[1].trim();
+
+            const num2 = Number(col2);
+
+            if (isNaN(num2)) {
+                alert('Second column must be numeric');
+                return;
+            }
+
+            labels.push(col1);
+            values.push(num2);
         }
-        
-        row.innerHTML = `
-            <td>${currentData.labels[i]}</td>
-            <td>${currentData.data[i].toLocaleString()}</td>
-            <td>${change}</td>
-        `;
-        
-        tableBody.appendChild(row);
-    }
+
+        if (labels.length === 0) {
+            alert('No valid data rows found');
+            return;
+        }
+
+        datasets.uploaded.labels = labels;
+        datasets.uploaded.data = values;
+
+        const datasetSelect = document.getElementById('dataset');
+        if (![...datasetSelect.options].some(o => o.value === 'uploaded')) {
+            datasetSelect.add(new Option('Uploaded Dataset', 'uploaded'));
+        }
+
+        datasetSelect.value = 'uploaded';
+
+        initializeChart();
+        updateDataTable();
+    };
+
+    reader.readAsText(file);
 }
 
-// Update chart info panel
-function updateChartInfo() {
-    const dataset = document.getElementById('dataset').value;
-    const chartType = document.getElementById('chart-type').value;
-    const currentData = datasets[dataset];
-    
-    // Update description
-    document.getElementById('chart-description').textContent = currentData.description;
-    
-    // Calculate stats
-    const dataPoints = currentData.data.length;
-    const maxValue = Math.max(...currentData.data);
-    const minValue = Math.min(...currentData.data);
-    const averageValue = (currentData.data.reduce((a, b) => a + b, 0) / dataPoints).toFixed(1);
-    
-    // Update stat values
-    document.getElementById('data-points').textContent = dataPoints;
-    document.getElementById('max-value').textContent = maxValue.toLocaleString();
-    document.getElementById('min-value').textContent = minValue.toLocaleString();
-    document.getElementById('average-value').textContent = averageValue.toLocaleString();
-    
-    // Update chart type description
-    let typeDescription = '';
-    switch(chartType) {
-        case 'bar':
-            typeDescription = 'Bar charts are used to compare data across categories. Each bar\'s length is proportional to the value it represents.';
-            break;
-        case 'line':
-            typeDescription = 'Line charts are ideal for showing trends over time. They connect individual data points to show continuity.';
-            break;
-        case 'pie':
-            typeDescription = 'Pie charts show parts of a whole. Each slice represents a proportion of the total value.';
-            break;
-        case 'doughnut':
-            typeDescription = 'Doughnut charts are similar to pie charts but with a hole in the center, making them useful for comparing multiple datasets.';
-            break;
-        case 'radar':
-            typeDescription = 'Radar charts display multivariate data on axes starting from the same point. Useful for comparing multiple quantitative variables.';
-            break;
-        case 'polar':
-            typeDescription = 'Polar area charts are similar to pie charts but each segment has equal angles, with the radius showing the value.';
-            break;
-    }
-    
-    document.getElementById('chart-description').textContent = typeDescription + ' ' + currentData.description;
+
+function updateDataTable() {
+    const tbody = document.querySelector('#data-table tbody');
+    const key = document.getElementById('dataset').value;
+    const data = datasets[key];
+
+    tbody.innerHTML = '';
+
+    data.labels.forEach((label, i) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${label}</td>
+            <td>${data.data[i]}</td>
+            <td>-</td>
+        `;
+        tbody.appendChild(row);
+    });
 }

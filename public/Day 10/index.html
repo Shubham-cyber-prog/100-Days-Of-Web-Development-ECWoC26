@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recipe Book</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="header">
+  <div class="header-left">
+    <h1>🍽️ Recipe Book</h1>
+  </div>
+  <nav class="nav">
+    <a href="index.html">Home</a>
+    <a href="favorites.html">❤️ Favorites</a>
+    <button id="themeToggle" class="theme-btn">🌙</button>
+  </nav>
+</header>
+
+<main class="container">
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <input id="searchInput" type="text" placeholder="Search recipes..." />
+    <select id="categorySelect">
+      <option value="">All Categories</option>
+    </select>
+  </div>
+
+  <!-- RECIPES -->
+  <section class="recipes-grid" id="recipes-grid">
+    <p class="loading">Loading recipes...</p>
+  </section>
+
+</main>
+
+<footer class="footer">
+  © 2026 Recipe Book. All rights reserved.
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>

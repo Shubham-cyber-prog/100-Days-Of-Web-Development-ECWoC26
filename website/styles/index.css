@@ -1,0 +1,62 @@
+/* --- Main Stylesheet --- */
+
+/* 1. Design Tokens */
+@import 'tokens/colors.css';
+@import 'tokens/typography.css';
+@import 'tokens/spacing.css';
+
+/* 2. Base */
+@import 'base/reset.css';
+@import 'base/global.css';
+@import 'base/icons.css';
+
+/* 3. Layout */
+@import 'layout/grid.css';
+@import 'layout/header.css';
+
+/* 4. Components */
+@import 'components/buttons.css';
+@import 'components/cards.css';
+@import 'components/forms.css';
+@import 'components/footer.css';
+@import 'components/cursor.css';
+
+/* 5. Animations */
+@import 'animations/motion.css';
+
+/* 6. Page Specifics (Loaded here for simplicity, can be separate if needed) */
+/* e.g., @import 'pages/home.css'; */
+
+#scrollToTopBtn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  padding: 12px 18px;
+  font-size: 18px;
+  background-color: #eeeb3c;
+  color: #000000;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1000;
+
+  /* animation */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+#scrollToTopBtn.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+#scrollToTopBtn:hover {
+  background-color: #ea8909;
+  transform: scale(1.1);
+}
+
