@@ -84,7 +84,6 @@ This repository documents my **100 Days of Web Development journey**, where I:
 ├── 📄 README.md                           # Documentation
 └── 📄 CONTRIBUTING.md                     # Contribution Guidelines
 ```
-
                # Dependencies configuration
 
 ---
@@ -196,5 +195,4 @@ To maintain a clean and collaborative codebase, follow these Git workflow guidel
 - Regularly sync your fork with the upstream repository.
 - Use `.gitignore` to exclude unnecessary files (e.g., `node_modules/`, `.env`).
 
-<img src="https://contributors-img.web.app/image?repo=Shubham-cyber-prog/100-Days-Of-Web-Development-ECWoC26"/>
 

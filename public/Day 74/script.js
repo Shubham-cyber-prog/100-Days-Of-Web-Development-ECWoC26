@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const voiceLevel = document.getElementById('voiceLevel');
     const levelBars = voiceLevel.querySelectorAll('.level-bar');
     
+
 const startNoteRecordingBtn = document.getElementById('startNoteRecording');
 const voiceNotesTextarea = document.getElementById('voiceNotes');
 const saveNoteBtn = document.getElementById('saveNote');

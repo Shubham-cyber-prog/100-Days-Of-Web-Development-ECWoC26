@@ -390,6 +390,7 @@ footer {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #3ab8de;
+
 }
 
 .notes-container {
@@ -453,4 +454,5 @@ footer {
     border-radius: 50%;
     margin-right: 8px;
     animation: pulse 1.5s infinite;
+
 }
