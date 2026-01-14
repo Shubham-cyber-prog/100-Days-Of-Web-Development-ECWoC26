@@ -119,6 +119,40 @@
             box-shadow: 0 0 20px rgba(255, 157, 0, 0.15);
         }
 
+
+        }
+
+        .login-logo-img:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 35px var(--primary-glow));
+        }
+
+        h1 { font-size: 2rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 0.5rem; }
+        .subtext { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 2.5rem; }
+
+        /* Form Controls */
+        .form-group { margin-bottom: 1.2rem; text-align: left; }
+        .form-label { display: block; font-size: 0.75rem; color: var(--text-dim); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .form-input {
+            width: 100%;
+            padding: 1.1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            color: #fff;
+            font-size: 1rem;
+            transition: 0.3s;
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+            background: rgba(255, 157, 0, 0.05);
+            box-shadow: 0 0 20px rgba(255, 157, 0, 0.15);
+        }
+
+
         /* Tab Switcher */
         .auth-tabs {
             display: flex;
@@ -144,6 +178,7 @@
             background: var(--primary);
             color: #000;
         }
+
         .external-auth-grid {
     display: grid;
     grid-template-columns: 1fr 1fr; /* Two equal columns */
@@ -201,6 +236,9 @@
     transform: translateY(-2px);
     border-color: var(--primary); /* Glow effect on hover */
 }
+
+
+
         /* Buttons */
         .btn-primary {
             width: 100%;
@@ -268,6 +306,7 @@
             </div>
 
             <form id="login-form" onsubmit="handleAuth(event, 'login')">
+
                 <div class="form-group">
                     <input type="email" class="form-input" placeholder="Email Address" required>
                 </div>
@@ -315,6 +354,41 @@
 </button>
 
 </div>
+
+                <div class="form-group">
+                    <input type="email" class="form-input" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" placeholder="Access Code" required>
+                </div>
+                <button type="submit" class="btn-primary">Join Now</button>
+                <a href="#" style="display:block; margin-top: 1.5rem; color: var(--text-tertiary); font-size: 0.8rem; text-decoration: none;">Forgot Access Code?</a>
+            </form>
+
+            <form id="register-form" class="hidden" onsubmit="handleAuth(event, 'register')">
+                <div class="form-group">
+                    <input type="text" class="form-input" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-input" placeholder="Academy Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" placeholder="New Access Code" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" placeholder="Confirm Access Code" required>
+                </div>
+                <button type="submit" class="btn-primary">Create Academy ID</button>
+            </form>
+
+            <div class="auth-divider">External Links</div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <button class="tab-btn" style="border: 1px solid var(--glass-border); padding: 12px;" onclick="handleLogin('Google')">Google</button>
+                <button class="tab-btn" style="border: 1px solid var(--glass-border); padding: 12px;" onclick="handleLogin('GitHub')">GitHub</button>
+            </div>
+        </div>
+
     </div>
 
     <script>
@@ -341,6 +415,7 @@
                 tabs[1].classList.add('active');
             }
         }
+
 
         async function handleAuth(event, mode) {
     event.preventDefault();
@@ -432,6 +507,17 @@ window.handleAuth = async (event, mode) => {
   }
 };
 </script>
+
+
+        function handleAuth(event, mode) {
+            event.preventDefault();
+            console.log(`Executing ${mode} protocol...`);
+            // Add your redirection or firebase logic here
+        }
+    </script>
+
+    <script src="../scripts/auth/service.js"></script>
+    <script src="../scripts/auth/guard.js"></script>
 
 </body>
 </html>
