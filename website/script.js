@@ -48,8 +48,7 @@ const projects = [
     // ADVANCED & CAPSTONE - Follow same pattern
     { day: 61, title: "Doodle Jump Game", folder: "Day 61", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
     // ... add more as you complete them
-    { day: 100, title: "Master Project", folder: "Day 100", level: "Capstone", tech: ["HTML", "CSS", "JS", "React"] },
-    { day: 101, title: "Canvas Image Particle Animation", folder: "Day 101", level: "Intermediate", tech: ["HTML", "CSS", "JS", "HTML Canvas"] }
+    { day: 100, title: "Master Project", folder: "Day 100", level: "Capstone", tech: ["HTML", "CSS", "JS", "React"] }
 ];
 
 const grid = document.getElementById('projects-grid');
@@ -63,20 +62,56 @@ let currentFilters = {
     tech: ['HTML', 'CSS', 'JS']
 };
 
-
 // Completed days tracking
 let completedDays = [];
 
+// Helper function to check if localStorage is available
+function isLocalStorageAvailable() {
+    try {
+        const test = '__localStorage_test__';
+        localStorage.setItem(test, test);
+        localStorage.removeItem(test);
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
 // localStorage functions
 function getCompletedDays() {
-    const stored = localStorage.getItem('completedDays');
-    return stored ? JSON.parse(stored) : [];
+    if (!isLocalStorageAvailable()) {
+        console.warn('localStorage is not available. Completed projects will not persist.');
+        return [];
+    }
+
+    try {
+        const stored = localStorage.getItem('completedDays');
+        if (stored) {
+            const parsed = JSON.parse(stored);
+            // Ensure it's an array and contains only numbers
+            if (Array.isArray(parsed) && parsed.every(d => typeof d === 'number' && !isNaN(d))) {
+                return parsed;
+            }
+        }
+        return [];
+    } catch (e) {
+        console.error('Error parsing completedDays from localStorage:', e);
+        return [];
+    }
 }
 
 function saveCompletedDays(days) {
-    localStorage.setItem('completedDays', JSON.stringify(days));
-}
+    if (!isLocalStorageAvailable()) {
+        console.warn('localStorage is not available. Cannot save completed projects.');
+        return;
+    }
 
+    try {
+        localStorage.setItem('completedDays', JSON.stringify(days));
+    } catch (e) {
+        console.error('Error saving completedDays to localStorage:', e);
+    }
+}
 
 // Event listeners for filters
 document.getElementById('projectSearch').addEventListener('input', (e) => {
@@ -192,7 +227,6 @@ function renderProjects() {
         grid.appendChild(card);
     });
 }
-
 
 // Event listener for completion checkboxes
 document.addEventListener('change', (e) => {
