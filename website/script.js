@@ -80,7 +80,6 @@ function isLocalStorageAvailable() {
 // localStorage functions
 function getCompletedDays() {
     if (!isLocalStorageAvailable()) {
-        console.warn('localStorage is not available. Completed projects will not persist.');
         return [];
     }
 
@@ -101,7 +100,6 @@ function getCompletedDays() {
 
 function saveCompletedDays(days) {
     if (!isLocalStorageAvailable()) {
-        console.warn('localStorage is not available. Cannot save completed projects.');
         return;
     }
 
