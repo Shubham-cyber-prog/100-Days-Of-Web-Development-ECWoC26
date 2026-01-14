@@ -144,7 +144,63 @@
             background: var(--primary);
             color: #000;
         }
+        .external-auth-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 1.5rem;                    /* Increased space between buttons */
+    margin-top: 1.5rem;
+    width: 100%;
+}
 
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 14px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    color: #ffffff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+.social-icon {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-icon img,
+.social-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Google brand colors stay intact */
+.social-btn.google {
+    background: rgba(255, 255, 255, 0.10);
+}
+
+/* GitHub icon white on dark */
+.social-btn.github svg {
+    fill: #ffffff;
+}
+
+/* Optional: subtle glow on hover */
+.social-btn:hover .social-icon {
+    transform: scale(1.05);
+}
+
+.social-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-2px);
+    border-color: var(--primary); /* Glow effect on hover */
+}
         /* Buttons */
         .btn-primary {
             width: 100%;
@@ -240,11 +296,25 @@
 
             <div class="auth-divider">External Links</div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                <button class="tab-btn" style="border: 1px solid var(--glass-border); padding: 12px;" onclick="handleLogin('Google')">Google</button>
-                <button class="tab-btn" style="border: 1px solid var(--glass-border); padding: 12px;" onclick="handleLogin('GitHub')">GitHub</button>
-            </div>
-        </div>
+<div class="external-auth-grid">
+    <button class="social-btn google" onclick="signInWithGoogle()">
+    <span class="social-icon">
+        <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google">
+    </span>
+    <span>Google</span>
+</button>
+
+    
+    <button class="social-btn github" onclick="signInWithGitHub()">
+    <span class="social-icon">
+        <svg viewBox="0 0 24 24">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+        </svg>
+    </span>
+    <span>GitHub</span>
+</button>
+
+</div>
     </div>
 
     <script>
@@ -272,14 +342,96 @@
             }
         }
 
-        function handleAuth(event, mode) {
-            event.preventDefault();
-            console.log(`Executing ${mode} protocol...`);
-            // Add your redirection or firebase logic here
-        }
-    </script>
+        async function handleAuth(event, mode) {
+    event.preventDefault();
+    const email = event.target.querySelector('input[type="email"]').value;
+    const password = event.target.querySelector('input[type="password"]').value;
 
+    try {
+        if (mode === 'register') {
+            await createUserWithEmailAndPassword(auth, email, password);
+            alert("Academy ID Created!");
+        } else {
+            await signInWithEmailAndPassword(auth, email, password);
+        }
+        window.location.href = "dashboard.html";
+    } catch (error) {
+        alert(error.message);
+    }
+}
+    </script>
+    
     <script src="../scripts/auth/service.js"></script>
     <script src="../scripts/auth/guard.js"></script>
+    <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  GithubAuthProvider,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+/* 🔐 Firebase Config — ONLY ONCE */
+const firebaseConfig = {
+  apiKey: "AIzaSyDZqZKcsk3BxIaiGhdr-fdtSPugwvSDnAQ",
+  authDomain: "days-8c631.firebaseapp.com",
+  projectId: "days-8c631",
+  storageBucket: "days-8c631.firebasestorage.app",
+  messagingSenderId: "624144787653",
+  appId: "1:624144787653:web:54330eaa3209e00118a8ac"
+};
+
+/* Init */
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+/* 🔑 Google */
+window.signInWithGoogle = async () => {
+  try {
+    const provider = new GoogleAuthProvider();
+    const result = await signInWithPopup(auth, provider);
+    localStorage.setItem("user_name", result.user.displayName);
+    localStorage.setItem("user_pic", result.user.photoURL);
+    window.location.href = "dashboard.html";
+  } catch (err) {
+    alert(err.message);
+  }
+};
+
+/* 🔑 GitHub */
+window.signInWithGitHub = async () => {
+  try {
+    const provider = new GithubAuthProvider();
+    const result = await signInWithPopup(auth, provider);
+    localStorage.setItem("user_name", result.user.displayName);
+    localStorage.setItem("user_pic", result.user.photoURL);
+    window.location.href = "dashboard.html";
+  } catch (err) {
+    alert("GitHub auth failed. Check Firebase callback URL.");
+  }
+};
+
+/* 🔐 Email Auth */
+window.handleAuth = async (event, mode) => {
+  event.preventDefault();
+  const email = event.target.querySelector('input[type="email"]').value;
+  const password = event.target.querySelector('input[type="password"]').value;
+
+  try {
+    if (mode === "register") {
+      await createUserWithEmailAndPassword(auth, email, password);
+    } else {
+      await signInWithEmailAndPassword(auth, email, password);
+    }
+    window.location.href = "dashboard.html";
+  } catch (err) {
+    alert(err.message);
+  }
+};
+</script>
+
 </body>
 </html>
