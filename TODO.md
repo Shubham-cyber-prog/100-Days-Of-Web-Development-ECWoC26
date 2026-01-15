@@ -1,3 +1,1 @@
 - [x] Remove console.error from getWeather function in public/Day 04/script.js
-- [x] Remove console.error from fetchSuggestions function and add user-friendly error message in public/Day 04/script.js
-- [x] Test the changes by running the app and checking for errors
