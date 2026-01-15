@@ -83,7 +83,7 @@ function render() {
   expenseList.innerHTML = "";
 
   let total = 0;
-  let catTotals = { food: 0, shopping: 0, travel: 0, health: 0 };
+  let catTotals = { : 0, shopping: 0, travel: 0, health: 0 };
 
   expenses.forEach(e => {
     total += e.amount;
