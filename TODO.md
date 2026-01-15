@@ -1,1 +1,4 @@
-- [x] Remove console.error from getWeather function in public/Day 04/script.js
+- [ ] Remove console.error from website/script.js (2 instances)
+- [ ] Remove console.error from website/scripts/pages/contributors.js (1 instance)
+- [ ] Remove console.error from website/scripts/pages/about.js (1 instance)
+- [ ] Verify website functionality
