@@ -15,12 +15,11 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            /* Deep Void Gradients */
             background: linear-gradient(180deg, var(--bg-void) 0%, #080808 100%);
             overflow: hidden;
+            padding: 20px;
         }
 
-        /* Ambient Background Glow */
         .ambient-glow {
             position: absolute;
             width: 800px;
@@ -35,14 +34,12 @@
 
         .login-card {
             background: rgba(10, 10, 10, 0.6);
-            /* Darker glass */
             backdrop-filter: blur(24px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 32px;
-            /* Super rounded */
             padding: var(--space-8) var(--space-10);
             width: 100%;
-            max-width: 460px;
+            max-width: 500px;
             box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.8);
             z-index: 1;
             text-align: center;
@@ -55,7 +52,6 @@
             margin: 0 auto var(--space-6);
             display: block;
             filter: drop-shadow(0 0 20px rgba(255, 159, 28, 0.3));
-            /* Cosmic glow */
         }
 
         h1 {
@@ -89,6 +85,143 @@
             background: var(--glass-border);
         }
 
+        .form-group {
+            margin-bottom: var(--space-4);
+            position: relative;
+            text-align: left;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: var(--space-3) var(--space-4);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: var(--text-sm);
+            transition: all 0.3s ease;
+            font-family: var(--font-main);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .form-input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent-secondary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-input.error {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: none;
+            animation: slideDown 0.2s ease;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .social-login {
+            display: grid;
+            gap: var(--space-3);
+            margin-bottom: var(--space-6);
+        }
+
+        .btn-social {
+            padding: var(--space-3) var(--space-4);
+            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-primary);
+            border-radius: var(--radius-md);
+            font-size: var(--text-sm);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn-social:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent-secondary);
+        }
+
+        .btn-social.loading {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: var(--space-3) var(--space-4);
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: var(--text-sm);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: var(--space-4);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .form-link {
+            display: block;
+            margin-top: var(--space-4);
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+            transition: all 0.3s ease;
+        }
+
+        .form-link:hover {
+            color: var(--accent-secondary);
+        }
+
+        .form-link .text-link-btn {
+            background: none;
+            border: none;
+            color: var(--accent-secondary);
+            cursor: pointer;
+            padding: 0;
+            font-size: inherit;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-link .text-link-btn:hover {
+            text-decoration: underline;
+        }
+
         @keyframes floatUp {
             from {
                 opacity: 0;
@@ -99,6 +232,17 @@
                 opacity: 1;
                 transform: translateY(0) scale(1);
             }
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: var(--space-6) var(--space-5);
+                max-width: 100%;
+            }
+        }
+
+        .text-left {
+            text-align: left;
         }
     </style>
 </head>
@@ -111,42 +255,46 @@
         <div class="login-card">
             <header>
                 <img src="../assets/images/logo.png" alt="100 Days of Web Dev" class="login-logo-img">
-                <h1>Welcome Back</h1>
-                <p class="subtext">Enter your credentials to access the Academy Network.</p>
+                <h1 id="authTitle">Welcome Back</h1>
+                <p class="subtext" id="authSubtitle">Enter your credentials to access the Academy Network.</p>
             </header>
 
-            <div class="social-login grid gap-3">
-                <button class="btn btn-social google" onclick="handleLogin('Google')">
+            <div class="social-login">
+                <button type="button" class="btn-social google" id="googleLogin">
                     Continue with Google
                 </button>
-                <button class="btn btn-social github" onclick="handleLogin('GitHub')">
+                <button type="button" class="btn-social github" id="githubLogin">
                     Continue with GitHub
                 </button>
             </div>
 
             <div class="auth-divider">or access via email</div>
 
-            <form id="loginForm" onsubmit="handleEmailLogin(event)" class="text-left">
+            <form id="loginForm" class="text-left">
                 <div class="form-group">
                     <input type="email" id="email" class="form-input" placeholder="Email Address" required>
+                    <div class="error-message" id="emailError"></div>
                 </div>
                 <div class="form-group">
                     <input type="password" id="password" class="form-input" placeholder="Password" required>
+                    <div class="error-message" id="passwordError"></div>
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: var(--space-4);">
-                    Initiate Launch Sequence
+                <button type="submit" class="btn-primary" id="submitBtn">
+                    Signin
                 </button>
             </form>
 
-            <a href="#" class="form-link"
-                style="display: block; margin-top: var(--space-4); font-size: 0.85rem; color: var(--text-tertiary);">Forgot
-                Access Code?</a>
+            <a href="#" class="form-link" id="forgotPasswordLink">Forgot Access Code?</a>
 
-            <!-- Guest access removed to enforce signup/signin flow -->
+            <p class="form-link" style="margin-top: var(--space-6); text-align: center;">
+                Don't have an account?
+                <button type="button" class="text-link-btn" id="signupLink">Register now</button>
+            </p>
         </div>
     </div>
 
     <!-- Scripts -->
+    <script src="../scripts/login.js"></script>
     <script src="../scripts/auth/service.js"></script>
     <script src="../scripts/auth/guard.js"></script>
 
