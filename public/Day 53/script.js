@@ -641,7 +641,6 @@ class FileUploader {
             };
             localStorage.setItem('fileUploaderData', JSON.stringify(data));
         } catch (e) {
-            console.error('Error saving to localStorage:', e);
             this.showToast('Error saving files (localStorage full?)', 'error');
         }
     }
@@ -663,7 +662,6 @@ class FileUploader {
                 }
             }
         } catch (e) {
-            console.error('Error loading from localStorage:', e);
             // Clear corrupted data
             localStorage.removeItem('fileUploaderData');
             this.files = [];
