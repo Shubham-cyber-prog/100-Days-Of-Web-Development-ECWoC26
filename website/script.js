@@ -65,14 +65,49 @@ let currentFilters = {
 // Completed days tracking
 let completedDays = [];
 
+// Helper function to check if localStorage is available
+function isLocalStorageAvailable() {
+    try {
+        const test = '__localStorage_test__';
+        localStorage.setItem(test, test);
+        localStorage.removeItem(test);
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
 // localStorage functions
 function getCompletedDays() {
-    const stored = localStorage.getItem('completedDays');
-    return stored ? JSON.parse(stored) : [];
+    if (!isLocalStorageAvailable()) {
+        return [];
+    }
+
+    try {
+        const stored = localStorage.getItem('completedDays');
+        if (stored) {
+            const parsed = JSON.parse(stored);
+            // Ensure it's an array and contains only numbers
+            if (Array.isArray(parsed) && parsed.every(d => typeof d === 'number' && !isNaN(d))) {
+                return parsed;
+            }
+        }
+        return [];
+    } catch (e) {
+        return [];
+    }
 }
 
 function saveCompletedDays(days) {
-    localStorage.setItem('completedDays', JSON.stringify(days));
+    if (!isLocalStorageAvailable()) {
+        return;
+    }
+
+    try {
+        localStorage.setItem('completedDays', JSON.stringify(days));
+    } catch (e) {
+        // Error saving to localStorage, silently fail
+    }
 }
 
 // Event listeners for filters
@@ -171,10 +206,6 @@ function renderProjects() {
             </div>
             <h3>${project.title}</h3>
             <p>${project.tech ? project.tech.join(', ') : 'HTML, CSS, JS'}</p>
-            <div class="card-actions">
-                <a href="${liveBaseUrl}${project.folder}/index.html" target="_blank" class="btn-small">Live Demo</a>
-                <a href="${repoBaseUrl}${project.folder}" target="_blank" class="btn-small outline">View Code</a>
-            </div>
         `;
 
         const codeChip = card.querySelector('.code-chip');
