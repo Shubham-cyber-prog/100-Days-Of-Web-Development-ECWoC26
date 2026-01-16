@@ -26,7 +26,8 @@ const folderMap = {
     81: "Day 81", 82: "Day 82", 83: "Day 83", 84: "Day 84", 85: "Day 85",
      87: "Day 87", 88: "Day 88", 89: "Day 89", 90: "Day 90",
     91: "Day 91", 92: "Day 92", 93: "Day 93", 94: "Day 94", 95: "Day 95",
-    96: "Day 96", 97: "Day 97", 98: "Day 98", 99: "Day 99", 100: "Day100", 101: "Day 101"
+    96: "Day 96", 97: "Day 97", 98: "Day 98", 99: "Day 99", 100: "Day100", 101: "Day 101",
+    151: "Day 151"
 };
 
 // Full 100-Day Project List
@@ -100,8 +101,9 @@ const allProjects = [
     { day: 143, title: "Advanced Recruitment Platform", tech: ["Next.js", "PostgreSQL"] }, { day: 144, title: "AI-Powered Social Media Management Tool", tech: ["OpenAI API", "Node.js"] },
     { day: 145, title: "Chess Game", tech: ["React", "Node.js"] }, { day: 146, title: "AI-Powered Customer Support Chatbot", tech: ["OpenAI API", "JS"] },
     { day: 147, title: "Advanced Financial Planning Tool", tech: ["Next.js", "Prisma"] }, { day: 148, title: "AI-Powered Document Summarization Tool", tech: ["OpenAI API", "Node.js"] },
-    { day: 149, title: "Custom Knowledge Base System", tech: ["React", "Node.js"] }, { day: 150, title: "AI-Powered Video Analysis Tool", tech: ["Python", "Django"] }
-
+    { day: 149, title: "Custom Knowledge Base System", tech: ["React", "Node.js"] }, { day: 150, title: "AI-Powered Video Analysis Tool", tech: ["Python", "Django"] },
+    // DAY 151
+    { day: 151, title: "Mini Geo Guesser", tech: ["HTML", "CSS", "JS"] }
 ];
 
 function getDifficulty(day) {
@@ -154,11 +156,13 @@ function renderProjects(filter = 'All') {
         const techTags = project.tech ? project.tech.map(t => `<span class="tech-tag">${t}</span>`).join('') : '';
 
         card.innerHTML = `
-            <div class="card-header">
+            <div class="card-top">
                 <span class="text-flame" style="font-size: var(--text-xs); font-weight: bold; letter-spacing: 1px;">
                     ${difficulty} • ${dayLabel}
                 </span>
+                <button class="code-chip" type="button" aria-label="View Code" title="View Code">&lt;/&gt;</button>
             </div>
+            <div class="card-divider"></div>
             
             <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-2); min-height: 40px;">
                 ${project.title}
@@ -168,33 +172,25 @@ function renderProjects(filter = 'All') {
                 ${techTags}
             </div>
 
-                <div class="flex gap-4 mt-auto">
-                    <a href="${liveLink}"
-                    class="btn"
-                    style="
-                        flex: 1;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        font-size: 0.9rem;
-                        padding: 10px 14px;
-                        border-radius: 10px;
-                        background-color: ${isDisabled ? '#FFE0C2' : '#FF7A18'};
-                        color: ${isDisabled ? '#9A5A1C' : '#FFFFFF'};
-                        font-weight: 500;
-                        opacity: ${isDisabled ? '0.6' : '1'};
-                        pointer-events: ${isDisabled ? 'none' : 'auto'};
-                        text-decoration: none;
-                        transition: all 0.2s ease;
-                    ">
-                    ${isDisabled ? 'Pending' : 'Live Demo'}
-                    </a>
-
-                    <a href="${codeLink}" target="_blank" class="btn btn-social" style="flex: 1; justify-content: center; font-size: 0.9rem;">
-                        View Code
-                    </a>
-                </div>
+            ${isDisabled ? `<div class="card-hint muted">Pending</div>` : ''}
         `;
+
+        // Code button opens repository without triggering card click
+        const codeChip = card.querySelector('.code-chip');
+        codeChip.onclick = (e) => {
+            e.stopPropagation();
+            window.open(codeLink, '_blank');
+        };
+
+        // Whole card opens live demo if available
+        if (!isDisabled) {
+            card.addEventListener('click', () => {
+    window.open(liveLink, '_blank', 'noopener,noreferrer');
+});
+
+        } else {
+            card.classList.add('is-disabled');
+        }
 
         setupTiltEffect(card); // Attach 3D Tilt Logic
         grid.appendChild(card);
