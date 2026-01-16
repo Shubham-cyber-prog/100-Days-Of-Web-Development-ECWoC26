@@ -1,2 +1,1 @@
-- [x] Remove console.error from saveToLocalStorage() function in public/Day 53/script.js
-- [x] Remove console.error from loadFromLocalStorage() function in public/Day 53/script.js
+- [x] Remove console.error from getWeather function in public/Day 04/script.js
