@@ -1,5 +1,36 @@
+import { auth } from './firebase-config.js';
+import { onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Projects data
+    // Check authentication with Firebase
+    onAuthStateChanged(auth, (user) => {
+        if (!user) {
+            window.location.href = 'login.html';
+            return;
+        }
+
+        // User is authenticated, initialize dashboard
+        initializeDashboard(user);
+    });
+
+    function initializeDashboard(user) {
+        // Set user name
+        const userNameElement = document.getElementById('userName');
+        userNameElement.textContent = user.email.split('@')[0];
+
+        // Logout functionality
+        const logoutBtn = document.getElementById('logoutBtn');
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                localStorage.removeItem('completedDays');
+                window.location.href = 'login.html';
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        });
+
+        // Projects data
     const projects = [
         // BEGINNER (Days 1-30) - Updated to match your actual Day XX folders
         { day: 1, title: "Animated Landing Page", folder: "Day 01", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
@@ -53,30 +84,8 @@ document.addEventListener('DOMContentLoaded', () => {
         { day: 100, title: "Master Project", folder: "Day 100", level: "Capstone", tech: ["HTML", "CSS", "JS", "React"] }
     ];
 
-    // Check authentication
-    const isAuthenticated = localStorage.getItem('isAuthenticated');
-    const userEmail = localStorage.getItem('userEmail');
-
-    if (!isAuthenticated || !userEmail) {
-        window.location.href = 'login.html';
-        return;
-    }
-
-    // Set user name
-    const userNameElement = document.getElementById('userName');
-    userNameElement.textContent = userEmail.split('@')[0];
-
-    // Logout functionality
-    const logoutBtn = document.getElementById('logoutBtn');
-    logoutBtn.addEventListener('click', () => {
-        localStorage.removeItem('isAuthenticated');
-        localStorage.removeItem('userEmail');
-        localStorage.removeItem('completedDays');
-        window.location.href = 'login.html';
-    });
-
-    // Load completed days from localStorage
-    let completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+        // Load completed days from localStorage (keeping this for now, but could be moved to Firebase later)
+        let completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
 
     // Render progress grid
     renderProgressGrid();
