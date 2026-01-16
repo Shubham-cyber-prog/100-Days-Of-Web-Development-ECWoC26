@@ -116,6 +116,7 @@ if (document.readyState === "loading") {
     if (validateDOM()) initializeEventListeners();
 }
 
+
         // ===== CONFIGURATION CONSTANTS =====
         const TIMER_CONFIG = {
             easy: 20,
