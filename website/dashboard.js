@@ -93,6 +93,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update stats
     updateStats();
 
+    // Update heatmap stats
+    updateHeatmapStats();
+
     // Render recommendations
     renderRecommendations();
 
@@ -100,12 +103,33 @@ document.addEventListener('DOMContentLoaded', () => {
         const progressGrid = document.getElementById('progressGrid');
         progressGrid.innerHTML = '';
 
-        for (let day = 1; day <= 100; day++) {
-            const dayElement = document.createElement('div');
-            dayElement.className = `progress-day ${completedDays.includes(day) ? 'completed' : ''}`;
-            dayElement.textContent = day;
-            dayElement.addEventListener('click', () => toggleDay(day));
-            progressGrid.appendChild(dayElement);
+        // Create 10 quarters (each with 10 days)
+        for (let quarter = 0; quarter < 10; quarter++) {
+            const quarterBlock = document.createElement('div');
+            quarterBlock.className = 'quarter-block';
+
+            // Each quarter has 10 days (2 rows of 5)
+            for (let week = 0; week < 2; week++) {
+                for (let dayOfWeek = 0; dayOfWeek < 5; dayOfWeek++) {
+                    const day = quarter * 10 + week * 5 + dayOfWeek + 1;
+                    if (day > 100) break;
+
+                    const dayElement = document.createElement('div');
+                    dayElement.className = `day-cell ${completedDays.includes(day) ? 'completed' : ''}`;
+
+                    // Get project details for tooltip
+                    const project = projects.find(p => p.day === day);
+                    const tooltipText = project ?
+                        `Day ${day}: ${project.title}\nLevel: ${project.level}\nTech: ${project.tech ? project.tech.join(', ') : 'HTML, CSS, JS'}` :
+                        `Day ${day}: Project not found`;
+
+                    dayElement.setAttribute('data-tooltip', tooltipText);
+                    dayElement.addEventListener('click', () => toggleDay(day));
+                    quarterBlock.appendChild(dayElement);
+                }
+            }
+
+            progressGrid.appendChild(quarterBlock);
         }
     }
 
@@ -118,6 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('completedDays', JSON.stringify(completedDays));
         renderProgressGrid();
         updateStats();
+        updateHeatmapStats();
         renderRecommendations();
     }
 
@@ -143,6 +168,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.getElementById('currentStreak').textContent = currentStreak;
         document.getElementById('longestStreak').textContent = longestStreak;
+    }
+
+    function updateHeatmapStats() {
+        const completedCount = completedDays.length;
+        document.getElementById('completedDaysHeatmap').textContent = completedCount;
     }
 
     function renderRecommendations() {

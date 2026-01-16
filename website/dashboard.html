@@ -59,10 +59,24 @@
             </div>
         </section>
 
-        <section class="progress-section">
-            <h2>Mark Your Progress</h2>
-            <div class="progress-grid" id="progressGrid">
-                <!-- Days will be populated by JS -->
+        <section class="tracker-section">
+            <div class="tracker-wrapper">
+                <div class="tracker-header-row">
+                    <div class="tracker-text">
+                        <h2>Progress Tracker</h2>
+                        <p>Visualize your coding streaks with an interactive heatmap</p>
+                    </div>
+                    <div class="progress-stat-pill">
+                        <span class="stat-label">COMPLETED</span>
+                        <span class="stat-value" id="completedDaysHeatmap">0</span>
+                        <span class="stat-total">/100</span>
+                    </div>
+                </div>
+                <div class="tracker-container">
+                    <div class="heatmap-grid" id="progressGrid">
+                        <!-- Heatmap will be populated by JS -->
+                    </div>
+                </div>
             </div>
         </section>
 
