@@ -24,9 +24,10 @@ const folderMap = {
     71: "Day 71", 72: "Day 72", 73: "Day 73", 74: "Day 74", 75: "Day 75",
     76: "Day 76", 77: "Day 77", 78: "Day 78", 79: "Day 79", 80: "Day 80",
     81: "Day 81", 82: "Day 82", 83: "Day 83", 84: "Day 84", 85: "Day 85",
-    86: "Day 86", 87: "Day 87", 88: "Day 88", 89: "Day 89", 90: "Day 90",
+     87: "Day 87", 88: "Day 88", 89: "Day 89", 90: "Day 90",
     91: "Day 91", 92: "Day 92", 93: "Day 93", 94: "Day 94", 95: "Day 95",
-    96: "Day 96", 97: "Day 97", 98: "Day 98", 99: "Day 99", 100: "Day100", 101: "Day 101"
+    96: "Day 96", 97: "Day 97", 98: "Day 98", 99: "Day 99", 100: "Day100", 101: "Day 101",
+    151: "Day 151"
 };
 
 // Full 100-Day Project List
@@ -100,8 +101,9 @@ const allProjects = [
     { day: 143, title: "Advanced Recruitment Platform", tech: ["Next.js", "PostgreSQL"] }, { day: 144, title: "AI-Powered Social Media Management Tool", tech: ["OpenAI API", "Node.js"] },
     { day: 145, title: "Chess Game", tech: ["React", "Node.js"] }, { day: 146, title: "AI-Powered Customer Support Chatbot", tech: ["OpenAI API", "JS"] },
     { day: 147, title: "Advanced Financial Planning Tool", tech: ["Next.js", "Prisma"] }, { day: 148, title: "AI-Powered Document Summarization Tool", tech: ["OpenAI API", "Node.js"] },
-    { day: 149, title: "Custom Knowledge Base System", tech: ["React", "Node.js"] }, { day: 150, title: "AI-Powered Video Analysis Tool", tech: ["Python", "Django"] }
-
+    { day: 149, title: "Custom Knowledge Base System", tech: ["React", "Node.js"] }, { day: 150, title: "AI-Powered Video Analysis Tool", tech: ["Python", "Django"] },
+    // DAY 151
+    { day: 151, title: "Mini Geo Guesser", tech: ["HTML", "CSS", "JS"] }
 ];
 
 function getDifficulty(day) {
@@ -120,37 +122,29 @@ function renderProjects(filter = 'All') {
     allProjects.forEach(project => {
         const difficulty = getDifficulty(project.day);
 
-        // Filter Logic
         if (filter !== 'All' && difficulty.toLowerCase() !== filter.toLowerCase()) return;
 
-        // Determine link and status
         let folderName = folderMap[project.day];
-        // Handle Capstone ranges if mapped individually (e.g. Day 91-92 might map to Day 91 folder if it existed)
-
         let liveLink = '#';
         let codeLink = '#';
         let isDisabled = false;
 
         if (folderName) {
-            liveLink = `../../public/${folderName}/index.html`;
+            // Updated path to ensure it points correctly from your projects page
+            liveLink = `../public/${folderName}/index.html`; 
             codeLink = `${REPO_URL}/${folderName}`;
         } else {
             isDisabled = true;
-            codeLink = REPO_URL; // Fallback to repo root
+            codeLink = REPO_URL;
         }
 
-        // Display "Day X" or "Day X-Y"
         const dayLabel = project.endDay ? `DAYS ${project.day}-${project.endDay}` : `DAY ${project.day}`;
 
-        // Card Construction
         const card = document.createElement('div');
         card.className = 'card project-card animate-enter';
-        card.style.animationDelay = `${Math.min(delay, 1000)}ms`; // Cap delay to avoid waiting too long
-
-        // Stagger animation
+        card.style.animationDelay = `${Math.min(delay, 1000)}ms`;
         delay += 30;
 
-        // Tech Tags HTML
         const techTags = project.tech ? project.tech.map(t => `<span class="tech-tag">${t}</span>`).join('') : '';
 
         card.innerHTML = `
@@ -161,48 +155,56 @@ function renderProjects(filter = 'All') {
                 <button class="code-chip" type="button" aria-label="View Code" title="View Code">&lt;/&gt;</button>
             </div>
             <div class="card-divider"></div>
-            
             <h3 style="font-size: var(--text-xl); margin-bottom: var(--space-2); min-height: 40px;">
                 ${project.title}
             </h3>
-
             <div class="tech-stack" style="margin-bottom: var(--space-4); display: flex; flex-wrap: wrap; gap: 5px;">
                 ${techTags}
             </div>
-
             ${isDisabled ? `<div class="card-hint muted">Pending</div>` : ''}
         `;
 
-        // Code button opens repository without triggering card click
         const codeChip = card.querySelector('.code-chip');
         codeChip.onclick = (e) => {
             e.stopPropagation();
             window.open(codeLink, '_blank');
         };
 
-        // Whole card opens live demo if available
+        // --- CRITICAL FIX START ---
         if (!isDisabled) {
-            card.addEventListener('click', () => {
-    window.open(liveLink, '_blank', 'noopener,noreferrer');
-});
-
+            // Instead of window.open, we call our health check function
+            card.addEventListener('click', (e) => {
+                handleProjectClick(e, liveLink);
+            });
         } else {
             card.classList.add('is-disabled');
         }
+        // --- CRITICAL FIX END ---
 
-        setupTiltEffect(card); // Attach 3D Tilt Logic
+        setupTiltEffect(card);
         grid.appendChild(card);
     });
-
-    if (grid.children.length === 0) {
-        grid.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 4rem; color: var(--text-secondary);">
-                <h3>No signals detected for this frequency.</h3>
-            </div>
-        `;
-    }
 }
 
+// Ensure the path to 404.html is correct relative to your current folder
+async function handleProjectClick(event, url) {
+    event.preventDefault(); 
+
+    try {
+        // Use 'no-cache' to ensure the browser doesn't give a fake "OK" 
+        const response = await fetch(url, { method: 'HEAD', cache: 'no-cache' });
+        
+        if (response.ok) {
+            window.open(url, '_blank', 'noopener,noreferrer');
+        } else {
+            // If the folder isn't there, redirect to your mission recovery page
+            window.location.href = './404.html'; 
+        }
+    } catch (error) {
+        // This catches the "Cannot GET" scenario (network/file not found)
+        window.location.href = './404.html';
+    }
+}
 /**
  * Applies a 3D Tilt effect based on cursor position.
  * Uses CSS variables --rx and --ry to control rotation.
