@@ -80,7 +80,6 @@ function isLocalStorageAvailable() {
 // localStorage functions
 function getCompletedDays() {
     if (!isLocalStorageAvailable()) {
-        console.warn('localStorage is not available. Completed projects will not persist.');
         return [];
     }
 
@@ -95,21 +94,19 @@ function getCompletedDays() {
         }
         return [];
     } catch (e) {
-        console.error('Error parsing completedDays from localStorage:', e);
         return [];
     }
 }
 
 function saveCompletedDays(days) {
     if (!isLocalStorageAvailable()) {
-        console.warn('localStorage is not available. Cannot save completed projects.');
         return;
     }
 
     try {
         localStorage.setItem('completedDays', JSON.stringify(days));
     } catch (e) {
-        console.error('Error saving completedDays to localStorage:', e);
+        // Error saving to localStorage, silently fail
     }
 }
 
@@ -209,10 +206,6 @@ function renderProjects() {
             </div>
             <h3>${project.title}</h3>
             <p>${project.tech ? project.tech.join(', ') : 'HTML, CSS, JS'}</p>
-            <div class="card-actions">
-                <a href="${liveBaseUrl}${project.folder}/index.html" target="_blank" class="btn-small">Live Demo</a>
-                <a href="${repoBaseUrl}${project.folder}" target="_blank" class="btn-small outline">View Code</a>
-            </div>
         `;
 
         const codeChip = card.querySelector('.code-chip');
