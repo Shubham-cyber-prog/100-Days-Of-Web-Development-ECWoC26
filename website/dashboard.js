@@ -1,5 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-
+    // Check if user is guest
+    const isGuest = localStorage.getItem('isGuest') === 'true';
+    const guestBanner = document.getElementById('guestBanner');
+    
+    // Show guest banner if in guest mode
+    if (isGuest && guestBanner) {
+        guestBanner.style.display = 'block';
+    }
 
     // Projects data
     const projects = [
@@ -55,27 +62,38 @@ document.addEventListener('DOMContentLoaded', () => {
         { day: 100, title: "Master Project", folder: "Day 100", level: "Capstone", tech: ["HTML", "CSS", "JS", "React"] }
     ];
 
-
     // Check authentication
     const isAuthenticated = localStorage.getItem('isAuthenticated');
     const userEmail = localStorage.getItem('userEmail');
+    const userName = localStorage.getItem('user_name');
 
-    if (!isAuthenticated || !userEmail) {
-        window.location.href = 'login.html';
+    if (!isAuthenticated && !isGuest) {
+        window.location.href = 'pages/login.html';
         return;
     }
 
-    // Set user name
+    // Set user name - prioritize stored name (for Google/GitHub/Guest), fallback to email
     const userNameElement = document.getElementById('userName');
-    userNameElement.textContent = userEmail.split('@')[0];
+    if (userName) {
+        userNameElement.textContent = userName;
+    } else if (userEmail) {
+        userNameElement.textContent = userEmail.split('@')[0];
+    } else {
+        userNameElement.textContent = 'User';
+    }
 
     // Logout functionality
     const logoutBtn = document.getElementById('logoutBtn');
     logoutBtn.addEventListener('click', () => {
+        // Clear all authentication data including guest mode
         localStorage.removeItem('isAuthenticated');
         localStorage.removeItem('userEmail');
         localStorage.removeItem('completedDays');
-        window.location.href = 'login.html';
+        localStorage.removeItem('isGuest');
+        localStorage.removeItem('user_name');
+        localStorage.removeItem('user_pic');
+        localStorage.removeItem('guest_session_start');
+        window.location.href = 'pages/login.html';
     });
 
     // Load completed days from localStorage

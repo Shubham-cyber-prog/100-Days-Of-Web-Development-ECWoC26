@@ -1,49 +1,43 @@
-const modal = document.getElementById("modal");
-const openBtn = document.querySelector(".add-expense-btn");
-const cancelBtn = document.getElementById("cancelBtn");
-const addBtn = document.getElementById("addBtn");
-
-const descInput = document.getElementById("description");
-const amountInput = document.getElementById("amount");
-const categoryInput = document.getElementById("category");
-const dateInput = document.getElementById("expense-date");
-
-const expenseList = document.querySelector(".expense-list");
-const totalEl = document.getElementById("total-expense");
-const ring = document.querySelector(".ring");
-const expenseAmount = document.getElementById("expense-amount");
-const warning = document.getElementById("limit-warning");
-const limitAmountEl = document.getElementById("limit-amount");
-
-const foodTotalEl = document.getElementById("total-food");
-const shoppingTotalEl = document.getElementById("total-shopping");
-const travelTotalEl = document.getElementById("total-travel");
-const healthTotalEl = document.getElementById("total-health");
-
-const CATEGORY_COLORS = {
-  food: "#22c55e",
-  shopping: "#f59e0b",
-  travel: "#3b82f6",
-  health: "#ef4444"
-};
-
-function formatDate(dateString) {
-  if (!dateString) return '';
-  const date = new Date(dateString);
-  const options = { day: 'numeric', month: 'short', year: 'numeric' };
-  return date.toLocaleDateString('en-GB', options);
-}
-
 let expenses = [];
 
-/* Monthly limit (default ₹5000, saved once) */
-let MONTHLY_LIMIT = localStorage.getItem("monthlyLimit");
-if (!MONTHLY_LIMIT) {
-  MONTHLY_LIMIT = 5000;
-  localStorage.setItem("monthlyLimit", MONTHLY_LIMIT);
-} else {
-  MONTHLY_LIMIT = Number(MONTHLY_LIMIT);
+// DOM Elements
+const form = document.getElementById('expense-form');
+const nameInput = document.getElementById('expense-name');
+const amountInput = document.getElementById('expense-amount');
+const categorySelect = document.getElementById('expense-category');
+const totalAmountEl = document.getElementById('total-amount');
+const expensesContainer = document.getElementById('expenses-container');
+
+// Load expenses from localStorage on page load
+function loadExpenses() {
+    const stored = localStorage.getItem('expenses');
+    if (stored) {
+        expenses = JSON.parse(stored);
+        renderExpenses();
+        updateTotal();
+    }
 }
+
+// Save expenses to localStorage
+function saveExpenses() {
+    localStorage.setItem('expenses', JSON.stringify(expenses));
+}
+
+// Add expense
+function addExpense(name, amount, category) {
+    const expense = {
+        id: Date.now(),
+        name: name,
+        amount: parseFloat(amount),
+        category: category
+    };
+    
+    expenses.push(expense);
+    saveExpenses();
+    renderExpenses();
+    updateTotal();
+}
+
 limitAmountEl.textContent = MONTHLY_LIMIT;
 
 /* Edit limit */
@@ -111,26 +105,101 @@ function render() {
 
   updateRing(catTotals, total);
   warning.style.display = total > MONTHLY_LIMIT ? "block" : "none";
+=======
+
+// Delete expense
+function deleteExpense(id) {
+    expenses = expenses.filter(expense => expense.id !== id);
+    saveExpenses();
+    renderExpenses();
+    updateTotal();
+
 }
 
-/* Multi-color ring */
-function updateRing(catTotals, total) {
-  if (total === 0) {
-    ring.style.background = "#e5e7eb";
-    return;
-  }
+// Render expenses list
+function renderExpenses() {
+    if (expenses.length === 0) {
+        expensesContainer.innerHTML = '<div class="empty-state">No expenses yet. Add your first expense above!</div>';
+        return;
+    }
 
-  let start = 0;
-  let parts = [];
+    expensesContainer.innerHTML = expenses.map(expense => `
+        <div class="expense-item">
+            <div class="expense-details">
+                <div class="expense-name">${escapeHtml(expense.name)}</div>
+                <span class="expense-category">${escapeHtml(expense.category)}</span>
+            </div>
+            <div class="expense-amount">$${expense.amount.toFixed(2)}</div>
+            <button class="delete-btn" data-id="${expense.id}">Delete</button>
+        </div>
+    `).join('');
 
-  for (const cat in catTotals) {
-    const value = catTotals[cat];
-    if (value === 0) continue;
-
-    const deg = (value / total) * 360;
-    parts.push(`${CATEGORY_COLORS[cat]} ${start}deg ${start + deg}deg`);
-    start += deg;
-  }
-
-  ring.style.background = `conic-gradient(${parts.join(", ")}, #e5e7eb ${start}deg 360deg)`;
+    // Add event listeners to delete buttons
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const id = parseInt(this.getAttribute('data-id'));
+            deleteExpense(id);
+        });
+    });
 }
+
+// Update total amount
+function updateTotal() {
+    const total = expenses.reduce((sum, expense) => sum + expense.amount, 0);
+    totalAmountEl.textContent = `$${total.toFixed(2)}`;
+}
+
+// Escape HTML to prevent XSS
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Validate input
+function validateInput(name, amount) {
+    let isValid = true;
+
+    // Reset error states
+    nameInput.classList.remove('error');
+    amountInput.classList.remove('error');
+
+    // Validate name
+    if (!name.trim()) {
+        nameInput.classList.add('error');
+        isValid = false;
+    }
+
+    // Validate amount
+    if (!amount || parseFloat(amount) <= 0) {
+        amountInput.classList.add('error');
+        isValid = false;
+    }
+
+    return isValid;
+}
+
+// Form submit handler
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const name = nameInput.value;
+    const amount = amountInput.value;
+    const category = categorySelect.value;
+
+    if (validateInput(name, amount)) {
+        addExpense(name, amount, category);
+        
+        // Clear form
+        nameInput.value = '';
+        amountInput.value = '';
+        categorySelect.value = 'Food';
+        
+        // Remove error states
+        nameInput.classList.remove('error');
+        amountInput.classList.remove('error');
+    }
+});
+
+// Load expenses on page load
+loadExpenses();

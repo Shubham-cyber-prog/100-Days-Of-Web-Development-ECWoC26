@@ -15,10 +15,25 @@
 
     const currentPath = window.location.pathname;
     const isLoginPage = currentPath.includes('login.html');
-    const isAuthenticated = sessionStorage.getItem('authToken') === 'true';
+    
+    // Use sessionStorage as source of truth; clean up any stale localStorage flags
+    const guestSession = sessionStorage.getItem('authGuest') === 'true';
+    const guestLocal = localStorage.getItem('isGuest') === 'true';
+    if (!guestSession && guestLocal) {
+        // session says "not guest" but local says "guest" -> clear stale local flag
+        localStorage.removeItem('isGuest');
+    }
+    const isGuest = guestSession;
 
-    // 1. If not authenticated and trying to access a protected page
-    if (!isAuthenticated) {
+    const authSession = sessionStorage.getItem('authToken') === 'true';
+    const authLocal = localStorage.getItem('isAuthenticated') === 'true';
+    if (!authSession && authLocal) {
+        // session says "not authenticated" but local says "authenticated" -> clear stale local flag
+        localStorage.removeItem('isAuthenticated');
+    }
+    const isAuthenticated = authSession && !isGuest;
+    // 1. If not authenticated and not guest, check if trying to access a protected page
+    if (!isAuthenticated && !isGuest) {
         const isProtected = protectedRoutes.some(route => currentPath.includes(route));
 
         // Root path check (index.html or empty)
@@ -44,6 +59,8 @@
                     }
                 }
 
+                // If a guest token exists, force removal to prevent bypass
+                if (isGuest) sessionStorage.removeItem('authGuest');
                 window.location.href = loginPath;
             }
         }
