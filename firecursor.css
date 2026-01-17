@@ -1,0 +1,22 @@
+/* 1. Hide default cursor */
+  body {
+    cursor: none;
+    margin: 0;
+    height: 100vh;
+    background-color: #111; /* Dark background makes fire pop */
+    overflow: hidden;
+  }
+
+  /* 2. Fire cursor styling */
+  .cursor {
+    position: absolute; /* so we can move it anywhere */
+    font-size: 28px; /* size of fire emoji */
+    pointer-events: none; /* ignore clicks */
+    transform: translate(-50%, -50%); /* center cursor on mouse */
+    text-shadow: 
+      0 0 5px #ff4500,
+      0 0 10px #ff6347,
+      0 0 20px #ff8c00,
+      0 0 30px #ffa500;
+    transition: transform 0.05s ease; /* smooth movement */
+  }
