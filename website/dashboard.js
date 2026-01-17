@@ -85,9 +85,12 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         // Load completed days from localStorage (keeping this for now, but could be moved to Firebase later)
         let completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
 =======
+=======
+>>>>>>> 2f13909ce8d1af519ef0dc99b870ac93732bbaee
     // Check authentication
     const isAuthenticated = localStorage.getItem('isAuthenticated');
     const userEmail = localStorage.getItem('userEmail');
@@ -100,6 +103,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const userNameElement = document.getElementById('userName');
     if (userName) {
+<<<<<<< HEAD
+=======
+        userNameElement.textContent = userName;
+    } else if (userEmail) {
+        userNameElement.textContent = userEmail.split('@')[0];
+    } else {
+        userNameElement.textContent = 'User';
+    }
+
+    // Logout functionality
+    const logoutBtn = document.getElementById('logoutBtn');
+    logoutBtn.addEventListener('click', () => {
+        // Clear all authentication data including guest mode
+        localStorage.removeItem('isAuthenticated');
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('completedDays');
+        localStorage.removeItem('isGuest');
+        localStorage.removeItem('user_name');
+        localStorage.removeItem('user_pic');
+        localStorage.removeItem('guest_session_start');
+        window.location.href = 'pages/login.html';
+    });
+
+    // Load completed days from localStorage
+    let completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+
+    // Render progress grid
+    renderProgressGrid();
+
+    // Update stats
+    updateStats();
+
+    // Render recommendations
+    renderRecommendations();
+
+    function renderProgressGrid() {
+>>>>>>> 2f13909ce8d1af519ef0dc99b870ac93732bbaee
         const progressGrid = document.getElementById('progressGrid');
         progressGrid.innerHTML = '';
 

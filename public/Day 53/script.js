@@ -303,11 +303,22 @@ t
             }
         } catch (e) {
 <<<<<<< HEAD
+<<<<<<< HEAD
             // Clear corrupted data
             localStorage.removeItem('fileUploaderData');
             this.files = [];
             this.showToast('Failed to load files from storage. Data may be corrupted.', 'error');
 =======
+=======
+
+
+            localStorage.removeItem('fileUploaderData');
+            this.files = [];
+            this.showToast('Stored data was corrupted and reset.', 'warning');
+        }
+    }
+}
+>>>>>>> 2f13909ce8d1af519ef0dc99b870ac93732bbaee
 
             localStorage.removeItem('fileUploaderData');
             this.files = [];
