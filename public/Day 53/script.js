@@ -303,15 +303,35 @@ t
             }
         } catch (e) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 4b66e6915f13048f149b8ade84c7ac14b1235406
             // Clear corrupted data
             localStorage.removeItem('fileUploaderData');
             this.files = [];
             this.showToast('Failed to load files from storage. Data may be corrupted.', 'error');
 =======
+<<<<<<< HEAD
+=======
+=======
+
+>>>>>>> 4b66e6915f13048f149b8ade84c7ac14b1235406
 
             localStorage.removeItem('fileUploaderData');
             this.files = [];
             this.showToast('Stored data was corrupted and reset.', 'warning');
+<<<<<<< HEAD
+=======
+        }
+    }
+}
+>>>>>>> 5bcdac685b2eae0b3fd60319a1663ba165e7ec3a
+
+            localStorage.removeItem('fileUploaderData');
+            this.files = [];
+            this.showToast('Stored data was corrupted and reset.', 'warning');
+>>>>>>> 4b66e6915f13048f149b8ade84c7ac14b1235406
     uploader = new FileUploader();
     window.uploader = uploader;
 });
