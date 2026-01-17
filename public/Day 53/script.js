@@ -209,6 +209,16 @@ class FileUploader {
         } catch {
             this.showToast('Unable to save files. Storage may be full.', 'error');
 
+t
+            localStorage.setItem('fileUploaderData', JSON.stringify(this.files));
+        } catch {
+            this.showToast('Unable to save files. Storage may be full.', 'error');
+
+
+            localStorage.setItem('fileUploaderData', JSON.stringify(this.files));
+        } catch {
+            this.showToast('Unable to save files. Storage may be full.', 'error');
+
             localStorage.setItem('fileUploaderData', JSON.stringify(this.files));
         } catch {
             this.showToast('Unable to save files. Storage may be full.', 'error');
@@ -244,15 +254,23 @@ class FileUploader {
             if (data) this.files = JSON.parse(data) || [];
         } catch {
 
+
+            if (data) this.files = JSON.parse(data) || [];
+        } catch {
+
+
+            if (data) this.files = JSON.parse(data) || [];
+        } catch {
+
             if (data) {
                 const parsed = JSON.parse(data);
                 this.files = parsed.files || [];
-                
+
                 // Validate loaded data
-                this.files = this.files.filter(file => 
+                this.files = this.files.filter(file =>
                     file && file.id && file.name && file.size && file.data
                 );
-                
+
                 if (this.files.length > 0) {
                     this.showToast(`Loaded ${this.files.length} files from storage`, 'info');
                 }

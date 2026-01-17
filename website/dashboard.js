@@ -1,4 +1,16 @@
+import { auth } from './firebase-config.js';
+import { onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
+
 document.addEventListener('DOMContentLoaded', () => {
+    // Check if user is guest
+    const isGuest = localStorage.getItem('isGuest') === 'true';
+    const guestBanner = document.getElementById('guestBanner');
+    
+    // Show guest banner if in guest mode
+    if (isGuest && guestBanner) {
+        guestBanner.style.display = 'block';
+    }
+
     // Projects data
     const projects = [
         // BEGINNER (Days 1-30) - Updated to match your actual Day XX folders
@@ -29,9 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
         { day: 25, title: "Temperature Converter", folder: "Day 25", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
         { day: 26, title: "Space War Game", folder: "Day 26", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
         { day: 27, title: "CHESS GAME", folder: "Day 27", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
-        { day: 28, title: "Coming Soon", folder: "Day 28", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
-        { day: 29, title: "Coming Soon", folder: "Day 29", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
-        { day: 30, title: "Coming Soon", folder: "Day 30", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+        { day: 28, title: "Rock Paper Scissors Game", folder: "Day 28", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+        { day: 29, title: "Simon Says Game", folder: "Day 29", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+        { day: 30, title: "Tic Tac Toe", folder: "Day 30", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
 
         // INTERMEDIATE (Days 31-60)
         { day: 31, title: "Bubble Shooter Game", folder: "Day 31", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
@@ -39,13 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
         { day: 33, title: "Guess the Number Game", folder: "Day 33", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
         { day: 34, title: "Typing Speed Test webapp", folder: "Day 34", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
         { day: 35, title: "Startup Name Generator Web App", folder: "Day 35", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
-        { day: 36, title: "Coming Soon", folder: "Day 36", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+        { day: 36, title: "Fitness Tracker Dashboard", folder: "Day 36", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
         { day: 37, title: "Recipe Finder", folder: "Day 37", level: "Intermediate", tech: ["HTML", "CSS", "JS", "API"] },
         { day: 38, title: "Snake Game", folder: "Day 38", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
         { day: 39, title: "Hangman Game", folder: "Day 39", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
         { day: 40, title: "Simon Say Game", folder: "Day 40", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
         // Continue pattern for remaining days...
-        { day: 60, title: "Coming Soon", folder: "Day 60", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+        { day: 60, title: "Travel Planner", folder: "Day 60", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
 
         // ADVANCED & CAPSTONE - Follow same pattern
         { day: 61, title: "Doodle Jump Game", folder: "Day 61", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
@@ -56,23 +68,35 @@ document.addEventListener('DOMContentLoaded', () => {
     // Check authentication
     const isAuthenticated = localStorage.getItem('isAuthenticated');
     const userEmail = localStorage.getItem('userEmail');
+    const userName = localStorage.getItem('user_name');
 
-    if (!isAuthenticated || !userEmail) {
-        window.location.href = 'login.html';
+    if (!isAuthenticated && !isGuest) {
+        window.location.href = 'pages/login.html';
         return;
     }
 
-    // Set user name
+    // Set user name - prioritize stored name (for Google/GitHub/Guest), fallback to email
     const userNameElement = document.getElementById('userName');
-    userNameElement.textContent = userEmail.split('@')[0];
+    if (userName) {
+        userNameElement.textContent = userName;
+    } else if (userEmail) {
+        userNameElement.textContent = userEmail.split('@')[0];
+    } else {
+        userNameElement.textContent = 'User';
+    }
 
     // Logout functionality
     const logoutBtn = document.getElementById('logoutBtn');
     logoutBtn.addEventListener('click', () => {
+        // Clear all authentication data including guest mode
         localStorage.removeItem('isAuthenticated');
         localStorage.removeItem('userEmail');
         localStorage.removeItem('completedDays');
-        window.location.href = 'login.html';
+        localStorage.removeItem('isGuest');
+        localStorage.removeItem('user_name');
+        localStorage.removeItem('user_pic');
+        localStorage.removeItem('guest_session_start');
+        window.location.href = 'pages/login.html';
     });
 
     // Load completed days from localStorage
@@ -84,6 +108,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update stats
     updateStats();
 
+    // Update heatmap stats
+    updateHeatmapStats();
+
     // Render recommendations
     renderRecommendations();
 
@@ -91,12 +118,33 @@ document.addEventListener('DOMContentLoaded', () => {
         const progressGrid = document.getElementById('progressGrid');
         progressGrid.innerHTML = '';
 
-        for (let day = 1; day <= 100; day++) {
-            const dayElement = document.createElement('div');
-            dayElement.className = `progress-day ${completedDays.includes(day) ? 'completed' : ''}`;
-            dayElement.textContent = day;
-            dayElement.addEventListener('click', () => toggleDay(day));
-            progressGrid.appendChild(dayElement);
+        // Create 10 quarters (each with 10 days)
+        for (let quarter = 0; quarter < 10; quarter++) {
+            const quarterBlock = document.createElement('div');
+            quarterBlock.className = 'quarter-block';
+
+            // Each quarter has 10 days (2 rows of 5)
+            for (let week = 0; week < 2; week++) {
+                for (let dayOfWeek = 0; dayOfWeek < 5; dayOfWeek++) {
+                    const day = quarter * 10 + week * 5 + dayOfWeek + 1;
+                    if (day > 100) break;
+
+                    const dayElement = document.createElement('div');
+                    dayElement.className = `day-cell ${completedDays.includes(day) ? 'completed' : ''}`;
+
+                    // Get project details for tooltip
+                    const project = projects.find(p => p.day === day);
+                    const tooltipText = project ?
+                        `Day ${day}: ${project.title}\nLevel: ${project.level}\nTech: ${project.tech ? project.tech.join(', ') : 'HTML, CSS, JS'}` :
+                        `Day ${day}: Project not found`;
+
+                    dayElement.setAttribute('data-tooltip', tooltipText);
+                    dayElement.addEventListener('click', () => toggleDay(day));
+                    quarterBlock.appendChild(dayElement);
+                }
+            }
+
+            progressGrid.appendChild(quarterBlock);
         }
     }
 
@@ -109,6 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('completedDays', JSON.stringify(completedDays));
         renderProgressGrid();
         updateStats();
+        updateHeatmapStats();
         renderRecommendations();
     }
 
@@ -134,6 +183,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.getElementById('currentStreak').textContent = currentStreak;
         document.getElementById('longestStreak').textContent = longestStreak;
+    }
+
+    function updateHeatmapStats() {
+        const completedCount = completedDays.length;
+        document.getElementById('completedDaysHeatmap').textContent = completedCount;
     }
 
     function renderRecommendations() {

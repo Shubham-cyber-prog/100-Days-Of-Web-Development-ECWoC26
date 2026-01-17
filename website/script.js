@@ -27,9 +27,9 @@ const projects = [
     { day: 25, title: "Temperature Converter", folder: "Day 25", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
     { day: 26, title: "Space War Game", folder: "Day 26", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
     { day: 27, title: "CHESS GAME", folder: "Day 27", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
-    { day: 28, title: "Coming Soon", folder: "Day 28", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
-    { day: 29, title: "Coming Soon", folder: "Day 29", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
-    { day: 30, title: "Coming Soon", folder: "Day 30", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 28, title: "Rock Paper Scissors Game", folder: "Day 28", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 29, title: "Simon Says Game", folder: "Day 29", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
+    { day: 30, title: "Tic Tac Toe", folder: "Day 30", level: "Beginner", tech: ["HTML", "CSS", "JS"] },
 
     // INTERMEDIATE (Days 31-60)
     { day: 31, title: "Bubble Shooter Game", folder: "Day 31", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
@@ -37,13 +37,13 @@ const projects = [
     { day: 33, title: "Guess the Number Game", folder: "Day 33", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
     { day: 34, title: "Typing Speed Test webapp", folder: "Day 34", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
     { day: 35, title: "Startup Name Generator Web App", folder: "Day 35", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
-    { day: 36, title: "Coming Soon", folder: "Day 36", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+    { day: 36, title: "Fitness Tracker Dashboard", folder: "Day 36", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
     { day: 37, title: "Recipe Finder", folder: "Day 37", level: "Intermediate", tech: ["HTML", "CSS", "JS", "API"] },
     { day: 38, title: "Snake Game", folder: "Day 38", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
     { day: 39, title: "Hangman Game", folder: "Day 39", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
     { day: 40, title: "Simon Say Game", folder: "Day 40", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
     // Continue pattern for remaining days...
-    { day: 60, title: "Coming Soon", folder: "Day 60", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+    { day: 60, title: "Travel Planner", folder: "Day 60", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
 
     // ADVANCED & CAPSTONE - Follow same pattern
     { day: 61, title: "Doodle Jump Game", folder: "Day 61", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
@@ -65,14 +65,49 @@ let currentFilters = {
 // Completed days tracking
 let completedDays = [];
 
+// Helper function to check if localStorage is available
+function isLocalStorageAvailable() {
+    try {
+        const test = '__localStorage_test__';
+        localStorage.setItem(test, test);
+        localStorage.removeItem(test);
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
 // localStorage functions
 function getCompletedDays() {
-    const stored = localStorage.getItem('completedDays');
-    return stored ? JSON.parse(stored) : [];
+    if (!isLocalStorageAvailable()) {
+        return [];
+    }
+
+    try {
+        const stored = localStorage.getItem('completedDays');
+        if (stored) {
+            const parsed = JSON.parse(stored);
+            // Ensure it's an array and contains only numbers
+            if (Array.isArray(parsed) && parsed.every(d => typeof d === 'number' && !isNaN(d))) {
+                return parsed;
+            }
+        }
+        return [];
+    } catch (e) {
+        return [];
+    }
 }
 
 function saveCompletedDays(days) {
-    localStorage.setItem('completedDays', JSON.stringify(days));
+    if (!isLocalStorageAvailable()) {
+        return;
+    }
+
+    try {
+        localStorage.setItem('completedDays', JSON.stringify(days));
+    } catch (e) {
+        // Error saving to localStorage, silently fail
+    }
 }
 
 // Event listeners for filters
@@ -171,10 +206,6 @@ function renderProjects() {
             </div>
             <h3>${project.title}</h3>
             <p>${project.tech ? project.tech.join(', ') : 'HTML, CSS, JS'}</p>
-            <div class="card-actions">
-                <a href="${liveBaseUrl}${project.folder}/index.html" target="_blank" class="btn-small">Live Demo</a>
-                <a href="${repoBaseUrl}${project.folder}" target="_blank" class="btn-small outline">View Code</a>
-            </div>
         `;
 
         const codeChip = card.querySelector('.code-chip');
