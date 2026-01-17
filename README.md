@@ -8,7 +8,7 @@
 
 <img src="https://github.com/Mayur-Pagote/README_Design_Kit/blob/45123f007c79aa8d0c8d9b11b3ff72d6bf4744c7/Assets/Star%20Light%20Line.gif" width="100%">
 
-Level up your **frontend skills** with this **100 Days of Web Development Challenge** using **HTML, CSS & JavaScript**. Build **mini-projects**, practice **daily coding**, and create a **portfolio-worthy collection**!
+Level up your **frontend skills** with this **Web Development Challenge** using **HTML, CSS & JavaScript**. Build **mini-projects**, practice **daily coding**, and create a **portfolio-worthy collection**! (Currently featuring **30 completed projects**)
 
 ![HTML](https://img.shields.io/badge/HTML5-orange?style=for-the-badge&logo=html5)
 ![CSS](https://img.shields.io/badge/CSS3-blue?style=for-the-badge&logo=css3)
@@ -39,6 +39,13 @@ This repository documents my **100 Days of Web Development journey**, where I:
 - **🔒 Login/Signup UI**: Sleek static authentication interface (dummy credentials only).
 
 > 💡 _Note: The login/signup UI is for demonstration purposes only and does not store real data._
+
+## 📈 Project Status
+
+The challenge aims for 100 days, but currently has **30 completed projects**. Here's the status:
+
+- **Completed**: Days 01-25, 31, 43, 53, 101, 151, 152, Day-35, Day100
+- **In Progress**: Remaining days are planned for future development.
 
 ---
 
