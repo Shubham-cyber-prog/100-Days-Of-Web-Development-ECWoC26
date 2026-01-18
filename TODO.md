@@ -1,7 +1,7 @@
 # Firebase Authentication Implementation TODO
 
 ## Completed Tasks
-- [x] Created Firebase configuration file (`website/firebase-config.js`)
+- [x] Created the Firebase configuration file (`website/firebase-config.js`)
 - [x] Updated login.js to use Firebase Authentication for signup, login, Google auth, and password reset
 - [x] Updated dashboard.js to use Firebase auth state listener instead of localStorage
 - [x] Updated index.html to redirect based on Firebase auth state
