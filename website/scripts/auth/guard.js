@@ -3,8 +3,14 @@
  * Protects routes by checking for a session token.
  * Redirects unauthenticated users to login.html.
  */
+// Allow dashboard access in demo / OSS mode
+const DEMO_MODE = true;
 
 (function () {
+    if (DEMO_MODE) {
+        return;
+    }
+
     const protectedRoutes = [
         'dashboard.html',
         'projects.html',
@@ -15,15 +21,31 @@
 
     const currentPath = window.location.pathname;
     const isLoginPage = currentPath.includes('login.html');
-    const isGuest = sessionStorage.getItem('authGuest') === 'true';
-    const isAuthenticated = sessionStorage.getItem('authToken') === 'true' && !isGuest;
 
+    // Use sessionStorage as source of truth; clean up any stale localStorage flags
+    const guestSession = sessionStorage.getItem('authGuest') === 'true';
+    const guestLocal = localStorage.getItem('isGuest') === 'true';
+    if (!guestSession && guestLocal) {
+        // session says "not guest" but local says "guest" -> clear stale local flag
+        localStorage.removeItem('isGuest');
+    }
+    const isGuest = guestSession;
+
+    const authSession = sessionStorage.getItem('authToken') === 'true';
+    const authLocal = localStorage.getItem('isAuthenticated') === 'true';
+    if (!authSession && authLocal) {
+        // session says "not authenticated" but local says "authenticated" -> clear stale local flag
+        localStorage.removeItem('isAuthenticated');
+    }
+    const isAuthenticated = authSession && !isGuest;
     // 1. If not authenticated and not guest, check if trying to access a protected page
     if (!isAuthenticated && !isGuest) {
         const isProtected = protectedRoutes.some(route => currentPath.includes(route));
 
         // Root path check (index.html or empty)
-        const isRoot = currentPath.endsWith('/') || currentPath.endsWith('index.html');
+        // const isRoot = currentPath.endsWith('/') || currentPath.endsWith('index.html');
+        const isRoot = false; // Landing page is public
+
 
         if (isProtected || isRoot) {
             if (!isLoginPage) {
