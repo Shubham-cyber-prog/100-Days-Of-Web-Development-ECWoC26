@@ -1,30 +1,12 @@
-# Firebase Authentication Implementation TODO
+# TODO: Standardize CSS File Naming Conventions
 
 ## Completed Tasks
-- [x] Created the Firebase configuration file (`website/firebase-config.js`)
-- [x] Updated login.js to use Firebase Authentication for signup, login, Google auth, and password reset
-- [x] Updated dashboard.js to use Firebase auth state listener instead of localStorage
-- [x] Updated index.html to redirect based on Firebase auth state
-- [x] Replaced localStorage-based authentication with Firebase Auth
+- [x] Analyze existing file structure and identify inconsistencies (some days use style.css, others styles.css, but in current repo only style.css exists)
+- [x] Update CONTRIBUTING.md to include Project Structure section specifying file naming conventions (use style.css for daily projects)
+- [x] Create PowerShell script (rename_css.ps1) to automate renaming styles.css to style.css and update HTML references
+- [x] Run the script to standardize existing files (no changes needed as no styles.css files found)
 
-## Key Changes Made
-1. **Firebase Setup**: Added Firebase SDK imports and configuration
-2. **Authentication Methods**:
-   - Email/password signup and login
-   - Google OAuth sign-in
-   - Password reset functionality
-   - Secure logout
-3. **Auth State Management**: Replaced localStorage checks with Firebase auth state listeners
-4. **Error Handling**: Added comprehensive error messages for different auth scenarios
-
-## Next Steps
-- Replace placeholder Firebase config with actual project credentials
-- Test authentication flow in browser
-- Consider migrating user progress data to Firebase for persistence across devices
-
-## Firebase Project Setup Required
-1. Create a Firebase project at https://console.firebase.google.com/
-2. Enable Authentication service
-3. Configure sign-in methods (Email/Password and Google)
-4. Copy the config object to `website/firebase-config.js`
-5. Update authorized domains in Firebase console
+## Summary
+- Added detailed Project Structure guidelines to CONTRIBUTING.md to prevent future inconsistencies
+- Created automation script for easy standardization of CSS file names
+- Ensured all daily projects use "style.css" consistently

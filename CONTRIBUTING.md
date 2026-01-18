@@ -97,6 +97,60 @@ You can help in many ways:
 
 ---
 
+## 🏗 Project Structure
+
+To maintain consistency across the repository, please adhere to the following file naming and structure conventions:
+
+### Daily Projects (public/Day XX/)
+Each daily challenge or project should be placed in its own directory under `public/`, named `Day XX/` (e.g., `Day 01/`, `Day 02/`, etc.).
+
+**Required Files:**
+- `index.html`: The main HTML file for the project.
+- `style.css`: The CSS file for styling (use `style.css`, not `styles.css` for consistency).
+- `script.js`: The JavaScript file for functionality.
+- `README.md`: A brief description of the project, what it demonstrates, and any instructions.
+
+**Optional Files:**
+- `images/`: A directory for any images used in the project.
+
+**Example Structure:**
+```
+public/
+├── Day 01/
+│   ├── index.html
+│   ├── style.css
+│   ├── script.js
+│   └── README.md
+├── Day 02/
+│   ├── index.html
+│   ├── style.css
+│   ├── script.js
+│   ├── images/
+│   │   └── example.png
+│   └── README.md
+└── ...
+```
+
+### Main Website (website/)
+The main website files are organized in the `website/` directory with subdirectories for better maintainability.
+
+**Key Directories:**
+- `styles/`: Organized CSS files (e.g., `index.css`, `components/`, `pages/`, etc.).
+- `scripts/`: JavaScript files, including `core/`, `components/`, `pages/`, etc.
+- `pages/`: HTML pages for different sections.
+- `assets/`: Static assets like images.
+
+**Naming Conventions:**
+- Use lowercase with hyphens for multi-word names (e.g., `about-us.css`).
+- For CSS files in daily projects, always use `style.css`.
+
+### General Guidelines
+- Ensure all file references in HTML/JS are relative and correct.
+- Use consistent indentation and formatting.
+- Follow semantic HTML and accessible practices.
+
+---
+
 ## Getting Started
 > New contributors are advised to read this file completely before starting their first contribution.
 
