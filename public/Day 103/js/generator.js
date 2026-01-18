@@ -1,4 +1,8 @@
 function generateREADME() {
+  const generateBtn = document.querySelector(".btn-group .primary");
+  generateBtn.textContent = "Generating...";
+  generateBtn.disabled = true;
+
   const badges = generateBadges();
 
   const title = document.getElementById("title").value;
@@ -50,6 +54,10 @@ ${author}
   localStorage.setItem("readme", markdown);
   renderPreview(markdown);
   calculateScore(markdown);
+
+  generateBtn.textContent = "Generate";
+  generateBtn.disabled = false;
+
 }
 
 // ==============================
