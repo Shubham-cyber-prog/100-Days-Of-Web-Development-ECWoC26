@@ -79,6 +79,7 @@ You can help in many ways:
 - Improve README files
 - Add learning resources
 - Write guides or tutorials
+- **Project README Template**: When adding new projects, include a detailed README.md in the project folder following the standardized template (see examples in Day 12 and Day 53)
 
 ### 🐞 Bug Fixes
 - Fix broken links
