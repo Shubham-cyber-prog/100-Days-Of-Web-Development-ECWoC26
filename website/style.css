@@ -341,6 +341,38 @@ ul {
     gap: 1.5rem;
 }
 
+/* === Unified Card Hover System (HOME PAGE) === */
+.feature-card,
+.project-card,
+.contributor-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    transition:
+        transform var(--duration-normal) var(--ease-out-quad),
+        box-shadow var(--duration-normal) var(--ease-out-quad),
+        background var(--duration-normal) var(--ease-out-quad),
+        border-color var(--duration-normal) var(--ease-out-quad);
+}
+
+.feature-card:hover,
+.project-card:hover,
+.contributor-card:hover {
+    transform: translateY(-6px);
+    background: var(--bg-hover);
+    border-color: var(--border-hover);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+}
+
+
+.feature-card,
+.project-card,
+.contributor-card {
+    cursor: pointer;
+}
+
+
+
 /* --- Navbar --- */
 .navbar {
     height: var(--nav-height);
@@ -630,12 +662,7 @@ main {
     transition: all var(--duration-normal) var(--ease-out-quad);
 }
 
-.feature-card:hover {
-    border-color: var(--text-secondary);
-    transform: translateY(-4px);
-    background: var(--bg-hover);
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
-}
+
 
 .feature-header {
     display: flex;
@@ -751,9 +778,7 @@ main {
     transition: border-color 0.2s;
 }
 
-.node-card:hover {
-    border-color: var(--text-tertiary);
-}
+
 
 .node-meta {
     font-size: 0.8rem;
@@ -1004,11 +1029,6 @@ main {
     flex-direction: column;
 }
 
-.project-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--text-tertiary);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
 
 .card-header {
     display: flex;
@@ -1190,9 +1210,7 @@ main {
     transition: border-color 0.2s;
 }
 
-.timeline-content:hover {
-    border-color: var(--text-tertiary);
-}
+
 
 .timeline-content h3 {
     font-size: 1.25rem;
@@ -1226,12 +1244,6 @@ main {
     /* Ensure link underline doesn't interfere */
 }
 
-.contributor-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--text-secondary);
-    background: var(--bg-hover);
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
-}
 
 .contributor-img {
     width: 80px;
@@ -2299,4 +2311,15 @@ body.login-page {
 
 .auth-divider span {
     padding: 0 1rem;
+}
+
+
+/* === Disable hover lift on touch devices === */
+@media (hover: none) {
+    .feature-card:hover,
+    .project-card:hover,
+    .contributor-card:hover {
+        transform: none;
+        box-shadow: none;
+    }
 }
