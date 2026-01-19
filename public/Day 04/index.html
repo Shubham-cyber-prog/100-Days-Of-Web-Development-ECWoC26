@@ -1,90 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather App - Current Weather & Forecast</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WeatherPro – Weather App</title>
+
+    <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
+
     <div class="container">
-        <!-- Header -->
+
+        <!-- ================= HEADER ================= -->
         <header class="header">
             <h1 class="logo">Weather<span>Pro</span></h1>
+
             <div class="header-controls">
                 <button id="unitToggle" class="unit-toggle">°C</button>
-                <button id="locationBtn" class="location-btn">
-                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+
+                <button id="locationBtn" class="location-btn" title="Use current location">
+                    <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 4.5 12 4.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
                     </svg>
                 </button>
             </div>
         </header>
 
-        <!-- Search Section -->
-        <div class="search-section">
+        <!-- ================= SEARCH ================= -->
+        <section class="search-section">
             <div class="search-container">
-                <input type="text" id="searchInput" placeholder="Search for a city..." class="search-input">
-                <button id="searchBtn" class="search-btn">
+                <input
+                    type="text"
+                    id="searchInput"
+                    class="search-input"
+                    placeholder="Search for a city..."
+                    autocomplete="off"
+                />
+
+                <button id="searchBtn" class="search-btn" aria-label="Search">
                     <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                        <path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.71.71l.27.28v.79L20 20.49 21.49 19 15.5 14zM9.5 14A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/>
                     </svg>
                 </button>
             </div>
-        </div>
+        </section>
 
-        <!-- Loading Spinner -->
+        <!-- ================= LOADING ================= -->
         <div id="loading" class="loading hidden">
             <div class="spinner"></div>
             <p>Loading weather data...</p>
         </div>
 
-        <!-- Error Message -->
+        <!-- ================= ERROR ================= -->
         <div id="errorMessage" class="error-message hidden">
-            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm1 15h-2v-2h2Zm0-4h-2V7h2Z"/>
             </svg>
             <p>City not found. Please try again.</p>
         </div>
 
-        <!-- Main Weather Content -->
+        <!-- ================= WEATHER CONTENT ================= -->
         <main id="weatherContent" class="weather-content hidden">
-            <!-- Current Weather -->
+
             <section class="current-weather">
+
                 <div class="current-weather-main">
                     <div class="weather-icon-large">
-                        <img id="currentWeatherIcon" src="" alt="Weather Icon">
+                        <img
+                            id="currentWeatherIcon"
+                            src=""
+                            alt="Weather icon"
+                        />
                     </div>
+
                     <div class="current-temp">
                         <span id="currentTemp">--°</span>
+
                         <div class="current-location">
-                            <span id="currentLocation">--</span>
+                            <span id="currentLocation">--</span><br>
                             <span id="currentDate">--</span>
                         </div>
                     </div>
                 </div>
+
                 <div class="extra-detail-item">
                     <span class="extra-label">UV Index</span>
-                    <span class="extra-val" id="uvIndex"></span>
+                    <span class="extra-val" id="uvIndex">--</span>
                 </div>
+
                 <div class="extra-detail-item">
                     <span class="extra-label">Visibility</span>
-                    <span class="extra-val" id="visibility"></span>
+                    <span class="extra-val" id="visibility">--</span>
                 </div>
-            </div>
-        </div>
+
+            </section>
+
+        </main>
+
+        <!-- ================= FOOTER ================= -->
+        <footer class="footer">
+            <p>Powered by Open-Meteo API</p>
+            <p>© 2026 WeatherPro. complete updated ❤️ by <strong>Bhavy</strong>.</p>
+            <p>© 2026 WeatherPro. Made with ❤️ by <strong>Bikramjit</strong>.</p>
+        </footer>
+
     </div>
 
-    <div class="footer">
-        Powered by Open-Meteo API
-    </div>
-</div>
-
+    <!-- JS -->
     <script src="script.js"></script>
-    <footer class="footer">
-        <p>© 2026 WeatherPro. All rights reserved.</p>
-        <p>WeatherPro is made with ❤️ by <strong>Bikramjit</strong>.</p>
-    </footer>
+
 </body>
 </html>
