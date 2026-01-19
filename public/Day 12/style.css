@@ -306,6 +306,152 @@ body {
         margin-top: 20px;
     }
     .social-icons a {
-        margin: 0 15px; 
+        margin: 0 15px;
+    }
+}
+
+/* Media query for small screens (phones) */
+@media (max-width: 480px) {
+    body {
+        padding-top: 60px;
+        font-size: 14px;
+    }
+
+    .navbar {
+        padding: 0.5rem 2%;
+    }
+
+    .nav-links a {
+        margin: 5px 5px;
+        font-size: 14px;
+    }
+
+    .btn {
+        padding: 8px 8px;
+        font-size: 14px;
+    }
+
+    #hero-section {
+        padding: 20px 2%;
+    }
+
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .hero-content p {
+        font-size: 14px;
+    }
+
+    .hero-content button {
+        padding: 15px;
+        font-size: 14px;
+    }
+
+    .hero-image img {
+        width: 100%;
+        height: auto;
+    }
+
+    #features-section {
+        padding: 40px 2%;
+    }
+
+    #features-section h2 {
+        font-size: 1.5rem;
+    }
+
+    .features-grid {
+        gap: 20px;
+    }
+
+    .feature-item h3 {
+        font-size: 1rem;
+    }
+
+    .feature-item p {
+        font-size: 14px;
+    }
+
+    .gallery-section {
+        padding: 40px 2%;
+        margin: 30px 2%;
+    }
+
+    .gallery-section h2 {
+        font-size: 1.8rem;
+    }
+
+    .gallery-images {
+        gap: 10px;
+    }
+
+    .gallery-images img {
+        width: 100%;
+    }
+
+    .reviews-section {
+        padding: 40px 2%;
+    }
+
+    .reviews-section h2 {
+        font-size: 1.8rem;
+    }
+
+    .review-card {
+        padding: 20px;
+    }
+
+    .review-card p {
+        font-size: 1rem;
+    }
+
+    #main-footer {
+        padding: 1rem 2%;
+    }
+
+    .footer-logo {
+        font-size: 1.2rem;
+    }
+
+    .social-icons a {
+        margin: 0 10px;
+        font-size: 1rem;
+    }
+}
+
+/* Media query for large screens (desktops) */
+@media (min-width: 1024px) {
+    #hero-section {
+        margin-left: 200px;
+    }
+
+    .hero-content {
+        margin-right: 100px;
+    }
+
+    .hero-content button {
+        margin-left: 300px;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 60px;
+    }
+
+    .gallery-images {
+        gap: 30px;
+    }
+
+    .gallery-images img {
+        width: 100%;
+    }
+
+    .review-card {
+        max-width: 800px;
+    }
+
+    #main-footer {
+        padding: 1.5rem 10%;
     }
 }
