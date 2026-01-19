@@ -17,7 +17,6 @@ const projects = [
     description: "Simple todo list using JavaScript",
     link: "../../Day03"
   }
-  // More projects can be added easily
 ];
 
 const projectGrid = document.getElementById("projectGrid");
@@ -29,7 +28,13 @@ projects.forEach(project => {
   card.innerHTML = `
     <h3>Day ${project.day}: ${project.title}</h3>
     <p>${project.description}</p>
-    <a href="${project.link}" target="_blank">View Project →</a>
+    <a
+      href="${project.link}"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      View Project →
+    </a>
   `;
 
   projectGrid.appendChild(card);
