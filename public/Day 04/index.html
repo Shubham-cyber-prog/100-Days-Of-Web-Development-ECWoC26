@@ -13,7 +13,6 @@
 </head>
 
 <body>
-
     <div class="container">
 
         <!-- ================= HEADER ================= -->
@@ -22,7 +21,6 @@
 
             <div class="header-controls">
                 <button id="unitToggle" class="unit-toggle">°C</button>
-
                 <button id="locationBtn" class="location-btn" title="Use current location">
                     <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 4.5 12 4.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
@@ -41,12 +39,12 @@
                     placeholder="Search for a city..."
                     autocomplete="off"
                 />
-
                 <button id="searchBtn" class="search-btn" aria-label="Search">
                     <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.71.71l.27.28v.79L20 20.49 21.49 19 15.5 14zM9.5 14A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/>
                     </svg>
                 </button>
+                <div id="suggestions" class="suggestions-box"></div>
             </div>
         </section>
 
@@ -71,16 +69,11 @@
 
                 <div class="current-weather-main">
                     <div class="weather-icon-large">
-                        <img
-                            id="currentWeatherIcon"
-                            src=""
-                            alt="Weather icon"
-                        />
+                        <img id="currentWeatherIcon" src="" alt="Weather icon"/>
                     </div>
 
                     <div class="current-temp">
                         <span id="currentTemp">--°</span>
-
                         <div class="current-location">
                             <span id="currentLocation">--</span><br>
                             <span id="currentDate">--</span>
@@ -100,19 +93,24 @@
 
             </section>
 
+            <!-- ================= 7 DAY FORECAST ================= -->
+            <section class="forecast">
+                <h3 class="forecast-title">7-Day Forecast</h3>
+                <div id="forecastContainer" class="forecast-container"></div>
+            </section>
+
         </main>
 
         <!-- ================= FOOTER ================= -->
         <footer class="footer">
             <p>Powered by Open-Meteo API</p>
-            <p>© 2026 WeatherPro. complete updated ❤️ by <strong>Bhavy</strong>.</p>
-            <p>© 2026 WeatherPro. Made with ❤️ by <strong>Bikramjit</strong>.</p>
+            <p>© 2026 WeatherPro. Updated by <strong>Bhavy</strong>.</p>
+            <p>Made with ❤️ by <strong>Bikramjit</strong>.</p>
         </footer>
 
     </div>
 
     <!-- JS -->
     <script src="script.js"></script>
-
 </body>
 </html>
