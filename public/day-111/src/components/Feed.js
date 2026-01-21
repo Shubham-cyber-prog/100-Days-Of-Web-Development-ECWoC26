@@ -53,6 +53,7 @@ const Feed = () => {
               type="text" 
               placeholder="What's on your mind?" 
               className="w-full bg-gray-100 rounded-full py-2 px-4 outline-none focus:ring-2 focus:ring-blue-400"
+              aria-label="What's on your mind?"
               value={input}
               onChange={(e) => setInput(e.target.value)}
             />
