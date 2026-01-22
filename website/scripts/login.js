@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 console.log('Redirecting to dashboard...');
                 setTimeout(() => {
-                    window.location.href = 'dashboard.html';
+                    window.location.href = 'website/pages/dashboard.html';
                 }, 500);
             }
         } else {
@@ -321,7 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 // Wait 1.5 seconds then redirect
                 setTimeout(() => {
-                    window.location.href = 'dashboard.html';
+                    window.location.href = 'website/pages/dashboard.html';
                 }, 1500);
                 
             } catch (error) {
@@ -401,7 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     showSuccessMessage('Google login successful! Redirecting...');
                     
                     setTimeout(() => {
-                        window.location.href = 'dashboard.html';
+                        window.location.href = 'website/pages/dashboard.html';
                     }, 1500);
                     
                 } catch (error) {
@@ -445,7 +445,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     showSuccessMessage('GitHub login successful! Redirecting...');
                     
                     setTimeout(() => {
-                        window.location.href = 'dashboard.html';
+                        window.location.href = 'website/pages/dashboard.html';
                     }, 1500);
                     
                 } catch (error) {
@@ -488,7 +488,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     showSuccessMessage('Welcome Guest! Redirecting...');
                     
                     setTimeout(() => {
-                        window.location.href = 'dashboard.html';
+                        window.location.href = 'website/pages/dashboard.html';
                     }, 1500);
                 }
             });
