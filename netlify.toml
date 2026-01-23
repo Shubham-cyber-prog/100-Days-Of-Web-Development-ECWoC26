@@ -1,3 +1,4 @@
+# Trigger Netlify build check
 [build]
   publish = "."
 
