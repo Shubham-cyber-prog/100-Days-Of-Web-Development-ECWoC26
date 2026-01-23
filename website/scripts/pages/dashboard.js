@@ -9,17 +9,29 @@ document.addEventListener('DOMContentLoaded', () => {
     // import { auth } from './firebase-config.js'; 
     */
 
-    const isGuest = sessionStorage.getItem('authGuest') === 'true';
-    const authToken = sessionStorage.getItem('authToken') === 'true';
-    const localAuth = localStorage.getItem('isAuthenticated') === 'true';
+    // Auth Guard is now handled by guard.js
+    // Removed conflicting check that caused infinite loop
 
-    // Auth Guard
-    if (!authToken && !localAuth && !isGuest) {
-        window.location.href = 'login.html';
-        return;
+    // Get user data from AuthService storage pattern
+    const isGuest = sessionStorage.getItem('is_guest') === 'true' || localStorage.getItem('is_guest') === 'true';
+
+    // Get user name (handle object parsing if needed)
+    let userName = 'User';
+    if (isGuest) {
+        userName = 'Guest Pilot';
+    } else {
+        try {
+            const userData = JSON.parse(sessionStorage.getItem('current_user') || localStorage.getItem('current_user'));
+            if (userData && userData.name) {
+                userName = userData.name;
+            } else if (userData && userData.email) {
+                userName = userData.email.split('@')[0];
+            }
+        } catch (e) {
+            console.warn('Error reading user data:', e);
+        }
     }
 
-    const userName = isGuest ? 'Guest Pilot' : (localStorage.getItem('user_name') || 'User');
     initializeDashboard({ email: userName, isGuest });
 
     function initializeDashboard(user) {
