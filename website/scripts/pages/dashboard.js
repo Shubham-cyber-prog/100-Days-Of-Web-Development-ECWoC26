@@ -20,24 +20,44 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isGuest) {
         userName = 'Guest Pilot';
     } else {
+        // robustly check session then local storage
+        let userData = null;
+
         try {
-            const userData = JSON.parse(sessionStorage.getItem('current_user') || localStorage.getItem('current_user'));
-            if (userData && userData.name) {
-                userName = userData.name;
-            } else if (userData && userData.email) {
-                userName = userData.email.split('@')[0];
+            const sessionRaw = sessionStorage.getItem('current_user');
+            if (sessionRaw) {
+                userData = JSON.parse(sessionRaw);
             }
         } catch (e) {
-            console.warn('Error reading user data:', e);
+            console.warn('Error parsing session user data:', e);
+        }
+
+        if (!userData) {
+            try {
+                const localRaw = localStorage.getItem('current_user');
+                if (localRaw) {
+                    userData = JSON.parse(localRaw);
+                }
+            } catch (e) {
+                console.warn('Error parsing local user data:', e);
+            }
+        }
+
+        if (userData) {
+            if (userData.name) {
+                userName = userData.name;
+            } else if (userData.email) {
+                userName = userData.email.split('@')[0];
+            }
         }
     }
 
-    initializeDashboard({ email: userName, isGuest });
+    initializeDashboard({ displayName: userName, isGuest });
 
     function initializeDashboard(user) {
         // Set user name
         const userNameElement = document.getElementById('userName');
-        if (userNameElement) userNameElement.textContent = user.email.split('@')[0];
+        if (userNameElement) userNameElement.textContent = user.displayName;
 
         // Logout functionality
         const logoutBtn = document.getElementById('logoutBtn');
