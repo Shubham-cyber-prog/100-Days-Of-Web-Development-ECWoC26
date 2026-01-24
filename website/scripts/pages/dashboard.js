@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Removed conflicting check that caused infinite loop
 
     // Get user data from AuthService storage pattern
-    // Get user data from AuthService storage pattern
     // Fix: Prefer sessionStorage to avoid stale localStorage guest state
     const sessionGuest = sessionStorage.getItem('is_guest');
     const isGuest = sessionGuest !== null ? sessionGuest === 'true' : localStorage.getItem('is_guest') === 'true';
