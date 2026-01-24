@@ -97,8 +97,31 @@ document.addEventListener('DOMContentLoaded', () => {
             { day: 100, title: "Master Project", folder: "Day 100", level: "Capstone", tech: ["HTML", "CSS", "JS", "React"] }
         ];
 
-        // Load completed days from localStorage
-        let completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+        // Initialize progress service and load completed days
+        let completedDays = [];
+        if (progressService) {
+            try {
+                completedDays = await progressService.initialize(user);
+                // Listen for real-time updates
+                progressService.listenToUpdates((updatedDays) => {
+                    completedDays = updatedDays;
+                    renderProgressGrid();
+                    updateStats();
+                });
+            } catch (error) {
+                console.warn('Failed to initialize progress service:', error);
+                completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+            }
+        } else {
+            completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+        }
+
+        // Listen for progress updates from other tabs/windows
+        window.addEventListener('progressUpdated', (e) => {
+            completedDays = e.detail;
+            renderProgressGrid();
+            updateStats();
+        });
 
         // Render progress grid
         if (document.getElementById('progressGrid')) renderProgressGrid();
@@ -141,13 +164,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        function toggleDay(day) {
-            if (completedDays.includes(day)) {
-                completedDays = completedDays.filter(d => d !== day);
+        async function toggleDay(day) {
+            if (progressService) {
+                await progressService.toggleDay(day);
+                completedDays = progressService.getCompletedDays();
             } else {
-                completedDays.push(day);
+                if (completedDays.includes(day)) {
+                    completedDays = completedDays.filter(d => d !== day);
+                } else {
+                    completedDays.push(day);
+                }
+                localStorage.setItem('completedDays', JSON.stringify(completedDays));
             }
-            localStorage.setItem('completedDays', JSON.stringify(completedDays));
             renderProgressGrid();
             updateStats();
         }
