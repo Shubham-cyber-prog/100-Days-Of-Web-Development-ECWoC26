@@ -2,6 +2,7 @@
 let App = window.App || null;
 let Notify = window.Notify || null;
 let progressService = null;
+let achievementService = null;
 
 // Try to load modules dynamically
 async function loadCoreModules() {
@@ -30,6 +31,13 @@ async function loadCoreModules() {
         }
     } catch (e) {
         console.warn('Notify not available, using console fallback');
+    }
+
+    try {
+        const module = await import('../core/achievementService.js');
+        achievementService = module.achievementService;
+    } catch (error) {
+        console.warn('Achievement service not available');
     }
 }
 
@@ -178,6 +186,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     completedDays = updatedDays;
                     renderProgressGrid();
                     updateStats();
+                    checkAchievements();
                 });
             } catch (error) {
                 console.warn('Failed to initialize progress service:', error);
@@ -185,6 +194,31 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         } else {
             completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+        }
+
+        // Initial achievement check
+        checkAchievements();
+
+        function checkAchievements() {
+            if (achievementService) {
+                achievementService.checkAchievements({
+                    totalCompleted: completedDays.length,
+                    currentStreak: calculateStreak(completedDays),
+                    techCount: 3 // Hardcoded estimate for now
+                });
+            }
+        }
+
+        function calculateStreak(days) {
+            if (!days.length) return 0;
+            const sorted = [...days].sort((a, b) => b - a);
+            let streak = 0;
+            // Simple streak logic for day numbers (assumes consecutive days are consecutive ints)
+            for (let i = 0; i < sorted.length - 1; i++) {
+                if (sorted[i] - sorted[i + 1] === 1) streak++;
+                else break;
+            }
+            return streak + 1;
         }
 
         // Listen for progress updates from other tabs/windows
@@ -256,7 +290,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             const el = document.getElementById('completedDays');
             if (el) el.textContent = completedCount;
 
-            // Stats logic...
+            // Achievement Progress logic
+            if (achievementService) {
+                const nextAchievement = achievementService.getNextAchievement('milestone', completedCount);
+                const nextEl = document.getElementById('nextAchievementLabel');
+                if (nextEl && nextAchievement) {
+                    nextEl.textContent = `Next: ${nextAchievement.title}`;
+                }
+            }
         }
 
         function renderRecommendations() {

@@ -20,7 +20,7 @@ async function loadCoreModules() {
     } catch (e) {
         console.warn('AppCore not available, using localStorage fallback');
     }
-    
+
     try {
         if (!Notify) {
             const notifyModule = await import('../core/Notify.js');
@@ -29,6 +29,13 @@ async function loadCoreModules() {
         }
     } catch (e) {
         console.warn('Notify not available, using local notification fallback');
+    }
+
+    try {
+        const module = await import('../core/achievementService.js');
+        window.achievementService = module.achievementService;
+    } catch (error) {
+        console.warn('Achievement service not available');
     }
 }
 
@@ -44,14 +51,14 @@ function checkAuth() {
         window.location.href = '../pages/login.html';
         return false;
     }
-    
+
     // Legacy auth check
     const authToken = sessionStorage.getItem('authToken');
     const localAuth = localStorage.getItem('isAuthenticated') === 'true';
     const isGuest = localStorage.getItem('isGuest') === 'true';
-    
-    if (!authToken && !localAuth && !isGuest && 
-        window.location.hostname !== 'localhost' && 
+
+    if (!authToken && !localAuth && !isGuest &&
+        window.location.hostname !== 'localhost' &&
         !window.location.protocol.includes('file')) {
         // window.location.href = '../pages/login.html';
     }
@@ -118,6 +125,7 @@ function renderGrid() {
     });
 
     updateStats();
+    renderAchievements();
 }
 
 // ============================================================
@@ -132,17 +140,40 @@ function loadProfileData() {
     }
     // Default profile data
     return {
-    username: 'Shubham-cyber-prog',
-    handle: '@ShubhamCyberProg',
-    avatar: 'https://avatars.githubusercontent.com/Shubham-cyber-prog',
-    rank: 'Developer',
-    level: 2,
-    bio: 'Frontend Developer | MERN Stack Learner | Open Source Contributor | Building real-world projects',
-    location: 'India',
-    website: 'https://tripolio.netlify.app/', 
-    github: 'https://github.com/Shubham-cyber-prog'
-};
+        username: 'Shubham-cyber-prog',
+        handle: '@ShubhamCyberProg',
+        avatar: 'https://avatars.githubusercontent.com/Shubham-cyber-prog',
+        rank: 'Developer',
+        level: 2,
+        bio: 'Frontend Developer | MERN Stack Learner | Open Source Contributor | Building real-world projects',
+        location: 'India',
+        website: 'https://tripolio.netlify.app/',
+        github: 'https://github.com/Shubham-cyber-prog'
+    };
 
+}
+
+// ============================================================
+// ACHIEVEMENT SHOWCASE
+// ============================================================
+
+function renderAchievements() {
+    const container = document.getElementById('achievementShowcase');
+    if (!container || !window.achievementService) return;
+
+    const achievements = window.achievementService.getAllAchievements();
+    const unlocked = achievements.filter(a => a.unlocked);
+
+    if (unlocked.length === 0) {
+        container.innerHTML = '<p class="text-secondary text-sm">No badges earned yet. Complete missions to unlock!</p>';
+        return;
+    }
+
+    container.innerHTML = unlocked.map(a => `
+        <div class="achievement-badge-mini" title="${a.title}: ${a.description}">
+            <span class="badge-icon-mini">${a.icon}</span>
+        </div>
+    `).join('');
 }
 
 // Save profile data to localStorage
@@ -385,7 +416,7 @@ function showSuccessMessage(message) {
         Notify.success(message);
         return;
     }
-    
+
     // Fallback to local notification
     const notification = document.createElement('div');
     notification.style.cssText = `
@@ -415,7 +446,7 @@ function showErrorMessage(message) {
         Notify.error(message);
         return;
     }
-    
+
     // Fallback
     const notification = document.createElement('div');
     notification.style.cssText = `
