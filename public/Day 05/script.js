@@ -222,6 +222,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.dataset.theme = 'light'; 
     }
 
+    if (!themeSwitcher) return;
+
     themeSwitcher.addEventListener('click', () => {
         const isDark = document.body.dataset.theme === 'dark';
         document.body.dataset.theme = isDark ? 'light' : 'dark';
