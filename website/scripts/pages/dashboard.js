@@ -1,39 +1,45 @@
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Check authentication (Mock / Local Storage)
-    // Upstream uses Firebase, but strictly adhering to "Frontend Only" request for now
-    // to prevent broken app due to missing API keys.
-
-    /* 
-    // Firebase Import (Commented out until config is provided)
-    // import { auth } from './firebase-config.js'; 
-    */
-
-    const isGuest = sessionStorage.getItem('authGuest') === 'true';
-    const authToken = sessionStorage.getItem('authToken') === 'true';
-    const localAuth = localStorage.getItem('isAuthenticated') === 'true';
-
-    // Auth Guard
-    if (!authToken && !localAuth && !isGuest) {
-        window.location.href = 'login.html';
-        return;
+    // Wait for AuthService to load
+    function waitForAuthService() {
+        if (window.AuthService) {
+            initializeDashboard();
+        } else {
+            setTimeout(waitForAuthService, 100);
+        }
     }
+    
+    waitForAuthService();
 
-    const userName = isGuest ? 'Guest Pilot' : (localStorage.getItem('user_name') || 'User');
-    initializeDashboard({ email: userName, isGuest });
-
-    function initializeDashboard(user) {
-        // Set user name
-        const userNameElement = document.getElementById('userName');
-        if (userNameElement) userNameElement.textContent = user.email.split('@')[0];
+    function initializeDashboard() {
+        const auth = window.AuthService;
+        
+        // Check authentication using AuthService
+        if (!auth.isAuthenticated()) {
+            console.log('❌ Not authenticated, redirecting to login');
+            window.location.href = 'login.html';
+            return;
+        }
+        
+        const user = auth.getCurrentUser();
+        const isGuest = auth.isGuest();
+        
+        console.log('✅ Dashboard initialized for:', user?.email || 'Guest');
+        
+        // Show guest banner if guest user
+        if (isGuest) {
+            const guestBanner = document.getElementById('guestBanner');
+            if (guestBanner) {
+                guestBanner.style.display = 'block';
+            }
+        }
 
         // Logout functionality
         const logoutBtn = document.getElementById('logoutBtn');
         if (logoutBtn) {
             logoutBtn.addEventListener('click', async () => {
                 if (confirm('Abort mission?')) {
-                    sessionStorage.clear();
-                    localStorage.removeItem('isAuthenticated');
+                    auth.logout();
                     window.location.href = 'login.html';
                 }
             });
