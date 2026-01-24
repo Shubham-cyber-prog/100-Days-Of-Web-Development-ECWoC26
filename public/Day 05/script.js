@@ -73,8 +73,6 @@ class Calculator {
         }
         
         this.currentOperand = result.toString();
-        this.operation = undefined;
-        this.previousOperand = '';
     }
 
     compute() {
