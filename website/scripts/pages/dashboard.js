@@ -18,7 +18,7 @@ async function loadCoreModules() {
     } catch (e) {
         console.warn('AppCore not available, using localStorage fallback');
     }
-    
+
     try {
         if (!Notify) {
             const notifyModule = await import('../core/Notify.js');
@@ -33,22 +33,22 @@ async function loadCoreModules() {
 document.addEventListener('DOMContentLoaded', async () => {
     // Load core modules first
     await loadCoreModules();
-    
+
     // Check authentication via App Core or legacy methods
     let isAuthenticated = false;
     let currentUser = null;
-    
+
     if (App && App.isAuthenticated()) {
         isAuthenticated = true;
-        currentUser = App.getUser();
+        currentUser = App.getCurrentUser();
     } else {
         // Legacy fallback
         const isGuest = sessionStorage.getItem('authGuest') === 'true';
         const authToken = sessionStorage.getItem('authToken') === 'true';
         const localAuth = localStorage.getItem('isAuthenticated') === 'true';
-        
+
         isAuthenticated = authToken || localAuth || isGuest;
-        
+
         if (isAuthenticated) {
             currentUser = {
                 name: isGuest ? 'Guest Pilot' : (localStorage.getItem('user_name') || 'User'),
@@ -86,26 +86,26 @@ document.addEventListener('DOMContentLoaded', async () => {
                     if (App) {
                         await App.logout();
                     }
-                    
+
                     // Clear legacy storage
                     sessionStorage.clear();
                     localStorage.removeItem('isAuthenticated');
-                    
+
                     if (Notify) {
                         Notify.success('Logged out successfully');
                     }
-                    
+
                     setTimeout(() => {
                         window.location.href = 'login.html';
                     }, 500);
                 };
-                
+
                 // Use Notify for confirmation if available
                 if (Notify && Notify.confirm) {
                     Notify.confirm('Abort mission?', {
                         onConfirm: handleLogout,
-                        confirmText: 'Abort',
-                        cancelText: 'Stay'
+                        confirmLabel: 'Abort',
+                        cancelLabel: 'Stay'
                     });
                 } else if (confirm('Abort mission?')) {
                     handleLogout();

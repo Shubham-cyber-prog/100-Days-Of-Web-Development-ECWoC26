@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // Load App and Notify from window or import
     try {
-        const appModule = await import('./core/App.js');
+        const appModule = await import('./core/app.js');
         App = appModule.App;
     } catch (e) {
         App = window.App;
@@ -586,7 +586,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 };
                 
                 if (App) {
-                    await App.login(guestUser, false); // Don't remember guests
+                    await App.loginAsGuest(); // Use proper guest login method
                 }
                 
                 // Legacy storage (for backward compatibility)
