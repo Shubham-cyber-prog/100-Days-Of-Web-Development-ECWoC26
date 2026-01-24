@@ -88,6 +88,10 @@ class Calculator {
                 result = prev / current;
                 break;
             case '%':
+                if (current === 0) {
+                    alert('Cannot modulo by zero');
+                    return;
+                }
                 result = prev % current;
                 break;
             case '^':
