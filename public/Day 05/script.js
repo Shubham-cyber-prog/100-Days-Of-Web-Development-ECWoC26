@@ -9,6 +9,7 @@ class Calculator {
         this.currentOperand = '0';
         this.previousOperand = '';
         this.operation = undefined;
+        this.awaitingNextOperand = false;
     }
 
     delete() {
@@ -19,6 +20,12 @@ class Calculator {
 
     appendNumber(number) {
         if (number === '.' && this.currentOperand.includes('.')) return;
+
+        if (this.awaitingNextOperand) {
+            this.currentOperand = (number === '.') ? '0.' : number.toString();
+            this.awaitingNextOperand = false;
+            return;
+        }
         
         if (this.currentOperand === '0' && number !== '.') {
             this.currentOperand = number;
@@ -29,6 +36,11 @@ class Calculator {
 
     chooseOperation(operation) {
         if (this.currentOperand === '') return;
+
+        if (this.operation && this.awaitingNextOperand) {
+            this.operation = operation;
+            return;
+        }
         
         if (this.previousOperand !== '') {
             this.compute();
@@ -37,6 +49,7 @@ class Calculator {
         this.operation = operation;
         this.previousOperand = this.currentOperand;
         this.currentOperand = '0';
+        this.awaitingNextOperand = true;
     }
 
     computeUnary(operation) {
