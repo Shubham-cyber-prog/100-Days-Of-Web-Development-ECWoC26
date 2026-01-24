@@ -6,23 +6,19 @@ const minusBtn = document.querySelector(".minus");
 const plusBtn = document.querySelector(".plus");
 const peopleCountEl = document.querySelector(".count");
 
-
 // outputs
 const tipPerPersonEL = document.querySelector(".result .row:first-child strong");
 const totalPerPersonEl = document.querySelector(".result .row:last-child strong");
 
-
 // reset
 const resetBtn = document.querySelector(".reset-btn");
-
 
 let billAmount = 0;
 let tipPercent = 0;
 let peopleCount = 1;
 
-
 function calculate() {
-    if ( billAmount <= 0 || peopleCount <= 0 ) {
+    if (billAmount <= 0 || peopleCount <= 0) {
         tipPerPersonEL.textContent = "₹0.00";
         totalPerPersonEl.textContent = "₹0.00";
         return;
@@ -36,18 +32,15 @@ function calculate() {
     totalPerPersonEl.textContent = `₹${totalPerPerson.toFixed(2)}`;
 }
 
-
 function clearActiveTips() {
     tipButtons.forEach(btn => btn.classList.remove("active"));
 }
-
 
 // bill input
 billInput.addEventListener("input", () => {
     billAmount = parseFloat(billInput.value) || 0;
     calculate();
 });
-
 
 // tip buttons
 tipButtons.forEach(button => {
@@ -57,11 +50,9 @@ tipButtons.forEach(button => {
 
         tipPercent = parseInt(button.textContent);
         customTipInput.value = "";
-
         calculate();
     });
 });
-
 
 // custom tip
 customTipInput.addEventListener("input", () => {
@@ -69,7 +60,6 @@ customTipInput.addEventListener("input", () => {
     tipPercent = parseFloat(customTipInput.value) || 0;
     calculate();
 });
-
 
 // people count
 plusBtn.addEventListener("click", () => {
@@ -86,7 +76,6 @@ minusBtn.addEventListener("click", () => {
     }
 });
 
-
 // reset
 resetBtn.addEventListener("click", () => {
     billAmount = 0;
@@ -98,23 +87,24 @@ resetBtn.addEventListener("click", () => {
     peopleCountEl.textContent = "1";
 
     clearActiveTips();
-
     tipPerPersonEL.textContent = "₹0.00";
     totalPerPersonEl.textContent = "₹0.00";
 });
 
-// dark mode toggle
+// dark mode toggle (FIXED ONLY)
 const themeToggle = document.querySelector(".theme-toggle");
 
-if (localStorage.getItem("theme") === "dark") {
-    document.body.classList.add("dark");
-    themeToggle.textContent = "☀️";
+if (themeToggle) {
+    if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark");
+        themeToggle.textContent = "☀️";
+    }
+
+    themeToggle.addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+
+        const isDark = document.body.classList.contains("dark");
+        themeToggle.textContent = isDark ? "☀️" : "🌙";
+        localStorage.setItem("theme", isDark ? "dark" : "light");
+    });
 }
-
-themeToggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-
-    const isDark = document.body.classList.contains("dark");
-    themeToggle.textContent = isDark ? "☀️" : "🌙";
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-});
