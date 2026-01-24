@@ -12,30 +12,56 @@ class Calculator {
     }
 
     delete() {
-        this.currentOperand = this.currentOperand.slice(0, -1);
-        if (this.currentOperand === '') this.currentOperand = '0';
+        if (this.currentOperand === '0') return;
+        this.currentOperand = this.currentOperand.toString().slice(0, -1);
+        if (this.currentOperand === '' || this.currentOperand === '-') this.currentOperand = '0';
     }
 
     appendNumber(number) {
         if (number === '.' && this.currentOperand.includes('.')) return;
-
+        
         if (this.currentOperand === '0' && number !== '.') {
             this.currentOperand = number;
         } else {
-            this.currentOperand += number;
+            this.currentOperand = this.currentOperand.toString() + number.toString();
         }
     }
 
     chooseOperation(operation) {
         if (this.currentOperand === '') return;
-
+        
         if (this.previousOperand !== '') {
             this.compute();
         }
-
+        
         this.operation = operation;
         this.previousOperand = this.currentOperand;
-        this.currentOperand = '';
+        this.currentOperand = '0';
+    }
+
+    computeUnary(operation) {
+        const current = parseFloat(this.currentOperand);
+        if (isNaN(current)) return;
+
+        let result;
+        switch (operation) {
+            case '√':
+                if (current < 0) {
+                    alert("Invalid Input");
+                    return;
+                }
+                result = Math.sqrt(current);
+                break;
+            case 'x²':
+                result = Math.pow(current, 2);
+                break;
+            default:
+                return;
+        }
+        
+        this.currentOperand = result.toString();
+        this.operation = undefined;
+        this.previousOperand = '';
     }
 
     compute() {
@@ -61,6 +87,12 @@ class Calculator {
                 }
                 result = prev / current;
                 break;
+            case '%':
+                result = prev % current;
+                break;
+            case '^':
+                result = Math.pow(prev, current);
+                break;
             default:
                 return;
         }
@@ -71,11 +103,12 @@ class Calculator {
     }
 
     getDisplayNumber(number) {
-        const [integerPart, decimalPart] = number.split('.');
+        const stringNumber = number.toString();
+        const [integerPart, decimalPart] = stringNumber.split('.');
         const integerDisplay = isNaN(integerPart)
             ? ''
-            : Number(integerPart).toLocaleString('en');
-
+            : Number(integerPart).toLocaleString('en', { maximumFractionDigits: 0 });
+            
         return decimalPart != null
             ? `${integerDisplay}.${decimalPart}`
             : integerDisplay;
@@ -85,10 +118,12 @@ class Calculator {
         this.currentOperandTextElement.innerText =
             this.getDisplayNumber(this.currentOperand);
 
-        this.previousOperandTextElement.innerText =
-            this.operation != null
-                ? `${this.getDisplayNumber(this.previousOperand)} ${this.operation}`
-                : '';
+        if (this.operation != null) {
+            this.previousOperandTextElement.innerText =
+                `${this.getDisplayNumber(this.previousOperand)} ${this.operation}`;
+        } else {
+            this.previousOperandTextElement.innerText = '';
+        }
     }
 }
 
@@ -98,6 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const numberButtons = document.querySelectorAll('.number');
     const operationButtons = document.querySelectorAll('.operator');
+    const scientificButtons = document.querySelectorAll('.scientific');
     const equalsButton = document.getElementById('equals');
     const deleteButton = document.getElementById('delete');
     const clearButton = document.getElementById('clear');
@@ -124,6 +160,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    scientificButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            calculator.computeUnary(button.innerText);
+            calculator.updateDisplay();
+        });
+    });
+
     equalsButton.addEventListener('click', () => {
         calculator.compute();
         calculator.updateDisplay();
@@ -143,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', e => {
         if ((e.key >= '0' && e.key <= '9') || e.key === '.') {
             calculator.appendNumber(e.key);
-        } else if (['+', '-', '*', '/'].includes(e.key)) {
+        } else if (['+', '-', '*', '/', '%', '^'].includes(e.key)) {
             const map = { '*': '×', '/': '÷' };
             calculator.chooseOperation(map[e.key] || e.key);
         } else if (e.key === 'Enter') {
@@ -159,7 +202,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* ---------- THEME SWITCH ---------- */
     const themeSwitcher = document.getElementById('theme-switcher');
-    document.body.dataset.theme = 'light';
+    
+    if(!document.body.dataset.theme) {
+        document.body.dataset.theme = 'light'; 
+    }
 
     themeSwitcher.addEventListener('click', () => {
         const isDark = document.body.dataset.theme === 'dark';
