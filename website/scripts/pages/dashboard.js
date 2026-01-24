@@ -1,11 +1,7 @@
-/**
- * Dashboard Module - 100 Days of Web Dev
- * Refactored to use centralized App Core and Notify services
- */
-
-// Dynamic imports for App Core and Notify
+// Dynamic imports for App Core, Notify, and Progress Service
 let App = window.App || null;
 let Notify = window.Notify || null;
+let progressService = null;
 
 // Try to load modules dynamically
 async function loadCoreModules() {
@@ -17,6 +13,13 @@ async function loadCoreModules() {
         }
     } catch (e) {
         console.warn('AppCore not available, using localStorage fallback');
+    }
+
+    try {
+        const module = await import('../core/progressService.js');
+        progressService = module.progressService;
+    } catch (error) {
+        console.warn('Progress service not available, using localStorage fallback');
     }
 
     try {
@@ -69,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     initializeDashboard(currentUser);
 
-    function initializeDashboard(user) {
+    async function initializeDashboard(user) {
         // Set user name
         const userNameElement = document.getElementById('userName');
         if (userNameElement) {
@@ -87,7 +90,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         await App.logout();
                     }
 
-                    // Clear legacy storage
+                    if (progressService) progressService.cleanup();
                     sessionStorage.clear();
                     localStorage.removeItem('isAuthenticated');
 
@@ -165,8 +168,31 @@ document.addEventListener('DOMContentLoaded', async () => {
             { day: 100, title: "Master Project", folder: "Day 100", level: "Capstone", tech: ["HTML", "CSS", "JS", "React"] }
         ];
 
-        // Load completed days from localStorage
-        let completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+        // Initialize progress service and load completed days
+        let completedDays = [];
+        if (progressService) {
+            try {
+                completedDays = await progressService.initialize(user);
+                // Listen for real-time updates
+                progressService.listenToUpdates((updatedDays) => {
+                    completedDays = updatedDays;
+                    renderProgressGrid();
+                    updateStats();
+                });
+            } catch (error) {
+                console.warn('Failed to initialize progress service:', error);
+                completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+            }
+        } else {
+            completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+        }
+
+        // Listen for progress updates from other tabs/windows
+        window.addEventListener('progressUpdated', (e) => {
+            completedDays = e.detail;
+            renderProgressGrid();
+            updateStats();
+        });
 
         // Render progress grid
         if (document.getElementById('progressGrid')) renderProgressGrid();
@@ -209,13 +235,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
 
-        function toggleDay(day) {
-            if (completedDays.includes(day)) {
-                completedDays = completedDays.filter(d => d !== day);
+        async function toggleDay(day) {
+            if (progressService) {
+                await progressService.toggleDay(day);
+                completedDays = progressService.getCompletedDays();
             } else {
-                completedDays.push(day);
+                if (completedDays.includes(day)) {
+                    completedDays = completedDays.filter(d => d !== day);
+                } else {
+                    completedDays.push(day);
+                }
+                localStorage.setItem('completedDays', JSON.stringify(completedDays));
             }
-            localStorage.setItem('completedDays', JSON.stringify(completedDays));
             renderProgressGrid();
             updateStats();
         }

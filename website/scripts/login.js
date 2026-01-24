@@ -25,22 +25,35 @@ import {
 // Import App Core and Notify (will fallback to window globals if not module)
 let App, Notify;
 
-// Firebase configuration
-const firebaseConfig = {
-    apiKey: "YOUR_API_KEY_HERE",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
-};
+// Your Firebase configuration - REPLACE WITH YOUR ACTUAL CONFIG
+const firebaseConfig = (() => {
+    const defaultConfig = {
+        apiKey: "YOUR_API_KEY_HERE",
+        authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_PROJECT_ID.appspot.com",
+        messagingSenderId: "YOUR_SENDER_ID",
+        appId: "YOUR_APP_ID"
+    };
+    if (typeof __firebase_config === 'object' && __firebase_config !== null) {
+        return __firebase_config;
+    } else if (typeof __firebase_config === 'string' && __firebase_config.trim()) {
+        try {
+            return JSON.parse(__firebase_config);
+        } catch (e) {
+            return defaultConfig;
+        }
+    } else {
+        return defaultConfig;
+    }
+})();
 
 // Initialize Firebase
 let app, auth;
 try {
     app = initializeApp(firebaseConfig);
     auth = getAuth(app);
-    
+
     // Set persistence to LOCAL
     setPersistence(auth, browserLocalPersistence)
         .then(() => console.log('Auth persistence set to LOCAL'))
@@ -51,7 +64,7 @@ try {
 
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('🔐 Auth script loaded');
-    
+
     // Load App and Notify from window or import
     try {
         const appModule = await import('./core/app.js');
@@ -59,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch (e) {
         App = window.App;
     }
-    
+
     try {
         const notifyModule = await import('./core/Notify.js');
         Notify = notifyModule.Notify;
@@ -71,7 +84,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (App && App.isAuthenticated()) {
         if (Notify) Notify.info('Already logged in! Redirecting...');
         setTimeout(() => {
-            window.location.href = 'dashboard.html';
+            window.location.href = '/website/pages/dashboard.html';
         }, 500);
         return;
     }
@@ -81,7 +94,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 console.log('User already logged in:', user.email);
-                
+
                 // Login via App Core
                 if (App) {
                     await App.login({
@@ -90,11 +103,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                         name: user.displayName || user.email.split('@')[0]
                     }, true);
                 }
-                
+
                 if (Notify) Notify.success('Welcome back! Redirecting...');
-                
+
                 setTimeout(() => {
-                    window.location.href = 'dashboard.html';
+                    window.location.href = '/website/pages/dashboard.html';
                 }, 500);
             }
         });
@@ -195,7 +208,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // Add error class to input
             input.classList.add('error');
-            
+
             // Create error message element
             const errorMsg = document.createElement('div');
             errorMsg.className = 'error-msg';
@@ -203,7 +216,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             errorMsg.style.color = '#ef4444';
             errorMsg.style.fontSize = '0.875rem';
             errorMsg.style.marginTop = '0.25rem';
-            
+
             // Insert after input
             input.parentNode.insertBefore(errorMsg, input.nextSibling);
 
@@ -315,12 +328,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             try {
                 let userCredential;
-                
+
                 if (isLogin) {
                     // Login
                     userCredential = await signInWithEmailAndPassword(auth, email, password);
                     console.log('Login successful:', userCredential.user.email);
-                    
+
                     // Login via App Core
                     if (App) {
                         await App.login({
@@ -329,7 +342,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             name: userCredential.user.displayName || userCredential.user.email.split('@')[0]
                         }, true);
                     }
-                    
+
                     // Show success notification
                     if (Notify) {
                         Notify.success('Login successful! Redirecting...');
@@ -340,7 +353,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     // Register
                     userCredential = await createUserWithEmailAndPassword(auth, email, password);
                     console.log('Registration successful:', userCredential.user.email);
-                    
+
                     // Login via App Core
                     if (App) {
                         await App.login({
@@ -349,7 +362,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             name: userCredential.user.email.split('@')[0]
                         }, true);
                     }
-                    
+
                     // Show success notification
                     if (Notify) {
                         Notify.success('Account created successfully! Redirecting...');
@@ -362,17 +375,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                 localStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('userEmail', userCredential.user.email);
                 localStorage.setItem('userId', userCredential.user.uid);
-                
+
                 // Wait 1.5 seconds then redirect
                 setTimeout(() => {
-                    window.location.href = 'dashboard.html';
+                    window.location.href = '/website/pages/dashboard.html';
                 }, 1500);
-                
+
             } catch (error) {
                 console.error('Auth error:', error);
-                
+
                 let errorMessage = 'An error occurred. Please try again.';
-                
+
                 switch (error.code) {
                     case 'auth/user-not-found':
                         errorMessage = 'No account found with this email.';
@@ -396,14 +409,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                         errorMessage = 'Network error. Please check your connection.';
                         break;
                 }
-                
+
                 // Show error via Notify or fallback
                 if (Notify) {
                     Notify.error(errorMessage);
                 } else {
                     showError(emailInput, errorMessage);
                 }
-                
+
                 // Reset button state
                 submitBtn.textContent = originalBtnText;
                 submitBtn.disabled = false;
@@ -415,7 +428,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Remove existing success messages
             const existingSuccess = document.querySelector('.success-message');
             if (existingSuccess) existingSuccess.remove();
-            
+
             // Create success message
             const successMsg = document.createElement('div');
             successMsg.className = 'success-message';
@@ -423,7 +436,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <i class="fas fa-check-circle" style="margin-right: 8px;"></i>
                 ${message}
             `;
-            
+
             // Insert after form
             authForm.parentNode.insertBefore(successMsg, authForm.nextSibling);
         }
@@ -436,10 +449,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                     googleBtn.disabled = true;
                     googleBtn.textContent = 'Connecting...';
                     googleBtn.classList.add('loading');
-                    
+
                     const userCredential = await signInWithPopup(auth, provider);
                     console.log('Google sign-in successful:', userCredential.user.email);
-                    
+
                     // Login via App Core
                     if (App) {
                         await App.login({
@@ -449,28 +462,28 @@ document.addEventListener('DOMContentLoaded', async () => {
                             provider: 'google'
                         }, true);
                     }
-                    
+
                     // Legacy storage (for backward compatibility)
                     localStorage.setItem('isLoggedIn', 'true');
                     localStorage.setItem('userEmail', userCredential.user.email);
                     localStorage.setItem('userId', userCredential.user.uid);
                     localStorage.setItem('userName', userCredential.user.displayName);
-                    
+
                     // Show success via Notify or fallback
                     if (Notify) {
                         Notify.success('Google login successful! Redirecting...');
                     } else {
                         showSuccessMessage('Google login successful! Redirecting...');
                     }
-                    
+
                     setTimeout(() => {
-                        window.location.href = 'dashboard.html';
+                        window.location.href = '/website/pages/dashboard.html';
                     }, 1500);
-                    
+
                 } catch (error) {
                     console.error('Google sign-in error:', error);
                     let errorMessage = 'Failed to sign in with Google. ';
-                    
+
                     if (error.code === 'auth/popup-blocked') {
                         errorMessage += 'Popup blocked by browser. Please allow popups for this site.';
                     } else if (error.code === 'auth/popup-closed-by-user') {
@@ -478,7 +491,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     } else {
                         errorMessage += 'Please try again.';
                     }
-                    
+
                     // Show error via Notify or fallback
                     if (Notify) {
                         Notify.error(errorMessage);
@@ -499,10 +512,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                     githubBtn.disabled = true;
                     githubBtn.textContent = 'Connecting...';
                     githubBtn.classList.add('loading');
-                    
+
                     const userCredential = await signInWithPopup(auth, provider);
                     console.log('GitHub sign-in successful:', userCredential.user.email);
-                    
+
                     // Login via App Core
                     if (App) {
                         await App.login({
@@ -512,28 +525,28 @@ document.addEventListener('DOMContentLoaded', async () => {
                             provider: 'github'
                         }, true);
                     }
-                    
+
                     // Legacy storage (for backward compatibility)
                     localStorage.setItem('isLoggedIn', 'true');
                     localStorage.setItem('userEmail', userCredential.user.email || 'github-user@github.com');
                     localStorage.setItem('userId', userCredential.user.uid);
                     localStorage.setItem('userName', userCredential.user.displayName || 'GitHub User');
-                    
+
                     // Show success via Notify or fallback
                     if (Notify) {
                         Notify.success('GitHub login successful! Redirecting...');
                     } else {
                         showSuccessMessage('GitHub login successful! Redirecting...');
                     }
-                    
+
                     setTimeout(() => {
-                        window.location.href = 'dashboard.html';
+                        window.location.href = '/website/pages/dashboard.html';
                     }, 1500);
-                    
+
                 } catch (error) {
                     console.error('GitHub sign-in error:', error);
                     let errorMessage = 'Failed to sign in with GitHub. ';
-                    
+
                     if (error.code === 'auth/popup-blocked') {
                         errorMessage += 'Popup blocked by browser. Please allow popups for this site.';
                     } else if (error.code === 'auth/popup-closed-by-user') {
@@ -543,7 +556,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     } else {
                         errorMessage += 'Please try again.';
                     }
-                    
+
                     // Show error via Notify or fallback
                     if (Notify) {
                         Notify.error(errorMessage);
@@ -573,10 +586,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                         }
                     });
                 };
-                
+
                 const confirmed = await confirmGuest();
                 if (!confirmed) return;
-                
+
                 // Guest login via App Core
                 const guestUser = {
                     id: 'guest_' + Date.now(),
@@ -584,11 +597,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     name: 'Guest User',
                     isGuest: true
                 };
-                
+
                 if (App) {
                     await App.loginAsGuest(); // Use proper guest login method
                 }
-                
+
                 // Legacy storage (for backward compatibility)
                 localStorage.setItem('isGuest', 'true');
                 localStorage.setItem('isLoggedIn', 'true');
@@ -596,16 +609,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                 localStorage.setItem('userName', 'Guest User');
                 localStorage.setItem('userEmail', 'guest@example.com');
                 localStorage.setItem('userId', guestUser.id);
-                
+
                 console.log('Guest login successful');
-                
+
                 // Show success via Notify or fallback
                 if (Notify) {
                     Notify.success('Welcome Guest! Redirecting...');
                 } else {
                     showSuccessMessage('Welcome Guest! Redirecting...');
                 }
-                
+
                 setTimeout(() => {
                     window.location.href = 'dashboard.html';
                 }, 1500);
@@ -616,9 +629,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (forgotPasswordAction) {
             forgotPasswordAction.addEventListener('click', async (e) => {
                 e.preventDefault();
-                
+
                 const email = emailInput.value.trim();
-                
+
                 if (!email) {
                     if (Notify) {
                         Notify.warning('Please enter your email address first.');
@@ -627,7 +640,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     }
                     return;
                 }
-                
+
                 if (!validateEmail(email)) {
                     if (Notify) {
                         Notify.warning('Please enter a valid email address.');
@@ -640,9 +653,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 try {
                     forgotPasswordAction.textContent = 'Sending...';
                     forgotPasswordAction.disabled = true;
-                    
+
                     await sendPasswordResetEmail(auth, email);
-                    
+
                     if (Notify) {
                         Notify.success(`Password reset email sent to ${email}. Check your inbox.`);
                     } else {
@@ -650,9 +663,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     }
                 } catch (error) {
                     console.error('Password reset error:', error);
-                    
+
                     let errorMessage = 'Failed to send password reset email. ';
-                    
+
                     if (error.code === 'auth/user-not-found') {
                         errorMessage = 'No account found with this email.';
                     } else if (error.code === 'auth/too-many-requests') {
@@ -660,7 +673,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     } else {
                         errorMessage += 'Please try again.';
                     }
-                    
+
                     if (Notify) {
                         Notify.error(errorMessage);
                     } else {
@@ -692,12 +705,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                     font-weight: 500;
                     width: 100%;
                 `;
-                
+
                 demoBtn.addEventListener('click', () => {
                     // Auto-fill demo credentials
                     emailInput.value = 'demo@example.com';
                     passwordInput.value = 'demo123';
-                    
+
                     if (confirm('Use demo account? Email: demo@example.com, Password: demo123')) {
                         // Trigger form submission after 1 second
                         setTimeout(() => {
@@ -705,7 +718,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         }, 1000);
                     }
                 });
-                
+
                 authForm.parentNode.insertBefore(demoBtn, authForm.nextSibling);
             }
         }
