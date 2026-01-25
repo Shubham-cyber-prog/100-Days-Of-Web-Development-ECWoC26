@@ -9,6 +9,12 @@ function toggleMobileMenu() {
     navLinks.classList.toggle('open');
 }
 
+/* Close mobile menu when nav link is clicked */
+function closeMobileMenu() {
+    const navLinks = document.querySelector('.nav-links');
+    navLinks.classList.remove('open');
+}
+
 /* User Dropdown */
 function toggleUserMenu() {
     const dropdown = document.querySelector('.user-dropdown');
@@ -76,6 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
             links.forEach(l => l.classList.remove('active'));
             link.classList.add('active');
         }
+        
+        // Add click event to close mobile menu
+        link.addEventListener('click', closeMobileMenu);
     });
 
     // 2. Avatar Logic (Guest checks)
@@ -97,13 +106,40 @@ document.addEventListener('DOMContentLoaded', () => {
     // Apply immediately to avoid flash
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateThemeIcon(savedTheme);
+
+    // 4. Connection Status Init
+    import('./ConnectionStatus.js').then(({ ConnectionStatus }) => {
+        new ConnectionStatus();
+    }).catch(e => console.warn('ConnectionStatus component not loaded:', e));
+
+    // 5. PWA Install Prompt
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        // Show install button if it exists
+        const installBtn = document.getElementById('pwa-install-btn');
+        if (installBtn) {
+            installBtn.style.display = 'flex';
+            installBtn.addEventListener('click', () => {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the A2HS prompt');
+                    }
+                    deferredPrompt = null;
+                    installBtn.style.display = 'none';
+                });
+            });
+        }
+    });
 });
 
 /* Logout Logic - Using Local Auth Service */
 function handleLogout() {
     if (confirm('Abort mission and logout?')) {
         console.log('🚪 Logout initiated...');
-        
+
         // Use AuthService if available
         if (window.AuthService) {
             window.AuthService.logout();
@@ -115,12 +151,12 @@ function handleLogout() {
             localStorage.removeItem('is_guest');
             localStorage.removeItem('guestSession');
         }
-        
+
         // Determine correct login path
-        const loginPath = window.location.pathname.includes('/pages/') 
-            ? 'login.html' 
+        const loginPath = window.location.pathname.includes('/pages/')
+            ? 'login.html'
             : 'website/pages/login.html';
-        
+
         console.log('✅ Logged out, redirecting to:', loginPath);
         window.location.href = loginPath;
     }
