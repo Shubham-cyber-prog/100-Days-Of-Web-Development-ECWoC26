@@ -18,8 +18,8 @@
 
     <link rel="icon" type="image/png" href="website/assets/images/logo.png" height="70px" width="100px">
     
-    <!-- Fire Cursor -->
-    <link rel="stylesheet" href="firecursor.css">
+    <!-- Fire Cursor - Commented out as file is missing -->
+    <!-- <link rel="stylesheet" href="firecursor.css"> -->
     
     <style>
         /* Enhanced Modern UI Styles */
@@ -80,19 +80,58 @@
             border-radius: 25%;
 
         }
+
         header nav img:hover {
             box-shadow: 0 0 15px #ff5733, 0 0 30px #ff5733, 0 0 45px #ff5733;
             transition: box-shadow 0.3s ease-in-out;
+
+
+        .nav-logo:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+
         }
         .nav-container{
             height: 120px;
             margin-top: 25px;
         }
+
         .nav-user a img {
             width: 100px;
             height: 70px;
             border: 2px groove #cc2a01;
             border-radius: 25%;
+
+
+        /* Navbar in light mode */
+        html[data-theme="light"] .site-header {
+            background: var(--light-bg);
+            backdrop-filter: blur(0); /* remove glass mismatch */
+            -webkit-backdrop-filter: blur(0);
+            box-shadow: none;
+        
+        }
+        /* Hero Section Enhancement */
+        .zenith-hero {
+            text-align: center;
+            padding: 100px 20px 80px;
+            position: relative;
+
         }
         .nav-user a:hover {
             box-shadow: 0 0 15px #ff5733, 0 0 30px #ff5733, 0 0 45px #ff5733;
@@ -133,6 +172,10 @@
             line-height: 1.6;
             position: relative;
             z-index: 1;
+        }
+
+        html[data-theme="light"] .hero-subtitle {
+            color: #333;
         }
 
         .hero-actions {
@@ -196,6 +239,10 @@
             border-color: rgba(102, 126, 234, 0.8);
             transform: translateY(-3px);
             box-shadow: var(--shadow-md);
+        }
+
+        html[data-theme="light"] .btn-zenith-secondary{
+            color:#333;
         }
 
         /* Feature Cards Enhancement */
@@ -390,12 +437,19 @@
             </a>
 
             <nav class="nav-links">
+
                 <a href="#" class="nav-link active">
                     <img src="website/assets/images/home.png" alt="">
                 </a>
                 <a href="website/pages/projects.html" class="nav-link"><img src="website/assets/images/project.png" alt=""></a>
                 <a href="website/pages/about.html" class="nav-link"><img src="website/assets/images/about.png" alt=""></a>
                 <a href="website/pages/contributors.html" class="nav-link"><img src="website/assets/images/contributor.png" alt=""></a>
+
+                <a href="#" class="nav-link active" onclick="closeMobileMenuInline()">Home</a>
+                <a href="website/pages/projects.html" class="nav-link" onclick="closeMobileMenuInline()">Projects</a>
+                <a href="website/pages/about.html" class="nav-link" onclick="closeMobileMenuInline()">About</a>
+                <a href="website/pages/contributors.html" class="nav-link" onclick="closeMobileMenuInline()">Contributors</a>
+
             </nav>
 
             <div class="nav-user">
@@ -531,6 +585,15 @@
     <!-- Scripts -->
     <script src="website/scripts/components/cursor.js"></script>
     <script src="website/scripts/components/navigation.js"></script>
+    <script>
+        // Inline function for main index.html mobile menu close
+        function closeMobileMenuInline() {
+            const navLinks = document.querySelector('.nav-links');
+            if (navLinks) {
+                navLinks.classList.remove('open');
+            }
+        }
+    </script>
 </body>
 
 </html>
