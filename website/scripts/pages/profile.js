@@ -13,6 +13,34 @@ if (!authToken && window.location.hostname !== 'localhost' && !window.location.p
     // window.location.href = '../pages/login.html';
 }
 
+// Initialize core modules
+loadCoreModules();
+
+// Auth Guard - use App Core if available
+function checkAuth() {
+    if (App && App.isAuthenticated && !App.isAuthenticated()) {
+        if (Notify) {
+            Notify.warning('Please login to view your profile');
+        }
+        window.location.href = '../pages/login.html';
+        return false;
+    }
+
+    // Legacy auth check
+    const authToken = sessionStorage.getItem('authToken');
+    const localAuth = localStorage.getItem('isAuthenticated') === 'true';
+    const isGuest = localStorage.getItem('isGuest') === 'true';
+
+    if (!authToken && !localAuth && !isGuest &&
+        window.location.hostname !== 'localhost' &&
+        !window.location.protocol.includes('file')) {
+        // window.location.href = '../pages/login.html';
+    }
+    return true;
+}
+
+checkAuth();
+
 const gridContainer = document.getElementById('missionGrid');
 const percentageDisplay = document.querySelector('.text-flame'); // The "45%" text
 
@@ -71,6 +99,7 @@ function renderGrid() {
     });
 
     updateStats();
+    renderAchievements();
 }
 
 // ============================================================
@@ -85,17 +114,40 @@ function loadProfileData() {
     }
     // Default profile data
     return {
-    username: 'Shubham-cyber-prog',
-    handle: '@ShubhamCyberProg',
-    avatar: 'https://avatars.githubusercontent.com/Shubham-cyber-prog',
-    rank: 'Developer',
-    level: 2,
-    bio: 'Frontend Developer | MERN Stack Learner | Open Source Contributor | Building real-world projects',
-    location: 'India',
-    website: 'https://tripolio.netlify.app/', 
-    github: 'https://github.com/Shubham-cyber-prog'
-};
+        username: 'Shubham-cyber-prog',
+        handle: '@ShubhamCyberProg',
+        avatar: 'https://avatars.githubusercontent.com/Shubham-cyber-prog',
+        rank: 'Developer',
+        level: 2,
+        bio: 'Frontend Developer | MERN Stack Learner | Open Source Contributor | Building real-world projects',
+        location: 'India',
+        website: 'https://tripolio.netlify.app/',
+        github: 'https://github.com/Shubham-cyber-prog'
+    };
 
+}
+
+// ============================================================
+// ACHIEVEMENT SHOWCASE
+// ============================================================
+
+function renderAchievements() {
+    const container = document.getElementById('achievementShowcase');
+    if (!container || !window.achievementService) return;
+
+    const achievements = window.achievementService.getAllAchievements();
+    const unlocked = achievements.filter(a => a.unlocked);
+
+    if (unlocked.length === 0) {
+        container.innerHTML = '<p class="text-secondary text-sm">No badges earned yet. Complete missions to unlock!</p>';
+        return;
+    }
+
+    container.innerHTML = unlocked.map(a => `
+        <div class="achievement-badge-mini" title="${a.title}: ${a.description}">
+            <span class="badge-icon-mini">${a.icon}</span>
+        </div>
+    `).join('');
 }
 
 // Save profile data to localStorage
@@ -333,12 +385,49 @@ function updateProfileDisplay() {
 }
 
 function showSuccessMessage(message) {
+    // Use Notify if available
+    if (Notify) {
+        Notify.success(message);
+        return;
+    }
+
+    // Fallback to local notification
     const notification = document.createElement('div');
     notification.style.cssText = `
         position: fixed;
         top: 20px;
         right: 20px;
         background: #10b981;
+        color: white;
+        padding: 16px 24px;
+        border-radius: 8px;
+        z-index: 2000;
+        animation: slideIn 0.3s ease-out;
+        font-weight: 500;
+    `;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease-out';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+// Error notification helper
+function showErrorMessage(message) {
+    if (Notify) {
+        Notify.error(message);
+        return;
+    }
+
+    // Fallback
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #ef4444;
         color: white;
         padding: 16px 24px;
         border-radius: 8px;
