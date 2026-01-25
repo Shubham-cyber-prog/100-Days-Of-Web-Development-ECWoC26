@@ -118,6 +118,7 @@ function renderGrid() {
     });
 
     updateStats();
+    renderAchievements();
 }
 
 // ============================================================
@@ -132,17 +133,40 @@ function loadProfileData() {
     }
     // Default profile data
     return {
-    username: 'Shubham-cyber-prog',
-    handle: '@ShubhamCyberProg',
-    avatar: 'https://avatars.githubusercontent.com/Shubham-cyber-prog',
-    rank: 'Developer',
-    level: 2,
-    bio: 'Frontend Developer | MERN Stack Learner | Open Source Contributor | Building real-world projects',
-    location: 'India',
-    website: 'https://tripolio.netlify.app/', 
-    github: 'https://github.com/Shubham-cyber-prog'
-};
+        username: 'Shubham-cyber-prog',
+        handle: '@ShubhamCyberProg',
+        avatar: 'https://avatars.githubusercontent.com/Shubham-cyber-prog',
+        rank: 'Developer',
+        level: 2,
+        bio: 'Frontend Developer | MERN Stack Learner | Open Source Contributor | Building real-world projects',
+        location: 'India',
+        website: 'https://tripolio.netlify.app/',
+        github: 'https://github.com/Shubham-cyber-prog'
+    };
 
+}
+
+// ============================================================
+// ACHIEVEMENT SHOWCASE
+// ============================================================
+
+function renderAchievements() {
+    const container = document.getElementById('achievementShowcase');
+    if (!container || !window.achievementService) return;
+
+    const achievements = window.achievementService.getAllAchievements();
+    const unlocked = achievements.filter(a => a.unlocked);
+
+    if (unlocked.length === 0) {
+        container.innerHTML = '<p class="text-secondary text-sm">No badges earned yet. Complete missions to unlock!</p>';
+        return;
+    }
+
+    container.innerHTML = unlocked.map(a => `
+        <div class="achievement-badge-mini" title="${a.title}: ${a.description}">
+            <span class="badge-icon-mini">${a.icon}</span>
+        </div>
+    `).join('');
 }
 
 // Save profile data to localStorage

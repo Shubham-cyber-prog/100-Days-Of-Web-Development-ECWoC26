@@ -2,6 +2,19 @@
 let App = window.App || null;
 let Notify = window.Notify || null;
 let progressService = null;
+let achievementService = null;
+
+// Try to load modules dynamically
+async function loadCoreModules() {
+    try {
+        if (!App) {
+            const appModule = await import('../core/app.js');
+            App = appModule.App || appModule.default;
+            window.App = App;
+        }
+    } catch (e) {
+        console.warn('AppCore not available, using localStorage fallback');
+    }
 
 // Try to load modules dynamically
 async function loadCoreModules() {
@@ -21,6 +34,85 @@ async function loadCoreModules() {
     } catch (error) {
         console.warn('Progress service not available, using localStorage fallback');
     }
+}
+
+
+    // Auth Guard is now handled by guard.js
+    // Removed conflicting check that caused infinite loop
+
+    // Get user data from AuthService storage pattern
+    // Fix: Prefer sessionStorage to avoid stale localStorage guest state
+    const sessionGuest = sessionStorage.getItem('is_guest');
+    const isGuest = sessionGuest !== null ? sessionGuest === 'true' : localStorage.getItem('is_guest') === 'true';
+
+    // Get user name (handle object parsing if needed)
+    let userName = 'User';
+    let userData = null;
+
+    if (isGuest) {
+        userName = 'Guest Pilot';
+    } else {
+        // robustly check session then local storage
+        try {
+            const sessionRaw = sessionStorage.getItem('current_user');
+            if (sessionRaw) {
+                userData = JSON.parse(sessionRaw);
+            }
+        } catch (e) {
+            console.warn('Error parsing session user data:', e);
+        }
+
+        if (!userData) {
+            try {
+                const localRaw = localStorage.getItem('current_user');
+                if (localRaw) {
+                    userData = JSON.parse(localRaw);
+                }
+            } catch (e) {
+                console.warn('Error parsing local user data:', e);
+            }
+        }
+
+        if (userData) {
+            if (userData.name) {
+                userName = userData.name;
+            } else if (userData.email) {
+                userName = userData.email.split('@')[0];
+            }
+        }
+    }
+
+    // Get user id from userData if available
+    let userId = null;
+    if (userData && userData.id) {
+        userId = userData.id;
+    }
+
+    // Fallback to upstream's simple check if needed (or if set by other means)
+    if (!userId) {
+        userId = localStorage.getItem('user_id');
+    }
+
+    await initializeDashboard({ displayName: userName, isGuest, uid: userId });
+
+document.addEventListener('DOMContentLoaded', async () => {
+    // Load core modules first
+    await loadCoreModules();
+
+    // Check authentication via App Core or legacy methods
+    let isAuthenticated = false;
+    let currentUser = null;
+
+    if (App && App.isAuthenticated()) {
+        isAuthenticated = true;
+        currentUser = App.getCurrentUser();
+    } else {
+        // Legacy fallback
+        const isGuest = sessionStorage.getItem('authGuest') === 'true';
+        const authToken = sessionStorage.getItem('authToken') === 'true';
+        const localAuth = localStorage.getItem('isAuthenticated') === 'true';
+
+        isAuthenticated = authToken || localAuth || isGuest;
 
     try {
         if (!Notify) {
@@ -178,6 +270,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     completedDays = updatedDays;
                     renderProgressGrid();
                     updateStats();
+                    checkAchievements();
                 });
             } catch (error) {
                 console.warn('Failed to initialize progress service:', error);
@@ -185,6 +278,31 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         } else {
             completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+        }
+
+        // Initial achievement check
+        checkAchievements();
+
+        function checkAchievements() {
+            if (achievementService) {
+                achievementService.checkAchievements({
+                    totalCompleted: completedDays.length,
+                    currentStreak: calculateStreak(completedDays),
+                    techCount: 3 // Hardcoded estimate for now
+                });
+            }
+        }
+
+        function calculateStreak(days) {
+            if (!days.length) return 0;
+            const sorted = [...days].sort((a, b) => b - a);
+            let streak = 0;
+            // Simple streak logic for day numbers (assumes consecutive days are consecutive ints)
+            for (let i = 0; i < sorted.length - 1; i++) {
+                if (sorted[i] - sorted[i + 1] === 1) streak++;
+                else break;
+            }
+            return streak + 1;
         }
 
         // Listen for progress updates from other tabs/windows
@@ -256,7 +374,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             const el = document.getElementById('completedDays');
             if (el) el.textContent = completedCount;
 
-            // Stats logic...
+            // Achievement Progress logic
+            if (achievementService) {
+                const nextAchievement = achievementService.getNextAchievement('milestone', completedCount);
+                const nextEl = document.getElementById('nextAchievementLabel');
+                if (nextEl && nextAchievement) {
+                    nextEl.textContent = `Next: ${nextAchievement.title}`;
+                }
+            }
         }
 
         function renderRecommendations() {

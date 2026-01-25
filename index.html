@@ -16,10 +16,10 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet">
 
-    <link rel="icon" type="image/png" href="website/assets/images/logo.png">
+    <link rel="icon" type="image/png" href="website/assets/images/logo.png" height="70px" width="100px">
     
-    <!-- Fire Cursor -->
-    <link rel="stylesheet" href="firecursor.css">
+    <!-- Fire Cursor - Commented out as file is missing -->
+    <!-- <link rel="stylesheet" href="firecursor.css"> -->
     
     <style>
         /* Enhanced Modern UI Styles */
@@ -69,16 +69,22 @@
         }
 
         /* Enhanced Header */
-        .site-header {
-            background: rgba(15, 15, 35, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(102, 126, 234, 0.2);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        header{
+            height: 150px;
+          
+        }
+        header nav img {
+            width: 100px;
+            height: 70px;
+            border: 2px groove #cc2a01;
+            border-radius: 25%;
+
         }
 
-        .nav-logo {
-            transition: transform 0.3s ease;
-        }
+        header nav img:hover {
+            box-shadow: 0 0 15px #ff5733, 0 0 30px #ff5733, 0 0 45px #ff5733;
+            transition: box-shadow 0.3s ease-in-out;
+
 
         .nav-logo:hover {
             transform: scale(1.05) rotate(5deg);
@@ -96,35 +102,42 @@
             left: 50%;
             width: 0;
             height: 2px;
-            background: var(--gradient-primary);
             transition: all 0.3s ease;
             transform: translateX(-50%);
+
+        }
+        .nav-container{
+            height: 120px;
+            margin-top: 25px;
         }
 
-        .nav-link:hover::after,
-        .nav-link.active::after {
-            width: 100%;
-        }
+        .nav-user a img {
+            width: 100px;
+            height: 70px;
+            border: 2px groove #cc2a01;
+            border-radius: 25%;
 
+
+        /* Navbar in light mode */
+        html[data-theme="light"] .site-header {
+            background: var(--light-bg);
+            backdrop-filter: blur(0); /* remove glass mismatch */
+            -webkit-backdrop-filter: blur(0);
+            box-shadow: none;
+        
+        }
         /* Hero Section Enhancement */
         .zenith-hero {
             text-align: center;
             padding: 100px 20px 80px;
             position: relative;
-        }
 
-        .zenith-hero::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: pulse-glow 4s ease-in-out infinite;
         }
+        .nav-user a:hover {
+            box-shadow: 0 0 15px #ff5733, 0 0 30px #ff5733, 0 0 45px #ff5733;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        
 
         @keyframes pulse-glow {
             0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
@@ -134,7 +147,7 @@
         .hero-title {
             font-size: clamp(2.5rem, 6vw, 5rem);
             font-weight: 800;
-            background: linear-gradient(135deg, #fff 0%, #667eea 50%, #f5576c 100%);
+            background: linear-gradient(135deg, #e43601 20%, #e9c600 50%, #dd0220 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -161,6 +174,10 @@
             z-index: 1;
         }
 
+        html[data-theme="light"] .hero-subtitle {
+            color: #333;
+        }
+
         .hero-actions {
             display: flex;
             gap: 1.5rem;
@@ -185,7 +202,7 @@
         }
 
         .btn-zenith-primary {
-            background: var(--gradient-primary);
+            background-image: linear-gradient(yellow , red, orange);
             color: white;
             box-shadow: var(--shadow-lg), var(--shadow-glow);
         }
@@ -207,7 +224,7 @@
 
         .btn-zenith-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 50px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 15px 50px rgba(252, 122, 2, 0.4);
         }
 
         .btn-zenith-secondary {
@@ -222,6 +239,10 @@
             border-color: rgba(102, 126, 234, 0.8);
             transform: translateY(-3px);
             box-shadow: var(--shadow-md);
+        }
+
+        html[data-theme="light"] .btn-zenith-secondary{
+            color:#333;
         }
 
         /* Feature Cards Enhancement */
@@ -416,10 +437,19 @@
             </a>
 
             <nav class="nav-links">
-                <a href="#" class="nav-link active">Home</a>
-                <a href="website/pages/projects.html" class="nav-link">Projects</a>
-                <a href="website/pages/about.html" class="nav-link">About</a>
-                <a href="website/pages/contributors.html" class="nav-link">Contributors</a>
+
+                <a href="#" class="nav-link active">
+                    <img src="website/assets/images/home.png" alt="">
+                </a>
+                <a href="website/pages/projects.html" class="nav-link"><img src="website/assets/images/project.png" alt=""></a>
+                <a href="website/pages/about.html" class="nav-link"><img src="website/assets/images/about.png" alt=""></a>
+                <a href="website/pages/contributors.html" class="nav-link"><img src="website/assets/images/contributor.png" alt=""></a>
+
+                <a href="#" class="nav-link active" onclick="closeMobileMenuInline()">Home</a>
+                <a href="website/pages/projects.html" class="nav-link" onclick="closeMobileMenuInline()">Projects</a>
+                <a href="website/pages/about.html" class="nav-link" onclick="closeMobileMenuInline()">About</a>
+                <a href="website/pages/contributors.html" class="nav-link" onclick="closeMobileMenuInline()">Contributors</a>
+
             </nav>
 
             <div class="nav-user">
@@ -431,7 +461,7 @@
                     </svg>
                 </button>
 
-                <a href="website/pages/dashboard.html" class="btn btn-primary text-sm">Dashboard</a>
+                <a href="website/pages/dashboard.html" class="btn btn-primary text-sm"><img src="website/assets/images/dashboard.png" alt="dashboard"></a>
 
                 <button class="mobile-toggle" onclick="toggleMobileMenu()" aria-label="Menu">
                     <svg class="icon icon-lg" viewBox="0 0 24 24">
@@ -555,6 +585,15 @@
     <!-- Scripts -->
     <script src="website/scripts/components/cursor.js"></script>
     <script src="website/scripts/components/navigation.js"></script>
+    <script>
+        // Inline function for main index.html mobile menu close
+        function closeMobileMenuInline() {
+            const navLinks = document.querySelector('.nav-links');
+            if (navLinks) {
+                navLinks.classList.remove('open');
+            }
+        }
+    </script>
 </body>
 
 </html>
