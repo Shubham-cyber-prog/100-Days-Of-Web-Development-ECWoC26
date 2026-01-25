@@ -34,13 +34,58 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Logout functionality
+        if (userNameElement) userNameElement.textContent = user.displayName;
+=======
+        if (userNameElement) {
+            const displayName = user.name || (user.email ? user.email.split('@')[0] : 'User');
+            userNameElement.textContent = displayName;
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Wait for AuthService to load
+    function waitForAuthService() {
+        if (window.AuthService) {
+            initializeDashboard();
+        } else {
+            setTimeout(waitForAuthService, 100);
+        }
+    }
+    
+    waitForAuthService();
+
+    function initializeDashboard() {
+        const auth = window.AuthService;
+        
+        // Check authentication using AuthService
+        if (!auth.isAuthenticated()) {
+            console.log('❌ Not authenticated, redirecting to login');
+            window.location.href = 'login.html';
+            return;
+        }
+        
+        const user = auth.getCurrentUser();
+        const isGuest = auth.isGuest();
+        
+        console.log('✅ Dashboard initialized for:', user?.email || 'Guest');
+        
+        // Show guest banner if guest user
+        if (isGuest) {
+            const guestBanner = document.getElementById('guestBanner');
+            if (guestBanner) {
+                guestBanner.style.display = 'block';
+            }
+
+
+        }
+
+        // Logout functionality with Notify confirmation
         const logoutBtn = document.getElementById('logoutBtn');
         if (logoutBtn) {
             logoutBtn.addEventListener('click', async () => {
                 if (confirm('Abort mission?')) {
                     auth.logout();
                     window.location.href = 'login.html';
+
                 }
             });
         }
@@ -107,6 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     completedDays = updatedDays;
                     renderProgressGrid();
                     updateStats();
+                    checkAchievements();
                 });
             } catch (error) {
                 console.warn('Failed to initialize progress service:', error);
@@ -114,6 +160,31 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } else {
             completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+        }
+
+        // Initial achievement check
+        checkAchievements();
+
+        function checkAchievements() {
+            if (achievementService) {
+                achievementService.checkAchievements({
+                    totalCompleted: completedDays.length,
+                    currentStreak: calculateStreak(completedDays),
+                    techCount: 3 // Hardcoded estimate for now
+                });
+            }
+        }
+
+        function calculateStreak(days) {
+            if (!days.length) return 0;
+            const sorted = [...days].sort((a, b) => b - a);
+            let streak = 0;
+            // Simple streak logic for day numbers (assumes consecutive days are consecutive ints)
+            for (let i = 0; i < sorted.length - 1; i++) {
+                if (sorted[i] - sorted[i + 1] === 1) streak++;
+                else break;
+            }
+            return streak + 1;
         }
 
         // Listen for progress updates from other tabs/windows
@@ -185,7 +256,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const el = document.getElementById('completedDays');
             if (el) el.textContent = completedCount;
 
-            // Stats logic...
+            // Achievement Progress logic
+            if (achievementService) {
+                const nextAchievement = achievementService.getNextAchievement('milestone', completedCount);
+                const nextEl = document.getElementById('nextAchievementLabel');
+                if (nextEl && nextAchievement) {
+                    nextEl.textContent = `Next: ${nextAchievement.title}`;
+                }
+            }
         }
 
         function renderRecommendations() {
