@@ -1,49 +1,232 @@
-/**
- * Dashboard Page Logic
- * Progress tracking, recommendations, and streak widget functionality.
- */
 
-import { streakService } from '../core/streakService.js';
+// Dynamic imports for App Core, Notify, and Progress Service
+let App = window.App || null;
+let Notify = window.Notify || null;
+let progressService = null;
+let achievementService = null;
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Check authentication (Mock / Local Storage)
-    // Upstream uses Firebase, but strictly adhering to "Frontend Only" request for now
-    // to prevent broken app due to missing API keys.
+// Try to load modules dynamically
+async function loadCoreModules() {
+    try {
+        if (!App) {
+            const appModule = await import('../core/app.js');
+            App = appModule.App || appModule.default;
+            window.App = App;
+        }
+    } catch (e) {
+        console.warn('AppCore not available, using localStorage fallback');
+    }
 
-    /* 
-    // Firebase Import (Commented out until config is provided)
-    // import { auth } from './firebase-config.js'; 
-    */
+    try {
+        const module = await import('../core/progressService.js');
+        progressService = module.progressService;
+    } catch (error) {
+        console.warn('Progress service not available, using localStorage fallback');
+    }
 
-    const isGuest = sessionStorage.getItem('authGuest') === 'true';
-    const authToken = sessionStorage.getItem('authToken') === 'true';
-    const localAuth = localStorage.getItem('isAuthenticated') === 'true';
+    try {
+        if (!Notify) {
+            const notifyModule = await import('../core/Notify.js');
+            Notify = notifyModule.Notify || notifyModule.default;
+            window.Notify = Notify;
+        }
+    } catch (e) {
+        console.warn('Notify not available, using console fallback');
+    }
 
-    // Auth Guard
-    if (!authToken && !localAuth && !isGuest) {
+    try {
+        const module = await import('../core/achievementService.js');
+        achievementService = module.achievementService;
+    } catch (error) {
+        console.warn('Achievement service not available');
+    }
+}
+
+
+    // Auth Guard is now handled by guard.js
+    // Removed conflicting check that caused infinite loop
+
+    // Get user data from AuthService storage pattern
+    // Fix: Prefer sessionStorage to avoid stale localStorage guest state
+    const sessionGuest = sessionStorage.getItem('is_guest');
+    const isGuest = sessionGuest !== null ? sessionGuest === 'true' : localStorage.getItem('is_guest') === 'true';
+
+    // Get user name (handle object parsing if needed)
+    let userName = 'User';
+    let userData = null;
+
+    if (isGuest) {
+        userName = 'Guest Pilot';
+    } else {
+        // robustly check session then local storage
+        try {
+            const sessionRaw = sessionStorage.getItem('current_user');
+            if (sessionRaw) {
+                userData = JSON.parse(sessionRaw);
+            }
+        } catch (e) {
+            console.warn('Error parsing session user data:', e);
+        }
+
+        if (!userData) {
+            try {
+                const localRaw = localStorage.getItem('current_user');
+                if (localRaw) {
+                    userData = JSON.parse(localRaw);
+                }
+            } catch (e) {
+                console.warn('Error parsing local user data:', e);
+            }
+        }
+
+        if (userData) {
+            if (userData.name) {
+                userName = userData.name;
+            } else if (userData.email) {
+                userName = userData.email.split('@')[0];
+            }
+        }
+    }
+
+    // Get user id from userData if available
+    let userId = null;
+    if (userData && userData.id) {
+        userId = userData.id;
+    }
+
+    // Fallback to upstream's simple check if needed (or if set by other means)
+    if (!userId) {
+        userId = localStorage.getItem('user_id');
+    }
+
+    await initializeDashboard({ displayName: userName, isGuest, uid: userId });
+
+document.addEventListener('DOMContentLoaded', async () => {
+    // Load core modules first
+    await loadCoreModules();
+
+    // Check authentication via App Core or legacy methods
+    let isAuthenticated = false;
+    let currentUser = null;
+
+    if (App && App.isAuthenticated()) {
+        isAuthenticated = true;
+        currentUser = App.getCurrentUser();
+    } else {
+        // Legacy fallback
+        const isGuest = sessionStorage.getItem('authGuest') === 'true';
+        const authToken = sessionStorage.getItem('authToken') === 'true';
+        const localAuth = localStorage.getItem('isAuthenticated') === 'true';
+
+        isAuthenticated = authToken || localAuth || isGuest;
+
+        if (isAuthenticated) {
+            currentUser = {
+                name: isGuest ? 'Guest Pilot' : (localStorage.getItem('user_name') || 'User'),
+                email: localStorage.getItem('userEmail') || 'user@example.com',
+                isGuest: isGuest
+            };
+        }
+    }
+
+    // Auth Guard - redirect if not authenticated
+    if (!isAuthenticated) {
+        if (Notify) {
+            Notify.warning('Please login to access the dashboard');
+        }
         window.location.href = 'login.html';
         return;
     }
 
-    const userName = isGuest ? 'Guest Pilot' : (localStorage.getItem('user_name') || 'User');
-    const userId = localStorage.getItem('user_id') || null;
-    
-    await initializeDashboard({ email: userName, isGuest, uid: userId });
+    initializeDashboard(currentUser);
+
 
     async function initializeDashboard(user) {
         // Set user name
         const userNameElement = document.getElementById('userName');
-        if (userNameElement) userNameElement.textContent = user.email.split('@')[0];
 
-        // Logout functionality
+        if (userNameElement) userNameElement.textContent = user.displayName;
+=======
+        if (userNameElement) {
+            const displayName = user.name || (user.email ? user.email.split('@')[0] : 'User');
+            userNameElement.textContent = displayName;
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Wait for AuthService to load
+    function waitForAuthService() {
+        if (window.AuthService) {
+            initializeDashboard();
+        } else {
+            setTimeout(waitForAuthService, 100);
+        }
+    }
+    
+    waitForAuthService();
+
+    function initializeDashboard() {
+        const auth = window.AuthService;
+        
+        // Check authentication using AuthService
+        if (!auth.isAuthenticated()) {
+            console.log('❌ Not authenticated, redirecting to login');
+            window.location.href = 'login.html';
+            return;
+        }
+        
+        const user = auth.getCurrentUser();
+        const isGuest = auth.isGuest();
+        
+        console.log('✅ Dashboard initialized for:', user?.email || 'Guest');
+        
+        // Show guest banner if guest user
+        if (isGuest) {
+            const guestBanner = document.getElementById('guestBanner');
+            if (guestBanner) {
+                guestBanner.style.display = 'block';
+            }
+
+
+        }
+
+        // Logout functionality with Notify confirmation
         const logoutBtn = document.getElementById('logoutBtn');
         if (logoutBtn) {
             logoutBtn.addEventListener('click', async () => {
-                if (confirm('Abort mission?')) {
+
+                const handleLogout = async () => {
+                    // Logout via App Core
+                    if (App) {
+                        await App.logout();
+                    }
+
                     if (progressService) progressService.cleanup();
                     sessionStorage.clear();
                     localStorage.removeItem('isAuthenticated');
+
+                    if (Notify) {
+                        Notify.success('Logged out successfully');
+                    }
+
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 500);
+                };
+
+                // Use Notify for confirmation if available
+                if (Notify && Notify.confirm) {
+                    Notify.confirm('Abort mission?', {
+                        onConfirm: handleLogout,
+                        confirmLabel: 'Abort',
+                        cancelLabel: 'Stay'
+                    });
+                } else if (confirm('Abort mission?')) {
+                    handleLogout();
+
+                if (confirm('Abort mission?')) {
+                    auth.logout();
                     window.location.href = 'login.html';
+
                 }
             });
         }
@@ -110,6 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     completedDays = updatedDays;
                     renderProgressGrid();
                     updateStats();
+                    checkAchievements();
                 });
             } catch (error) {
                 console.warn('Failed to initialize progress service:', error);
@@ -117,6 +301,31 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } else {
             completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+        }
+
+        // Initial achievement check
+        checkAchievements();
+
+        function checkAchievements() {
+            if (achievementService) {
+                achievementService.checkAchievements({
+                    totalCompleted: completedDays.length,
+                    currentStreak: calculateStreak(completedDays),
+                    techCount: 3 // Hardcoded estimate for now
+                });
+            }
+        }
+
+        function calculateStreak(days) {
+            if (!days.length) return 0;
+            const sorted = [...days].sort((a, b) => b - a);
+            let streak = 0;
+            // Simple streak logic for day numbers (assumes consecutive days are consecutive ints)
+            for (let i = 0; i < sorted.length - 1; i++) {
+                if (sorted[i] - sorted[i + 1] === 1) streak++;
+                else break;
+            }
+            return streak + 1;
         }
 
         // Listen for progress updates from other tabs/windows
@@ -188,289 +397,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const el = document.getElementById('completedDays');
             if (el) el.textContent = completedCount;
 
-            // Stats logic...
+            // Achievement Progress logic
+            if (achievementService) {
+                const nextAchievement = achievementService.getNextAchievement('milestone', completedCount);
+                const nextEl = document.getElementById('nextAchievementLabel');
+                if (nextEl && nextAchievement) {
+                    nextEl.textContent = `Next: ${nextAchievement.title}`;
+                }
+            }
         }
 
         function renderRecommendations() {
             // Recommendation logic...
         }
-
-        // ============================================================
-        // STREAK WIDGET
-        // ============================================================
-
-        /**
-         * Initialize and render the streak widget
-         */
-        async function initializeStreakWidget() {
-            // Initialize streak service
-            const userId = localStorage.getItem('userId') || null;
-            await streakService.initialize({ uid: userId });
-
-            // Sync completed days to streak data
-            syncCompletedDaysToStreak();
-
-            // Render widget
-            renderStreakWidget();
-
-            // Listen for updates
-            window.addEventListener('activityUpdated', renderStreakWidget);
-        }
-
-        /**
-         * Sync completed days from localStorage to streak service
-         */
-        function syncCompletedDaysToStreak() {
-            if (completedDays.length > 0) {
-                const today = new Date();
-                const activityData = {};
-
-                completedDays.forEach((day) => {
-                    // Distribute completed days over the past period
-                    const daysAgo = Math.max(0, 365 - (day * 3.65));
-                    const date = new Date(today);
-                    date.setDate(today.getDate() - Math.floor(daysAgo));
-                    const dateKey = date.toISOString().split('T')[0];
-                    activityData[dateKey] = (activityData[dateKey] || 0) + 1;
-                });
-
-                streakService.importActivityData(activityData);
-            }
-        }
-
-        /**
-         * Render the streak widget in the dashboard
-         */
-        async function renderStreakWidget() {
-            let widgetContainer = document.getElementById('streakWidget');
-
-            if (!widgetContainer) {
-                // Create widget container if it doesn't exist
-                const statsSection = document.querySelector('.stats-section, .dashboard-stats, [class*="stats"]');
-                if (statsSection) {
-                    widgetContainer = document.createElement('div');
-                    widgetContainer.id = 'streakWidget';
-                    widgetContainer.className = 'streak-widget';
-                    statsSection.parentElement.insertBefore(widgetContainer, statsSection.nextSibling);
-                } else {
-                    // Fallback: insert after progress grid
-                    const progressGrid = document.getElementById('progressGrid');
-                    if (progressGrid && progressGrid.parentElement) {
-                        widgetContainer = document.createElement('div');
-                        widgetContainer.id = 'streakWidget';
-                        widgetContainer.className = 'streak-widget';
-                        widgetContainer.style.marginTop = '2rem';
-                        progressGrid.parentElement.insertAdjacentElement('afterend', widgetContainer);
-                    }
-                }
-            }
-
-            if (!widgetContainer) return;
-
-            const stats = await streakService.getStreakStats();
-            const freezeStatus = streakService.getStreakFreezeStatus();
-
-            // Get last 7 days activity
-            const last7Days = [];
-            const today = new Date();
-            const dayNames = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-
-            for (let i = 6; i >= 0; i--) {
-                const date = new Date(today);
-                date.setDate(today.getDate() - i);
-                const dateKey = date.toISOString().split('T')[0];
-                const activityData = await streakService.getActivityData();
-                const hasActivity = activityData[dateKey] > 0;
-
-                last7Days.push({
-                    day: dayNames[date.getDay()],
-                    active: hasActivity,
-                    isToday: i === 0
-                });
-            }
-
-            widgetContainer.innerHTML = `
-                <div class="streak-widget-header">
-                    <h4>🔥 Learning Streak</h4>
-                    ${freezeStatus.available ? `
-                        <div class="streak-freeze-indicator" title="Streak freeze available (1 per week)">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M12 2v2m0 16v2M4 12H2m20 0h-2m-2.05-6.95l-1.41 1.41M6.34 17.66l-1.41 1.41m0-12.73l1.41 1.41m11.32 11.32l1.41 1.41"/>
-                            </svg>
-                            <span>Freeze Ready</span>
-                        </div>
-                    ` : `
-                        <div class="streak-freeze-indicator used" title="Streak freeze used this week">
-                            <span>Freeze Used</span>
-                        </div>
-                    `}
-                </div>
-                <div class="streak-widget-content">
-                    <div class="streak-widget-stat ${stats.currentStreak > 0 ? 'fire' : ''}">
-                        <div class="value">${stats.currentStreak}</div>
-                        <div class="label">Current</div>
-                    </div>
-                    <div class="streak-widget-stat">
-                        <div class="value">${stats.longestStreak}</div>
-                        <div class="label">Best</div>
-                    </div>
-                    <div class="streak-widget-stat">
-                        <div class="value">${stats.totalActiveDays}</div>
-                        <div class="label">Total Days</div>
-                    </div>
-                </div>
-                <div class="streak-widget-mini-chart">
-                    ${last7Days.map(day => `
-                        <div class="day ${day.active ? 'active' : ''} ${day.isToday ? 'today' : ''}" title="${day.active ? 'Active' : 'No activity'}">
-                            ${day.day}
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-
-            addStreakWidgetStyles();
-        }
-
-        /**
-         * Add streak widget styles to the page
-         */
-        function addStreakWidgetStyles() {
-            if (document.getElementById('streakWidgetStyles')) return;
-
-            const styleEl = document.createElement('style');
-            styleEl.id = 'streakWidgetStyles';
-            styleEl.textContent = `
-                .streak-widget {
-                    background: rgba(13, 17, 23, 0.8);
-                    border: 1px solid rgba(255, 255, 255, 0.1);
-                    border-radius: 12px;
-                    padding: 20px;
-                    backdrop-filter: blur(16px);
-                    max-width: 400px;
-                }
-
-                .streak-widget-header {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    margin-bottom: 16px;
-                }
-
-                .streak-widget-header h4 {
-                    margin: 0;
-                    font-size: 1rem;
-                    font-weight: 600;
-                    color: var(--text-primary, #c9d1d9);
-                }
-
-                .streak-widget-content {
-                    display: flex;
-                    gap: 16px;
-                    margin-bottom: 16px;
-                }
-
-                .streak-widget-stat {
-                    flex: 1;
-                    text-align: center;
-                    padding: 12px;
-                    background: rgba(255, 255, 255, 0.03);
-                    border-radius: 8px;
-                }
-
-                .streak-widget-stat .value {
-                    font-size: 2rem;
-                    font-weight: 700;
-                    color: var(--text-primary, #c9d1d9);
-                    font-family: var(--font-mono, monospace);
-                    line-height: 1.2;
-                }
-
-                .streak-widget-stat .label {
-                    font-size: 0.7rem;
-                    color: var(--text-secondary, #8b949e);
-                    text-transform: uppercase;
-                    letter-spacing: 0.5px;
-                    margin-top: 4px;
-                }
-
-                .streak-widget-stat.fire .value {
-                    color: #f97316;
-                    animation: firePulse 2s ease-in-out infinite;
-                }
-
-                @keyframes firePulse {
-                    0%, 100% { text-shadow: 0 0 10px rgba(249, 115, 22, 0.3); }
-                    50% { text-shadow: 0 0 20px rgba(249, 115, 22, 0.6); }
-                }
-
-                .streak-widget-mini-chart {
-                    display: flex;
-                    gap: 4px;
-                    justify-content: center;
-                }
-
-                .streak-widget-mini-chart .day {
-                    width: 32px;
-                    height: 32px;
-                    border-radius: 4px;
-                    background: rgba(255, 255, 255, 0.05);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 0.7rem;
-                    color: var(--text-tertiary, #6e7681);
-                    transition: all 0.2s ease;
-                }
-
-                .streak-widget-mini-chart .day.active {
-                    background: linear-gradient(135deg, #2ea043, #238636);
-                    color: #fff;
-                }
-
-                .streak-widget-mini-chart .day.today {
-                    outline: 2px solid var(--accent-primary, #58a6ff);
-                    outline-offset: 1px;
-                }
-
-                .streak-freeze-indicator {
-                    display: flex;
-                    align-items: center;
-                    gap: 6px;
-                    padding: 6px 10px;
-                    background: rgba(96, 165, 250, 0.1);
-                    border: 1px solid rgba(96, 165, 250, 0.2);
-                    border-radius: 6px;
-                    font-size: 0.75rem;
-                    color: #60a5fa;
-                }
-
-                .streak-freeze-indicator.used {
-                    background: rgba(255, 255, 255, 0.05);
-                    border-color: rgba(255, 255, 255, 0.1);
-                    color: var(--text-tertiary, #6e7681);
-                }
-
-                .streak-freeze-indicator svg {
-                    width: 14px;
-                    height: 14px;
-                }
-            `;
-            document.head.appendChild(styleEl);
-        }
-
-        // Record activity when day is toggled
-        const originalToggleDay = toggleDay;
-        toggleDay = function(day) {
-            const wasCompleted = completedDays.includes(day);
-            originalToggleDay(day);
-
-            if (!wasCompleted && completedDays.includes(day)) {
-                streakService.recordActivity();
-                renderStreakWidget();
-            }
-        };
-
-        // Initialize streak widget
-        initializeStreakWidget();
     }
 });
