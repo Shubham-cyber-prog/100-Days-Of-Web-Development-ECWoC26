@@ -1,39 +1,86 @@
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Check authentication (Mock / Local Storage)
-    // Upstream uses Firebase, but strictly adhering to "Frontend Only" request for now
-    // to prevent broken app due to missing API keys.
+let App = window.App || null;
+let Notify = window.Notify || null;
+let progressService = null;
+let achievementService = null;
 
-    /* 
-    // Firebase Import (Commented out until config is provided)
-    // import { auth } from './firebase-config.js'; 
-    */
-
-    const isGuest = sessionStorage.getItem('authGuest') === 'true';
-    const authToken = sessionStorage.getItem('authToken') === 'true';
-    const localAuth = localStorage.getItem('isAuthenticated') === 'true';
-
-    // Auth Guard
-    if (!authToken && !localAuth && !isGuest) {
-        window.location.href = 'login.html';
-        return;
+// Try to load modules dynamically
+async function loadCoreModules() {
+    try {
+        if (!App) {
+            const appModule = await import('../core/app.js');
+            App = appModule.App || appModule.default;
+            window.App = App;
+        }
+    } catch (e) {
+        console.warn('AppCore not available, using localStorage fallback');
     }
 
-    const userName = isGuest ? 'Guest Pilot' : (localStorage.getItem('user_name') || 'User');
-    initializeDashboard({ email: userName, isGuest });
+// Try to load modules dynamically
+async function loadCoreModules() {
+    try {
+        if (!App) {
+            const appModule = await import('../core/app.js');
+            App = appModule.App || appModule.default;
+            window.App = App;
+        }
+    } catch (e) {
+        console.warn('AppCore not available, using localStorage fallback');
+    }
 
-    function initializeDashboard(user) {
-        // Set user name
-        const userNameElement = document.getElementById('userName');
-        if (userNameElement) userNameElement.textContent = user.email.split('@')[0];
+    try {
+        const module = await import('../core/progressService.js');
+        progressService = module.progressService;
+    } catch (error) {
 
-        // Logout functionality
+        console.warn('Achievement service not available');
+    }
+}
+
+        console.warn('Progress service not available, using localStorage fallback');
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Wait for AuthService to load
+    function waitForAuthService() {
+        if (window.AuthService) {
+            initializeDashboard();
+        } else {
+            setTimeout(waitForAuthService, 100);
+        }
+    }
+    
+    waitForAuthService();
+
+    function initializeDashboard() {
+        const auth = window.AuthService;
+        
+        // Check authentication using AuthService
+        if (!auth.isAuthenticated()) {
+            console.log('❌ Not authenticated, redirecting to login');
+            window.location.href = 'login.html';
+            return;
+        }
+        
+        const user = auth.getCurrentUser();
+        const isGuest = auth.isGuest();
+        
+        console.log('✅ Dashboard initialized for:', user?.email || 'Guest');
+        
+        // Show guest banner if guest user
+        if (isGuest) {
+            const guestBanner = document.getElementById('guestBanner');
+            if (guestBanner) {
+                guestBanner.style.display = 'block';
+            }
+        }
+
+        // Logout functionality with Notify confirmation
         const logoutBtn = document.getElementById('logoutBtn');
         if (logoutBtn) {
             logoutBtn.addEventListener('click', async () => {
                 if (confirm('Abort mission?')) {
-                    sessionStorage.clear();
-                    localStorage.removeItem('isAuthenticated');
+                    auth.logout();
                     window.location.href = 'login.html';
                 }
             });
@@ -88,18 +135,18 @@ document.addEventListener('DOMContentLoaded', () => {
             { day: 42, title: "HFT Market Tracker", folder: "Day 42", level: "Intermediate", tech: ["HTML", "CSS", "JS", "API"] },
             { day: 43, title: "NewsWave - Your Daily News Aggregator", folder: "Day 43", level: "Intermediate", tech: ["HTML", "CSS", "JS", "API"] },
             { day: 44, title: "AI Chatbot Interface", folder: "Day 44", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
-            { day: 45, title: "Project Management Tool", folder: "Day 45", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
-            { day: 46, title: "ShopEase Pro", folder: "Day 46", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
-            { day: 47, title: "Banking Dashboard", folder: "Day 47", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
-            { day: 48, title: "Flight Booking System", folder: "Day 48", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
-            { day: 49, title: "RecipeShare", folder: "Day 49", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 45, title: "Project Day 45", folder: "Day 45", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 46, title: "Project Day 46", folder: "Day 46", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 47, title: "Project Day 47", folder: "Day 47", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 48, title: "Project Day 48", folder: "Day 48", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 49, title: "Project Day 49", folder: "Day 49", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
             { day: 50, title: "Interactive Resume Builder", folder: "Day 50", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
-            { day: 51, title: "Portfolio & Blog", folder: "Day 51", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 51, title: "Project Day 51", folder: "Day 51", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
             { day: 52, title: "Project Day 52", folder: "Day 52", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
-            { day: 53, title: "File Uploader", folder: "Day 53", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
-            { day: 54, title: "CodeEditor Pro", folder: "Day 54", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 53, title: "Project Day 53", folder: "Day 53", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
+            { day: 54, title: "Project Day 54", folder: "Day 54", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
             { day: 55, title: "Project Day 55", folder: "Day 55", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
-            { day: 56, title: "Expense Splitter", folder: "Day 56", level: "Advanced", tech: ["HTML", "CSS", "JS"] },
+            { day: 56, title: "Project Day 56", folder: "Day 56", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
             { day: 57, title: "Project Day 57", folder: "Day 57", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
             { day: 58, title: "Project Day 58", folder: "Day 58", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
             { day: 59, title: "Project Day 59", folder: "Day 59", level: "Intermediate", tech: ["HTML", "CSS", "JS"] },
@@ -147,8 +194,57 @@ document.addEventListener('DOMContentLoaded', () => {
             { day: 100, title: "Master Project", folder: "Day 100", level: "Capstone", tech: ["HTML", "CSS", "JS", "React"] }
         ];
 
-        // Load completed days from localStorage
-        let completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+        // Initialize progress service and load completed days
+        let completedDays = [];
+        if (progressService) {
+            try {
+                completedDays = await progressService.initialize(user);
+                // Listen for real-time updates
+                progressService.listenToUpdates((updatedDays) => {
+                    completedDays = updatedDays;
+                    renderProgressGrid();
+                    updateStats();
+                    checkAchievements();
+                });
+            } catch (error) {
+                console.warn('Failed to initialize progress service:', error);
+                completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+            }
+        } else {
+            completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+        }
+
+        // Initial achievement check
+        checkAchievements();
+
+        function checkAchievements() {
+            if (achievementService) {
+                achievementService.checkAchievements({
+                    totalCompleted: completedDays.length,
+                    currentStreak: calculateStreak(completedDays),
+                    techCount: 3 // Hardcoded estimate for now
+                });
+            }
+        }
+
+        function calculateStreak(days) {
+            if (!days.length) return 0;
+            const sorted = [...days].sort((a, b) => b - a);
+            let streak = 0;
+            // Simple streak logic for day numbers (assumes consecutive days are consecutive ints)
+            for (let i = 0; i < sorted.length - 1; i++) {
+                if (sorted[i] - sorted[i + 1] === 1) streak++;
+                else break;
+            }
+            return streak + 1;
+        }
+
+        // Listen for progress updates from other tabs/windows
+        window.addEventListener('progressUpdated', (e) => {
+            completedDays = e.detail;
+            renderProgressGrid();
+            updateStats();
+        });
 
         // Render progress grid
         if (document.getElementById('progressGrid')) renderProgressGrid();
@@ -191,13 +287,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        function toggleDay(day) {
-            if (completedDays.includes(day)) {
-                completedDays = completedDays.filter(d => d !== day);
+        async function toggleDay(day) {
+            if (progressService) {
+                await progressService.toggleDay(day);
+                completedDays = progressService.getCompletedDays();
             } else {
-                completedDays.push(day);
+                if (completedDays.includes(day)) {
+                    completedDays = completedDays.filter(d => d !== day);
+                } else {
+                    completedDays.push(day);
+                }
+                localStorage.setItem('completedDays', JSON.stringify(completedDays));
             }
-            localStorage.setItem('completedDays', JSON.stringify(completedDays));
             renderProgressGrid();
             updateStats();
         }
@@ -207,7 +308,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const el = document.getElementById('completedDays');
             if (el) el.textContent = completedCount;
 
-            // Stats logic...
+            // Achievement Progress logic
+            if (achievementService) {
+                const nextAchievement = achievementService.getNextAchievement('milestone', completedCount);
+                const nextEl = document.getElementById('nextAchievementLabel');
+                if (nextEl && nextAchievement) {
+                    nextEl.textContent = `Next: ${nextAchievement.title}`;
+                }
+            }
         }
 
         function renderRecommendations() {
