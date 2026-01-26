@@ -3,104 +3,375 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Tutorials - 100 Days Web Dev</title>
-    <link rel="stylesheet" href="../styles/global.css">
-    <link rel="stylesheet" href="../styles/pages/tutorials.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="/website/assets/images/logo.png">
+    <title>Tutorials | 100 Days of Web Dev</title>
+    <link rel="stylesheet" href="../styles/index.css">
+    <style>
+        .page-header {
+            text-align: center;
+            padding: 120px 0 60px;
+        }
+        .tutorials-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .search-wrapper {
+            max-width: 400px;
+            flex: 1;
+            position: relative;
+        }
+        #searchInput {
+            background: var(--bg-surface);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            padding: 16px 24px;
+            font-size: var(--text-base);
+            width: 100%;
+            transition: all 0.2s;
+            color: var(--text-primary);
+        }
+        #searchInput:focus {
+            outline: none;
+            border-color: var(--accent-core);
+            box-shadow: 0 0 20px -5px var(--accent-alpha);
+        }
+        .filter-tabs {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--glass-border);
+            padding: 10px 24px;
+            border-radius: 100px;
+            font-size: var(--text-sm);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .filter-btn:hover {
+            border-color: var(--accent-core);
+            color: var(--text-primary);
+        }
+        .filter-btn.active {
+            background: var(--accent-core);
+            color: #000;
+            border-color: var(--accent-core);
+            font-weight: var(--weight-bold);
+        }
+        .progress-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .progress-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .tutorials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .tutorial-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        .tutorial-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-core);
+        }
+        .tutorial-thumbnail {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background: var(--bg-nebula);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .tutorial-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        .tutorial-info {
+            padding: 1.5rem;
+        }
+        .tutorial-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .duration {
+            background: var(--bg-nebula);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+        .difficulty {
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .difficulty.beginner {
+            background: var(--accent-success);
+            color: #000;
+        }
+        .difficulty.intermediate {
+            background: var(--accent-core);
+            color: #000;
+        }
+        .difficulty.advanced {
+            background: var(--accent-danger);
+            color: #fff;
+        }
+        .resources-section {
+            background: var(--bg-surface);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .resource-card {
+            background: var(--bg-nebula);
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .resource-card:hover {
+            transform: translateY(-3px);
+        }
+        .download-btn {
+            background: var(--accent-core);
+            color: #000;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: var(--weight-bold);
+        }
+        .download-btn:hover {
+            transform: translateY(-2px);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+        }
+        .modal-content {
+            background: var(--bg-surface);
+            margin: 2% auto;
+            padding: 0;
+            border-radius: var(--radius-lg);
+            width: 90%;
+            max-width: 1000px;
+            border: 1px solid var(--glass-border);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .close {
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+        .modal-body {
+            padding: 1.5rem;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%;
+            margin-bottom: 1.5rem;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+        @media (max-width: 768px) {
+            .tutorials-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .tutorials-grid {
+                grid-template-columns: 1fr;
+            }
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar">
+    <header class="site-header">
         <div class="nav-container">
-            <div class="nav-logo">
-                <a href="../index.html">100 Days Web Dev</a>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="tutorials.html" class="active">Tutorials</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+            <a href="dashboard.html" class="nav-logo">
+                <img src="../assets/images/logo.png" alt="100 Days of Web Dev" class="brand-logo-img">
+            </a>
+            <nav class="nav-links">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="projects.html" class="nav-link">Projects</a>
+                <a href="tutorials.html" class="nav-link active">Tutorials</a>
+                <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+                <a href="profile.html" class="nav-link">Profile</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="contributors.html" class="nav-link">Contributors</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </nav>
+            <div class="nav-user">
+                <button class="mobile-toggle" onclick="toggleMobileMenu()">
+                    <svg class="icon icon-lg" viewBox="0 0 24 24">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                <button id="theme-toggle-btn" class="icon-btn" onclick="toggleTheme()" style="margin-right: 15px; background: none; border: none; cursor: pointer;">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-secondary)">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <div class="user-avatar-wrapper">
+                    <button class="user-avatar" onclick="toggleUserMenu()">
+                        <img src="https://github.com/ntbnaren7.png" alt="User" style="width: 100%; height: 100%; border-radius: 50%">
+                    </button>
+                    <div class="user-dropdown">
+                        <a href="profile.html" class="dropdown-item">View Profile</a>
+                        <a href="settings.html" class="dropdown-item">Settings</a>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item text-danger" onclick="handleLogout()">Log Out</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </nav>
+    </header>
 
-    <main class="tutorials-main">
-        <div class="container">
-            <header class="page-header">
-                <h1><i class="fas fa-play-circle"></i> Video Tutorials</h1>
-                <p>Master web development with our comprehensive video library</p>
-            </header>
+    <main class="container section">
+        <div class="page-header animate-enter">
+            <h1 style="font-size: var(--text-4xl); margin-bottom: var(--space-4)">Video Tutorials</h1>
+            <p class="text-secondary">Master web development with our comprehensive video library</p>
+        </div>
 
-            <div class="tutorials-controls">
-                <div class="search-bar">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="searchInput" placeholder="Search tutorials...">
-                </div>
-                <div class="filter-tabs">
-                    <button class="filter-btn active" data-level="all">All</button>
-                    <button class="filter-btn" data-level="beginner">Beginner</button>
-                    <button class="filter-btn" data-level="intermediate">Intermediate</button>
-                    <button class="filter-btn" data-level="advanced">Advanced</button>
+        <div class="tutorials-controls animate-enter delay-100">
+            <div class="search-wrapper">
+                <input type="text" id="searchInput" placeholder="Search tutorials...">
+            </div>
+            <div class="filter-tabs">
+                <button class="filter-btn active" data-level="all">All</button>
+                <button class="filter-btn" data-level="beginner">Beginner</button>
+                <button class="filter-btn" data-level="intermediate">Intermediate</button>
+                <button class="filter-btn" data-level="advanced">Advanced</button>
+            </div>
+        </div>
+
+        <div class="progress-overview animate-enter delay-200">
+            <div class="progress-card">
+                <div style="font-size: 2rem; color: var(--accent-core);">📊</div>
+                <div>
+                    <h3 id="watchedCount">0</h3>
+                    <p class="text-secondary">Videos Watched</p>
                 </div>
             </div>
-
-            <div class="progress-overview">
-                <div class="progress-card">
-                    <i class="fas fa-chart-line"></i>
-                    <div>
-                        <h3 id="watchedCount">0</h3>
-                        <p>Videos Watched</p>
-                    </div>
-                </div>
-                <div class="progress-card">
-                    <i class="fas fa-clock"></i>
-                    <div>
-                        <h3 id="totalTime">0h 0m</h3>
-                        <p>Total Watch Time</p>
-                    </div>
-                </div>
-                <div class="progress-card">
-                    <i class="fas fa-trophy"></i>
-                    <div>
-                        <h3 id="completionRate">0%</h3>
-                        <p>Completion Rate</p>
-                    </div>
+            <div class="progress-card">
+                <div style="font-size: 2rem; color: var(--accent-core);">⏱️</div>
+                <div>
+                    <h3 id="totalTime">0h 0m</h3>
+                    <p class="text-secondary">Total Watch Time</p>
                 </div>
             </div>
-
-            <div class="tutorials-grid" id="tutorialsGrid">
-                <!-- Videos will be loaded here -->
+            <div class="progress-card">
+                <div style="font-size: 2rem; color: var(--accent-core);">🏆</div>
+                <div>
+                    <h3 id="completionRate">0%</h3>
+                    <p class="text-secondary">Completion Rate</p>
+                </div>
             </div>
+        </div>
 
-            <div class="resources-section">
-                <h2><i class="fas fa-download"></i> Downloadable Resources</h2>
-                <div class="resources-grid">
-                    <div class="resource-card">
-                        <i class="fas fa-file-pdf"></i>
-                        <h3>HTML Cheat Sheet</h3>
-                        <button class="download-btn">Download PDF</button>
-                    </div>
-                    <div class="resource-card">
-                        <i class="fas fa-file-code"></i>
-                        <h3>CSS Reference Guide</h3>
-                        <button class="download-btn">Download PDF</button>
-                    </div>
-                    <div class="resource-card">
-                        <i class="fas fa-file-alt"></i>
-                        <h3>JavaScript Snippets</h3>
-                        <button class="download-btn">Download ZIP</button>
-                    </div>
+        <div class="tutorials-grid animate-enter delay-300" id="tutorialsGrid">
+            <!-- Videos will be loaded here -->
+        </div>
+
+        <div class="resources-section animate-enter delay-400">
+            <h2 style="margin-bottom: 1.5rem; text-align: center;">📥 Downloadable Resources</h2>
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">📄</div>
+                    <h3>HTML Cheat Sheet</h3>
+                    <button class="download-btn">Download PDF</button>
+                </div>
+                <div class="resource-card">
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">💻</div>
+                    <h3>CSS Reference Guide</h3>
+                    <button class="download-btn">Download PDF</button>
+                </div>
+                <div class="resource-card">
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">📝</div>
+                    <h3>JavaScript Snippets</h3>
+                    <button class="download-btn">Download ZIP</button>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Video Modal -->
     <div id="videoModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -111,22 +382,14 @@
                 <div class="video-container">
                     <iframe id="videoFrame" src="" frameborder="0" allowfullscreen></iframe>
                 </div>
-                <div class="video-info">
-                    <div class="video-meta">
-                        <span class="duration" id="modalDuration"></span>
-                        <span class="difficulty" id="modalDifficulty"></span>
-                    </div>
-                    <p id="modalDescription"></p>
-                    <div class="video-notes">
-                        <h4>Your Notes</h4>
-                        <textarea id="videoNotes" placeholder="Add your notes here..."></textarea>
-                        <button id="saveNotes">Save Notes</button>
-                    </div>
+                <div id="modalContent">
+                    <!-- Modal content will be loaded here -->
                 </div>
             </div>
         </div>
     </div>
 
+    <script src="../scripts/components/cursor.js"></script>
     <script src="../scripts/components/navigation.js"></script>
     <script src="../scripts/pages/tutorials.js"></script>
 </body>
