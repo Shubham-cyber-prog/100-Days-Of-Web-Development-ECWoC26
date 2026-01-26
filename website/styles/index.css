@@ -20,12 +20,14 @@
 @import 'components/forms.css';
 @import 'components/footer.css';
 @import 'components/cursor.css';
+@import 'components/calendar-heatmap.css';
 
 /* 5. Animations */
 @import 'animations/motion.css';
 
 /* 6. Page Specifics (Loaded here for simplicity, can be separate if needed) */
 @import 'pages/landing.css';
+@import 'pages/study-room.css';
 
 #scrollToTopBtn {
   position: fixed;
