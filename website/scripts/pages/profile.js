@@ -1,14 +1,45 @@
 /**
  * Profile Page Logic
  * Generates the 100-day mission log grid with interactivity.
- * Handles Edit Profile modal and Share Profile functionality.
+ * Handles Edit Profile modal, Share Profile, and Calendar Heatmap functionality.
  */
+
+import { CalendarHeatmap } from '../components/CalendarHeatmap.js';
+import { streakService } from '../core/streakService.js';
 
 // Auth Guard (Simplified for static view)
 const authToken = sessionStorage.getItem('authToken');
 if (!authToken && window.location.hostname !== 'localhost' && !window.location.protocol.includes('file')) {
     // window.location.href = '../pages/login.html';
 }
+
+// Initialize core modules
+loadCoreModules();
+
+// Auth Guard - use App Core if available
+function checkAuth() {
+    if (App && App.isAuthenticated && !App.isAuthenticated()) {
+        if (Notify) {
+            Notify.warning('Please login to view your profile');
+        }
+        window.location.href = '../pages/login.html';
+        return false;
+    }
+    
+    // Legacy auth check
+    const authToken = sessionStorage.getItem('authToken');
+    const localAuth = localStorage.getItem('isAuthenticated') === 'true';
+    const isGuest = localStorage.getItem('isGuest') === 'true';
+    
+    if (!authToken && !localAuth && !isGuest && 
+        window.location.hostname !== 'localhost' && 
+        !window.location.protocol.includes('file')) {
+        // window.location.href = '../pages/login.html';
+    }
+    return true;
+}
+
+checkAuth();
 
 const gridContainer = document.getElementById('missionGrid');
 const percentageDisplay = document.querySelector('.text-flame'); // The "45%" text
@@ -68,6 +99,7 @@ function renderGrid() {
     });
 
     updateStats();
+    renderAchievements();
 }
 
 // ============================================================
@@ -82,17 +114,40 @@ function loadProfileData() {
     }
     // Default profile data
     return {
-    username: 'Shubham-cyber-prog',
-    handle: '@ShubhamCyberProg',
-    avatar: 'https://avatars.githubusercontent.com/Shubham-cyber-prog',
-    rank: 'Developer',
-    level: 2,
-    bio: 'Frontend Developer | MERN Stack Learner | Open Source Contributor | Building real-world projects',
-    location: 'India',
-    website: 'https://tripolio.netlify.app/', 
-    github: 'https://github.com/Shubham-cyber-prog'
-};
+        username: 'Shubham-cyber-prog',
+        handle: '@ShubhamCyberProg',
+        avatar: 'https://avatars.githubusercontent.com/Shubham-cyber-prog',
+        rank: 'Developer',
+        level: 2,
+        bio: 'Frontend Developer | MERN Stack Learner | Open Source Contributor | Building real-world projects',
+        location: 'India',
+        website: 'https://tripolio.netlify.app/',
+        github: 'https://github.com/Shubham-cyber-prog'
+    };
 
+}
+
+// ============================================================
+// ACHIEVEMENT SHOWCASE
+// ============================================================
+
+function renderAchievements() {
+    const container = document.getElementById('achievementShowcase');
+    if (!container || !window.achievementService) return;
+
+    const achievements = window.achievementService.getAllAchievements();
+    const unlocked = achievements.filter(a => a.unlocked);
+
+    if (unlocked.length === 0) {
+        container.innerHTML = '<p class="text-secondary text-sm">No badges earned yet. Complete missions to unlock!</p>';
+        return;
+    }
+
+    container.innerHTML = unlocked.map(a => `
+        <div class="achievement-badge-mini" title="${a.title}: ${a.description}">
+            <span class="badge-icon-mini">${a.icon}</span>
+        </div>
+    `).join('');
 }
 
 // Save profile data to localStorage
@@ -330,12 +385,49 @@ function updateProfileDisplay() {
 }
 
 function showSuccessMessage(message) {
+    // Use Notify if available
+    if (Notify) {
+        Notify.success(message);
+        return;
+    }
+    
+    // Fallback to local notification
     const notification = document.createElement('div');
     notification.style.cssText = `
         position: fixed;
         top: 20px;
         right: 20px;
         background: #10b981;
+        color: white;
+        padding: 16px 24px;
+        border-radius: 8px;
+        z-index: 2000;
+        animation: slideIn 0.3s ease-out;
+        font-weight: 500;
+    `;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease-out';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+// Error notification helper
+function showErrorMessage(message) {
+    if (Notify) {
+        Notify.error(message);
+        return;
+    }
+    
+    // Fallback
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #ef4444;
         color: white;
         padding: 16px 24px;
         border-radius: 8px;
@@ -653,3 +745,116 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// ============================================================
+// CALENDAR HEATMAP INITIALIZATION
+// ============================================================
+
+let calendarHeatmap = null;
+
+/**
+ * Initialize the Calendar Heatmap component
+ */
+async function initializeCalendarHeatmap() {
+    // Check if container exists, if not create one
+    let heatmapContainer = document.getElementById('activityHeatmap');
+    
+    if (!heatmapContainer) {
+        // Create heatmap section after mission grid
+        const missionGrid = document.getElementById('missionGrid');
+        if (missionGrid && missionGrid.parentElement) {
+            const heatmapSection = document.createElement('section');
+            heatmapSection.className = 'activity-heatmap-section';
+            heatmapSection.innerHTML = `
+                <div class="section-header" style="margin-bottom: 1.5rem;">
+                    <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">📊 Activity Overview</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Track your daily coding activity and maintain your streak</p>
+                </div>
+                <div id="activityHeatmap"></div>
+            `;
+            
+            // Insert after the mission grid's parent container
+            missionGrid.parentElement.insertAdjacentElement('afterend', heatmapSection);
+            heatmapContainer = document.getElementById('activityHeatmap');
+        }
+    }
+    
+    if (heatmapContainer) {
+        // Initialize streak service
+        const user = {
+            uid: localStorage.getItem('userId') || null
+        };
+        await streakService.initialize(user);
+        
+        // Sync completed days from mission grid to streak service
+        syncMissionProgressToStreak();
+        
+        // Create heatmap
+        calendarHeatmap = new CalendarHeatmap('activityHeatmap', {
+            colorScheme: localStorage.getItem('heatmapColorScheme') || 'green',
+            weeksToShow: 52,
+            showMonthLabels: true,
+            showDayLabels: true
+        });
+    }
+}
+
+/**
+ * Sync mission grid progress to streak service
+ */
+function syncMissionProgressToStreak() {
+    // Get completed days from localStorage
+    const savedProgress = localStorage.getItem('zenith_mission_progress');
+    if (savedProgress) {
+        const progress = JSON.parse(savedProgress);
+        const completedDays = progress.map((completed, index) => completed ? index + 1 : null).filter(Boolean);
+        
+        // Convert completed days to activity data format
+        // Spread completed days over the past period
+        const today = new Date();
+        const activityData = {};
+        
+        completedDays.forEach((day, index) => {
+            // Distribute activities over the past year based on day number
+            const daysAgo = Math.max(0, 365 - (day * 3.65)); // Spread over the year
+            const date = new Date(today);
+            date.setDate(today.getDate() - Math.floor(daysAgo));
+            const dateKey = date.toISOString().split('T')[0];
+            
+            activityData[dateKey] = (activityData[dateKey] || 0) + 1;
+        });
+        
+        // Import to streak service
+        streakService.importActivityData(activityData);
+    }
+}
+
+/**
+ * Record activity when a day is toggled
+ * @param {number} dayIndex - Day index (0-99)
+ * @param {boolean} completed - Whether the day is now completed
+ */
+function recordDayActivity(dayIndex, completed) {
+    if (completed) {
+        // Record activity for today
+        streakService.recordActivity();
+    }
+}
+
+// Extend the original toggleDay function to also record activity
+const originalToggleDay = window.toggleDay || toggleDay;
+window.toggleDay = function(index) {
+    const wasCompleted = progressData[index];
+    originalToggleDay(index);
+    
+    if (!wasCompleted && progressData[index]) {
+        recordDayActivity(index, true);
+    }
+};
+
+// Initialize heatmap when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeCalendarHeatmap);
+} else {
+    initializeCalendarHeatmap();
+}
