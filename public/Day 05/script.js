@@ -9,6 +9,7 @@ class Calculator {
         this.currentOperand = '0';
         this.previousOperand = '';
         this.operation = undefined;
+        this.awaitingNextOperand = false;
     }
 
     delete() {
@@ -19,6 +20,15 @@ class Calculator {
 
     appendNumber(number) {
         if (number === '.' && this.currentOperand.includes('.')) return;
+<<<<<<< HEAD
+=======
+
+        if (this.awaitingNextOperand) {
+            this.currentOperand = (number === '.') ? '0.' : number.toString();
+            this.awaitingNextOperand = false;
+            return;
+        }
+>>>>>>> 2e32cd4dd0e7e94e263659a6ca1f990c101295d1
         
         if (this.currentOperand === '0' && number !== '.') {
             this.currentOperand = number;
@@ -29,6 +39,14 @@ class Calculator {
 
     chooseOperation(operation) {
         if (this.currentOperand === '') return;
+<<<<<<< HEAD
+=======
+
+        if (this.operation && this.awaitingNextOperand) {
+            this.operation = operation;
+            return;
+        }
+>>>>>>> 2e32cd4dd0e7e94e263659a6ca1f990c101295d1
         
         if (this.previousOperand !== '') {
             this.compute();
@@ -37,6 +55,10 @@ class Calculator {
         this.operation = operation;
         this.previousOperand = this.currentOperand;
         this.currentOperand = '0';
+<<<<<<< HEAD
+=======
+        this.awaitingNextOperand = true;
+>>>>>>> 2e32cd4dd0e7e94e263659a6ca1f990c101295d1
     }
 
     computeUnary(operation) {
@@ -60,8 +82,11 @@ class Calculator {
         }
         
         this.currentOperand = result.toString();
+<<<<<<< HEAD
         this.operation = undefined;
         this.previousOperand = '';
+=======
+>>>>>>> 2e32cd4dd0e7e94e263659a6ca1f990c101295d1
     }
 
     compute() {
@@ -88,6 +113,13 @@ class Calculator {
                 result = prev / current;
                 break;
             case '%':
+<<<<<<< HEAD
+=======
+                if (current === 0) {
+                    alert('Cannot modulo by zero');
+                    return;
+                }
+>>>>>>> 2e32cd4dd0e7e94e263659a6ca1f990c101295d1
                 result = prev % current;
                 break;
             case '^':
@@ -206,6 +238,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if(!document.body.dataset.theme) {
         document.body.dataset.theme = 'light'; 
     }
+<<<<<<< HEAD
+=======
+
+    if (!themeSwitcher) return;
+>>>>>>> 2e32cd4dd0e7e94e263659a6ca1f990c101295d1
 
     themeSwitcher.addEventListener('click', () => {
         const isDark = document.body.dataset.theme === 'dark';
