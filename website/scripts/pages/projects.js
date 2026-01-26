@@ -115,7 +115,7 @@ const allProjects = [
     { day: 154, title: "Snake Game", tech: ["HTML", "CSS", "JS"] },
     { day: 152, title: "Newsly", tech: ["HTML", "CSS", "JS"] },
     { day: 155, title: "Tetris Game", tech: ["HTML", "CSS", "JS"] },
-    { day: 167, title: "Fracture Time Arena", tech: ["HTML"] }
+    { day: 167, title: "Time Fracture Arena", tech: ["HTML", "CSS", "JS", "Canvas"] }
 ];
 
 function getDifficulty(day) {

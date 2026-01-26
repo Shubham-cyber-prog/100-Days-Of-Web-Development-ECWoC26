@@ -135,7 +135,7 @@ class Player extends Entity {
     takeDamage(amount) {
         if (this.invulnTimer > 0 || state.gameOver) return;
         
-        this.hp -= amount;
+        this.hp = Math.max(0, this.hp - amount);
         this.invulnTimer = 60;
         
         uiHealth.style.width = (this.hp / this.maxHp * 100) + '%';
@@ -248,7 +248,8 @@ function recordState() {
         },
         score: state.score,
         entities: state.entities.map(e => ({ 
-            x: e.x, y: e.y, dead: e.dead, vx: e.vx, vy: e.vy, 
+            x: e.x, y: e.y, dead: e.dead, vx: e.vx, vy: e.vy,
+            speed: e.speed, radius: e.radius, color: e.color,
             type: e instanceof Player ? 'p' : 'e' 
         })),
         bullets: state.bullets.map(b => ({ x: b.x, y: b.y, vx: b.vx, vy: b.vy, dead: b.dead }))
@@ -272,13 +273,18 @@ function restoreState() {
     uiScore.innerText = state.score;
     uiHealth.style.width = (player.hp / player.maxHp * 100) + '%';
     
-    state.entities.forEach((e, i) => {
-        if (snap.entities[i]) {
-            e.x = snap.entities[i].x;
-            e.y = snap.entities[i].y;
-            e.vx = snap.entities[i].vx;
-            e.vy = snap.entities[i].vy;
-        }
+    state.entities = snap.entities.map(e => {
+        if (e.type === 'p') return player;
+        const enemy = new Enemy();
+        enemy.x = e.x;
+        enemy.y = e.y;
+        enemy.vx = e.vx;
+        enemy.vy = e.vy;
+        enemy.speed = e.speed;
+        enemy.radius = e.radius;
+        enemy.color = e.color;
+        enemy.dead = e.dead;
+        return enemy;
     });
 
     state.bullets = snap.bullets.map(b => {
