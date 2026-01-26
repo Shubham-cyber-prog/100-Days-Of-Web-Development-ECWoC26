@@ -1,4 +1,4 @@
-// Dynamic imports for App Core, Notify, and Progress Service
+
 let App = window.App || null;
 let Notify = window.Notify || null;
 let progressService = null;
@@ -16,12 +16,100 @@ async function loadCoreModules() {
         console.warn('AppCore not available, using localStorage fallback');
     }
 
+// Try to load modules dynamically
+async function loadCoreModules() {
+    try {
+        if (!App) {
+            const appModule = await import('../core/app.js');
+            App = appModule.App || appModule.default;
+            window.App = App;
+        }
+    } catch (e) {
+        console.warn('AppCore not available, using localStorage fallback');
+    }
+
     try {
         const module = await import('../core/progressService.js');
         progressService = module.progressService;
     } catch (error) {
-        console.warn('Progress service not available, using localStorage fallback');
+
+        console.warn('Achievement service not available');
     }
+}
+
+        console.warn('Progress service not available, using localStorage fallback');
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Wait for AuthService to load
+    function waitForAuthService() {
+        if (window.AuthService) {
+            initializeDashboard();
+        } else {
+            setTimeout(waitForAuthService, 100);
+        }
+
+    }
+    
+    waitForAuthService();
+
+    function initializeDashboard() {
+        const auth = window.AuthService;
+        
+        // Check authentication using AuthService
+        if (!auth.isAuthenticated()) {
+            console.log('❌ Not authenticated, redirecting to login');
+            window.location.href = 'login.html';
+            return;
+        }
+        
+        const user = auth.getCurrentUser();
+        const isGuest = auth.isGuest();
+        
+        console.log('✅ Dashboard initialized for:', user?.email || 'Guest');
+        
+        // Show guest banner if guest user
+        if (isGuest) {
+            const guestBanner = document.getElementById('guestBanner');
+            if (guestBanner) {
+                guestBanner.style.display = 'block';
+            }
+        }
+
+    }
+
+    // Get user id from userData if available
+    let userId = null;
+    if (userData && userData.id) {
+        userId = userData.id;
+    }
+
+    // Fallback to upstream's simple check if needed (or if set by other means)
+    if (!userId) {
+        userId = localStorage.getItem('user_id');
+    }
+
+    await initializeDashboard({ displayName: userName, isGuest, uid: userId });
+
+
+document.addEventListener('DOMContentLoaded', async () => {
+    // Load core modules first
+    await loadCoreModules();
+
+    // Check authentication via App Core or legacy methods
+    let isAuthenticated = false;
+    let currentUser = null;
+
+    if (App && App.isAuthenticated()) {
+        isAuthenticated = true;
+        currentUser = App.getCurrentUser();
+    } else {
+        // Legacy fallback
+        const isGuest = sessionStorage.getItem('authGuest') === 'true';
+        const authToken = sessionStorage.getItem('authToken') === 'true';
+        const localAuth = localStorage.getItem('isAuthenticated') === 'true';
+
+        isAuthenticated = authToken || localAuth || isGuest;
 
     try {
         if (!Notify) {
@@ -31,13 +119,6 @@ async function loadCoreModules() {
         }
     } catch (e) {
         console.warn('Notify not available, using console fallback');
-    }
-
-    try {
-        const module = await import('../core/achievementService.js');
-        achievementService = module.achievementService;
-    } catch (error) {
-        console.warn('Achievement service not available');
     }
 }
 
@@ -83,6 +164,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function initializeDashboard(user) {
         // Set user name
         const userNameElement = document.getElementById('userName');
+
+
+
+        if (userNameElement) userNameElement.textContent = user.displayName;
+
         if (userNameElement) {
             const displayName = user.name || (user.email ? user.email.split('@')[0] : 'User');
             userNameElement.textContent = displayName;
