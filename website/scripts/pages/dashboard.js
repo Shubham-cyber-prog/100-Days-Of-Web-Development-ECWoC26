@@ -1,4 +1,4 @@
-// Dynamic imports for App Core, Notify, and Progress Service
+
 let App = window.App || null;
 let Notify = window.Notify || null;
 let progressService = null;
@@ -33,53 +33,44 @@ async function loadCoreModules() {
         progressService = module.progressService;
     } catch (error) {
         console.warn('Progress service not available, using localStorage fallback');
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Wait for AuthService to load
+    function waitForAuthService() {
+        if (window.AuthService) {
+            initializeDashboard();
+        } else {
+            setTimeout(waitForAuthService, 100);
+        }
+
     }
-}
+    
+    waitForAuthService();
 
-
-    // Auth Guard is now handled by guard.js
-    // Removed conflicting check that caused infinite loop
-
-    // Get user data from AuthService storage pattern
-    // Fix: Prefer sessionStorage to avoid stale localStorage guest state
-    const sessionGuest = sessionStorage.getItem('is_guest');
-    const isGuest = sessionGuest !== null ? sessionGuest === 'true' : localStorage.getItem('is_guest') === 'true';
-
-    // Get user name (handle object parsing if needed)
-    let userName = 'User';
-    let userData = null;
-
-    if (isGuest) {
-        userName = 'Guest Pilot';
-    } else {
-        // robustly check session then local storage
-        try {
-            const sessionRaw = sessionStorage.getItem('current_user');
-            if (sessionRaw) {
-                userData = JSON.parse(sessionRaw);
-            }
-        } catch (e) {
-            console.warn('Error parsing session user data:', e);
+    function initializeDashboard() {
+        const auth = window.AuthService;
+        
+        // Check authentication using AuthService
+        if (!auth.isAuthenticated()) {
+            console.log('❌ Not authenticated, redirecting to login');
+            window.location.href = 'login.html';
+            return;
         }
-
-        if (!userData) {
-            try {
-                const localRaw = localStorage.getItem('current_user');
-                if (localRaw) {
-                    userData = JSON.parse(localRaw);
-                }
-            } catch (e) {
-                console.warn('Error parsing local user data:', e);
+        
+        const user = auth.getCurrentUser();
+        const isGuest = auth.isGuest();
+        
+        console.log('✅ Dashboard initialized for:', user?.email || 'Guest');
+        
+        // Show guest banner if guest user
+        if (isGuest) {
+            const guestBanner = document.getElementById('guestBanner');
+            if (guestBanner) {
+                guestBanner.style.display = 'block';
             }
         }
 
-        if (userData) {
-            if (userData.name) {
-                userName = userData.name;
-            } else if (userData.email) {
-                userName = userData.email.split('@')[0];
-            }
-        }
     }
 
     // Get user id from userData if available
@@ -167,6 +158,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function initializeDashboard(user) {
         // Set user name
         const userNameElement = document.getElementById('userName');
+
+
+        if (userNameElement) userNameElement.textContent = user.displayName;
+
         if (userNameElement) {
             const displayName = user.name || (user.email ? user.email.split('@')[0] : 'User');
             userNameElement.textContent = displayName;
@@ -176,6 +171,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const logoutBtn = document.getElementById('logoutBtn');
         if (logoutBtn) {
             logoutBtn.addEventListener('click', async () => {
+
                 const handleLogout = async () => {
                     // Logout via App Core
                     if (App) {
@@ -204,6 +200,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     });
                 } else if (confirm('Abort mission?')) {
                     handleLogout();
+
+                if (confirm('Abort mission?')) {
+                    auth.logout();
+                    window.location.href = 'login.html';
+
                 }
             });
         }
