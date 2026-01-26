@@ -43,6 +43,18 @@ button {
   font-weight: bold;
   border-radius: 8px;
   cursor: pointer;
+  transition: 0.2s ease;
+}
+
+/* Hover + Focus for accessibility */
+button:hover {
+  filter: brightness(1.1);
+}
+button:focus {
+  outline: 2px solid #38bdf8;
+}
+input:focus {
+  outline: 2px solid #38bdf8;
 }
 
 .result {
@@ -59,7 +71,7 @@ button {
   overflow: hidden;
 }
 
-#bar-fill {
+#barFill {
   width: 0%;
   height: 100%;
   transition: width .3s ease;

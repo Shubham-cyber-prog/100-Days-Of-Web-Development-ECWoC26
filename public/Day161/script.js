@@ -1,9 +1,19 @@
+const calcBtn = document.getElementById("calcBtn");
+const scoreEl = document.getElementById("score");
+const barFill = document.getElementById("barFill");
+const impactText = document.getElementById("impactText");
+
+function safeNum(input) {
+  const n = Number(input.value);
+  return isNaN(n) || n < 0 ? 0 : n;
+}
+
 calcBtn.onclick = () => {
-  const browsing = Number(browsingInput.value) * 5;
-  const streaming = Number(streamingInput.value) * 15;
-  const messaging = Number(messagingInput.value) * 0.2;
-  const posts = Number(postsInput.value) * 10;
-  const gaming = Number(gamingInput.value) * 8;
+  const browsing = safeNum(browsing) * 5;
+  const streaming = safeNum(streaming) * 15;
+  const messaging = safeNum(messaging) * 0.2;
+  const posts = safeNum(posts) * 10;
+  const gaming = safeNum(gaming) * 8;
 
   let score = Math.round(browsing + streaming + messaging + posts + gaming);
   score = Math.min(score, 300);
@@ -19,6 +29,6 @@ calcBtn.onclick = () => {
     impactText.textContent = "Moderate Footprint 🌐 (Balanced usage)";
   } else {
     barFill.style.background = "#ef4444";
-    impactText.textContent = "High Footprint 🔥 (Reduce usage & data exposure)";
+    impactText.textContent = "High Footprint 🔥 (Reduce usage)";
   }
 };
