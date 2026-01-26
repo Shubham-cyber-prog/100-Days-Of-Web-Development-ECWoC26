@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4a90e2">
+    <title>Day 94 - PWA Focus</title>
+    
+    <link rel="manifest" href="manifest.json">
+    
+    <link rel="apple-touch-icon" href="images/icon-192.png">
+    <meta name="apple-mobile-web-app-status-bar" content="#4a90e2">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>My Daily Focus</h1>
+            <p>Day 94: Progressive Web App</p>
+        </header>
+        
+        <main>
+            <div class="input-group">
+                <input type="text" id="focusInput" placeholder="What is your main focus today?">
+                <button id="setBtn">Set Focus</button>
+            </div>
+            
+            <div id="displayArea" class="hidden">
+                <h2>Today's Focus:</h2>
+                <h3 id="focusText"></h3>
+                <button id="clearBtn" class="secondary">Clear</button>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Works offline via Service Worker</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
