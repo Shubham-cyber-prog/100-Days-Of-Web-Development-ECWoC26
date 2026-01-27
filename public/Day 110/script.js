@@ -9,8 +9,7 @@ class VideoTutorials {
                 platform: "youtube",
                 duration: "15:30",
                 difficulty: "beginner",
-                category: "HTML",
-                thumbnail: "https://img.youtube.com/vi/UB1O30fR-EE/maxresdefault.jpg"
+                category: "HTML"
             },
             {
                 id: 2,
@@ -20,8 +19,7 @@ class VideoTutorials {
                 platform: "youtube",
                 duration: "22:45",
                 difficulty: "intermediate",
-                category: "CSS",
-                thumbnail: "https://img.youtube.com/vi/jV8B24rSN5o/maxresdefault.jpg"
+                category: "CSS"
             },
             {
                 id: 3,
@@ -31,8 +29,7 @@ class VideoTutorials {
                 platform: "youtube",
                 duration: "28:15",
                 difficulty: "intermediate",
-                category: "JavaScript",
-                thumbnail: "https://img.youtube.com/vi/NCwa_xi0Uuc/maxresdefault.jpg"
+                category: "JavaScript"
             },
             {
                 id: 4,
@@ -42,8 +39,7 @@ class VideoTutorials {
                 platform: "youtube",
                 duration: "35:20",
                 difficulty: "beginner",
-                category: "CSS",
-                thumbnail: "https://img.youtube.com/vi/srvUrASNdxs/maxresdefault.jpg"
+                category: "CSS"
             },
             {
                 id: 5,
@@ -53,8 +49,7 @@ class VideoTutorials {
                 platform: "youtube",
                 duration: "42:10",
                 difficulty: "advanced",
-                category: "JavaScript",
-                thumbnail: "https://img.youtube.com/vi/Mus_vwhTCq0/maxresdefault.jpg"
+                category: "JavaScript"
             },
             {
                 id: 6,
@@ -64,13 +59,11 @@ class VideoTutorials {
                 platform: "youtube",
                 duration: "18:45",
                 difficulty: "beginner",
-                category: "CSS",
-                thumbnail: "https://img.youtube.com/vi/JJSoEo8JSnc/maxresdefault.jpg"
+                category: "CSS"
             }
         ];
         
         this.watchedVideos = JSON.parse(localStorage.getItem('watchedVideos')) || {};
-        this.videoNotes = JSON.parse(localStorage.getItem('videoNotes')) || {};
         this.currentFilter = 'all';
         this.searchQuery = '';
         
@@ -79,7 +72,7 @@ class VideoTutorials {
     
     init() {
         this.renderTutorials();
-        this.updateProgressStats();
+        this.updateStats();
         this.bindEvents();
     }
     
@@ -101,18 +94,14 @@ class VideoTutorials {
         });
         
         // Modal events
-        document.getElementById('videoModal').addEventListener('click', (e) => {
-            if (e.target.id === 'videoModal') {
-                this.closeModal();
-            }
-        });
-        
         document.querySelector('.close').addEventListener('click', () => {
             this.closeModal();
         });
         
-        document.getElementById('saveNotes').addEventListener('click', () => {
-            this.saveVideoNotes();
+        document.getElementById('videoModal').addEventListener('click', (e) => {
+            if (e.target.id === 'videoModal') {
+                this.closeModal();
+            }
         });
         
         // Download buttons
@@ -153,27 +142,17 @@ class VideoTutorials {
     }
     
     createTutorialCard(tutorial) {
-        const isWatched = this.watchedVideos[tutorial.id];
-        const progress = isWatched ? 100 : 0;
-        
         return `
             <div class="tutorial-card" data-id="${tutorial.id}">
                 <div class="tutorial-thumbnail">
-                    <img src="${tutorial.thumbnail}" alt="${tutorial.title}" loading="lazy">
-                    <div class="play-overlay">
-                        <i class="fas fa-play"></i>
-                    </div>
-                    ${isWatched ? '<div class="watched-indicator"><i class="fas fa-check"></i></div>' : ''}
+                    <div class="play-overlay">▶️</div>
                 </div>
                 <div class="tutorial-info">
                     <h3 class="tutorial-title">${tutorial.title}</h3>
                     <p class="tutorial-description">${tutorial.description}</p>
                     <div class="tutorial-meta">
-                        <span class="duration"><i class="fas fa-clock"></i> ${tutorial.duration}</span>
+                        <span class="duration">⏱️ ${tutorial.duration}</span>
                         <span class="difficulty ${tutorial.difficulty}">${tutorial.difficulty}</span>
-                    </div>
-                    <div class="watch-progress">
-                        <div class="progress-bar" style="width: ${progress}%"></div>
                     </div>
                 </div>
             </div>
@@ -189,18 +168,11 @@ class VideoTutorials {
         
         // Set modal content
         document.getElementById('modalTitle').textContent = tutorial.title;
-        document.getElementById('modalDuration').innerHTML = `<i class="fas fa-clock"></i> ${tutorial.duration}`;
-        document.getElementById('modalDifficulty').textContent = tutorial.difficulty;
         document.getElementById('modalDescription').textContent = tutorial.description;
         
         // Load video
         const videoUrl = this.getVideoEmbedUrl(tutorial);
         videoFrame.src = videoUrl;
-        
-        // Load existing notes
-        const notes = this.videoNotes[tutorialId] || '';
-        document.getElementById('videoNotes').value = notes;
-        document.getElementById('videoNotes').dataset.tutorialId = tutorialId;
         
         // Show modal
         modal.style.display = 'block';
@@ -234,36 +206,10 @@ class VideoTutorials {
             completed: true
         };
         localStorage.setItem('watchedVideos', JSON.stringify(this.watchedVideos));
-        this.updateProgressStats();
-        this.renderTutorials();
+        this.updateStats();
     }
     
-    saveVideoNotes() {
-        const textarea = document.getElementById('videoNotes');
-        const tutorialId = parseInt(textarea.dataset.tutorialId);
-        const notes = textarea.value.trim();
-        
-        if (notes) {
-            this.videoNotes[tutorialId] = notes;
-        } else {
-            delete this.videoNotes[tutorialId];
-        }
-        
-        localStorage.setItem('videoNotes', JSON.stringify(this.videoNotes));
-        
-        // Show success feedback
-        const saveBtn = document.getElementById('saveNotes');
-        const originalText = saveBtn.textContent;
-        saveBtn.textContent = 'Saved!';
-        saveBtn.style.background = '#4caf50';
-        
-        setTimeout(() => {
-            saveBtn.textContent = originalText;
-            saveBtn.style.background = '#667eea';
-        }, 2000);
-    }
-    
-    updateProgressStats() {
+    updateStats() {
         const watchedCount = Object.keys(this.watchedVideos).length;
         const totalVideos = this.tutorials.length;
         const completionRate = Math.round((watchedCount / totalVideos) * 100);
@@ -285,23 +231,17 @@ class VideoTutorials {
     }
     
     downloadResource(resourceName) {
-        // Simulate download
-        const link = document.createElement('a');
-        link.href = '#';
-        link.download = resourceName.toLowerCase().replace(/\s+/g, '-') + '.pdf';
-        
         // Show download feedback
         const btn = event.target;
         const originalText = btn.textContent;
         btn.textContent = 'Downloaded!';
-        btn.style.background = '#4caf50';
+        btn.style.background = '#10B981';
         
         setTimeout(() => {
             btn.textContent = originalText;
-            btn.style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
+            btn.style.background = '#8B5CF6';
         }, 2000);
         
-        // In a real app, this would trigger actual file download
         console.log(`Downloading: ${resourceName}`);
     }
 }
@@ -310,8 +250,3 @@ class VideoTutorials {
 document.addEventListener('DOMContentLoaded', () => {
     new VideoTutorials();
 });
-
-// Export for potential use in other modules
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = VideoTutorials;
-}
