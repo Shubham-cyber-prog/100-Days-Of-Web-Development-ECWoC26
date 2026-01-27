@@ -1,190 +1,283 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="../assets/images/logo.png">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
     <title>Profile - 100 Days Web Dev</title>
-    <link rel="stylesheet" href="../styles/global.css">
-    <link rel="stylesheet" href="../styles/pages/profile.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
+    <link rel="stylesheet" href="../styles/global.css" />
+    <link rel="stylesheet" href="../styles/pages/profile.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
 
-<body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="dashboard.html" class="nav-logo">
-                <img src="../assets/images/logo.png" alt="100 Days of Web Dev" class="brand-logo-img" />
-            </a>
-            <ul class="nav-menu">
-                <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="tutorials.html">Tutorials</a></li>
-                <li><a href="profile.html" class="active">Profile</a></li>
-                <li><a href="about.html">About</a></li>
-            </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+  <body>
+    <header class="site-header">
+      <div
+        class="nav-container"
+        style="
+          filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))
+            drop-shadow(
+              0 0 14px color-mix(in srgb, var(--accent-core) 22%, transparent)
+            )
+            drop-shadow(
+              0 0 28px color-mix(in srgb, var(--accent-core) 12%, transparent)
+            );
+        "
+      >
+        <a href="dashboard.html" class="nav-logo">
+          <img
+            src="../assets/images/logo.png"
+            alt="100 Days of Web Dev"
+            class="brand-logo-img"
+          />
+        </a>
+        <nav class="nav-links">
+          <a href="dashboard.html" class="nav-link">Dashboard</a>
+          <a href="projects.html" class="nav-link">Projects</a>
+          <a href="favorites.html" class="nav-link">Favorites</a>
+          <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+          <a href="about.html" class="nav-link">About</a>
+          <a href="contributors.html" class="nav-link">Contributors</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+        </nav>
+        <div class="nav-user">
+          <button class="mobile-toggle" onclick="toggleMobileMenu()">
+            <svg class="icon icon-lg" viewBox="0 0 24 24">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+
+          <button
+            id="theme-toggle-btn"
+            class="icon-btn"
+            onclick="toggleTheme()"
+            style="
+              margin-right: 15px;
+              background: none;
+              border: none;
+              cursor: pointer;
+            "
+          >
+            <svg
+              class="icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="color: var(--text-secondary)"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+
+          <div class="user-avatar-wrapper">
+            <button class="user-avatar" onclick="toggleUserMenu()">
+              <img
+                src="https://github.com/ntbnaren7.png"
+                alt="User"
+                style="width: 100%; height: 100%"
+              />
+            </button>
+            <!-- Dropdown -->
+            <div class="user-dropdown">
+              <a href="profile.html" class="dropdown-item">View Profile</a>
+              <a href="settings.html" class="dropdown-item">Settings</a>
+              <div class="dropdown-divider"></div>
+              <button
+                class="dropdown-item text-danger"
+                onclick="handleLogout()"
+              >
+                Log Out
+              </button>
             </div>
+          </div>
         </div>
-    </nav>
+      </div>
+    </header>
 
     <main class="profile-main">
-        <div class="container">
-            <div class="profile-header">
-                <div class="profile-avatar">
-                    <img id="avatarImg" src="../assets/images/pilot_avatar.png" alt="Profile Avatar">
-                    <button class="avatar-edit-btn" id="editAvatarBtn">
-                        <i class="fas fa-camera"></i>
-                    </button>
-                </div>
-                <div class="profile-info">
-                    <h1 id="userName">Web Developer</h1>
-                    <p id="userTitle">Frontend Enthusiast</p>
-                    <div class="profile-stats">
-                        <div class="stat">
-                            <span class="stat-number" id="projectsCompleted">0</span>
-                            <span class="stat-label">Projects</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-number" id="daysActive">0</span>
-                            <span class="stat-label">Days Active</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-number" id="currentStreak">0</span>
-                            <span class="stat-label">Streak</span>
-                        </div>
-                    </div>
-                </div>
-                <button class="edit-profile-btn" id="editProfileBtn">
-                    <i class="fas fa-edit"></i> Edit Profile
-                </button>
+      <div class="container">
+        <div class="profile-header">
+          <div class="profile-avatar">
+            <img
+              id="avatarImg"
+              src="../assets/images/pilot_avatar.png"
+              alt="Profile Avatar"
+            />
+            <button class="avatar-edit-btn" id="editAvatarBtn">
+              <i class="fas fa-camera"></i>
+            </button>
+          </div>
+          <div class="profile-info">
+            <h1 id="userName">Web Developer</h1>
+            <p id="userTitle">Frontend Enthusiast</p>
+            <div class="profile-stats">
+              <div class="stat">
+                <span class="stat-number" id="projectsCompleted">0</span>
+                <span class="stat-label">Projects</span>
+              </div>
+              <div class="stat">
+                <span class="stat-number" id="daysActive">0</span>
+                <span class="stat-label">Days Active</span>
+              </div>
+              <div class="stat">
+                <span class="stat-number" id="currentStreak">0</span>
+                <span class="stat-label">Streak</span>
+              </div>
             </div>
-
-            <div class="profile-content">
-                <div class="profile-section">
-                    <h2><i class="fas fa-user"></i> Personal Information</h2>
-                    <div class="info-grid">
-                        <div class="info-item">
-                            <label>Full Name</label>
-                            <span id="fullName">Web Developer</span>
-                        </div>
-                        <div class="info-item">
-                            <label>Email</label>
-                            <span id="userEmail">developer@example.com</span>
-                        </div>
-                        <div class="info-item">
-                            <label>Join Date</label>
-                            <span id="joinDate">January 2024</span>
-                        </div>
-                        <div class="info-item">
-                            <label>Location</label>
-                            <span id="userLocation">Global</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="profile-section">
-                    <h2><i class="fas fa-trophy"></i> Achievements</h2>
-                    <div class="achievements-grid" id="achievementsGrid">
-                        <!-- Achievements will be loaded here -->
-                    </div>
-                </div>
-
-                <div class="profile-section">
-                    <h2><i class="fas fa-chart-line"></i> Progress Overview</h2>
-                    <div class="progress-cards">
-                        <div class="progress-card">
-                            <div class="progress-icon">
-                                <i class="fas fa-code"></i>
-                            </div>
-                            <div class="progress-info">
-                                <h3>HTML/CSS</h3>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 85%"></div>
-                                </div>
-                                <span>85% Complete</span>
-                            </div>
-                        </div>
-                        <div class="progress-card">
-                            <div class="progress-icon">
-                                <i class="fab fa-js"></i>
-                            </div>
-                            <div class="progress-info">
-                                <h3>JavaScript</h3>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 70%"></div>
-                                </div>
-                                <span>70% Complete</span>
-                            </div>
-                        </div>
-                        <div class="progress-card">
-                            <div class="progress-icon">
-                                <i class="fas fa-mobile-alt"></i>
-                            </div>
-                            <div class="progress-info">
-                                <h3>Responsive Design</h3>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 90%"></div>
-                                </div>
-                                <span>90% Complete</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="profile-section">
-                    <h2><i class="fas fa-history"></i> Recent Activity</h2>
-                    <div class="activity-list" id="activityList">
-                        <!-- Activity items will be loaded here -->
-                    </div>
-                </div>
-            </div>
+          </div>
+          <button class="edit-profile-btn" id="editProfileBtn">
+            <i class="fas fa-edit"></i> Edit Profile
+          </button>
         </div>
+
+        <div class="profile-content">
+          <div class="profile-section">
+            <h2><i class="fas fa-user"></i> Personal Information</h2>
+            <div class="info-grid">
+              <div class="info-item">
+                <label>Full Name</label>
+                <span id="fullName">Web Developer</span>
+              </div>
+              <div class="info-item">
+                <label>Email</label>
+                <span id="userEmail">developer@example.com</span>
+              </div>
+              <div class="info-item">
+                <label>Join Date</label>
+                <span id="joinDate">January 2024</span>
+              </div>
+              <div class="info-item">
+                <label>Location</label>
+                <span id="userLocation">Global</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-section">
+            <h2><i class="fas fa-trophy"></i> Achievements</h2>
+            <div class="achievements-grid" id="achievementsGrid">
+              <!-- Achievements will be loaded here -->
+            </div>
+          </div>
+
+          <div class="profile-section">
+            <h2><i class="fas fa-chart-line"></i> Progress Overview</h2>
+            <div class="progress-cards">
+              <div class="progress-card">
+                <div class="progress-icon">
+                  <i class="fas fa-code"></i>
+                </div>
+                <div class="progress-info">
+                  <h3>HTML/CSS</h3>
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 85%"></div>
+                  </div>
+                  <span>85% Complete</span>
+                </div>
+              </div>
+              <div class="progress-card">
+                <div class="progress-icon">
+                  <i class="fab fa-js"></i>
+                </div>
+                <div class="progress-info">
+                  <h3>JavaScript</h3>
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 70%"></div>
+                  </div>
+                  <span>70% Complete</span>
+                </div>
+              </div>
+              <div class="progress-card">
+                <div class="progress-icon">
+                  <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="progress-info">
+                  <h3>Responsive Design</h3>
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 90%"></div>
+                  </div>
+                  <span>90% Complete</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-section">
+            <h2><i class="fas fa-history"></i> Recent Activity</h2>
+            <div class="activity-list" id="activityList">
+              <!-- Activity items will be loaded here -->
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
 
     <!-- Edit Profile Modal -->
     <div id="editModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Edit Profile</h3>
-                <span class="close">&times;</span>
-            </div>
-            <div class="modal-body">
-                <form id="editProfileForm">
-                    <div class="form-group">
-                        <label for="editFullName">Full Name</label>
-                        <input type="text" id="editFullName" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="editEmail">Email</label>
-                        <input type="email" id="editEmail" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="editTitle">Title</label>
-                        <input type="text" id="editTitle" class="form-control" placeholder="e.g., Frontend Developer">
-                    </div>
-                    <div class="form-group">
-                        <label for="editLocation">Location</label>
-                        <input type="text" id="editLocation" class="form-control" placeholder="e.g., New York, USA">
-                    </div>
-                    <div class="form-group">
-                        <label for="editBio">Bio</label>
-                        <textarea id="editBio" class="form-control" rows="3" placeholder="Tell us about yourself..."></textarea>
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-secondary" id="cancelEdit">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                </form>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Edit Profile</h3>
+          <span class="close">&times;</span>
         </div>
+        <div class="modal-body">
+          <form id="editProfileForm">
+            <div class="form-group">
+              <label for="editFullName">Full Name</label>
+              <input type="text" id="editFullName" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="editEmail">Email</label>
+              <input type="email" id="editEmail" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="editTitle">Title</label>
+              <input
+                type="text"
+                id="editTitle"
+                class="form-control"
+                placeholder="e.g., Frontend Developer"
+              />
+            </div>
+            <div class="form-group">
+              <label for="editLocation">Location</label>
+              <input
+                type="text"
+                id="editLocation"
+                class="form-control"
+                placeholder="e.g., New York, USA"
+              />
+            </div>
+            <div class="form-group">
+              <label for="editBio">Bio</label>
+              <textarea
+                id="editBio"
+                class="form-control"
+                rows="3"
+                placeholder="Tell us about yourself..."
+              ></textarea>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn btn-secondary" id="cancelEdit">
+                Cancel
+              </button>
+              <button type="submit" class="btn btn-primary">
+                Save Changes
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
 
     <script src="../scripts/components/navigation.js"></script>
     <script src="../scripts/pages/profile.js"></script>
-</body>
+  </body>
 </html>
