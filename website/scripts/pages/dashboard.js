@@ -1,26 +1,20 @@
 
+import { firestoreService } from '../firestore.js';
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Check authentication (Mock / Local Storage)
-    // Upstream uses Firebase, but strictly adhering to "Frontend Only" request for now
-    // to prevent broken app due to missing API keys.
-
-    /* 
-    // Firebase Import (Commented out until config is provided)
-    // import { auth } from './firebase-config.js'; 
-    */
-
-    const isGuest = sessionStorage.getItem('authGuest') === 'true';
-    const authToken = sessionStorage.getItem('authToken') === 'true';
-    const localAuth = localStorage.getItem('isAuthenticated') === 'true';
+    // Check authentication
+    const isGuest = localStorage.getItem('isGuest') === 'true';
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
     // Auth Guard
-    if (!authToken && !localAuth && !isGuest) {
+    if (!isLoggedIn && !isGuest) {
         window.location.href = 'login.html';
         return;
     }
 
-    const userName = isGuest ? 'Guest Pilot' : (localStorage.getItem('user_name') || 'User');
-    initializeDashboard({ email: userName, isGuest });
+    const userId = localStorage.getItem('userId');
+    const userName = isGuest ? 'Guest Pilot' : (localStorage.getItem('userName') || 'User');
+    initializeDashboard({ email: userName, isGuest, userId });
 
     function initializeDashboard(user) {
         // Set user name
@@ -147,17 +141,34 @@ document.addEventListener('DOMContentLoaded', () => {
             { day: 100, title: "Master Project", folder: "Day 100", level: "Capstone", tech: ["HTML", "CSS", "JS", "React"] }
         ];
 
-        // Load completed days from localStorage
-        let completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+        // Load completed days from Firestore or localStorage as fallback
+        let completedDays = [];
+        let userProgress = null;
 
-        // Render progress grid
-        if (document.getElementById('progressGrid')) renderProgressGrid();
+        async function loadUserProgress() {
+            if (!user.isGuest && user.userId) {
+                try {
+                    userProgress = await firestoreService.getUserProgress(user.userId);
+                    completedDays = userProgress.completedDays || [];
+                    console.log('Loaded progress from Firestore:', completedDays.length, 'days completed');
+                } catch (error) {
+                    console.error('Error loading progress from Firestore:', error);
+                    // Fallback to localStorage
+                    completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+                }
+            } else {
+                // Guest user - use localStorage
+                completedDays = JSON.parse(localStorage.getItem('completedDays') || '[]');
+            }
 
-        // Update stats
-        if (document.getElementById('completedDays')) updateStats();
+            // Render UI after loading data
+            if (document.getElementById('progressGrid')) renderProgressGrid();
+            if (document.getElementById('completedDays')) updateStats();
+            if (document.getElementById('recommendationsGrid')) renderRecommendations();
+        }
 
-        // Render recommendations
-        if (document.getElementById('recommendationsGrid')) renderRecommendations();
+        // Load user progress
+        loadUserProgress();
 
         function renderProgressGrid() {
             const progressGrid = document.getElementById('progressGrid');
