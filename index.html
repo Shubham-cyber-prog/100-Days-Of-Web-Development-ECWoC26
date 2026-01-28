@@ -18,18 +18,10 @@
 
     <link rel="icon" type="image/png" href="website/assets/images/logo.png" />
 
-    <!-- logo for nav bar -->
-    <link rel="stylesheet" href="website/assets/images/logo.png" />
-    <!-- home-->
+    <!-- Fire Cursor Styles -->
+    <link rel="stylesheet" href="firecursor.css" />
 
     <!-- Enhanced Modern UI Styles -->
-
-
-    <!-- Enhanced Modern UI Styles -->
-
-    <!-- Fire Cursor - Commented out as file is missing -->
-    <!-- <link rel="stylesheet" href="firecursor.css"> -->
-
     <style>
       /* Enhanced Modern UI Styles */
       :root {
@@ -41,6 +33,8 @@
         --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.15);
         --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.2);
         --shadow-glow: 0 0 30px rgba(102, 126, 234, 0.3);
+        --text-primary: #ffffff;
+        --text-secondary: rgba(255, 255, 255, 0.7);
       }
 
       body {
@@ -53,6 +47,7 @@
         min-height: 100vh;
         position: relative;
         overflow-x: hidden;
+        cursor: none; /* Fire cursor will handle cursor */
       }
 
       /* Animated Background Particles */
@@ -115,10 +110,10 @@
         align-items: center;
         justify-content: center;
       }
+
       .theme-readable {
         color: var(--text-primary) !important;
       }
-
 
       .brand-logo-img {
         height: 45px;
@@ -253,6 +248,7 @@
         overflow: hidden;
         text-transform: uppercase;
         letter-spacing: 0.5px;
+        cursor: none; /* Fire cursor will handle */
       }
 
       .btn-zenith-primary {
@@ -323,6 +319,7 @@
         backdrop-filter: blur(10px);
         position: relative;
         overflow: hidden;
+        cursor: none; /* Fire cursor will handle */
       }
 
       .feature-card::before {
@@ -405,6 +402,7 @@
         border-radius: 50%;
         background: rgba(255, 255, 255, 0.05);
         border: 1px solid rgba(102, 126, 234, 0.3);
+        cursor: none; /* Fire cursor will handle */
       }
 
       .social-btn:hover {
@@ -418,6 +416,7 @@
         transition: all 0.3s ease;
         position: relative;
         padding-left: 15px;
+        cursor: none; /* Fire cursor will handle */
       }
 
       .footer-link::before {
@@ -500,28 +499,14 @@
           max-width: 300px;
         }
       }
-
-      .nav-link::after {
-        display: none;
-      }
-
-      .nav-link:hover::after,
-      .nav-link.active::after {
-        display: none;
-      }
-
-
-      .nav-link:hover::after,
-      .nav-link.active::after {
-        display: none;
-      }
-
     </style>
   </head>
-  <!-- Fire Cursor -->
-  <link rel="stylesheet" href="firecursor.css" />
 
   <body>
+    <!-- Fire Cursor Elements -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-dot-outline"></div>
+
     <!-- Navbar -->
     <header class="site-header">
       <div class="nav-container">
@@ -530,6 +515,7 @@
             src="website/assets/images/logo.png"
             alt="100 Days of Web Dev"
             class="brand-logo-img"
+            loading="lazy"
           />
         </a>
 
@@ -598,22 +584,10 @@
     </header>
 
     <main class="container section">
-        <!-- Hero Section -->
-        <section class="zenith-hero animate-enter">
-            <h1 class="hero-title">Forge Your Future<br>One Day at a Time</h1>
-            <p class="hero-subtitle theme-readable">
-                Join the elite 100-day coding protocol. Master modern web development through rigorous daily deployment cycles.
-            </p>
-            <div class="hero-actions">
-                <a href="website/pages/dashboard.html" class="btn-zenith-primary">Initialize Protocol</a>
-                <a href="website/pages/projects.html" class="btn-zenith-secondary theme-readable">View Archive</a>
-            </div>
-        </section>
-
       <!-- Hero Section -->
       <section class="zenith-hero animate-enter">
         <h1 class="hero-title">Forge Your Future<br />One Day at a Time</h1>
-        <p class="hero-subtitle">
+        <p class="hero-subtitle theme-readable">
           Join the elite 100-day coding protocol. Master modern web development
           through rigorous daily deployment cycles.
         </p>
@@ -621,7 +595,7 @@
           <a href="website/pages/dashboard.html" class="btn-zenith-primary"
             >Initialize Protocol</a
           >
-          <a href="website/pages/projects.html" class="btn-zenith-secondary"
+          <a href="website/pages/projects.html" class="btn-zenith-secondary theme-readable"
             >View Archive</a
           >
         </div>
@@ -658,46 +632,16 @@
       </section>
     </main>
 
-
-      <!-- Features Grid -->
-      <section class="features-section animate-enter delay-100">
-        <div class="grid grid-3">
-          <div class="feature-card">
-            <span class="feature-icon">🚀</span>
-            <h3>Daily Deployments</h3>
-            <p>
-              Build and ship a new project every single day. From simple scripts
-              to complex full-stack applications.
-            </p>
-          </div>
-          <div class="feature-card">
-            <span class="feature-icon">⚡</span>
-            <h3>Modern Stack</h3>
-            <p>
-              Master the latest technologies including React, Next.js,
-              TailwindCSS, and serverless architecture.
-            </p>
-          </div>
-          <div class="feature-card">
-            <span class="feature-icon">🤝</span>
-            <h3>Community Driven</h3>
-            <p>
-              Join a squad of dedicated developers. Code reviews, pair
-              programming, and collaborative growth.
-            </p>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <!--  feature of fire-cursor -->
-
     <!-- Footer -->
     <footer class="site-footer">
       <div class="container footer-content">
         <div class="footer-brand animate-enter">
           <a href="#" class="footer-logo">
-            <img src="website/assets/images/logo.png" alt="Logo" />
+            <img 
+              src="website/assets/images/logo.png" 
+              alt="100 Days of Web Dev Logo" 
+              loading="lazy"
+            />
             <h2>100 Days of<br /><span class="text-flame">Web Dev</span></h2>
           </a>
           <p class="footer-desc">
@@ -744,70 +688,19 @@
           <h3>Connect</h3>
           <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
           <div class="footer-socials">
-            <a href="#" class="social-btn" aria-label="Github"
-              ><svg class="icon" viewBox="0 0 24 24">
+            <a href="#" class="social-btn" aria-label="Github">
+              <svg class="icon" viewBox="0 0 24 24">
                 <path
                   d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-                ></path></svg></a>
-            <a href="#" class="social-btn" aria-label="Twitter"
-              ><svg class="icon" viewBox="0 0 24 24">
+                ></path></svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="Twitter">
+              <svg class="icon" viewBox="0 0 24 24">
                 <path
-                  d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
-                ></path></svg></a>
-          </div>
-        </div>
-        </div>
-
-        <div class="footer-col animate-enter delay-100">
-          <h3>Navigation</h3>
-          <nav class="footer-links">
-            <a href="#" class="footer-link">Home Base</a>
-            <a href="website/pages/projects.html" class="footer-link"
-              >Archive</a
-            >
-            <a href="website/pages/about.html" class="footer-link"
-              >Leaderboard</a
-            >
-            <a href="website/pages/contributors.html" class="footer-link"
-              >Crew</a
-            >
-          </nav>
-        </div>
-
-        <div class="footer-col animate-enter delay-200">
-          <h3>Resources</h3>
-          <nav class="footer-links">
-            <a href="website/pages/documentation.html" class="footer-link"
-              >Documentation</a
-            >
-            <a href="website/pages/api-status.html" class="footer-link"
-              >API Status</a
-            >
-            <a href="website/pages/contact.html" class="footer-link"
-              >Contact Comms</a
-            >
-            <a href="website/pages/system-logic.html" class="footer-link"
-              >System Logic</a
-            >
-          </nav>
-        </div>
-
-        <div class="footer-col animate-enter delay-300">
-          <h3>Connect</h3>
-          <p class="text-secondary text-sm mb-4">Join the signal frequency.</p>
-          <div class="footer-socials">
-            <a href="#" class="social-btn" aria-label="Github"
-              ><svg class="icon" viewBox="0 0 24 24">
-                <path
-                  d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-                ></path></svg
-            ></a>
-            <a href="#" class="social-btn" aria-label="Twitter"
-              ><svg class="icon" viewBox="0 0 24 24">
-                <path
-                  d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
-                ></path></svg
-            ></a>
+                  d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                </path>
+              </svg>
+            </a>
           </div>
         </div>
       </div>
@@ -817,15 +710,13 @@
           &copy; 2026 100 Days of Web Dev. All Systems Nominal.
         </p>
         <p class="made-by">
-          Maintained by <span class="text-flame font-bold">Subham</span>
+          Maintained by <span class="text-flame font-bold">Shubham</span>
           <svg
             class="icon icon-sm heart-pulse"
             viewBox="0 0 24 24"
-            fill="currentColor"
-          >
+            fill="currentColor">
             <path
-              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-            ></path>
+              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
           </svg>
         </p>
       </div>
@@ -834,6 +725,7 @@
     <!-- Scripts -->
     <script src="website/scripts/components/cursor.js"></script>
     <script src="website/scripts/components/navigation.js"></script>
+    <script src="firecursor.js"></script>
     <script>
       // Inline function for main index.html mobile menu close
       function closeMobileMenuInline() {
@@ -842,6 +734,11 @@
           navLinks.classList.remove("open");
         }
       }
+
+      // Initialize fire cursor
+      document.addEventListener('DOMContentLoaded', function() {
+        // Fire cursor is initialized in firecursor.js
+      });
     </script>
   </body>
 </html>
